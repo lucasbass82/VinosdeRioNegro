@@ -295,7 +295,7 @@ export default function App() {
   return (
     <div style={styles.page}>
       <div style={styles.phone}>
-        <Header onSearchClick={() => setTab("search")} />
+        <Header currentTab={tab} onSearchClick={() => setTab("search")} />
 
         <div style={styles.content}>
           {detail && detailView ? (
@@ -337,7 +337,9 @@ export default function App() {
           ) : tab === "home" ? (
             <HomeScreen
               onOpenWinery={openWinery}
+              onOpenShop={openShop}
               onSetTab={setTab}
+              setSearch={setSearch}
               favorites={favorites}
               toggleFavorite={toggleFavorite}
             />
@@ -365,37 +367,111 @@ export default function App() {
   );
 }
 
-function Header({ onSearchClick }: { onSearchClick: () => void }) {
+function Header({
+  currentTab,
+  onSearchClick,
+}: {
+  currentTab: TabKey;
+  onSearchClick: () => void;
+}) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>Ruta del Vino RN</div>
+      <div style={styles.headerEyebrow}>VINOS DE RIO NEGRO</div>
       <div style={styles.headerTitle}>Descubrí Viedma</div>
-      <button style={styles.searchBar} onClick={onSearchClick}>
-        <SearchIcon />
-        <span style={{ color: "#8a7d71", fontSize: 14 }}>
-          Buscá vinos, bodegas o vinotecas
-        </span>
-      </button>
+
+      {currentTab !== "search" && (
+        <button style={styles.searchBar} onClick={onSearchClick}>
+          <SearchIcon />
+          <span style={{ color: "#8a7d71", fontSize: 14 }}>
+            Buscá vinos, bodegas o vinotecas
+          </span>
+        </button>
+      )}
     </div>
   );
 }
 
 function HomeScreen({
   onOpenWinery,
+  onOpenShop,
   onSetTab,
+  setSearch,
   favorites,
   toggleFavorite,
 }: {
   onOpenWinery: (id: string) => void;
+  onOpenShop: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
+  setSearch: (value: string) => void;
   favorites: FavoriteItem[];
   toggleFavorite: (item: FavoriteItem) => void;
 }) {
+  const handleChipClick = (chip: string) => {
+    if (chip === "Cerca mío") {
+      onSetTab("map");
+      return;
+    }
+    if (chip === "Pinot Noir") {
+      setSearch("Pinot Noir");
+      onSetTab("search");
+      return;
+    }
+    if (chip === "Abiertas ahora") {
+      setSearch("abiertas");
+      onSetTab("search");
+      return;
+    }
+    if (chip === "Con descuento") {
+      setSearch("descuento");
+      onSetTab("search");
+      return;
+    }
+  };
+
+  const handleQuickAction = (title: string) => {
+    if (title === "Bodegas cerca") {
+      onSetTab("map");
+      return;
+    }
+    if (title === "Buscar un vino") {
+      onSetTab("search");
+      return;
+    }
+    if (title === "Que Plan?") {
+      onSetTab("agenda");
+      return;
+    }
+    if (title === "Club del vino") {
+      onSetTab("profile");
+      return;
+    }
+  };
+
+  const handleEventClick = (place: string) => {
+    if (place === "Bodega Miras") {
+      onOpenWinery("w1");
+      return;
+    }
+    if (place === "Bodega Aniello") {
+      onOpenWinery("w2");
+      return;
+    }
+    if (place === "Vinoteca del Río") {
+      onOpenShop("s1");
+      return;
+    }
+    onSetTab("agenda");
+  };
+
   return (
     <div style={styles.stack16}>
       <div style={styles.chipsRow}>
         {quickChips.map((chip) => (
-          <button key={chip} style={styles.chip}>
+          <button
+            key={chip}
+            style={styles.chip}
+            onClick={() => handleChipClick(chip)}
+          >
             {chip}
           </button>
         ))}
@@ -434,16 +510,37 @@ function HomeScreen({
       </div>
 
       <div style={styles.grid2}>
-        <QuickActionCard icon={<WineIcon />} title="Bodegas cerca" />
-        <QuickActionCard icon={<SearchIcon />} title="Buscar un vino" />
-        <QuickActionCard icon={<SparklesIcon />} title="Eventos hoy" />
-        <QuickActionCard icon={<TicketIcon />} title="Club del vino" />
+        {[
+          ["Bodegas cerca", <WineIcon />],
+          ["Buscar un vino", <SearchIcon />],
+          ["Que Plan?", <SparklesIcon />],
+          ["Tus Beneficios", <TicketIcon />],
+        ].map(([title, icon]) => (
+          <div
+            key={String(title)}
+            style={{ ...styles.card, cursor: "pointer" }}
+            onClick={() => handleQuickAction(String(title))}
+          >
+            <div style={styles.iconBadge}>{icon}</div>
+            <div style={{ ...styles.itemTitle, marginTop: 12 }}>{title}</div>
+            <div style={styles.itemSub}>Acceso rápido</div>
+          </div>
+        ))}
       </div>
 
-      <SectionTitle title="Actividades destacadas" action="Ver todo" />
+      <SectionTitle
+        title="Actividades destacadas"
+        action="Ver todo"
+        onAction={() => onSetTab("agenda")}
+      />
+
       <div style={styles.stack12}>
         {EVENTS.slice(0, 2).map((e) => (
-          <div key={e.id} style={styles.card}>
+          <div
+            key={e.id}
+            style={{ ...styles.card, cursor: "pointer" }}
+            onClick={() => handleEventClick(e.place)}
+          >
             <div style={styles.rowGap12}>
               <div style={styles.iconBadgeWine}>
                 <SparklesIcon white />
@@ -463,7 +560,12 @@ function HomeScreen({
         ))}
       </div>
 
-      <SectionTitle title="Bodegas recomendadas" action="Ver mapa" />
+      <SectionTitle
+        title="Bodegas recomendadas"
+        action="Ver mapa"
+        onAction={() => onSetTab("map")}
+      />
+
       <div style={styles.stack12}>
         {WINERIES.map((w) => (
           <div
@@ -769,7 +871,7 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
       <div style={styles.profileHeroCard}>
         <div>
           <div style={styles.membershipEyebrow}>Membresía activa</div>
-          <div style={styles.membershipTitle}>Club del Vino RN</div>
+          <div style={styles.membershipTitle}>Tus Beneficios</div>
           <div style={styles.membershipText}>
             Descuentos en vinotecas, actividades y bodegas adheridas.
           </div>
@@ -1134,7 +1236,7 @@ function BottomNav({
     { key: "home", label: "Inicio", icon: <HomeIcon /> },
     { key: "map", label: "Mapa", icon: <MapIcon /> },
     { key: "search", label: "Buscar", icon: <SearchIcon /> },
-    { key: "agenda", label: "Orden del día", icon: <CalendarIcon /> },
+    { key: "Que Plan?", label: "Que Plan?", icon: <CalendarIcon /> },
     { key: "profile", label: "Perfil", icon: <UserIcon /> },
   ];
 
@@ -1190,11 +1292,23 @@ function Block({
   );
 }
 
-function SectionTitle({ title, action }: { title: string; action?: string }) {
+function SectionTitle({
+  title,
+  action,
+  onAction,
+}: {
+  title: string;
+  action?: string;
+  onAction?: () => void;
+}) {
   return (
     <div style={styles.rowBetweenCenter}>
       <div style={styles.sectionTitle}>{title}</div>
-      {action ? <button style={styles.sectionAction}>{action}</button> : null}
+      {action ? (
+        <button style={styles.sectionAction} onClick={onAction}>
+          {action}
+        </button>
+      ) : null}
     </div>
   );
 }
@@ -2094,6 +2208,8 @@ const styles: Record<string, React.CSSProperties> = {
     padding: 18,
     display: "flex",
     alignItems: "end",
+
+    padding: 16,
   },
   bottomNavWrap: {
     padding: 14,
