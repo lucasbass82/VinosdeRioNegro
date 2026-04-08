@@ -2095,9 +2095,6 @@ const styles: Record<string, React.CSSProperties> = {
     display: "flex",
     alignItems: "end",
   },
-  imageCardBody: {
-    padding: 16,
-  },
   bottomNavWrap: {
     padding: 14,
     borderTop: "1px solid #ede4da",
