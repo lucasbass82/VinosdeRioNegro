@@ -422,7 +422,7 @@ function Header({
 }) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>VINOS DE RIO NEGRO</div>
+      <div style={styles.headerEyebrow}>VINOS DE RIO NEGROOO</div>
       <div style={styles.headerTitle}>Descubrí Viedma</div>
 
       {currentTab !== "search" && (
