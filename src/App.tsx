@@ -2208,8 +2208,6 @@ const styles: Record<string, React.CSSProperties> = {
     padding: 18,
     display: "flex",
     alignItems: "end",
-
-    padding: 16,
   },
   bottomNavWrap: {
     padding: 14,
