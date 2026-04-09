@@ -9,13 +9,12 @@
   ],
   "main": "src/index.tsx",
   "dependencies": {
-  "loader-utils": "3.2.1",
-  "react": "18.2.0",
-  "react-dom": "18.2.0",
-  "react-scripts": "5.0.1",
-  "leaflet": "1.9.4",
-  "react-leaflet": "5.0.0"
-},
+    "leaflet": "1.9.4",
+    "loader-utils": "3.2.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-leaflet": "5.0.0",
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "@types/react": "18.2.38",
@@ -24,14 +23,18 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
