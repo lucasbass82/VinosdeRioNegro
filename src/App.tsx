@@ -437,7 +437,7 @@ function HomeScreen({
       onSetTab("search");
       return;
     }
-    if (title === "Que Plan?") {
+    if (title === "Agenda?") {
       onSetTab("agenda");
       return;
     }
@@ -513,7 +513,7 @@ function HomeScreen({
         {[
           ["Bodegas cerca", <WineIcon />],
           ["Buscar un vino", <SearchIcon />],
-          ["Que Plan?", <SparklesIcon />],
+          ["Agenda", <SparklesIcon />],
           ["Tus Beneficios", <TicketIcon />],
         ].map(([title, icon]) => (
           <div
@@ -1236,7 +1236,7 @@ function BottomNav({
     { key: "home", label: "Inicio", icon: <HomeIcon /> },
     { key: "map", label: "Mapa", icon: <MapIcon /> },
     { key: "search", label: "Buscar", icon: <SearchIcon /> },
-    { key: "Que Plan?", label: "Que Plan?", icon: <CalendarIcon /> },
+    { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
     { key: "profile", label: "Perfil", icon: <UserIcon /> },
   ];
 
@@ -2255,4 +2255,3 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
   },
 };
-
