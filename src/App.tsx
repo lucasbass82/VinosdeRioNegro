@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 type Winery = {
   id: string;
@@ -687,6 +689,37 @@ function MapScreen({
 }) {
   const [filter, setFilter] = useState("Todos");
 
+  const defaultCenter: [number, number] = [-40.8135, -62.9967];
+  const mapCenter: [number, number] = userLocation
+    ? [userLocation.lat, userLocation.lng]
+    : defaultCenter;
+
+  const wineryPoints = [
+    {
+      id: "w1",
+      name: "Bodega Miras",
+      position: [-40.76, -63.02] as [number, number],
+    },
+    {
+      id: "w2",
+      name: "Bodega Aniello",
+      position: [-40.79, -63.01] as [number, number],
+    },
+  ];
+
+  const shopPoints = [
+    {
+      id: "s1",
+      name: "Vinoteca del Río",
+      position: [-40.81, -62.99] as [number, number],
+    },
+    {
+      id: "s2",
+      name: "Patagonia Wine House",
+      position: [-40.805, -63.005] as [number, number],
+    },
+  ];
+
   return (
     <div style={styles.stack16}>
       <div style={styles.rowBetweenCenter}>
@@ -707,76 +740,78 @@ function MapScreen({
         </button>
       </div>
 
-      <div style={styles.mapShellPro}>
-        <div style={styles.mapTerrainOverlay} />
-        <div style={styles.mapRoad} />
-        <div style={{ ...styles.mapLabel, top: "16%", left: "14%" }}>
-          Viedma
-        </div>
-        <div style={{ ...styles.mapLabel, top: "32%", left: "48%" }}>
-          Centro
-        </div>
-        <div style={{ ...styles.mapLabel, top: "58%", left: "25%" }}>
-          Costanera
-        </div>
-
-        <MapPin
-          top="20%"
-          left="20%"
-          color="#6f1d2b"
-          onClick={() => onOpenWinery("w1")}
-        >
-          <WineIcon white />
-        </MapPin>
-        <MapPin
-          top="34%"
-          left="58%"
-          color="#c78935"
-          onClick={() => onOpenShop("s1")}
-        >
-          <StoreIcon white />
-        </MapPin>
-        <MapPin top="47%" left="32%" color="#4f46e5">
-          <CalendarIcon white />
-        </MapPin>
-        <MapPin
-          top="62%"
-          left="63%"
-          color="#c78935"
-          onClick={() => onOpenShop("s2")}
-        >
-          <StoreIcon white />
-        </MapPin>
-
-        {userLocation && (
-          <button
-            style={{
-              ...styles.mapPin,
-              top: "54%",
-              left: "50%",
-              background: "#2563eb",
-              transform: "translate(-50%, -50%)",
-              border: "2px solid rgba(255,255,255,0.7)",
-            }}
-            title={`Tu ubicación: ${userLocation.lat.toFixed(
-              4
-            )}, ${userLocation.lng.toFixed(4)}`}
+      <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
+        <div style={{ height: 420, width: "100%" }}>
+          <MapContainer
+            center={mapCenter}
+            zoom={13}
+            style={{ height: "100%", width: "100%" }}
           >
-            <UserIcon />
-          </button>
-        )}
+            <TileLayer
+              attribution="&copy; OpenStreetMap contributors"
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-        <div style={styles.mapFloatingActions}>
-          <button style={styles.mapRoundButton}>
-            <MapIcon />
-          </button>
-          <button style={styles.mapRoundButton} onClick={requestUserLocation}>
-            <SearchIcon />
-          </button>
+            {userLocation && (
+              <Marker position={[userLocation.lat, userLocation.lng]}>
+                <Popup>Estás acá 📍</Popup>
+              </Marker>
+            )}
+
+            {(filter === "Todos" || filter === "Bodegas") &&
+              wineryPoints.map((item) => (
+                <Marker key={item.id} position={item.position}>
+                  <Popup>
+                    <div>
+                      <strong>{item.name}</strong>
+                      <br />
+                      <button
+                        onClick={() => onOpenWinery(item.id)}
+                        style={{
+                          marginTop: 8,
+                          borderRadius: 10,
+                          padding: "8px 10px",
+                          border: "1px solid #ddd",
+                          background: "#fff",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Ver detalle
+                      </button>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+
+            {(filter === "Todos" || filter === "Vinotecas") &&
+              shopPoints.map((item) => (
+                <Marker key={item.id} position={item.position}>
+                  <Popup>
+                    <div>
+                      <strong>{item.name}</strong>
+                      <br />
+                      <button
+                        onClick={() => onOpenShop(item.id)}
+                        style={{
+                          marginTop: 8,
+                          borderRadius: 10,
+                          padding: "8px 10px",
+                          border: "1px solid #ddd",
+                          background: "#fff",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Ver detalle
+                      </button>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+          </MapContainer>
         </div>
 
-        <div style={styles.mapOverlayCard}>
-          <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
+        <div style={{ padding: 16 }}>
+          <div style={styles.mapOverlayEyebrow}>Mapa real</div>
 
           {locationStatus === "granted" && userLocation ? (
             <>
@@ -786,7 +821,7 @@ function MapScreen({
                 {userLocation.lng.toFixed(4)}
               </div>
               <div style={styles.placeText}>
-                Ya podemos usar tu ubicación para mostrarte lugares cerca tuyo.
+                Ya podemos mostrarte lugares cerca tuyo sobre un mapa real.
               </div>
             </>
           ) : locationStatus === "error" ? (
@@ -803,26 +838,6 @@ function MapScreen({
               </div>
             </>
           )}
-
-          <div style={styles.grid3}>
-            <Metric label="Estado" value={locationStatus} />
-            <Metric label="Bodegas" value="3" />
-            <Metric label="Vinotecas" value="2" />
-          </div>
-
-          <div style={styles.rowGap10}>
-            <button
-              style={{ ...styles.primaryButton, flex: 1 }}
-              onClick={requestUserLocation}
-            >
-              {locationStatus === "granted"
-                ? "Actualizar ubicación"
-                : "Usar ubicación"}
-            </button>
-            <button style={{ ...styles.secondaryButton, flex: 1 }}>
-              Cómo llegar
-            </button>
-          </div>
         </div>
       </div>
     </div>
