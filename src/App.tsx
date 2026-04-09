@@ -245,12 +245,48 @@ export default function App() {
     { id: "v1", name: "Miras Pinot Noir", kind: "wine" },
   ]);
   const [search, setSearch] = useState("Pinot Noir");
-
+  const [userLocation, setUserLocation] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+  const [locationStatus, setLocationStatus] = useState<
+    "idle" | "loading" | "granted" | "error"
+  >("idle");
+  const [locationError, setLocationError] = useState("");
   const openWine = (id: string) => setDetail({ kind: "wine", id });
   const openWinery = (id: string) => setDetail({ kind: "winery", id });
   const openShop = (id: string) => setDetail({ kind: "shop", id });
   const closeDetail = () => setDetail(null);
 
+  const requestUserLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationStatus("error");
+      setLocationError("Tu navegador no soporta geolocalización.");
+      return;
+    }
+
+    setLocationStatus("loading");
+    setLocationError("");
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setLocationStatus("granted");
+      },
+      () => {
+        setLocationStatus("error");
+        setLocationError("No pudimos obtener tu ubicación.");
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000,
+      }
+    );
+  };
   const isFavorite = (id: string) => favorites.some((f) => f.id === id);
 
   const toggleFavorite = (item: FavoriteItem) => {
@@ -342,9 +378,17 @@ export default function App() {
               setSearch={setSearch}
               favorites={favorites}
               toggleFavorite={toggleFavorite}
+              requestUserLocation={requestUserLocation}
             />
           ) : tab === "map" ? (
-            <MapScreen onOpenWinery={openWinery} onOpenShop={openShop} />
+            <MapScreen
+              onOpenWinery={openWinery}
+              onOpenShop={openShop}
+              userLocation={userLocation}
+              locationStatus={locationStatus}
+              locationError={locationError}
+              requestUserLocation={requestUserLocation}
+            />
           ) : tab === "search" ? (
             <SearchScreen
               search={search}
@@ -398,6 +442,7 @@ function HomeScreen({
   setSearch,
   favorites,
   toggleFavorite,
+  requestUserLocation,
 }: {
   onOpenWinery: (id: string) => void;
   onOpenShop: (id: string) => void;
@@ -405,9 +450,11 @@ function HomeScreen({
   setSearch: (value: string) => void;
   favorites: FavoriteItem[];
   toggleFavorite: (item: FavoriteItem) => void;
+  requestUserLocation: () => void;
 }) {
   const handleChipClick = (chip: string) => {
     if (chip === "Cerca mío") {
+      requestUserLocation();
       onSetTab("map");
       return;
     }
@@ -437,7 +484,7 @@ function HomeScreen({
       onSetTab("search");
       return;
     }
-    if (title === "Agenda?") {
+    if (title === "Eventos hoy") {
       onSetTab("agenda");
       return;
     }
@@ -513,8 +560,8 @@ function HomeScreen({
         {[
           ["Bodegas cerca", <WineIcon />],
           ["Buscar un vino", <SearchIcon />],
-          ["Agenda", <SparklesIcon />],
-          ["Tus Beneficios", <TicketIcon />],
+          ["Eventos hoy", <SparklesIcon />],
+          ["Club del vino", <TicketIcon />],
         ].map(([title, icon]) => (
           <div
             key={String(title)}
@@ -626,24 +673,38 @@ function HomeScreen({
 function MapScreen({
   onOpenWinery,
   onOpenShop,
+  userLocation,
+  locationStatus,
+  locationError,
+  requestUserLocation,
 }: {
   onOpenWinery: (id: string) => void;
   onOpenShop: (id: string) => void;
+  userLocation: { lat: number; lng: number } | null;
+  locationStatus: "idle" | "loading" | "granted" | "error";
+  locationError: string;
+  requestUserLocation: () => void;
 }) {
   const [filter, setFilter] = useState("Todos");
 
   return (
     <div style={styles.stack16}>
-      <div style={styles.chipsRow}>
-        {["Todos", "Bodegas", "Vinotecas", "Eventos", "Hoy"].map((item) => (
-          <button
-            key={item}
-            style={filter === item ? styles.chipActive : styles.chip}
-            onClick={() => setFilter(item)}
-          >
-            {item}
-          </button>
-        ))}
+      <div style={styles.rowBetweenCenter}>
+        <div style={styles.chipsRow}>
+          {["Todos", "Bodegas", "Vinotecas", "Eventos", "Hoy"].map((item) => (
+            <button
+              key={item}
+              style={filter === item ? styles.chipActive : styles.chip}
+              onClick={() => setFilter(item)}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+        <button style={styles.secondaryButton} onClick={requestUserLocation}>
+          {locationStatus === "loading" ? "Buscando..." : "Mi ubicación"}
+        </button>
       </div>
 
       <div style={styles.mapShellPro}>
@@ -687,39 +748,76 @@ function MapScreen({
           <StoreIcon white />
         </MapPin>
 
+        {userLocation && (
+          <button
+            style={{
+              ...styles.mapPin,
+              top: "54%",
+              left: "50%",
+              background: "#2563eb",
+              transform: "translate(-50%, -50%)",
+              border: "2px solid rgba(255,255,255,0.7)",
+            }}
+            title={`Tu ubicación: ${userLocation.lat.toFixed(
+              4
+            )}, ${userLocation.lng.toFixed(4)}`}
+          >
+            <UserIcon />
+          </button>
+        )}
+
         <div style={styles.mapFloatingActions}>
           <button style={styles.mapRoundButton}>
             <MapIcon />
           </button>
-          <button style={styles.mapRoundButton}>
+          <button style={styles.mapRoundButton} onClick={requestUserLocation}>
             <SearchIcon />
           </button>
         </div>
 
         <div style={styles.mapOverlayCard}>
-          <div style={styles.mapOverlayEyebrow}>Seleccionado</div>
-          <div style={styles.rowBetweenTop}>
-            <div>
-              <div style={styles.mapOverlayTitle}>Vinoteca del Río</div>
-              <div style={styles.itemSub}>Viedma · abierta ahora</div>
-            </div>
-            <Badge kind="benefit">10% OFF socios</Badge>
-          </div>
+          <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
 
-          <div style={styles.placeText}>
-            Hoy hay cata guiada y además encontrás vinos patagónicos con
-            beneficio activo.
-          </div>
+          {locationStatus === "granted" && userLocation ? (
+            <>
+              <div style={styles.mapOverlayTitle}>Ubicación detectada</div>
+              <div style={styles.itemSub}>
+                Lat {userLocation.lat.toFixed(4)} · Lng{" "}
+                {userLocation.lng.toFixed(4)}
+              </div>
+              <div style={styles.placeText}>
+                Ya podemos usar tu ubicación para mostrarte lugares cerca tuyo.
+              </div>
+            </>
+          ) : locationStatus === "error" ? (
+            <>
+              <div style={styles.mapOverlayTitle}>No pudimos ubicarte</div>
+              <div style={styles.placeText}>{locationError}</div>
+            </>
+          ) : (
+            <>
+              <div style={styles.mapOverlayTitle}>Activá tu ubicación</div>
+              <div style={styles.placeText}>
+                Permití acceso a tu ubicación para ver bodegas y vinotecas cerca
+                tuyo.
+              </div>
+            </>
+          )}
 
           <div style={styles.grid3}>
-            <Metric label="Evento" value="20:30" />
-            <Metric label="Beneficio" value="10% OFF" />
-            <Metric label="Stock" value="12 vinos" />
+            <Metric label="Estado" value={locationStatus} />
+            <Metric label="Bodegas" value="3" />
+            <Metric label="Vinotecas" value="2" />
           </div>
 
           <div style={styles.rowGap10}>
-            <button style={{ ...styles.primaryButton, flex: 1 }}>
-              Ver detalle
+            <button
+              style={{ ...styles.primaryButton, flex: 1 }}
+              onClick={requestUserLocation}
+            >
+              {locationStatus === "granted"
+                ? "Actualizar ubicación"
+                : "Usar ubicación"}
             </button>
             <button style={{ ...styles.secondaryButton, flex: 1 }}>
               Cómo llegar
