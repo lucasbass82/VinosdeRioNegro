@@ -743,7 +743,7 @@ function MapScreen({
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
         <div style={{ height: 420, width: "100%" }}>
           <MapContainer
-            center={mapCenter}
+            center={mapCenter as any}
             zoom={13}
             style={{ height: "100%", width: "100%" }}
           >
