@@ -745,6 +745,8 @@ function MapScreen({
     Abrir mapa real
   </button>
 </div>     
+  ) ;
+}
 function SearchScreen({
   search,
   setSearch,
