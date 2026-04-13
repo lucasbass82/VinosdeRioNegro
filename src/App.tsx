@@ -1,6 +1,4 @@
 import React, { useMemo, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 
 type Winery = {
   id: string;
@@ -742,108 +740,11 @@ function MapScreen({
 
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
         <div style={{ height: 420, width: "100%" }}>
-          <MapContainer
-            center={mapCenter as any}
-            zoom={13}
-            style={{ height: "100%", width: "100%" }}
-          >
-            <TileLayer
-              attribution="&copy; OpenStreetMap contributors"
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            {userLocation && (
-              <Marker position={[userLocation.lat, userLocation.lng]}>
-                <Popup>Estás acá 📍</Popup>
-              </Marker>
-            )}
-
-            {(filter === "Todos" || filter === "Bodegas") &&
-              wineryPoints.map((item) => (
-                <Marker key={item.id} position={item.position}>
-                  <Popup>
-                    <div>
-                      <strong>{item.name}</strong>
-                      <br />
-                      <button
-                        onClick={() => onOpenWinery(item.id)}
-                        style={{
-                          marginTop: 8,
-                          borderRadius: 10,
-                          padding: "8px 10px",
-                          border: "1px solid #ddd",
-                          background: "#fff",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Ver detalle
-                      </button>
-                    </div>
-                  </Popup>
-                </Marker>
-              ))}
-
-            {(filter === "Todos" || filter === "Vinotecas") &&
-              shopPoints.map((item) => (
-                <Marker key={item.id} position={item.position}>
-                  <Popup>
-                    <div>
-                      <strong>{item.name}</strong>
-                      <br />
-                      <button
-                        onClick={() => onOpenShop(item.id)}
-                        style={{
-                          marginTop: 8,
-                          borderRadius: 10,
-                          padding: "8px 10px",
-                          border: "1px solid #ddd",
-                          background: "#fff",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Ver detalle
-                      </button>
-                    </div>
-                  </Popup>
-                </Marker>
-              ))}
-          </MapContainer>
-        </div>
-
-        <div style={{ padding: 16 }}>
-          <div style={styles.mapOverlayEyebrow}>Mapa real</div>
-
-          {locationStatus === "granted" && userLocation ? (
-            <>
-              <div style={styles.mapOverlayTitle}>Ubicación detectada</div>
-              <div style={styles.itemSub}>
-                Lat {userLocation.lat.toFixed(4)} · Lng{" "}
-                {userLocation.lng.toFixed(4)}
-              </div>
-              <div style={styles.placeText}>
-                Ya podemos mostrarte lugares cerca tuyo sobre un mapa real.
-              </div>
-            </>
-          ) : locationStatus === "error" ? (
-            <>
-              <div style={styles.mapOverlayTitle}>No pudimos ubicarte</div>
-              <div style={styles.placeText}>{locationError}</div>
-            </>
-          ) : (
-            <>
-              <div style={styles.mapOverlayTitle}>Activá tu ubicación</div>
-              <div style={styles.placeText}>
-                Permití acceso a tu ubicación para ver bodegas y vinotecas cerca
-                tuyo.
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
+    <div style={{ height: 420, width: "100%", background: "#eee", display: "flex", alignItems: "center", justifyContent: "center" }}>
+  <button onClick={() => window.open("https://www.google.com/maps", "_blank")}>
+    Abrir mapa real
+  </button>
+</div>     
 function SearchScreen({
   search,
   setSearch,
