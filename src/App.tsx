@@ -420,8 +420,8 @@ function Header({
 }) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>DESCUBRI UNA EXPERIENCIA UNICA </div>
-      <div style={styles.headerTitle}>Vinos de Río Negro</div>
+      <div style={styles.headerEyebrow}>Explorá Bodegas, Descubí vinos y encontralos en tu ciudad</div>
+      <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
 
       {currentTab !== "search" && (
         <button style={styles.searchBar} onClick={onSearchClick}>
@@ -1635,19 +1635,19 @@ const styles: Record<string, React.CSSProperties> = {
     borderBottom: "1px solid #ede4da",
   },
   headerEyebrow: {
-    fontSize: 11,
-    letterSpacing: 2.2,
-    textTransform: "uppercase",
-    color: "#8b7b70",
-    marginBottom: 6,
-    fontWeight: 700,
+     fontSize: 12,
+  letterSpacing: 1.5,
+  textTransform: "uppercase",
+  color: "#8b7b70",
+  marginBottom: 6,
+  fontWeight: 600,
   },
   headerTitle: {
-    fontSize: 26,
-    fontWeight: 800,
-    color: "#211914",
-    letterSpacing: -0.7,
-    marginBottom: 12,
+   fontSize: 32,
+  fontWeight: 900,
+  color: "#211914",
+  letterSpacing: -1,
+  marginBottom: 12,
   },
   searchBar: {
     width: "100%",
