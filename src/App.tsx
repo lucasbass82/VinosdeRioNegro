@@ -671,7 +671,7 @@ function HomeScreen({
 }
 
 function MapScreen({
-  onOpenWinery,
+   onOpenWinery,
   onOpenShop,
   userLocation,
   locationStatus,
@@ -687,36 +687,15 @@ function MapScreen({
 }) {
   const [filter, setFilter] = useState("Todos");
 
-  const defaultCenter: [number, number] = [-40.8135, -62.9967];
-  const mapCenter: [number, number] = userLocation
-    ? [userLocation.lat, userLocation.lng]
-    : defaultCenter;
+  const openGoogleMaps = () => {
+    if (userLocation) {
+      const url = `https://www.google.com/maps?q=${userLocation.lat},${userLocation.lng}`;
+      window.open(url, "_blank");
+      return;
+    }
 
-  const wineryPoints = [
-    {
-      id: "w1",
-      name: "Bodega Miras",
-      position: [-40.76, -63.02] as [number, number],
-    },
-    {
-      id: "w2",
-      name: "Bodega Aniello",
-      position: [-40.79, -63.01] as [number, number],
-    },
-  ];
-
-  const shopPoints = [
-    {
-      id: "s1",
-      name: "Vinoteca del Río",
-      position: [-40.81, -62.99] as [number, number],
-    },
-    {
-      id: "s2",
-      name: "Patagonia Wine House",
-      position: [-40.805, -63.005] as [number, number],
-    },
-  ];
+    requestUserLocation();
+  };
 
   return (
     <div style={styles.stack16}>
@@ -739,212 +718,58 @@ function MapScreen({
       </div>
 
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
-        <div style={{ height: 420, width: "100%" }}>
-    <div style={{ height: 420, width: "100%", background: "#eee", display: "flex", alignItems: "center", justifyContent: "center" }}>
-  <button onClick={() => window.open("https://www.google.com/maps", "_blank")}>
-    Abrir mapa real
-  </button>
-</div>     
-  ) ;
-}
-function SearchScreen({
-  search,
-  setSearch,
-  results,
-  onOpenWine,
-  onOpenWinery,
-  onOpenShop,
-}: {
-  search: string;
-  setSearch: (value: string) => void;
-  results: {
-    wines: Wine[];
-    wineries: Winery[];
-    shops: Shop[];
-  };
-  onOpenWine: (id: string) => void;
-  onOpenWinery: (id: string) => void;
-  onOpenShop: (id: string) => void;
-}) {
-  return (
-    <div style={styles.stack16}>
-      <div style={styles.card}>
-        <div style={styles.searchInputWrap}>
-          <SearchIcon />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={styles.input}
-            placeholder="Buscá un vino, bodega o vinoteca"
-          />
-        </div>
-        <div style={{ ...styles.chipsRow, marginTop: 12 }}>
-          {["Noemía", "Saurus", "Malbec", "vino para regalo"].map((chip) => (
-            <button
-              key={chip}
-              style={styles.chip}
-              onClick={() => setSearch(chip)}
-            >
-              {chip}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <Block title="Vinos">
-        {results.wines.length ? (
-          results.wines.map((wine) => (
-            <ResultRow
-              key={wine.id}
-              title={wine.name}
-              subtitle={`${wine.winery} · ${wine.varietal}`}
-              tag={wine.tag}
-              onClick={() => onOpenWine(wine.id)}
-            />
-          ))
-        ) : (
-          <Empty text="No encontramos vinos con esa búsqueda." />
-        )}
-      </Block>
-
-      <Block title="Bodegas">
-        {results.wineries.length ? (
-          results.wineries.map((item) => (
-            <ResultRow
-              key={item.id}
-              title={item.name}
-              subtitle={item.city}
-              onClick={() => onOpenWinery(item.id)}
-            />
-          ))
-        ) : (
-          <Empty text="No encontramos bodegas." />
-        )}
-      </Block>
-
-      <Block title="Dónde comprar">
-        {results.shops.length ? (
-          results.shops.map((item) => (
-            <ResultRow
-              key={item.id}
-              title={item.name}
-              subtitle={`${item.city} · ${item.benefit}`}
-              onClick={() => onOpenShop(item.id)}
-            />
-          ))
-        ) : (
-          <Empty text="No encontramos vinotecas." />
-        )}
-      </Block>
-    </div>
-  );
-}
-
-function AgendaScreen() {
-  const [filter, setFilter] = useState("Hoy");
-
-  return (
-    <div style={styles.stack16}>
-      <div style={styles.rowGap10Wrap}>
-        {["Ahora", "Hoy", "Este finde"].map((x) => (
+        <div
+          style={{
+            height: 420,
+            width: "100%",
+            background: "#eee",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <button
-            key={x}
-            style={filter === x ? styles.chipActive : styles.chip}
-            onClick={() => setFilter(x)}
+            style={styles.primaryButton}
+            onClick={openGoogleMaps}
           >
-            {x}
+            Abrir mapa real
           </button>
-        ))}
-      </div>
+        </div>
 
-      {EVENTS.map((e) => (
-        <div key={e.id} style={styles.card}>
-          <div style={styles.rowBetweenTop}>
-            <div>
-              <div style={styles.itemTitle}>{e.title}</div>
+        <div style={{ padding: 16 }}>
+          <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
+
+          {locationStatus === "granted" && userLocation ? (
+            <>
+              <div style={styles.mapOverlayTitle}>Ubicación detectada</div>
               <div style={styles.itemSub}>
-                {e.place} · {e.city}
+                Lat {userLocation.lat.toFixed(4)} · Lng {userLocation.lng.toFixed(4)}
               </div>
-            </div>
-            <Badge kind="neutral">{filter}</Badge>
-          </div>
-
-          <div style={styles.grid2}>
-            <InfoBox label="Horario" value={e.when} />
-            <InfoBox label="Beneficio" value={e.benefit} />
-          </div>
-
-          <button style={styles.primaryButton}>Ver actividad</button>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
-  return (
-    <div style={styles.stack16}>
-      <div style={styles.profileHeroCard}>
-        <div>
-          <div style={styles.membershipEyebrow}>Membresía activa</div>
-          <div style={styles.membershipTitle}>Tus Beneficios</div>
-          <div style={styles.membershipText}>
-            Descuentos en vinotecas, actividades y bodegas adheridas.
-          </div>
-        </div>
-
-        <div style={styles.savingsBigCard}>
-          <div style={styles.savingsBigLabel}>Ahorraste este mes</div>
-          <div style={styles.savingsBigValue}>$12.400</div>
-          <div style={styles.savingsBigSub}>6 beneficios usados</div>
-        </div>
-      </div>
-
-      <div style={styles.notificationPreviewCard}>
-        <div style={styles.itemTitle}>Notificación ejemplo</div>
-        <div style={styles.placeText}>
-          “El vino que buscabas ya está disponible 🍷 Miras Pinot Noir volvió a
-          Vinoteca del Río. Aprovechá: 10% OFF por ser miembro.”
-        </div>
-      </div>
-
-      {favorites.length > 0 && (
-        <Block title="Tus guardados">
-          {favorites.map((f) => (
-            <div key={f.id} style={styles.card}>
-              <div style={styles.itemTitle}>{f.name}</div>
-              <div style={styles.itemSub}>
-                {f.city ? `${f.city} · ` : ""}
-                {f.kind === "wine"
-                  ? "Vino"
-                  : f.kind === "winery"
-                  ? "Bodega"
-                  : "Vinoteca"}
+              <div style={styles.placeText}>
+                Ya podemos usar tu ubicación y abrir Google Maps con tu posición real.
               </div>
-            </div>
-          ))}
-        </Block>
-      )}
-
-      <Block title="Beneficios disponibles">
-        {[
-          "10% OFF en Vinoteca del Río",
-          "15% OFF en degustaciones en Bodega Miras",
-          "Copa de bienvenida en eventos adheridos",
-        ].map((b) => (
-          <div key={b} style={styles.card}>
-            <div style={styles.rowGap12}>
-              <div style={styles.iconBadgeWine}>
-                <CheckIcon white />
+            </>
+          ) : locationStatus === "error" ? (
+            <>
+              <div style={styles.mapOverlayTitle}>No pudimos ubicarte</div>
+              <div style={styles.placeText}>{locationError}</div>
+            </>
+          ) : (
+            <>
+              <div style={styles.mapOverlayTitle}>Activá tu ubicación</div>
+              <div style={styles.placeText}>
+                Permití acceso a tu ubicación para abrir un mapa real cerca tuyo.
               </div>
-              <div style={styles.itemTitle}>{b}</div>
-            </div>
+            </>
+          )}
+
+          <div style={styles.grid3}>
+            <Metric label="Estado" value={locationStatus} />
+            <Metric label="Bodegas" value="3" />
+            <Metric label="Vinotecas" value="2" />
           </div>
-        ))}
-      </Block>
-    </div>
-  );
-}
+
+          <div style={styles.rowGap10
 
 function WineDetail({
   wine,
