@@ -420,7 +420,7 @@ function Header({
 }) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>Explorá Bodegas, Descubí vinos y encontralos en tu ciudad</div>
+      <div style={styles.headerEyebrow}>La Ruta del Vino en tu Celular</div>
       <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
 
       {currentTab !== "search" && (
