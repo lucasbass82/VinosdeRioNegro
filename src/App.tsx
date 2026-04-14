@@ -420,8 +420,8 @@ function Header({
 }) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>VINOS DE RIO NEGROOO</div>
-      <div style={styles.headerTitle}>Descubrí Viedma</div>
+      <div style={styles.headerEyebrow}>VIVI LA EXPERIENCIA DE NUESTROS</div>
+      <div style={styles.headerTitle}>Vinos de Río Negro</div>
 
       {currentTab !== "search" && (
         <button style={styles.searchBar} onClick={onSearchClick}>
