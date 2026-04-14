@@ -420,7 +420,7 @@ function Header({
 }) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>VIVI LA EXPERIENCIA DE NUESTROS</div>
+      <div style={styles.headerEyebrow}>VIVI UNA EXPERIENCIA ÚNICA </div>
       <div style={styles.headerTitle}>Vinos de Río Negro</div>
 
       {currentTab !== "search" && (
