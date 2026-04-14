@@ -771,7 +771,205 @@ function MapScreen({
     </div>
   );
 }
+function SearchScreen({
+  search,
+  setSearch,
+  results,
+  onOpenWine,
+  onOpenWinery,
+  onOpenShop,
+}: {
+  search: string;
+  setSearch: (value: string) => void;
+  results: {
+    wines: Wine[];
+    wineries: Winery[];
+    shops: Shop[];
+  };
+  onOpenWine: (id: string) => void;
+  onOpenWinery: (id: string) => void;
+  onOpenShop: (id: string) => void;
+}) {
+  return (
+    <div style={styles.stack16}>
+      <div style={styles.card}>
+        <div style={styles.searchInputWrap}>
+          <SearchIcon />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={styles.input}
+            placeholder="Buscá un vino, bodega o vinoteca"
+          />
+        </div>
 
+        <div style={{ ...styles.chipsRow, marginTop: 12 }}>
+          {["Noemía", "Saurus", "Malbec", "vino para regalo"].map((chip) => (
+            <button
+              key={chip}
+              style={styles.chip}
+              onClick={() => setSearch(chip)}
+            >
+              {chip}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <Block title="Vinos">
+        {results.wines.length ? (
+          results.wines.map((wine) => (
+            <ResultRow
+              key={wine.id}
+              title={wine.name}
+              subtitle={`${wine.winery} · ${wine.varietal}`}
+              tag={wine.tag}
+              onClick={() => onOpenWine(wine.id)}
+            />
+          ))
+        ) : (
+          <Empty text="No encontramos vinos con esa búsqueda." />
+        )}
+      </Block>
+
+      <Block title="Bodegas">
+        {results.wineries.length ? (
+          results.wineries.map((item) => (
+            <ResultRow
+              key={item.id}
+              title={item.name}
+              subtitle={item.city}
+              onClick={() => onOpenWinery(item.id)}
+            />
+          ))
+        ) : (
+          <Empty text="No encontramos bodegas." />
+        )}
+      </Block>
+
+      <Block title="Dónde comprar">
+        {results.shops.length ? (
+          results.shops.map((item) => (
+            <ResultRow
+              key={item.id}
+              title={item.name}
+              subtitle={`${item.city} · ${item.benefit}`}
+              onClick={() => onOpenShop(item.id)}
+            />
+          ))
+        ) : (
+          <Empty text="No encontramos vinotecas." />
+        )}
+      </Block>
+    </div>
+  );
+}
+
+function AgendaScreen() {
+  const [filter, setFilter] = useState("Hoy");
+
+  return (
+    <div style={styles.stack16}>
+      <div style={styles.rowGap10Wrap}>
+        {["Ahora", "Hoy", "Este finde"].map((x) => (
+          <button
+            key={x}
+            style={filter === x ? styles.chipActive : styles.chip}
+            onClick={() => setFilter(x)}
+          >
+            {x}
+          </button>
+        ))}
+      </div>
+
+      {EVENTS.map((e) => (
+        <div key={e.id} style={styles.card}>
+          <div style={styles.rowBetweenTop}>
+            <div>
+              <div style={styles.itemTitle}>{e.title}</div>
+              <div style={styles.itemSub}>
+                {e.place} · {e.city}
+              </div>
+            </div>
+            <Badge kind="neutral">{filter}</Badge>
+          </div>
+
+          <div style={styles.grid2}>
+            <InfoBox label="Horario" value={e.when} />
+            <InfoBox label="Beneficio" value={e.benefit} />
+          </div>
+
+          <button style={styles.primaryButton}>Ver actividad</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
+  return (
+    <div style={styles.stack16}>
+      <div style={styles.profileHeroCard}>
+        <div>
+          <div style={styles.membershipEyebrow}>Membresía activa</div>
+          <div style={styles.membershipTitle}>Tus Beneficios</div>
+          <div style={styles.membershipText}>
+            Descuentos en vinotecas, actividades y bodegas adheridas.
+          </div>
+        </div>
+
+        <div style={styles.savingsBigCard}>
+          <div style={styles.savingsBigLabel}>Ahorraste este mes</div>
+          <div style={styles.savingsBigValue}>$12.400</div>
+          <div style={styles.savingsBigSub}>6 beneficios usados</div>
+        </div>
+      </div>
+
+      <div style={styles.notificationPreviewCard}>
+        <div style={styles.itemTitle}>Notificación ejemplo</div>
+        <div style={styles.placeText}>
+          “El vino que buscabas ya está disponible. Miras Pinot Noir volvió a
+          Vinoteca del Río. Aprovechá: 10% OFF por ser miembro.”
+        </div>
+      </div>
+
+      {favorites.length > 0 && (
+        <Block title="Tus guardados">
+          {favorites.map((f) => (
+            <div key={f.id} style={styles.card}>
+              <div style={styles.itemTitle}>{f.name}</div>
+              <div style={styles.itemSub}>
+                {f.city ? `${f.city} · ` : ""}
+                {f.kind === "wine"
+                  ? "Vino"
+                  : f.kind === "winery"
+                  ? "Bodega"
+                  : "Vinoteca"}
+              </div>
+            </div>
+          ))}
+        </Block>
+      )}
+
+      <Block title="Beneficios disponibles">
+        {[
+          "10% OFF en Vinoteca del Río",
+          "15% OFF en degustaciones en Bodega Miras",
+          "Copa de bienvenida en eventos adheridos",
+        ].map((b) => (
+          <div key={b} style={styles.card}>
+            <div style={styles.rowGap12}>
+              <div style={styles.iconBadgeWine}>
+                <CheckIcon white />
+              </div>
+              <div style={styles.itemTitle}>{b}</div>
+            </div>
+          </div>
+        ))}
+      </Block>
+    </div>
+  );
+}
 function WineDetail({
   wine,
   onBack,
