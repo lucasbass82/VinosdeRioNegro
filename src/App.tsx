@@ -1637,7 +1637,7 @@ const styles: Record<string, React.CSSProperties> = {
   headerEyebrow: {
      fontSize: 12,
   letterSpacing: 1.5,
-  textTransform: "uppercase",
+  textTransform: "none",
   color: "#8b7b70",
   marginBottom: 6,
   fontWeight: 600,
