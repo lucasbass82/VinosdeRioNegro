@@ -535,7 +535,7 @@ function HomeScreen({
       >
         <div style={styles.heroBadge}>Experiencias cerca tuyo</div>
         <div style={styles.heroTitle}>
-          Vino, lugares y actividades en un solo lugar
+          Vinos y actividades en un solo lugar
         </div>
         <div style={styles.heroText}>
           Descubrí bodegas, vinotecas, vinos y beneficios en Viedma.
