@@ -420,14 +420,14 @@ function Header({
 }) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>VIVI UNA EXPERIENCIA ÚNICA </div>
+      <div style={styles.headerEyebrow}>DESCUBRI UNA EXPERIENCIA UNICA </div>
       <div style={styles.headerTitle}>Vinos de Río Negro</div>
 
       {currentTab !== "search" && (
         <button style={styles.searchBar} onClick={onSearchClick}>
           <SearchIcon />
           <span style={{ color: "#8a7d71", fontSize: 14 }}>
-            Buscá vinos, bodegas o vinotecas
+            Busca tu vino, bodega o experiencia
           </span>
         </button>
       )}
@@ -533,12 +533,12 @@ function HomeScreen({
           backgroundPosition: "center",
         }}
       >
-        <div style={styles.heroBadge}>Experiencias cerca tuyo</div>
+        <div style={styles.heroBadge}>La Ruta del Vino en tu celular</div>
         <div style={styles.heroTitle}>
           Vinos y actividades en un solo lugar
         </div>
         <div style={styles.heroText}>
-          Descubrí bodegas, vinotecas, vinos y beneficios en Viedma.
+          Descubrí bodegas, vinotecas, vinos  y beneficios cerca tuyo.
         </div>
         <div style={styles.rowGap10Wrap}>
           <button
