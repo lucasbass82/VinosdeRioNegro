@@ -671,7 +671,7 @@ function HomeScreen({
 }
 
 function MapScreen({
-   onOpenWinery,
+  onOpenWinery,
   onOpenShop,
   userLocation,
   locationStatus,
@@ -693,7 +693,6 @@ function MapScreen({
       window.open(url, "_blank");
       return;
     }
-
     requestUserLocation();
   };
 
@@ -728,10 +727,7 @@ function MapScreen({
             justifyContent: "center",
           }}
         >
-          <button
-            style={styles.primaryButton}
-            onClick={openGoogleMaps}
-          >
+          <button style={styles.primaryButton} onClick={openGoogleMaps}>
             Abrir mapa real
           </button>
         </div>
@@ -743,10 +739,12 @@ function MapScreen({
             <>
               <div style={styles.mapOverlayTitle}>Ubicación detectada</div>
               <div style={styles.itemSub}>
-                Lat {userLocation.lat.toFixed(4)} · Lng {userLocation.lng.toFixed(4)}
+                Lat {userLocation.lat.toFixed(4)} · Lng{" "}
+                {userLocation.lng.toFixed(4)}
               </div>
               <div style={styles.placeText}>
-                Ya podemos usar tu ubicación y abrir Google Maps con tu posición real.
+                Ya podemos usar tu ubicación y abrir Google Maps con tu posición
+                real.
               </div>
             </>
           ) : locationStatus === "error" ? (
@@ -768,8 +766,11 @@ function MapScreen({
             <Metric label="Bodegas" value="3" />
             <Metric label="Vinotecas" value="2" />
           </div>
-
-          <div style={styles.rowGap10
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function WineDetail({
   wine,
