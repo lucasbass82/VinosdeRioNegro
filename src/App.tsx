@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 type Winery = {
   id: string;
   name: string;
-  city: string;
+  city: string; 
   description: string;
   hours: string;
   openNow: boolean;
