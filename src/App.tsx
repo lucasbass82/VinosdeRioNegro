@@ -443,11 +443,26 @@ function Header({
 }
 function SplashScreen() {
   return (
-    <div style={styles.splashPage}>
-      <div style={styles.splashLogoWrap}>
-  <img src="/logo-app.png" style={styles.splashLogo} />
+     <>
+      <style>{`
+        @keyframes splashLogoIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
+
+      <div style={styles.splashPage}>
+        <div style={styles.splashLogoWrap}>
+          <img src="/logo-app.png" style={styles.splashLogo} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 function HomeScreen({
@@ -2341,17 +2356,3 @@ splashTitle: {
   fontWeight: 800,
 },
 };
-const styleSheet = document.styleSheets[0];
-
-styleSheet.insertRule(`
-@keyframes splashLogoIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-`, styleSheet.cssRules.length);
