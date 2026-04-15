@@ -445,8 +445,7 @@ function SplashScreen() {
   return (
     <div style={styles.splashPage}>
       <div style={styles.splashLogoWrap}>
-        <div style={styles.splashEyebrow}>Ruta del Vino RN</div>
-        <div style={styles.splashTitle}>Viví el Vino Rionegrino</div>
+  <img src="/logo-app.png" style={styles.splashLogo} />
       </div>
     </div>
   );
@@ -1624,7 +1623,7 @@ function StarIcon({ filled = false }: { filled?: boolean }) {
 const styles: Record<string, React.CSSProperties> = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(180deg,#f5f0ea,#efe7de)",
+    background: "#f5e9ea",
     display: "flex",
     justifyContent: "center",
     padding: 18,
@@ -2321,7 +2320,13 @@ splashPage: {
 splashLogoWrap: {
   textAlign: "center",
 },
-
+  
+splashLogo: {
+  width: 140,
+  height: "auto",
+  animation: "splashLogoIn 1s ease-out",
+},
+  
 splashEyebrow: {
   color: "rgba(255,255,255,0.7)",
   letterSpacing: 2,
@@ -2336,3 +2341,17 @@ splashTitle: {
   fontWeight: 800,
 },
 };
+const styleSheet = document.styleSheets[0];
+
+styleSheet.insertRule(`
+@keyframes splashLogoIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+`, styleSheet.cssRules.length);
