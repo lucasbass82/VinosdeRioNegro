@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 type Winery = {
   id: string;
@@ -253,6 +253,11 @@ export default function App() {
     "idle" | "loading" | "granted" | "error"
   >("idle");
   const [locationError, setLocationError] = useState("");
+  const [showSplash, setShowSplash] = useState(true);
+useEffect(() => {
+  const timer = setTimeout(() => setShowSplash(false), 1400);
+  return () => clearTimeout(timer);
+}, []);
   const openWine = (id: string) => setDetail({ kind: "wine", id });
   const openWinery = (id: string) => setDetail({ kind: "winery", id });
   const openShop = (id: string) => setDetail({ kind: "shop", id });
@@ -327,7 +332,9 @@ export default function App() {
     );
     return { wines, wineries, shops };
   }, [search]);
-
+if (showSplash) {
+  return <SplashScreen />;
+}
   return (
     <div style={styles.page}>
       <div style={styles.phone}>
@@ -434,7 +441,16 @@ function Header({
     </div>
   );
 }
-
+function SplashScreen() {
+  return (
+    <div style={styles.splashPage}>
+      <div style={styles.splashLogoWrap}>
+        <div style={styles.splashEyebrow}>Ruta del Vino RN</div>
+        <div style={styles.splashTitle}>Viví el Vino Rionegrino</div>
+      </div>
+    </div>
+  );
+}
 function HomeScreen({
   onOpenWinery,
   onOpenShop,
@@ -2292,4 +2308,31 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 11,
     fontWeight: 700,
   },
+  
+splashPage: {
+  height: "100vh",
+  width: "100%",
+  background: "#6f1d2b",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+},
+
+splashLogoWrap: {
+  textAlign: "center",
+},
+
+splashEyebrow: {
+  color: "rgba(255,255,255,0.7)",
+  letterSpacing: 2,
+  fontSize: 12,
+  marginBottom: 10,
+  textTransform: "uppercase",
+},
+
+splashTitle: {
+  color: "#fff",
+  fontSize: 32,
+  fontWeight: 800,
+},
 };
