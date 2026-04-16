@@ -427,7 +427,6 @@ function Header({
 }) {
   return (
     <div style={styles.header}>
-      <div style={styles.headerEyebrow}>La Ruta del Vino en tu Celular</div>
       <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
 
       {currentTab !== "search" && (
@@ -1673,11 +1672,12 @@ const styles: Record<string, React.CSSProperties> = {
   fontWeight: 600,
   },
   headerTitle: {
-   fontSize: 32,
-  fontWeight: 900,
+   fontSize: 30,
+  fontWeight: 800,
   color: "#211914",
   letterSpacing: -1,
-  marginBottom: 12,
+  marginTop: 8,
+  marginBottom: 14,
   },
   searchBar: {
     width: "100%",
