@@ -255,7 +255,7 @@ export default function App() {
   const [locationError, setLocationError] = useState("");
   const [showSplash, setShowSplash] = useState(true);
 useEffect(() => {
-  const timer = setTimeout(() => setShowSplash(false), 1400);
+  const timer = setTimeout(() => setShowSplash(false), 2200);
   return () => clearTimeout(timer);
 }, []);
   const openWine = (id: string) => setDetail({ kind: "wine", id });
@@ -2326,7 +2326,7 @@ const styles: Record<string, React.CSSProperties> = {
 splashPage: {
   height: "100vh",
   width: "100%",
-  background: "#6f1d2b",
+  background: "#f3dfe3",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -2339,7 +2339,7 @@ splashLogoWrap: {
 splashLogo: {
   width: 140,
   height: "auto",
-  animation: "splashLogoIn 1s ease-out",
+  animation: "splashLogoIn 1.4s ease-out",
 },
   
 splashEyebrow: {
