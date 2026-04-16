@@ -336,6 +336,9 @@ if (showSplash) {
   return <SplashScreen />;
 }
   return (
+    <>
+    <style>{globalStyles}</style>
+
     <div style={styles.page}>
       <div style={styles.phone}>
         <Header currentTab={tab} onSearchClick={() => setTab("search")} />
@@ -696,8 +699,9 @@ function HomeScreen({
         ))}
       </div>
     </div>
-  );
-}
+  </>
+ );
+
 
 function MapScreen({
   onOpenWinery,
@@ -1672,23 +1676,32 @@ const styles: Record<string, React.CSSProperties> = {
   fontWeight: 600,
   },
   headerTitle: {
- fontSize: 30,
+ fontFamily: "Manrope, Inter, sans-serif",
+  fontSize: 34,
   fontWeight: 800,
   color: "#1c1714",
-  letterSpacing: -1,
-  lineHeight: 1.1,
+  letterSpacing: -1.4,
+  lineHeight: 1.04,
+  marginTop: 2,
+  marginBottom: 16,
+  opacity: 0,
+  animation: "fadeUp 0.6s ease-out forwards",
   },
   searchBar: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    padding: 14,
-    borderRadius: 18,
-    border: "1px solid #e9dfd5",
-    background: "#fff",
-    boxShadow: "0 4px 18px rgba(17,12,9,0.04)",
-    cursor: "pointer",
+     width: "100%",
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+  padding: 16,
+  borderRadius: 20,
+  border: "1px solid #ead9d7",
+  background: "rgba(255,255,255,0.92)",
+  boxShadow: "0 6px 22px rgba(40,24,22,0.05)",
+  cursor: "pointer",
+
+  opacity: 0,
+  animation: "fadeUp 0.6s ease-out forwards",
+  animationDelay: "0.2s",
   },
   content: {
     flex: 1,
@@ -2355,3 +2368,15 @@ splashTitle: {
   fontWeight: 800,
 },
 };
+const globalStyles = `
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+`;
