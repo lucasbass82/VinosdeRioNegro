@@ -1672,12 +1672,11 @@ const styles: Record<string, React.CSSProperties> = {
   fontWeight: 600,
   },
   headerTitle: {
-   fontSize: 30,
+ fontSize: 30,
   fontWeight: 800,
-  color: "#211914",
+  color: "#1c1714",
   letterSpacing: -1,
-  marginTop: 8,
-  marginBottom: 14,
+  lineHeight: 1.1,
   },
   searchBar: {
     width: "100%",
