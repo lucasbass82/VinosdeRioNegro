@@ -335,8 +335,9 @@ useEffect(() => {
 if (showSplash) {
   return <SplashScreen />;
 }
-  return (
-    <>
+
+return (
+  <>
     <style>{globalStyles}</style>
 
     <div style={styles.page}>
@@ -418,8 +419,8 @@ if (showSplash) {
         {!detail && <BottomNav tab={tab} setTab={setTab} />}
       </div>
     </div>
-  );
-}
+  </>
+);
 
 function Header({
   currentTab,
@@ -699,9 +700,8 @@ function HomeScreen({
         ))}
       </div>
     </div>
-  </>
  );
-
+}
 
 function MapScreen({
   onOpenWinery,
