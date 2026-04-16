@@ -1677,10 +1677,10 @@ const styles: Record<string, React.CSSProperties> = {
   },
   headerTitle: {
  fontFamily: "Manrope, Inter, sans-serif",
-  fontSize: 34,
+  fontSize: 31,
   fontWeight: 800,
   color: "#1c1714",
-  letterSpacing: -1.4,
+  letterSpacing: -1.2,
   lineHeight: 1.04,
   marginTop: 2,
   marginBottom: 16,
@@ -1698,11 +1698,10 @@ const styles: Record<string, React.CSSProperties> = {
   background: "rgba(255,255,255,0.92)",
   boxShadow: "0 6px 22px rgba(40,24,22,0.05)",
   cursor: "pointer",
-
   opacity: 0,
   animation: "fadeUp 0.6s ease-out forwards",
   animationDelay: "0.2s",
-  },
+},
   content: {
     flex: 1,
     overflowY: "auto",
