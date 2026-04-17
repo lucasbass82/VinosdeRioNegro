@@ -464,165 +464,87 @@ function HomeScreen({
   };
 
   return (
-    <div style={styles.stack16}>
-      <div style={styles.chipsRow}>
-        {quickChips.map((chip) => (
-          <button
-            key={chip}
-            style={styles.chip}
-            onClick={() => handleChipClick(chip)}
-          >
-            {chip}
-          </button>
-        ))}
-      </div>
+<div style={styles.page}>
+    <div style={styles.phone}>
+      <Header currentTab={tab} onSearchClick={() => setTab("search")} />
 
-      <div
-        style={{
-          ...styles.heroCard,
-          backgroundImage:
-            "linear-gradient(135deg, rgba(33,25,20,0.82), rgba(111,29,43,0.86)), url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div style={styles.heroBadge}>La Ruta del Vino en tu celular</div>
-        <div style={styles.heroTitle}>
-          Vinos y actividades en un solo lugar
-        </div>
-        <div style={styles.heroText}>
-          Descubrí bodegas, vinotecas, vinos  y beneficios cerca tuyo.
-        </div>
-        <div style={styles.rowGap10Wrap}>
-          <button
-            style={styles.primaryLightButton}
-            onClick={() => onSetTab("map")}
-          >
-            Explorar mapa
-          </button>
-          <button
-            style={styles.secondaryDarkButton}
-            onClick={() => onSetTab("agenda")}
-          >
-            Qué pasa hoy
-          </button>
-        </div>
-      </div>
-
-      <div style={styles.grid2}>
-        {[
-          ["Bodegas cerca", <WineIcon />],
-          ["Buscar un vino", <SearchIcon />],
-          ["Eventos hoy", <SparklesIcon />],
-          ["Club del vino", <TicketIcon />],
-        ].map(([title, icon]) => (
-          <div
-            key={String(title)}
-            style={{ ...styles.card, cursor: "pointer" }}
-            onClick={() => handleQuickAction(String(title))}
-          >
-            <div style={styles.iconBadge}>{icon}</div>
-            <div style={{ ...styles.itemTitle, marginTop: 12 }}>{title}</div>
-            <div style={styles.itemSub}>Acceso rápido</div>
-          </div>
-        ))}
-      </div>
-
-      <SectionTitle
-        title="Actividades destacadas"
-        action="Ver todo"
-        onAction={() => onSetTab("agenda")}
-      />
-
-      <div style={styles.stack12}>
-        {EVENTS.slice(0, 2).map((e) => (
-          <div
-            key={e.id}
-            style={{ ...styles.card, cursor: "pointer" }}
-            onClick={() => handleEventClick(e.place)}
-          >
-            <div style={styles.rowGap12}>
-              <div style={styles.iconBadgeWine}>
-                <SparklesIcon white />
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={styles.itemTitle}>{e.title}</div>
-                <div style={styles.itemSub}>
-                  {e.place} · {e.city}
-                </div>
-                <div style={styles.itemMeta}>{e.when}</div>
-                <div style={{ marginTop: 10 }}>
-                  <Badge kind="benefit">{e.benefit}</Badge>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <SectionTitle
-        title="Bodegas recomendadas"
-        action="Ver mapa"
-        onAction={() => onSetTab("map")}
-      />
-
-      <div style={styles.stack12}>
-        {WINERIES.map((w) => (
-          <div
-            key={w.id}
-            style={styles.imageCard}
-            onClick={() => onOpenWinery(w.id)}
-          >
-            <div
-              style={{
-                ...styles.imageCardTop,
-                backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.62)), url('${w.image}')`,
+      <div style={styles.content}>
+        {detail && detailView ? (
+          detail.kind === "wine" ? (
+            <WineDetail
+              wine={detailView as Wine}
+              onBack={closeDetail}
+              onOpenShop={openShop}
+              toggleFavorite={toggleFavorite}
+              isFavorite={isFavorite}
+            />
+          ) : detail.kind === "winery" ? (
+            <WineryDetail
+              winery={detailView as Winery}
+              onBack={closeDetail}
+              onOpenWine={(name) => {
+                const found = WINES.find((w) => w.name === name);
+                if (found) openWine(found.id);
               }}
-            >
-              <div style={styles.rowBetweenTop}>
-                <div style={styles.rowGap8}>
-                  <Badge kind={w.openNow ? "open" : "closed"}>
-                    {w.openNow ? "Abierta" : "Cerrada"}
-                  </Badge>
-                </div>
-                <button
-                  style={styles.iconGlassButton}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFavorite({
-                      id: w.id,
-                      name: w.name,
-                      city: w.city,
-                      kind: "winery",
-                    });
-                  }}
-                >
-                  <HeartIcon active={favorites.some((f) => f.id === w.id)} />
-                </button>
-              </div>
-
-              <div>
-                <div style={styles.imageCardTitle}>{w.name}</div>
-                <div style={styles.imageCardSub}>
-                  {w.city} · {w.distance} · ★ {w.rating}
-                </div>
-              </div>
-            </div>
-
-            <div style={styles.imageCardBody}>
-              <div style={styles.placeText}>{w.description}</div>
-              <div style={styles.rowBetweenCenter}>
-                <div style={styles.featureText}>{w.activity}</div>
-                <ChevronRightIcon />
-              </div>
-            </div>
-          </div>
-        ))}
+              onOpenShop={(name) => {
+                const found = SHOPS.find((s) => s.name === name);
+                if (found) openShop(found.id);
+              }}
+              toggleFavorite={toggleFavorite}
+              isFavorite={isFavorite}
+            />
+          ) : (
+            <ShopDetail
+              shop={detailView as Shop}
+              onBack={closeDetail}
+              onOpenWine={(name) => {
+                const found = WINES.find((w) => w.name === name);
+                if (found) openWine(found.id);
+              }}
+              toggleFavorite={toggleFavorite}
+              isFavorite={isFavorite}
+            />
+          )
+        ) : tab === "home" ? (
+          <HomeScreen
+            onOpenWinery={openWinery}
+            onOpenShop={openShop}
+            onSetTab={setTab}
+            setSearch={setSearch}
+            favorites={favorites}
+            toggleFavorite={toggleFavorite}
+            requestUserLocation={requestUserLocation}
+          />
+        ) : tab === "map" ? (
+          <MapScreen
+            onOpenWinery={openWinery}
+            onOpenShop={openShop}
+            userLocation={userLocation}
+            locationStatus={locationStatus}
+            locationError={locationError}
+            requestUserLocation={requestUserLocation}
+          />
+        ) : tab === "search" ? (
+          <SearchScreen
+            search={search}
+            setSearch={setSearch}
+            results={results}
+            onOpenWine={openWine}
+            onOpenWinery={openWinery}
+            onOpenShop={openShop}
+          />
+        ) : tab === "agenda" ? (
+          <AgendaScreen />
+        ) : (
+          <ProfileScreen favorites={favorites} />
+        )}
       </div>
-    </div>
- );
-}
 
+      {!detail && <BottomNav tab={tab} setTab={setTab} />}
+    </div>
+  </div>
+);
+}
 function MapScreen({
   onOpenWinery,
   onOpenShop,
