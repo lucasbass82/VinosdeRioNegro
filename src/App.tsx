@@ -335,92 +335,12 @@ useEffect(() => {
 if (showSplash) {
   return <SplashScreen />;
 }
-
 return (
-  <>
-    <style>{globalStyles}</style>
-
     <div style={styles.page}>
-      <div style={styles.phone}>
-        <Header currentTab={tab} onSearchClick={() => setTab("search")} />
-
-        <div style={styles.content}>
-          {detail && detailView ? (
-            detail.kind === "wine" ? (
-              <WineDetail
-                wine={detailView as Wine}
-                onBack={closeDetail}
-                onOpenShop={openShop}
-                toggleFavorite={toggleFavorite}
-                isFavorite={isFavorite}
-              />
-            ) : detail.kind === "winery" ? (
-              <WineryDetail
-                winery={detailView as Winery}
-                onBack={closeDetail}
-                onOpenWine={(name) => {
-                  const found = WINES.find((w) => w.name === name);
-                  if (found) openWine(found.id);
-                }}
-                onOpenShop={(name) => {
-                  const found = SHOPS.find((s) => s.name === name);
-                  if (found) openShop(found.id);
-                }}
-                toggleFavorite={toggleFavorite}
-                isFavorite={isFavorite}
-              />
-            ) : (
-              <ShopDetail
-                shop={detailView as Shop}
-                onBack={closeDetail}
-                onOpenWine={(name) => {
-                  const found = WINES.find((w) => w.name === name);
-                  if (found) openWine(found.id);
-                }}
-                toggleFavorite={toggleFavorite}
-                isFavorite={isFavorite}
-              />
-            )
-          ) : tab === "home" ? (
-            <HomeScreen
-              onOpenWinery={openWinery}
-              onOpenShop={openShop}
-              onSetTab={setTab}
-              setSearch={setSearch}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-              requestUserLocation={requestUserLocation}
-            />
-          ) : tab === "map" ? (
-            <MapScreen
-              onOpenWinery={openWinery}
-              onOpenShop={openShop}
-              userLocation={userLocation}
-              locationStatus={locationStatus}
-              locationError={locationError}
-              requestUserLocation={requestUserLocation}
-            />
-          ) : tab === "search" ? (
-            <SearchScreen
-              search={search}
-              setSearch={setSearch}
-              results={results}
-              onOpenWine={openWine}
-              onOpenWinery={openWinery}
-              onOpenShop={openShop}
-            />
-          ) : tab === "agenda" ? (
-            <AgendaScreen />
-          ) : (
-            <ProfileScreen favorites={favorites} />
-          )}
-        </div>
-
-        {!detail && <BottomNav tab={tab} setTab={setTab} />}
-      </div>
+      ...
     </div>
-  </>
-);
+  );
+}
 
 function Header({
   currentTab,
@@ -1684,11 +1604,9 @@ const styles: Record<string, React.CSSProperties> = {
   lineHeight: 1.04,
   marginTop: 2,
   marginBottom: 16,
-  opacity: 0,
-  animation: "fadeUp 0.6s ease-out forwards",
   },
   searchBar: {
-     width: "100%",
+      width: "100%",
   display: "flex",
   alignItems: "center",
   gap: 10,
@@ -1698,9 +1616,6 @@ const styles: Record<string, React.CSSProperties> = {
   background: "rgba(255,255,255,0.92)",
   boxShadow: "0 6px 22px rgba(40,24,22,0.05)",
   cursor: "pointer",
-  opacity: 0,
-  animation: "fadeUp 0.6s ease-out forwards",
-  animationDelay: "0.2s",
 },
   content: {
     flex: 1,
@@ -2367,15 +2282,4 @@ splashTitle: {
   fontWeight: 800,
 },
 };
-const globalStyles = `
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-`;
+
