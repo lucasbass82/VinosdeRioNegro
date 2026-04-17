@@ -335,35 +335,88 @@ useEffect(() => {
 if (showSplash) {
   return <SplashScreen />;
 }
+
 return (
-    <div style={styles.page}>
-      ...
-    </div>
-  );
-}
+  <div style={styles.page}>
+    <div style={styles.phone}>
+      <Header currentTab={tab} onSearchClick={() => setTab("search")} />
 
-function Header({
-  currentTab,
-  onSearchClick,
-}: {
-  currentTab: TabKey;
-  onSearchClick: () => void;
-}) {
-  return (
-    <div style={styles.header}>
-      <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
+      <div style={styles.content}>
+        {detail && detailView ? (
+          detail.kind === "wine" ? (
+            <WineDetail
+              wine={detailView as Wine}
+              onBack={closeDetail}
+              onOpenShop={openShop}
+              toggleFavorite={toggleFavorite}
+              isFavorite={isFavorite}
+            />
+          ) : detail.kind === "winery" ? (
+            <WineryDetail
+              winery={detailView as Winery}
+              onBack={closeDetail}
+              onOpenWine={(name) => {
+                const found = WINES.find((w) => w.name === name);
+                if (found) openWine(found.id);
+              }}
+              onOpenShop={(name) => {
+                const found = SHOPS.find((s) => s.name === name);
+                if (found) openShop(found.id);
+              }}
+              toggleFavorite={toggleFavorite}
+              isFavorite={isFavorite}
+            />
+          ) : (
+            <ShopDetail
+              shop={detailView as Shop}
+              onBack={closeDetail}
+              onOpenWine={(name) => {
+                const found = WINES.find((w) => w.name === name);
+                if (found) openWine(found.id);
+              }}
+              toggleFavorite={toggleFavorite}
+              isFavorite={isFavorite}
+            />
+          )
+        ) : tab === "home" ? (
+          <HomeScreen
+            onOpenWinery={openWinery}
+            onOpenShop={openShop}
+            onSetTab={setTab}
+            setSearch={setSearch}
+            favorites={favorites}
+            toggleFavorite={toggleFavorite}
+            requestUserLocation={requestUserLocation}
+          />
+        ) : tab === "map" ? (
+          <MapScreen
+            onOpenWinery={openWinery}
+            onOpenShop={openShop}
+            userLocation={userLocation}
+            locationStatus={locationStatus}
+            locationError={locationError}
+            requestUserLocation={requestUserLocation}
+          />
+        ) : tab === "search" ? (
+          <SearchScreen
+            search={search}
+            setSearch={setSearch}
+            results={results}
+            onOpenWine={openWine}
+            onOpenWinery={openWinery}
+            onOpenShop={openShop}
+          />
+        ) : tab === "agenda" ? (
+          <AgendaScreen />
+        ) : (
+          <ProfileScreen favorites={favorites} />
+        )}
+      </div>
 
-      {currentTab !== "search" && (
-        <button style={styles.searchBar} onClick={onSearchClick}>
-          <SearchIcon />
-          <span style={{ color: "#8a7d71", fontSize: 14 }}>
-            Busca tu vino, bodega o experiencia
-          </span>
-        </button>
-      )}
+      {!detail && <BottomNav tab={tab} setTab={setTab} />}
     </div>
-  );
-}
+  </div>
+);
 function SplashScreen() {
   return (
      <>
