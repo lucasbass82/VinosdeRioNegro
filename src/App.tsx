@@ -39,6 +39,7 @@ type Wine = {
   note: string;
   availableAt: string[];
   tag: string;
+  image: string;
 };
 
 type EventItem = {
@@ -162,6 +163,8 @@ const WINES: Wine[] = [
     note: "Fruta roja, acidez equilibrada y perfil patagónico ideal para regalar.",
     availableAt: ["Vinoteca del Río", "Patagonia Wine House"],
     tag: "Ideal para regalar",
+    image:
+      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=80",
   },
   {
     id: "v2",
@@ -172,6 +175,8 @@ const WINES: Wine[] = [
     note: "Muy versátil, ideal para una cena y uno de los más buscados.",
     availableAt: ["Vinoteca del Río"],
     tag: "Muy buscado",
+    image:
+      "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1200&q=80",
   },
   {
     id: "v3",
@@ -182,6 +187,8 @@ const WINES: Wine[] = [
     note: "Etiqueta clásica, con personalidad y excelente estructura.",
     availableAt: ["Vinoteca del Río"],
     tag: "Reserva",
+    image:
+      "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=1200&q=80",
   },
   {
     id: "v4",
@@ -192,6 +199,8 @@ const WINES: Wine[] = [
     note: "Entrada ideal al mundo del vino rionegrino, fresco y accesible.",
     availableAt: ["Patagonia Wine House"],
     tag: "Recomendado",
+    image:
+      "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=1200&q=80",
   },
   {
     id: "v5",
@@ -202,6 +211,8 @@ const WINES: Wine[] = [
     note: "Una etiqueta muy patagónica, perfecta para quienes buscan algo delicado.",
     availableAt: ["Patagonia Wine House"],
     tag: "Descubrimiento",
+    image:
+      "https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
@@ -230,13 +241,6 @@ const EVENTS: EventItem[] = [
     city: "Mainqué",
     benefit: "10% OFF socios",
   },
-];
-
-const quickChips = [
-  "Cerca mío",
-  "Pinot Noir",
-  "Abiertas ahora",
-  "Con descuento",
 ];
 
 export default function App() {
@@ -386,6 +390,7 @@ export default function App() {
             )
           ) : tab === "home" ? (
             <HomeScreen
+              onOpenWine={openWine}
               onOpenWinery={openWinery}
               onOpenShop={openShop}
               onSetTab={setTab}
@@ -474,6 +479,7 @@ function SplashScreen() {
 }
 
 function HomeScreen({
+  onOpenWine,
   onOpenWinery,
   onOpenShop,
   onSetTab,
@@ -482,6 +488,7 @@ function HomeScreen({
   toggleFavorite,
   requestUserLocation,
 }: {
+  onOpenWine: (id: string) => void;
   onOpenWinery: (id: string) => void;
   onOpenShop: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
@@ -490,28 +497,6 @@ function HomeScreen({
   toggleFavorite: (item: FavoriteItem) => void;
   requestUserLocation: () => void;
 }) {
-  const handleChipClick = (chip: string) => {
-    if (chip === "Cerca mío") {
-      requestUserLocation();
-      onSetTab("map");
-      return;
-    }
-    if (chip === "Pinot Noir") {
-      setSearch("Pinot Noir");
-      onSetTab("search");
-      return;
-    }
-    if (chip === "Abiertas ahora") {
-      setSearch("abiertas");
-      onSetTab("search");
-      return;
-    }
-    if (chip === "Con descuento") {
-      setSearch("descuento");
-      onSetTab("search");
-    }
-  };
-
   const handleQuickAction = (title: string) => {
     if (title === "Bodegas cerca") {
       onSetTab("map");
@@ -548,18 +533,6 @@ function HomeScreen({
 
   return (
     <div style={styles.stack16}>
-      <div style={styles.chipsRow}>
-        {quickChips.map((chip) => (
-          <button
-            key={chip}
-            style={styles.chip}
-            onClick={() => handleChipClick(chip)}
-          >
-            {chip}
-          </button>
-        ))}
-      </div>
-
       <div
         style={{
           ...styles.heroCard,
@@ -575,7 +548,10 @@ function HomeScreen({
         <div style={styles.rowGap10Wrap}>
           <button
             style={styles.primaryLightButton}
-            onClick={() => onSetTab("map")}
+            onClick={() => {
+              requestUserLocation();
+              onSetTab("map");
+            }}
           >
             Explorar mapa
           </button>
@@ -692,6 +668,63 @@ function HomeScreen({
               <div style={styles.placeText}>{w.description}</div>
               <div style={styles.rowBetweenCenter}>
                 <div style={styles.featureText}>{w.activity}</div>
+                <ChevronRightIcon />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <SectionTitle
+        title="Vinos recomendados"
+        action="Ver mapa"
+        onAction={() => onSetTab("map")}
+      />
+
+      <div style={styles.stack12}>
+        {WINES.map((wine) => (
+          <div
+            key={wine.id}
+            style={styles.imageCard}
+            onClick={() => onOpenWine(wine.id)}
+          >
+            <div
+              style={{
+                ...styles.imageCardTop,
+                backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.62)), url('${wine.image}')`,
+              }}
+            >
+              <div style={styles.rowBetweenTop}>
+                <div style={styles.rowGap8}>
+                  <Badge kind="benefit">{wine.tag}</Badge>
+                </div>
+                <button
+                  style={styles.iconGlassButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite({
+                      id: wine.id,
+                      name: wine.name,
+                      kind: "wine",
+                    });
+                  }}
+                >
+                  <HeartIcon active={favorites.some((f) => f.id === wine.id)} />
+                </button>
+              </div>
+
+              <div>
+                <div style={styles.imageCardTitle}>{wine.name}</div>
+                <div style={styles.imageCardSub}>
+                  {wine.winery} · {wine.varietal}
+                </div>
+              </div>
+            </div>
+
+            <div style={styles.imageCardBody}>
+              <div style={styles.placeText}>{wine.note}</div>
+              <div style={styles.rowBetweenCenter}>
+                <div style={styles.featureText}>{wine.style}</div>
                 <ChevronRightIcon />
               </div>
             </div>
