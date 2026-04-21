@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 type Winery = {
   id: string;
   name: string;
-  city: string; 
+  city: string;
   description: string;
   hours: string;
   openNow: boolean;
@@ -58,6 +58,7 @@ type FavoriteItem = {
 };
 
 type TabKey = "home" | "map" | "search" | "agenda" | "profile";
+
 type DetailState =
   | { kind: "wine"; id: string }
   | { kind: "winery"; id: string }
@@ -254,10 +255,12 @@ export default function App() {
   >("idle");
   const [locationError, setLocationError] = useState("");
   const [showSplash, setShowSplash] = useState(true);
-useEffect(() => {
-  const timer = setTimeout(() => setShowSplash(false), 2200);
-  return () => clearTimeout(timer);
-}, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 2200);
+    return () => clearTimeout(timer);
+  }, []);
+
   const openWine = (id: string) => setDetail({ kind: "wine", id });
   const openWinery = (id: string) => setDetail({ kind: "winery", id });
   const openShop = (id: string) => setDetail({ kind: "shop", id });
@@ -292,6 +295,7 @@ useEffect(() => {
       }
     );
   };
+
   const isFavorite = (id: string) => favorites.some((f) => f.id === id);
 
   const toggleFavorite = (item: FavoriteItem) => {
@@ -305,8 +309,9 @@ useEffect(() => {
   const detailView = useMemo(() => {
     if (!detail) return null;
     if (detail.kind === "wine") return WINES.find((x) => x.id === detail.id);
-    if (detail.kind === "winery")
+    if (detail.kind === "winery") {
       return WINERIES.find((x) => x.id === detail.id);
+    }
     return SHOPS.find((x) => x.id === detail.id);
   }, [detail]);
 
@@ -332,94 +337,120 @@ useEffect(() => {
     );
     return { wines, wineries, shops };
   }, [search]);
-if (showSplash) {
-  return <SplashScreen />;
+
+  if (showSplash) {
+    return <SplashScreen />;
+  }
+
+  return (
+    <div style={styles.page}>
+      <div style={styles.phone}>
+        <Header currentTab={tab} onSearchClick={() => setTab("search")} />
+
+        <div style={styles.content}>
+          {detail && detailView ? (
+            detail.kind === "wine" ? (
+              <WineDetail
+                wine={detailView as Wine}
+                onBack={closeDetail}
+                onOpenShop={openShop}
+                toggleFavorite={toggleFavorite}
+                isFavorite={isFavorite}
+              />
+            ) : detail.kind === "winery" ? (
+              <WineryDetail
+                winery={detailView as Winery}
+                onBack={closeDetail}
+                onOpenWine={(name) => {
+                  const found = WINES.find((w) => w.name === name);
+                  if (found) openWine(found.id);
+                }}
+                onOpenShop={(name) => {
+                  const found = SHOPS.find((s) => s.name === name);
+                  if (found) openShop(found.id);
+                }}
+                toggleFavorite={toggleFavorite}
+                isFavorite={isFavorite}
+              />
+            ) : (
+              <ShopDetail
+                shop={detailView as Shop}
+                onBack={closeDetail}
+                onOpenWine={(name) => {
+                  const found = WINES.find((w) => w.name === name);
+                  if (found) openWine(found.id);
+                }}
+                toggleFavorite={toggleFavorite}
+                isFavorite={isFavorite}
+              />
+            )
+          ) : tab === "home" ? (
+            <HomeScreen
+              onOpenWinery={openWinery}
+              onOpenShop={openShop}
+              onSetTab={setTab}
+              setSearch={setSearch}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+              requestUserLocation={requestUserLocation}
+            />
+          ) : tab === "map" ? (
+            <MapScreen
+              onOpenWinery={openWinery}
+              onOpenShop={openShop}
+              userLocation={userLocation}
+              locationStatus={locationStatus}
+              locationError={locationError}
+              requestUserLocation={requestUserLocation}
+            />
+          ) : tab === "search" ? (
+            <SearchScreen
+              search={search}
+              setSearch={setSearch}
+              results={results}
+              onOpenWine={openWine}
+              onOpenWinery={openWinery}
+              onOpenShop={openShop}
+            />
+          ) : tab === "agenda" ? (
+            <AgendaScreen />
+          ) : (
+            <ProfileScreen favorites={favorites} />
+          )}
+        </div>
+
+        {!detail && <BottomNav tab={tab} setTab={setTab} />}
+      </div>
+    </div>
+  );
 }
 
-return (
-  <div style={styles.page}>
-    <div style={styles.phone}>
-      <Header currentTab={tab} onSearchClick={() => setTab("search")} />
+function Header({
+  currentTab,
+  onSearchClick,
+}: {
+  currentTab: TabKey;
+  onSearchClick: () => void;
+}) {
+  return (
+    <div style={styles.header}>
+      <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
 
-      <div style={styles.content}>
-        {detail && detailView ? (
-          detail.kind === "wine" ? (
-            <WineDetail
-              wine={detailView as Wine}
-              onBack={closeDetail}
-              onOpenShop={openShop}
-              toggleFavorite={toggleFavorite}
-              isFavorite={isFavorite}
-            />
-          ) : detail.kind === "winery" ? (
-            <WineryDetail
-              winery={detailView as Winery}
-              onBack={closeDetail}
-              onOpenWine={(name) => {
-                const found = WINES.find((w) => w.name === name);
-                if (found) openWine(found.id);
-              }}
-              onOpenShop={(name) => {
-                const found = SHOPS.find((s) => s.name === name);
-                if (found) openShop(found.id);
-              }}
-              toggleFavorite={toggleFavorite}
-              isFavorite={isFavorite}
-            />
-          ) : (
-            <ShopDetail
-              shop={detailView as Shop}
-              onBack={closeDetail}
-              onOpenWine={(name) => {
-                const found = WINES.find((w) => w.name === name);
-                if (found) openWine(found.id);
-              }}
-              toggleFavorite={toggleFavorite}
-              isFavorite={isFavorite}
-            />
-          )
-        ) : tab === "home" ? (
-          <HomeScreen
-            onOpenWinery={openWinery}
-            onOpenShop={openShop}
-            onSetTab={setTab}
-            setSearch={setSearch}
-            favorites={favorites}
-            toggleFavorite={toggleFavorite}
-            requestUserLocation={requestUserLocation}
-          />
-        ) : tab === "map" ? (
-          <MapScreen
-            onOpenWinery={openWinery}
-            onOpenShop={openShop}
-            userLocation={userLocation}
-            locationStatus={locationStatus}
-            locationError={locationError}
-            requestUserLocation={requestUserLocation}
-          />
-        ) : tab === "search" ? (
-          <SearchScreen
-            search={search}
-            setSearch={setSearch}
-            results={results}
-            onOpenWine={openWine}
-            onOpenWinery={openWinery}
-            onOpenShop={openShop}
-          />
-        ) : tab === "agenda" ? (
-          <AgendaScreen />
-        ) : (
-          <ProfileScreen favorites={favorites} />
-        )}
-      </div>
-
-      {!detail && <BottomNav tab={tab} setTab={setTab} />}
+      {currentTab !== "search" && (
+        <button style={styles.searchBar} onClick={onSearchClick}>
+          <SearchIcon />
+          <span style={{ color: "#8a7d71", fontSize: 14 }}>
+            Busca tu vino, bodega o experiencia
+          </span>
+        </button>
+      )}
     </div>
-  </div>
-);
+  );
+}
+
 function SplashScreen() {
   return (
-     <>
+    <>
       <style>{`
         @keyframes splashLogoIn {
           0% {
@@ -435,12 +466,13 @@ function SplashScreen() {
 
       <div style={styles.splashPage}>
         <div style={styles.splashLogoWrap}>
-          <img src="/logo-app.png" style={styles.splashLogo} />
+          <img src="/logo-app.png" style={styles.splashLogo} alt="Logo app" />
         </div>
       </div>
     </>
   );
 }
+
 function HomeScreen({
   onOpenWinery,
   onOpenShop,
@@ -477,7 +509,6 @@ function HomeScreen({
     if (chip === "Con descuento") {
       setSearch("descuento");
       onSetTab("search");
-      return;
     }
   };
 
@@ -496,7 +527,6 @@ function HomeScreen({
     }
     if (title === "Club del vino") {
       onSetTab("profile");
-      return;
     }
   };
 
@@ -517,87 +547,161 @@ function HomeScreen({
   };
 
   return (
-<div style={styles.page}>
-    <div style={styles.phone}>
-      <Header currentTab={tab} onSearchClick={() => setTab("search")} />
-
-      <div style={styles.content}>
-        {detail && detailView ? (
-          detail.kind === "wine" ? (
-            <WineDetail
-              wine={detailView as Wine}
-              onBack={closeDetail}
-              onOpenShop={openShop}
-              toggleFavorite={toggleFavorite}
-              isFavorite={isFavorite}
-            />
-          ) : detail.kind === "winery" ? (
-            <WineryDetail
-              winery={detailView as Winery}
-              onBack={closeDetail}
-              onOpenWine={(name) => {
-                const found = WINES.find((w) => w.name === name);
-                if (found) openWine(found.id);
-              }}
-              onOpenShop={(name) => {
-                const found = SHOPS.find((s) => s.name === name);
-                if (found) openShop(found.id);
-              }}
-              toggleFavorite={toggleFavorite}
-              isFavorite={isFavorite}
-            />
-          ) : (
-            <ShopDetail
-              shop={detailView as Shop}
-              onBack={closeDetail}
-              onOpenWine={(name) => {
-                const found = WINES.find((w) => w.name === name);
-                if (found) openWine(found.id);
-              }}
-              toggleFavorite={toggleFavorite}
-              isFavorite={isFavorite}
-            />
-          )
-        ) : tab === "home" ? (
-          <HomeScreen
-            onOpenWinery={openWinery}
-            onOpenShop={openShop}
-            onSetTab={setTab}
-            setSearch={setSearch}
-            favorites={favorites}
-            toggleFavorite={toggleFavorite}
-            requestUserLocation={requestUserLocation}
-          />
-        ) : tab === "map" ? (
-          <MapScreen
-            onOpenWinery={openWinery}
-            onOpenShop={openShop}
-            userLocation={userLocation}
-            locationStatus={locationStatus}
-            locationError={locationError}
-            requestUserLocation={requestUserLocation}
-          />
-        ) : tab === "search" ? (
-          <SearchScreen
-            search={search}
-            setSearch={setSearch}
-            results={results}
-            onOpenWine={openWine}
-            onOpenWinery={openWinery}
-            onOpenShop={openShop}
-          />
-        ) : tab === "agenda" ? (
-          <AgendaScreen />
-        ) : (
-          <ProfileScreen favorites={favorites} />
-        )}
+    <div style={styles.stack16}>
+      <div style={styles.chipsRow}>
+        {quickChips.map((chip) => (
+          <button
+            key={chip}
+            style={styles.chip}
+            onClick={() => handleChipClick(chip)}
+          >
+            {chip}
+          </button>
+        ))}
       </div>
 
-      {!detail && <BottomNav tab={tab} setTab={setTab} />}
+      <div
+        style={{
+          ...styles.heroCard,
+          backgroundImage:
+            "linear-gradient(135deg, rgba(33,25,20,0.82), rgba(111,29,43,0.86)), url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80')",
+        }}
+      >
+        <div style={styles.heroBadge}>La Ruta del Vino en tu celular</div>
+        <div style={styles.heroTitle}>Vinos y actividades en un solo lugar</div>
+        <div style={styles.heroText}>
+          Descubrí bodegas, vinotecas, vinos y beneficios cerca tuyo.
+        </div>
+        <div style={styles.rowGap10Wrap}>
+          <button
+            style={styles.primaryLightButton}
+            onClick={() => onSetTab("map")}
+          >
+            Explorar mapa
+          </button>
+          <button
+            style={styles.secondaryDarkButton}
+            onClick={() => onSetTab("agenda")}
+          >
+            Qué pasa hoy
+          </button>
+        </div>
+      </div>
+
+      <div style={styles.grid2}>
+        {[
+          ["Bodegas cerca", <WineIcon key="wine" />],
+          ["Buscar un vino", <SearchIcon key="search" />],
+          ["Eventos hoy", <SparklesIcon key="sparkles" />],
+          ["Club del vino", <TicketIcon key="ticket" />],
+        ].map(([title, icon]) => (
+          <div
+            key={String(title)}
+            style={{ ...styles.card, cursor: "pointer" }}
+            onClick={() => handleQuickAction(String(title))}
+          >
+            <div style={styles.iconBadge}>{icon}</div>
+            <div style={{ ...styles.itemTitle, marginTop: 12 }}>{title}</div>
+            <div style={styles.itemSub}>Acceso rápido</div>
+          </div>
+        ))}
+      </div>
+
+      <SectionTitle
+        title="Actividades destacadas"
+        action="Ver todo"
+        onAction={() => onSetTab("agenda")}
+      />
+
+      <div style={styles.stack12}>
+        {EVENTS.slice(0, 2).map((e) => (
+          <div
+            key={e.id}
+            style={{ ...styles.card, cursor: "pointer" }}
+            onClick={() => handleEventClick(e.place)}
+          >
+            <div style={styles.rowGap12}>
+              <div style={styles.iconBadgeWine}>
+                <SparklesIcon white />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={styles.itemTitle}>{e.title}</div>
+                <div style={styles.itemSub}>
+                  {e.place} · {e.city}
+                </div>
+                <div style={styles.itemMeta}>{e.when}</div>
+                <div style={{ marginTop: 10 }}>
+                  <Badge kind="benefit">{e.benefit}</Badge>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <SectionTitle
+        title="Bodegas recomendadas"
+        action="Ver mapa"
+        onAction={() => onSetTab("map")}
+      />
+
+      <div style={styles.stack12}>
+        {WINERIES.map((w) => (
+          <div
+            key={w.id}
+            style={styles.imageCard}
+            onClick={() => onOpenWinery(w.id)}
+          >
+            <div
+              style={{
+                ...styles.imageCardTop,
+                backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.62)), url('${w.image}')`,
+              }}
+            >
+              <div style={styles.rowBetweenTop}>
+                <div style={styles.rowGap8}>
+                  <Badge kind={w.openNow ? "open" : "closed"}>
+                    {w.openNow ? "Abierta" : "Cerrada"}
+                  </Badge>
+                </div>
+                <button
+                  style={styles.iconGlassButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite({
+                      id: w.id,
+                      name: w.name,
+                      city: w.city,
+                      kind: "winery",
+                    });
+                  }}
+                >
+                  <HeartIcon active={favorites.some((f) => f.id === w.id)} />
+                </button>
+              </div>
+
+              <div>
+                <div style={styles.imageCardTitle}>{w.name}</div>
+                <div style={styles.imageCardSub}>
+                  {w.city} · {w.distance} · ★ {w.rating}
+                </div>
+              </div>
+            </div>
+
+            <div style={styles.imageCardBody}>
+              <div style={styles.placeText}>{w.description}</div>
+              <div style={styles.rowBetweenCenter}>
+                <div style={styles.featureText}>{w.activity}</div>
+                <ChevronRightIcon />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
 }
+
 function MapScreen({
   onOpenWinery,
   onOpenShop,
@@ -699,6 +803,7 @@ function MapScreen({
     </div>
   );
 }
+
 function SearchScreen({
   search,
   setSearch,
@@ -898,6 +1003,7 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
     </div>
   );
 }
+
 function WineDetail({
   wine,
   onBack,
@@ -1229,22 +1335,6 @@ function BottomNav({
   );
 }
 
-function QuickActionCard({
-  icon,
-  title,
-}: {
-  icon: React.ReactNode;
-  title: string;
-}) {
-  return (
-    <div style={styles.card}>
-      <div style={styles.iconBadge}>{icon}</div>
-      <div style={{ ...styles.itemTitle, marginTop: 12 }}>{title}</div>
-      <div style={styles.itemSub}>Acceso rápido</div>
-    </div>
-  );
-}
-
 function Block({
   title,
   children,
@@ -1349,34 +1439,6 @@ function Empty({ text }: { text: string }) {
   return <div style={styles.card}>{text}</div>;
 }
 
-function MapPin({
-  top,
-  left,
-  color,
-  children,
-  onClick,
-}: {
-  top: string;
-  left: string;
-  color: string;
-  children: React.ReactNode;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      style={{
-        ...styles.mapPin,
-        top,
-        left,
-        background: color,
-      }}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
-
 function svgBase(path: React.ReactNode, props?: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -1403,6 +1465,7 @@ function HomeIcon() {
     </>
   );
 }
+
 function MapIcon() {
   return svgBase(
     <>
@@ -1412,6 +1475,7 @@ function MapIcon() {
     </>
   );
 }
+
 function SearchIcon() {
   return svgBase(
     <>
@@ -1420,6 +1484,7 @@ function SearchIcon() {
     </>
   );
 }
+
 function CalendarIcon({ white = false }: { white?: boolean }) {
   return (
     <span style={{ color: white ? "#fff" : "currentColor" }}>
@@ -1432,6 +1497,7 @@ function CalendarIcon({ white = false }: { white?: boolean }) {
     </span>
   );
 }
+
 function UserIcon() {
   return svgBase(
     <>
@@ -1440,6 +1506,7 @@ function UserIcon() {
     </>
   );
 }
+
 function WineIcon({ white = false }: { white?: boolean }) {
   return (
     <span style={{ color: white ? "#fff" : "currentColor" }}>
@@ -1453,19 +1520,7 @@ function WineIcon({ white = false }: { white?: boolean }) {
     </span>
   );
 }
-function StoreIcon({ white = false }: { white?: boolean }) {
-  return (
-    <span style={{ color: white ? "#fff" : "currentColor" }}>
-      {svgBase(
-        <>
-          <path d="M3 9l2-5h14l2 5" />
-          <path d="M4 9h16v12H4z" />
-          <path d="M9 21v-6h6v6" />
-        </>
-      )}
-    </span>
-  );
-}
+
 function TicketIcon() {
   return svgBase(
     <>
@@ -1474,6 +1529,7 @@ function TicketIcon() {
     </>
   );
 }
+
 function SparklesIcon({ white = false }: { white?: boolean }) {
   return (
     <span style={{ color: white ? "#fff" : "currentColor" }}>
@@ -1485,6 +1541,7 @@ function SparklesIcon({ white = false }: { white?: boolean }) {
     </span>
   );
 }
+
 function CheckIcon({ white = false }: { white?: boolean }) {
   return (
     <span style={{ color: white ? "#fff" : "currentColor" }}>
@@ -1496,6 +1553,7 @@ function CheckIcon({ white = false }: { white?: boolean }) {
     </span>
   );
 }
+
 function ArrowLeftIcon() {
   return svgBase(
     <>
@@ -1504,6 +1562,7 @@ function ArrowLeftIcon() {
     </>
   );
 }
+
 function ChevronRightIcon() {
   return svgBase(
     <>
@@ -1511,6 +1570,7 @@ function ChevronRightIcon() {
     </>
   );
 }
+
 function HeartIcon({ active }: { active: boolean }) {
   return svgBase(
     <>
@@ -1519,16 +1579,6 @@ function HeartIcon({ active }: { active: boolean }) {
         d="M12 20s-7-4.4-9-8.7C1.4 8 3.2 5 6.6 5c2 0 3.1 1 5.4 3.4C14.3 6 15.4 5 17.4 5 20.8 5 22.6 8 21 11.3 19 15.6 12 20 12 20z"
       />
       <path d="M12 20s-7-4.4-9-8.7C1.4 8 3.2 5 6.6 5c2 0 3.1 1 5.4 3.4C14.3 6 15.4 5 17.4 5 20.8 5 22.6 8 21 11.3 19 15.6 12 20 12 20z" />
-    </>
-  );
-}
-function StarIcon({ filled = false }: { filled?: boolean }) {
-  return svgBase(
-    <>
-      <path
-        fill={filled ? "currentColor" : "transparent"}
-        d="m12 3 2.8 5.7L21 9.6l-4.5 4.3 1 6.1L12 17l-5.5 3 1-6.1L3 9.6l6.2-.9L12 3z"
-      />
     </>
   );
 }
@@ -1562,36 +1612,28 @@ const styles: Record<string, React.CSSProperties> = {
     background: "rgba(252,250,247,0.95)",
     borderBottom: "1px solid #ede4da",
   },
-  headerEyebrow: {
-     fontSize: 12,
-  letterSpacing: 1.5,
-  textTransform: "none",
-  color: "#8b7b70",
-  marginBottom: 6,
-  fontWeight: 600,
-  },
   headerTitle: {
- fontFamily: "Manrope, Inter, sans-serif",
-  fontSize: 31,
-  fontWeight: 800,
-  color: "#1c1714",
-  letterSpacing: -1.2,
-  lineHeight: 1.04,
-  marginTop: 2,
-  marginBottom: 16,
+    fontFamily: "Manrope, Inter, sans-serif",
+    fontSize: 31,
+    fontWeight: 800,
+    color: "#1c1714",
+    letterSpacing: -1.2,
+    lineHeight: 1.04,
+    marginTop: 2,
+    marginBottom: 16,
   },
   searchBar: {
-      width: "100%",
-  display: "flex",
-  alignItems: "center",
-  gap: 10,
-  padding: 16,
-  borderRadius: 20,
-  border: "1px solid #ead9d7",
-  background: "rgba(255,255,255,0.92)",
-  boxShadow: "0 6px 22px rgba(40,24,22,0.05)",
-  cursor: "pointer",
-},
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: 16,
+    borderRadius: 20,
+    border: "1px solid #ead9d7",
+    background: "rgba(255,255,255,0.92)",
+    boxShadow: "0 6px 22px rgba(40,24,22,0.05)",
+    cursor: "pointer",
+  },
   content: {
     flex: 1,
     overflowY: "auto",
@@ -1800,14 +1842,6 @@ const styles: Record<string, React.CSSProperties> = {
     color: "#211914",
     fontSize: 14,
   },
-  ratingText: {
-    display: "flex",
-    alignItems: "center",
-    gap: 4,
-    color: "#8b7b70",
-    fontSize: 12,
-    fontWeight: 700,
-  },
   placeText: {
     marginTop: 12,
     color: "#5f5249",
@@ -1927,78 +1961,6 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "center",
     background: "#6f1d2b",
     color: "#fff",
-  },
-  mapShellPro: {
-    height: 540,
-    borderRadius: 28,
-    position: "relative",
-    overflow: "hidden",
-    border: "1px solid #eadfd4",
-    background: "linear-gradient(180deg,#ede5d8 0%, #e8dece 50%, #e4d9c9 100%)",
-  },
-  mapTerrainOverlay: {
-    position: "absolute",
-    inset: 0,
-    backgroundImage:
-      "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35), transparent 18%), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.18), transparent 20%), radial-gradient(circle at 60% 70%, rgba(255,255,255,0.18), transparent 24%)",
-  },
-  mapRoad: {
-    position: "absolute",
-    top: "18%",
-    left: "-10%",
-    width: "120%",
-    height: 10,
-    background: "rgba(196,170,120,0.65)",
-    transform: "rotate(15deg)",
-    borderRadius: 999,
-    boxShadow: "0 0 0 4px rgba(255,255,255,0.25)",
-  },
-  mapLabel: {
-    position: "absolute",
-    color: "#7a6c60",
-    fontSize: 13,
-    fontWeight: 700,
-  },
-  mapPin: {
-    position: "absolute",
-    width: 50,
-    height: 50,
-    borderRadius: 18,
-    border: "1px solid rgba(255,255,255,0.22)",
-    boxShadow: "0 10px 24px rgba(33,22,16,0.18)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-  },
-  mapFloatingActions: {
-    position: "absolute",
-    right: 14,
-    top: 14,
-    display: "grid",
-    gap: 10,
-  },
-  mapRoundButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 16,
-    border: "1px solid #e8ddd3",
-    background: "rgba(255,255,255,0.92)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-  },
-  mapOverlayCard: {
-    position: "absolute",
-    left: 14,
-    right: 14,
-    bottom: 14,
-    background: "rgba(252,250,247,0.98)",
-    border: "1px solid #eee5dc",
-    borderRadius: 24,
-    boxShadow: "0 10px 30px rgba(26,18,15,0.05)",
-    padding: 18,
   },
   mapOverlayEyebrow: {
     fontSize: 11,
@@ -2223,38 +2185,20 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 11,
     fontWeight: 700,
   },
-  
-splashPage: {
-  height: "100vh",
-  width: "100%",
-  background: "#f3dfe3",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-},
-
-splashLogoWrap: {
-  textAlign: "center",
-},
-  
-splashLogo: {
-  width: 140,
-  height: "auto",
-  animation: "splashLogoIn 1.4s ease-out",
-},
-  
-splashEyebrow: {
-  color: "rgba(255,255,255,0.7)",
-  letterSpacing: 2,
-  fontSize: 12,
-  marginBottom: 10,
-  textTransform: "uppercase",
-},
-
-splashTitle: {
-  color: "#fff",
-  fontSize: 32,
-  fontWeight: 800,
-},
+  splashPage: {
+    height: "100vh",
+    width: "100%",
+    background: "#f3dfe3",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  splashLogoWrap: {
+    textAlign: "center",
+  },
+  splashLogo: {
+    width: 140,
+    height: "auto",
+    animation: "splashLogoIn 1.4s ease-out",
+  },
 };
-
