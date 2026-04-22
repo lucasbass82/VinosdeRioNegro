@@ -1712,6 +1712,42 @@ function ShopDetail({
   );
 }
 
+function BottomNav({
+  tab,
+  setTab,
+}: {
+  tab: TabKey;
+  setTab: (tab: TabKey) => void;
+}) {
+  const items: Array<{ key: TabKey; label: string; icon: React.ReactNode }> = [
+    { key: "home", label: "Inicio", icon: <HomeIcon /> },
+    { key: "map", label: "Mapa", icon: <MapIcon /> },
+    { key: "search", label: "Buscar", icon: <SearchIcon /> },
+    { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
+    { key: "bodegas", label: "Bodegas", icon: <WineIcon /> },
+  ];
+
+  return (
+    <div style={styles.bottomNavWrap}>
+      <div style={styles.bottomNav}>
+        {items.map((item) => {
+          const active = tab === item.key;
+          return (
+            <button
+              key={item.key}
+              style={active ? styles.navItemActive : styles.navItem}
+              onClick={() => setTab(item.key)}
+            >
+              {item.icon}
+              <span style={styles.navLabel}>{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Block({
   title,
   children,
