@@ -18,7 +18,7 @@ type Winery = {
   shops: string[];
   activity: string;
   benefit: string;
-  rating: number;
+  rating: number; 
   distance: string;
   image: string;
 };
