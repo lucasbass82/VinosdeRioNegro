@@ -1,9 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 
+type RegionKey =
+  | "alto-valle"
+  | "valle-medio"
+  | "valle-inferior"
+  | "linea-sur";
+
 type Winery = {
   id: string;
   name: string;
   city: string;
+  region: RegionKey;
   description: string;
   hours: string;
   openNow: boolean;
@@ -58,7 +65,7 @@ type FavoriteItem = {
   kind: "wine" | "winery" | "shop";
 };
 
-type TabKey = "home" | "map" | "search" | "agenda" | "profile";
+type TabKey = "home" | "map" | "search" | "agenda" | "bodegas" | "profile";
 
 type DetailState =
   | { kind: "wine"; id: string }
@@ -66,11 +73,42 @@ type DetailState =
   | { kind: "shop"; id: string }
   | null;
 
+const REGION_META: Record<
+  RegionKey,
+  { title: string; subtitle: string; image: string }
+> = {
+  "alto-valle": {
+    title: "Alto Valle",
+    subtitle: "La región vitivinícola más consolidada de Río Negro.",
+    image:
+      "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=1400&q=80",
+  },
+  "valle-medio": {
+    title: "Valle Medio",
+    subtitle: "Un territorio con gran potencial y nuevas propuestas productivas.",
+    image:
+      "https://images.unsplash.com/photo-1464638681273-0962e9b53566?auto=format&fit=crop&w=1400&q=80",
+  },
+  "valle-inferior": {
+    title: "Valle Inferior",
+    subtitle: "Cercanía, identidad local y proyección para crecer.",
+    image:
+      "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80",
+  },
+  "linea-sur": {
+    title: "Línea Sur",
+    subtitle: "Una región emergente para descubrir nuevas historias del vino.",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+  },
+};
+
 const WINERIES: Winery[] = [
   {
     id: "w1",
     name: "Bodega Miras",
     city: "Mainqué",
+    region: "alto-valle",
     description:
       "Bodega patagónica enfocada en Pinot Noir, visitas y degustaciones con identidad local.",
     hours: "10:00 a 18:00",
@@ -88,6 +126,7 @@ const WINERIES: Winery[] = [
     id: "w2",
     name: "Bodega Aniello",
     city: "Mainqué",
+    region: "alto-valle",
     description:
       "Proyecto del Alto Valle con experiencias, música en vivo y vinos muy buscados.",
     hours: "11:00 a 19:00",
@@ -105,6 +144,7 @@ const WINERIES: Winery[] = [
     id: "w3",
     name: "Humberto Canale",
     city: "General Roca",
+    region: "alto-valle",
     description:
       "Bodega histórica de Río Negro con etiquetas emblemáticas y visitas guiadas.",
     hours: "09:00 a 17:00",
@@ -259,11 +299,19 @@ export default function App() {
   >("idle");
   const [locationError, setLocationError] = useState("");
   const [showSplash, setShowSplash] = useState(true);
+  const [selectedRegion, setSelectedRegion] = useState<RegionKey | null>(null);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSplash(false), 2200);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (tab !== "bodegas") {
+      setSelectedRegion(null);
+    }
+  }, [tab]);
 
   const openWine = (id: string) => setDetail({ kind: "wine", id });
   const openWinery = (id: string) => setDetail({ kind: "winery", id });
@@ -328,7 +376,7 @@ export default function App() {
         .includes(q)
     );
     const wineries = WINERIES.filter((w) =>
-      [w.name, w.city, w.description, ...w.wines]
+      [w.name, w.city, w.region, w.description, ...w.wines]
         .join(" ")
         .toLowerCase()
         .includes(q)
@@ -349,7 +397,34 @@ export default function App() {
   return (
     <div style={styles.page}>
       <div style={styles.phone}>
-        <Header currentTab={tab} onSearchClick={() => setTab("search")} />
+        <Header
+          currentTab={tab}
+          onSearchClick={() => setTab("search")}
+          onMenuClick={() => setShowMenu((prev) => !prev)}
+        />
+
+        {showMenu && !detail && (
+          <div style={styles.menuDropdown}>
+            <button
+              style={styles.menuItem}
+              onClick={() => {
+                setTab("profile");
+                setShowMenu(false);
+              }}
+            >
+              Perfil y beneficios
+            </button>
+            <button
+              style={styles.menuItem}
+              onClick={() => {
+                setTab("home");
+                setShowMenu(false);
+              }}
+            >
+              Volver al inicio
+            </button>
+          </div>
+        )}
 
         <div style={styles.content}>
           {detail && detailView ? (
@@ -394,7 +469,6 @@ export default function App() {
               onOpenWinery={openWinery}
               onOpenShop={openShop}
               onSetTab={setTab}
-              setSearch={setSearch}
               favorites={favorites}
               toggleFavorite={toggleFavorite}
               requestUserLocation={requestUserLocation}
@@ -419,6 +493,16 @@ export default function App() {
             />
           ) : tab === "agenda" ? (
             <AgendaScreen />
+          ) : tab === "bodegas" ? (
+            selectedRegion ? (
+              <RegionWineriesScreen
+                region={selectedRegion}
+                onBack={() => setSelectedRegion(null)}
+                onOpenWinery={openWinery}
+              />
+            ) : (
+              <RegionsScreen onOpenRegion={setSelectedRegion} />
+            )
           ) : (
             <ProfileScreen favorites={favorites} />
           )}
@@ -433,12 +517,20 @@ export default function App() {
 function Header({
   currentTab,
   onSearchClick,
+  onMenuClick,
 }: {
   currentTab: TabKey;
   onSearchClick: () => void;
+  onMenuClick: () => void;
 }) {
   return (
     <div style={styles.header}>
+      <div style={styles.headerTopRow}>
+        <button style={styles.menuButton} onClick={onMenuClick}>
+          <MenuIcon />
+        </button>
+      </div>
+
       <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
 
       {currentTab !== "search" && (
@@ -483,7 +575,6 @@ function HomeScreen({
   onOpenWinery,
   onOpenShop,
   onSetTab,
-  setSearch,
   favorites,
   toggleFavorite,
   requestUserLocation,
@@ -492,7 +583,6 @@ function HomeScreen({
   onOpenWinery: (id: string) => void;
   onOpenShop: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
-  setSearch: (value: string) => void;
   favorites: FavoriteItem[];
   toggleFavorite: (item: FavoriteItem) => void;
   requestUserLocation: () => void;
@@ -735,6 +825,138 @@ function HomeScreen({
   );
 }
 
+function RegionsScreen({
+  onOpenRegion,
+}: {
+  onOpenRegion: (region: RegionKey) => void;
+}) {
+  const regionOrder: RegionKey[] = [
+    "alto-valle",
+    "valle-medio",
+    "valle-inferior",
+    "linea-sur",
+  ];
+
+  return (
+    <div style={styles.stack16}>
+      <SectionTitle title="Descubrí por región" />
+      <div style={styles.stack12}>
+        {regionOrder.map((region) => {
+          const wineries = WINERIES.filter((w) => w.region === region);
+          const meta = REGION_META[region];
+
+          return (
+            <div
+              key={region}
+              style={styles.imageCard}
+              onClick={() => onOpenRegion(region)}
+            >
+              <div
+                style={{
+                  ...styles.regionCardTop,
+                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.60)), url('${meta.image}')`,
+                }}
+              >
+                <div style={styles.regionPill}>
+                  {wineries.length} {wineries.length === 1 ? "bodega" : "bodegas"}
+                </div>
+
+                <div>
+                  <div style={styles.imageCardTitle}>{meta.title}</div>
+                  <div style={styles.imageCardSub}>{meta.subtitle}</div>
+                </div>
+              </div>
+
+              <div style={styles.imageCardBody}>
+                <div style={styles.placeText}>
+                  Explorá las bodegas de esta región y conocé sus vinos, propuestas
+                  y experiencias.
+                </div>
+                <div style={styles.rowBetweenCenter}>
+                  <div style={styles.featureText}>Ver bodegas</div>
+                  <ChevronRightIcon />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function RegionWineriesScreen({
+  region,
+  onBack,
+  onOpenWinery,
+}: {
+  region: RegionKey;
+  onBack: () => void;
+  onOpenWinery: (id: string) => void;
+}) {
+  const wineries = WINERIES.filter((w) => w.region === region);
+  const meta = REGION_META[region];
+
+  return (
+    <div style={styles.stack16}>
+      <div style={styles.rowBetweenCenter}>
+        <button style={styles.backButton} onClick={onBack}>
+          <ArrowLeftIcon /> Volver
+        </button>
+      </div>
+
+      <div style={styles.card}>
+        <div style={styles.sectionTitle}>{meta.title}</div>
+        <div style={styles.placeText}>{meta.subtitle}</div>
+      </div>
+
+      {wineries.length ? (
+        <div style={styles.stack12}>
+          {wineries.map((w) => (
+            <div
+              key={w.id}
+              style={styles.imageCard}
+              onClick={() => onOpenWinery(w.id)}
+            >
+              <div
+                style={{
+                  ...styles.imageCardTop,
+                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.60)), url('${w.image}')`,
+                }}
+              >
+                <div style={styles.bodegaLogoBadge}>{w.name}</div>
+
+                <div>
+                  <div style={styles.imageCardTitle}>{w.name}</div>
+                  <div style={styles.imageCardSub}>
+                    {w.city} · ★ {w.rating}
+                  </div>
+                </div>
+              </div>
+
+              <div style={styles.imageCardBody}>
+                <div style={styles.placeText}>{w.description}</div>
+                <div style={styles.rowBetweenCenter}>
+                  <div style={styles.featureText}>{w.activity}</div>
+                  <ChevronRightIcon />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div style={styles.card}>
+          <div style={styles.itemTitle}>Próximamente</div>
+          <div style={styles.placeText}>
+            Vamos a sumar bodegas de esta región a medida que avancemos con la carga
+            provincial.
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MapScreen({
   onOpenWinery,
   onOpenShop,
@@ -904,7 +1126,7 @@ function SearchScreen({
             <ResultRow
               key={item.id}
               title={item.name}
-              subtitle={item.city}
+              subtitle={`${item.city} · ${REGION_META[item.region].title}`}
               onClick={() => onOpenWinery(item.id)}
             />
           ))
@@ -1186,7 +1408,7 @@ function WineryDetail({
           <div>
             <div style={styles.imageCardTitle}>{winery.name}</div>
             <div style={styles.imageCardSub}>
-              {winery.city} · {winery.distance}
+              {winery.city} · {REGION_META[winery.region].title}
             </div>
           </div>
         </div>
@@ -1202,7 +1424,7 @@ function WineryDetail({
 
           <div style={styles.grid2}>
             <InfoBox label="Horario" value={winery.hours} />
-            <InfoBox label="Beneficio" value={winery.benefit} />
+            <InfoBox label="Región" value={REGION_META[winery.region].title} />
           </div>
 
           <div style={styles.rowGap10}>
@@ -1344,7 +1566,7 @@ function BottomNav({
     { key: "map", label: "Mapa", icon: <MapIcon /> },
     { key: "search", label: "Buscar", icon: <SearchIcon /> },
     { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
-    { key: "profile", label: "Perfil", icon: <UserIcon /> },
+    { key: "bodegas", label: "Bodegas", icon: <WineIcon /> },
   ];
 
   return (
@@ -1487,6 +1709,16 @@ function svgBase(path: React.ReactNode, props?: React.SVGProps<SVGSVGElement>) {
     >
       {path}
     </svg>
+  );
+}
+
+function MenuIcon() {
+  return svgBase(
+    <>
+      <path d="M4 7h16" />
+      <path d="M4 12h16" />
+      <path d="M4 17h16" />
+    </>
   );
 }
 
@@ -1639,11 +1871,54 @@ const styles: Record<string, React.CSSProperties> = {
     boxShadow: "0 22px 70px rgba(37,20,22,0.12)",
     display: "flex",
     flexDirection: "column",
+    position: "relative",
   },
   header: {
-    padding: "22px 18px 18px 18px",
+    padding: "16px 18px 18px 18px",
     background: "rgba(252,250,247,0.95)",
     borderBottom: "1px solid #efe4df",
+    position: "relative",
+    zIndex: 4,
+  },
+  headerTopRow: {
+    display: "flex",
+    justifyContent: "flex-start",
+    marginBottom: 8,
+  },
+  menuButton: {
+    width: 42,
+    height: 42,
+    borderRadius: 14,
+    border: "1px solid #ead9d7",
+    background: "#fff",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    color: "#211914",
+  },
+  menuDropdown: {
+    position: "absolute",
+    top: 78,
+    left: 18,
+    background: "#fff",
+    border: "1px solid #eadfd8",
+    borderRadius: 18,
+    boxShadow: "0 14px 30px rgba(33,22,16,0.12)",
+    padding: 10,
+    display: "grid",
+    gap: 6,
+    zIndex: 10,
+  },
+  menuItem: {
+    border: 0,
+    background: "transparent",
+    padding: "10px 12px",
+    borderRadius: 12,
+    textAlign: "left",
+    cursor: "pointer",
+    color: "#211914",
+    fontWeight: 700,
   },
   headerTitle: {
     fontFamily: "Manrope, Inter, sans-serif",
@@ -1947,6 +2222,15 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "space-between",
     padding: 16,
   },
+  regionCardTop: {
+    height: 190,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: 16,
+  },
   imageCardBody: {
     padding: 16,
   },
@@ -1993,6 +2277,30 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "center",
     background: "#6f1d2b",
     color: "#fff",
+  },
+  regionPill: {
+    display: "inline-flex",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    borderRadius: 999,
+    padding: "7px 12px",
+    fontSize: 12,
+    fontWeight: 700,
+    background: "rgba(255,255,255,0.14)",
+    border: "1px solid rgba(255,255,255,0.18)",
+    color: "#fff",
+  },
+  bodegaLogoBadge: {
+    display: "inline-flex",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    borderRadius: 14,
+    padding: "8px 12px",
+    fontSize: 12,
+    fontWeight: 800,
+    background: "rgba(255,255,255,0.88)",
+    color: "#6f1d2b",
+    border: "1px solid rgba(255,255,255,0.9)",
   },
   mapOverlayEyebrow: {
     fontSize: 11,
