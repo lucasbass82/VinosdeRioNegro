@@ -85,13 +85,13 @@ const REGION_META: Record<
   },
   "valle-medio": {
     title: "Valle Medio",
-    subtitle: "Un territorio con gran potencial y nuevas propuestas productivas.",
+    subtitle: "Historia, identidad y bodegas familiares en el corazón del valle.",
     image:
       "https://images.unsplash.com/photo-1464638681273-0962e9b53566?auto=format&fit=crop&w=1400&q=80",
   },
   "valle-inferior": {
     title: "Valle Inferior",
-    subtitle: "Cercanía, identidad local y proyección para crecer.",
+    subtitle: "Vinos con impronta atlántica y experiencias cerca del mar.",
     image:
       "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80",
   },
@@ -158,6 +158,42 @@ const WINERIES: Winery[] = [
     image:
       "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=1200&q=80",
   },
+  {
+    id: "w4",
+    name: "Bodega Videla Dorna",
+    city: "Luis Beltrán",
+    region: "valle-medio",
+    description:
+      "Bodega familiar del Valle Medio nacida de la recuperación de la histórica Bodega La Esmeralda, con visitas personalizadas y vinos con fuerte identidad territorial.",
+    hours: "10:30 a 17:30",
+    openNow: true,
+    wines: ["Calfulen Pinot Noir", "Calfulen Malbec Reserva"],
+    shops: ["Vinoteca del Río", "Patagonia Wine House"],
+    activity: "Visita guiada y experiencia campestre",
+    benefit: "10% OFF socios",
+    rating: 4.8,
+    distance: "170 km",
+    image:
+      "https://images.unsplash.com/photo-1502741126161-b048400d85b7?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "w5",
+    name: "Wapisa",
+    city: "San Javier",
+    region: "valle-inferior",
+    description:
+      "Bodega del Valle Inferior con impronta atlántica, vinos frescos y una propuesta singular asociada al mar y la cava submarina.",
+    hours: "11:00 a 18:00",
+    openNow: true,
+    wines: ["Wapisa Pinot Noir", "Wapisa Sauvignon Blanc"],
+    shops: ["Vinoteca del Río", "Patagonia Wine House"],
+    activity: "Recorrido y degustación con perfil oceánico",
+    benefit: "Beneficio especial para socios",
+    rating: 4.9,
+    distance: "32 km",
+    image:
+      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80",
+  },
 ];
 
 const SHOPS: Shop[] = [
@@ -169,7 +205,13 @@ const SHOPS: Shop[] = [
       "Selección de vinos patagónicos, catas guiadas y beneficios para miembros.",
     hours: "10:00 a 13:00 y 17:00 a 21:00",
     openNow: true,
-    wines: ["Miras Pinot Noir", "Aniello 006", "Old Vineyard Pinot Noir"],
+    wines: [
+      "Miras Pinot Noir",
+      "Aniello 006",
+      "Old Vineyard Pinot Noir",
+      "Calfulen Pinot Noir",
+      "Wapisa Pinot Noir",
+    ],
     benefit: "10% OFF socios",
     rating: 4.8,
     distance: "1.2 km",
@@ -184,7 +226,12 @@ const SHOPS: Shop[] = [
       "Vinoteca boutique con etiquetas regionales, recomendaciones y experiencias.",
     hours: "11:00 a 20:30",
     openNow: true,
-    wines: ["Miras Joven Malbec", "Aniello Pinot Noir"],
+    wines: [
+      "Miras Joven Malbec",
+      "Aniello Pinot Noir",
+      "Calfulen Malbec Reserva",
+      "Wapisa Sauvignon Blanc",
+    ],
     benefit: "2x1 en degustación jueves",
     rating: 4.7,
     distance: "2.7 km",
@@ -253,6 +300,54 @@ const WINES: Wine[] = [
     tag: "Descubrimiento",
     image:
       "https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "v6",
+    name: "Calfulen Pinot Noir",
+    varietal: "Pinot Noir",
+    winery: "Bodega Videla Dorna",
+    style: "Patagónico y delicado",
+    note: "Expresa la elegancia del Valle Medio con fruta fresca, tensión y perfil refinado.",
+    availableAt: ["Vinoteca del Río"],
+    tag: "Valle Medio",
+    image:
+      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "v7",
+    name: "Calfulen Malbec Reserva",
+    varietal: "Malbec",
+    winery: "Bodega Videla Dorna",
+    style: "Estructurado y profundo",
+    note: "Malbec con carácter, historia y una impronta muy marcada del valle rionegrino.",
+    availableAt: ["Patagonia Wine House"],
+    tag: "Reserva",
+    image:
+      "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "v8",
+    name: "Wapisa Pinot Noir",
+    varietal: "Pinot Noir",
+    winery: "Wapisa",
+    style: "Fresco y oceánico",
+    note: "Pinot Noir de perfil atlántico, con tensión, frescura y una identidad distinta dentro de Río Negro.",
+    availableAt: ["Vinoteca del Río"],
+    tag: "Atlántico",
+    image:
+      "https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "v9",
+    name: "Wapisa Sauvignon Blanc",
+    varietal: "Sauvignon Blanc",
+    winery: "Wapisa",
+    style: "Vibrante y salino",
+    note: "Blanco de gran frescura, con perfil costero y expresión singular del Valle Inferior.",
+    availableAt: ["Patagonia Wine House"],
+    tag: "Costa atlántica",
+    image:
+      "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
@@ -948,8 +1043,9 @@ function RegionWineriesScreen({
         <div style={styles.card}>
           <div style={styles.itemTitle}>Próximamente</div>
           <div style={styles.placeText}>
-            Vamos a sumar bodegas de esta región a medida que avancemos con la carga
-            provincial.
+            No pude verificar todavía una bodega activa de Línea Sur con la misma
+            solidez que el resto, así que dejé esta región lista para completar en
+            la próxima pasada.
           </div>
         </div>
       )}
@@ -1050,7 +1146,7 @@ function MapScreen({
 
           <div style={styles.grid3}>
             <Metric label="Estado" value={locationStatus} />
-            <Metric label="Bodegas" value="3" />
+            <Metric label="Bodegas" value="5" />
             <Metric label="Vinotecas" value="2" />
           </div>
         </div>
@@ -1092,7 +1188,7 @@ function SearchScreen({
         </div>
 
         <div style={{ ...styles.chipsRow, marginTop: 12 }}>
-          {["Noemía", "Saurus", "Malbec", "vino para regalo"].map((chip) => (
+          {["Noemía", "Wapisa", "Malbec", "vino para regalo"].map((chip) => (
             <button
               key={chip}
               style={styles.chip}
@@ -1243,7 +1339,7 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
         {[
           "10% OFF en Vinoteca del Río",
           "15% OFF en degustaciones en Bodega Miras",
-          "Copa de bienvenida en eventos adheridos",
+          "Beneficios especiales en bodegas adheridas",
         ].map((b) => (
           <div key={b} style={styles.card}>
             <div style={styles.rowGap12}>
@@ -1313,7 +1409,7 @@ function WineDetail({
           <div style={styles.grid3}>
             <InfoBox label="Varietal" value={wine.varietal} />
             <InfoBox label="Estilo" value={wine.style} />
-            <InfoBox label="Ciudad" value="Viedma" />
+            <InfoBox label="Ciudad" value="Río Negro" />
           </div>
 
           <div style={styles.placeText}>{wine.note}</div>
@@ -1760,15 +1856,6 @@ function CalendarIcon({ white = false }: { white?: boolean }) {
         </>
       )}
     </span>
-  );
-}
-
-function UserIcon() {
-  return svgBase(
-    <>
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6" />
-    </>
   );
 }
 
