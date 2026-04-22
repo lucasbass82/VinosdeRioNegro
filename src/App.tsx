@@ -18,7 +18,7 @@ type Winery = {
   shops: string[];
   activity: string;
   benefit: string;
-  rating: number; 
+  rating: number;
   distance: string;
   image: string;
 };
@@ -73,33 +73,67 @@ type DetailState =
   | { kind: "shop"; id: string }
   | null;
 
+const theme = {
+  backgroundTop: "#f7f0eb",
+  backgroundBottom: "#f4e7e5",
+  surface: "#fffdfb",
+  card: "#fffdfb",
+  primary: "#6f1d2b",
+  primaryDark: "#4f1320",
+  accentLeaf: "#a9b679",
+  accentLeafSoft: "#dbe3c0",
+  accentGrape: "#dfbcc5",
+  text: "#1f1815",
+  secondaryText: "#7f7065",
+  border: "#eadfd5",
+  borderSoft: "#efe5dc",
+  successBg: "#eef5e5",
+  successText: "#5b6a34",
+  successBorder: "#dce7bc",
+  dangerBg: "#f6e8eb",
+  dangerText: "#8a4252",
+  dangerBorder: "#ead0d7",
+  neutralBg: "#f5f1eb",
+  neutralText: "#53473e",
+  neutralBorder: "#eadfd5",
+};
+
 const REGION_META: Record<
   RegionKey,
-  { title: string; subtitle: string; image: string }
+  {
+    title: string;
+    subtitle: string;
+    image: string;
+    tint: string;
+  }
 > = {
   "alto-valle": {
     title: "Alto Valle",
     subtitle: "La región vitivinícola más consolidada de Río Negro.",
     image:
       "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=1400&q=80",
+    tint: "rgba(169,182,121,0.20)",
   },
   "valle-medio": {
     title: "Valle Medio",
-    subtitle: "Historia, identidad y bodegas familiares en el corazón del valle.",
+    subtitle: "Historia, familia y vinos con identidad propia.",
     image:
       "https://images.unsplash.com/photo-1464638681273-0962e9b53566?auto=format&fit=crop&w=1400&q=80",
+    tint: "rgba(223,188,197,0.22)",
   },
   "valle-inferior": {
     title: "Valle Inferior",
-    subtitle: "Vinos con impronta atlántica y experiencias cerca del mar.",
+    subtitle: "Vinos con impronta atlántica y nuevas experiencias.",
     image:
       "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80",
+    tint: "rgba(169,182,121,0.18)",
   },
   "linea-sur": {
     title: "Línea Sur",
-    subtitle: "Una región emergente para descubrir nuevas historias del vino.",
+    subtitle: "Territorio preparado para seguir creciendo.",
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+    tint: "rgba(223,188,197,0.18)",
   },
 };
 
@@ -164,7 +198,7 @@ const WINERIES: Winery[] = [
     city: "Luis Beltrán",
     region: "valle-medio",
     description:
-      "Bodega familiar del Valle Medio nacida de la recuperación de la histórica Bodega La Esmeralda, con visitas personalizadas y vinos con fuerte identidad territorial.",
+      "Bodega familiar del Valle Medio, ligada a la historia vitivinícola regional y al desarrollo del vino con fuerte raíz territorial.",
     hours: "10:30 a 17:30",
     openNow: true,
     wines: ["Calfulen Pinot Noir", "Calfulen Malbec Reserva"],
@@ -182,7 +216,7 @@ const WINERIES: Winery[] = [
     city: "San Javier",
     region: "valle-inferior",
     description:
-      "Bodega del Valle Inferior con impronta atlántica, vinos frescos y una propuesta singular asociada al mar y la cava submarina.",
+      "Bodega del Valle Inferior con impronta atlántica, vinos frescos y una propuesta singular vinculada al mar.",
     hours: "11:00 a 18:00",
     openNow: true,
     wines: ["Wapisa Pinot Noir", "Wapisa Sauvignon Blanc"],
@@ -378,6 +412,58 @@ const EVENTS: EventItem[] = [
   },
 ];
 
+function GlobalStyles() {
+  return (
+    <style>{`
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+      @keyframes splashLogoIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.82) translateY(12px);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @keyframes floatSoft {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-4px); }
+        100% { transform: translateY(0px); }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: ${theme.backgroundTop};
+      }
+
+      button, input {
+        font-family: "Manrope", sans-serif;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #d9cbc3;
+        border-radius: 999px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+    `}</style>
+  );
+}
+
 export default function App() {
   const [tab, setTab] = useState<TabKey>("home");
   const [detail, setDetail] = useState<DetailState>(null);
@@ -456,9 +542,7 @@ export default function App() {
   const detailView = useMemo(() => {
     if (!detail) return null;
     if (detail.kind === "wine") return WINES.find((x) => x.id === detail.id);
-    if (detail.kind === "winery") {
-      return WINERIES.find((x) => x.id === detail.id);
-    }
+    if (detail.kind === "winery") return WINERIES.find((x) => x.id === detail.id);
     return SHOPS.find((x) => x.id === detail.id);
   }, [detail]);
 
@@ -486,126 +570,136 @@ export default function App() {
   }, [search]);
 
   if (showSplash) {
-    return <SplashScreen />;
+    return (
+      <>
+        <GlobalStyles />
+        <SplashScreen />
+      </>
+    );
   }
 
   return (
-    <div style={styles.page}>
-      <div style={styles.phone}>
-        <Header
-          currentTab={tab}
-          onSearchClick={() => setTab("search")}
-          onMenuClick={() => setShowMenu((prev) => !prev)}
-        />
+    <>
+      <GlobalStyles />
+      <div style={styles.page}>
+        <div style={styles.backgroundPaintA} />
+        <div style={styles.backgroundPaintB} />
+        <div style={styles.backgroundArt} />
 
-        {showMenu && !detail && (
-          <div style={styles.menuDropdown}>
-            <button
-              style={styles.menuItem}
-              onClick={() => {
-                setTab("profile");
-                setShowMenu(false);
-              }}
-            >
-              Perfil y beneficios
-            </button>
-            <button
-              style={styles.menuItem}
-              onClick={() => {
-                setTab("home");
-                setShowMenu(false);
-              }}
-            >
-              Volver al inicio
-            </button>
-          </div>
-        )}
+        <div style={styles.phone}>
+          <Header
+            currentTab={tab}
+            onSearchClick={() => setTab("search")}
+            onMenuClick={() => setShowMenu((prev) => !prev)}
+          />
 
-        <div style={styles.content}>
-          {detail && detailView ? (
-            detail.kind === "wine" ? (
-              <WineDetail
-                wine={detailView as Wine}
-                onBack={closeDetail}
-                onOpenShop={openShop}
-                toggleFavorite={toggleFavorite}
-                isFavorite={isFavorite}
-              />
-            ) : detail.kind === "winery" ? (
-              <WineryDetail
-                winery={detailView as Winery}
-                onBack={closeDetail}
-                onOpenWine={(name) => {
-                  const found = WINES.find((w) => w.name === name);
-                  if (found) openWine(found.id);
+          {showMenu && !detail && (
+            <div style={styles.menuDropdown}>
+              <button
+                style={styles.menuItem}
+                onClick={() => {
+                  setTab("profile");
+                  setShowMenu(false);
                 }}
-                onOpenShop={(name) => {
-                  const found = SHOPS.find((s) => s.name === name);
-                  if (found) openShop(found.id);
+              >
+                Perfil y beneficios
+              </button>
+              <button
+                style={styles.menuItem}
+                onClick={() => {
+                  setTab("home");
+                  setShowMenu(false);
                 }}
-                toggleFavorite={toggleFavorite}
-                isFavorite={isFavorite}
-              />
-            ) : (
-              <ShopDetail
-                shop={detailView as Shop}
-                onBack={closeDetail}
-                onOpenWine={(name) => {
-                  const found = WINES.find((w) => w.name === name);
-                  if (found) openWine(found.id);
-                }}
-                toggleFavorite={toggleFavorite}
-                isFavorite={isFavorite}
-              />
-            )
-          ) : tab === "home" ? (
-            <HomeScreen
-              onOpenWine={openWine}
-              onOpenWinery={openWinery}
-              onOpenShop={openShop}
-              onSetTab={setTab}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-              requestUserLocation={requestUserLocation}
-            />
-          ) : tab === "map" ? (
-            <MapScreen
-              onOpenWinery={openWinery}
-              onOpenShop={openShop}
-              userLocation={userLocation}
-              locationStatus={locationStatus}
-              locationError={locationError}
-              requestUserLocation={requestUserLocation}
-            />
-          ) : tab === "search" ? (
-            <SearchScreen
-              search={search}
-              setSearch={setSearch}
-              results={results}
-              onOpenWine={openWine}
-              onOpenWinery={openWinery}
-              onOpenShop={openShop}
-            />
-          ) : tab === "agenda" ? (
-            <AgendaScreen />
-          ) : tab === "bodegas" ? (
-            selectedRegion ? (
-              <RegionWineriesScreen
-                region={selectedRegion}
-                onBack={() => setSelectedRegion(null)}
-                onOpenWinery={openWinery}
-              />
-            ) : (
-              <RegionsScreen onOpenRegion={setSelectedRegion} />
-            )
-          ) : (
-            <ProfileScreen favorites={favorites} />
+              >
+                Volver al inicio
+              </button>
+            </div>
           )}
-        </div>
 
-        {!detail && <BottomNav tab={tab} setTab={setTab} />}
+          <div style={styles.content}>
+            {detail && detailView ? (
+              detail.kind === "wine" ? (
+                <WineDetail
+                  wine={detailView as Wine}
+                  onBack={closeDetail}
+                  onOpenShop={openShop}
+                  toggleFavorite={toggleFavorite}
+                  isFavorite={isFavorite}
+                />
+              ) : detail.kind === "winery" ? (
+                <WineryDetail
+                  winery={detailView as Winery}
+                  onBack={closeDetail}
+                  onOpenWine={(name) => {
+                    const found = WINES.find((w) => w.name === name);
+                    if (found) openWine(found.id);
+                  }}
+                  onOpenShop={(name) => {
+                    const found = SHOPS.find((s) => s.name === name);
+                    if (found) openShop(found.id);
+                  }}
+                  toggleFavorite={toggleFavorite}
+                  isFavorite={isFavorite}
+                />
+              ) : (
+                <ShopDetail
+                  shop={detailView as Shop}
+                  onBack={closeDetail}
+                  onOpenWine={(name) => {
+                    const found = WINES.find((w) => w.name === name);
+                    if (found) openWine(found.id);
+                  }}
+                  toggleFavorite={toggleFavorite}
+                  isFavorite={isFavorite}
+                />
+              )
+            ) : tab === "home" ? (
+              <HomeScreen
+                onOpenWine={openWine}
+                onOpenWinery={openWinery}
+                onOpenShop={openShop}
+                onSetTab={setTab}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+                requestUserLocation={requestUserLocation}
+              />
+            ) : tab === "map" ? (
+              <MapScreen
+                userLocation={userLocation}
+                locationStatus={locationStatus}
+                locationError={locationError}
+                requestUserLocation={requestUserLocation}
+              />
+            ) : tab === "search" ? (
+              <SearchScreen
+                search={search}
+                setSearch={setSearch}
+                results={results}
+                onOpenWine={openWine}
+                onOpenWinery={openWinery}
+                onOpenShop={openShop}
+              />
+            ) : tab === "agenda" ? (
+              <AgendaScreen />
+            ) : tab === "bodegas" ? (
+              selectedRegion ? (
+                <RegionWineriesScreen
+                  region={selectedRegion}
+                  onBack={() => setSelectedRegion(null)}
+                  onOpenWinery={openWinery}
+                />
+              ) : (
+                <RegionsScreen onOpenRegion={setSelectedRegion} />
+              )
+            ) : (
+              <ProfileScreen favorites={favorites} />
+            )}
+          </div>
+
+          {!detail && <BottomNav tab={tab} setTab={setTab} />}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -626,12 +720,15 @@ function Header({
         </button>
       </div>
 
-      <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
+      <div style={styles.headerBrandRow}>
+        <img src="/grapes.png" alt="Arte uvas" style={styles.headerBrandArt} />
+        <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
+      </div>
 
       {currentTab !== "search" && (
         <button style={styles.searchBar} onClick={onSearchClick}>
           <SearchIcon />
-          <span style={{ color: "#8a7d71", fontSize: 14 }}>
+          <span style={{ color: theme.secondaryText, fontSize: 14 }}>
             Busca tu vino, bodega o experiencia
           </span>
         </button>
@@ -642,26 +739,15 @@ function Header({
 
 function SplashScreen() {
   return (
-    <>
-      <style>{`
-        @keyframes splashLogoIn {
-          0% {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-      `}</style>
+    <div style={styles.splashPage}>
+      <div style={styles.splashGlowOne} />
+      <div style={styles.splashGlowTwo} />
+      <img src="/grapes.png" alt="Arte uvas" style={styles.splashArt} />
 
-      <div style={styles.splashPage}>
-        <div style={styles.splashLogoWrap}>
-          <img src="/logo-app.png" style={styles.splashLogo} alt="Logo app" />
-        </div>
+      <div style={styles.splashLogoWrap}>
+        <img src="/logo-app.png" style={styles.splashLogo} alt="Logo app" />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -683,53 +769,30 @@ function HomeScreen({
   requestUserLocation: () => void;
 }) {
   const handleQuickAction = (title: string) => {
-    if (title === "Bodegas cerca") {
-      onSetTab("map");
-      return;
-    }
-    if (title === "Buscar un vino") {
-      onSetTab("search");
-      return;
-    }
-    if (title === "Eventos hoy") {
-      onSetTab("agenda");
-      return;
-    }
-    if (title === "Club del vino") {
-      onSetTab("profile");
-    }
+    if (title === "Bodegas cerca") return onSetTab("map");
+    if (title === "Buscar un vino") return onSetTab("search");
+    if (title === "Eventos hoy") return onSetTab("agenda");
+    if (title === "Club del vino") return onSetTab("profile");
   };
 
   const handleEventClick = (place: string) => {
-    if (place === "Bodega Miras") {
-      onOpenWinery("w1");
-      return;
-    }
-    if (place === "Bodega Aniello") {
-      onOpenWinery("w2");
-      return;
-    }
-    if (place === "Vinoteca del Río") {
-      onOpenShop("s1");
-      return;
-    }
+    if (place === "Bodega Miras") return onOpenWinery("w1");
+    if (place === "Bodega Aniello") return onOpenWinery("w2");
+    if (place === "Vinoteca del Río") return onOpenShop("s1");
     onSetTab("agenda");
   };
 
   return (
-    <div style={styles.stack16}>
-      <div
-        style={{
-          ...styles.heroCard,
-          backgroundImage:
-            "linear-gradient(135deg, rgba(33,25,20,0.82), rgba(111,29,43,0.86)), url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80')",
-        }}
-      >
+    <div style={styles.stack18}>
+      <div style={styles.heroCard}>
+        <img src="/grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
         <div style={styles.heroBadge}>La Ruta del Vino en tu celular</div>
         <div style={styles.heroTitle}>Vinos y actividades en un solo lugar</div>
         <div style={styles.heroText}>
-          Descubrí bodegas, vinotecas, vinos y beneficios cerca tuyo.
+          Descubrí bodegas, vinotecas, vinos y beneficios con una experiencia más
+          cálida, artesanal y rionegrina.
         </div>
+
         <div style={styles.rowGap10Wrap}>
           <button
             style={styles.primaryLightButton}
@@ -741,7 +804,7 @@ function HomeScreen({
             Explorar mapa
           </button>
           <button
-            style={styles.secondaryDarkButton}
+            style={styles.secondarySoftButton}
             onClick={() => onSetTab("agenda")}
           >
             Qué pasa hoy
@@ -808,55 +871,30 @@ function HomeScreen({
 
       <div style={styles.stack12}>
         {WINERIES.map((w) => (
-          <div
+          <ImageCard
             key={w.id}
-            style={styles.imageCard}
+            title={w.name}
+            subtitle={`${w.city} · ${w.distance} · ★ ${w.rating}`}
+            description={w.description}
+            feature={w.activity}
+            image={w.image}
+            badge={
+              <Badge kind={w.openNow ? "open" : "closed"}>
+                {w.openNow ? "Abierta" : "Cerrada"}
+              </Badge>
+            }
+            onFavorite={(e) => {
+              e.stopPropagation();
+              toggleFavorite({
+                id: w.id,
+                name: w.name,
+                city: w.city,
+                kind: "winery",
+              });
+            }}
+            favoriteActive={favorites.some((f) => f.id === w.id)}
             onClick={() => onOpenWinery(w.id)}
-          >
-            <div
-              style={{
-                ...styles.imageCardTop,
-                backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.62)), url('${w.image}')`,
-              }}
-            >
-              <div style={styles.rowBetweenTop}>
-                <div style={styles.rowGap8}>
-                  <Badge kind={w.openNow ? "open" : "closed"}>
-                    {w.openNow ? "Abierta" : "Cerrada"}
-                  </Badge>
-                </div>
-                <button
-                  style={styles.iconGlassButton}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFavorite({
-                      id: w.id,
-                      name: w.name,
-                      city: w.city,
-                      kind: "winery",
-                    });
-                  }}
-                >
-                  <HeartIcon active={favorites.some((f) => f.id === w.id)} />
-                </button>
-              </div>
-
-              <div>
-                <div style={styles.imageCardTitle}>{w.name}</div>
-                <div style={styles.imageCardSub}>
-                  {w.city} · {w.distance} · ★ {w.rating}
-                </div>
-              </div>
-            </div>
-
-            <div style={styles.imageCardBody}>
-              <div style={styles.placeText}>{w.description}</div>
-              <div style={styles.rowBetweenCenter}>
-                <div style={styles.featureText}>{w.activity}</div>
-                <ChevronRightIcon />
-              </div>
-            </div>
-          </div>
+          />
         ))}
       </div>
 
@@ -868,53 +906,79 @@ function HomeScreen({
 
       <div style={styles.stack12}>
         {WINES.map((wine) => (
-          <div
+          <ImageCard
             key={wine.id}
-            style={styles.imageCard}
+            title={wine.name}
+            subtitle={`${wine.winery} · ${wine.varietal}`}
+            description={wine.note}
+            feature={wine.style}
+            image={wine.image}
+            badge={<Badge kind="benefit">{wine.tag}</Badge>}
+            onFavorite={(e) => {
+              e.stopPropagation();
+              toggleFavorite({
+                id: wine.id,
+                name: wine.name,
+                kind: "wine",
+              });
+            }}
+            favoriteActive={favorites.some((f) => f.id === wine.id)}
             onClick={() => onOpenWine(wine.id)}
-          >
-            <div
-              style={{
-                ...styles.imageCardTop,
-                backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.62)), url('${wine.image}')`,
-              }}
-            >
-              <div style={styles.rowBetweenTop}>
-                <div style={styles.rowGap8}>
-                  <Badge kind="benefit">{wine.tag}</Badge>
-                </div>
-                <button
-                  style={styles.iconGlassButton}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFavorite({
-                      id: wine.id,
-                      name: wine.name,
-                      kind: "wine",
-                    });
-                  }}
-                >
-                  <HeartIcon active={favorites.some((f) => f.id === wine.id)} />
-                </button>
-              </div>
-
-              <div>
-                <div style={styles.imageCardTitle}>{wine.name}</div>
-                <div style={styles.imageCardSub}>
-                  {wine.winery} · {wine.varietal}
-                </div>
-              </div>
-            </div>
-
-            <div style={styles.imageCardBody}>
-              <div style={styles.placeText}>{wine.note}</div>
-              <div style={styles.rowBetweenCenter}>
-                <div style={styles.featureText}>{wine.style}</div>
-                <ChevronRightIcon />
-              </div>
-            </div>
-          </div>
+          />
         ))}
+      </div>
+    </div>
+  );
+}
+
+function ImageCard({
+  title,
+  subtitle,
+  description,
+  feature,
+  image,
+  badge,
+  onFavorite,
+  favoriteActive,
+  onClick,
+}: {
+  title: string;
+  subtitle: string;
+  description: string;
+  feature: string;
+  image: string;
+  badge: React.ReactNode;
+  onFavorite: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  favoriteActive: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <div style={styles.imageCard} onClick={onClick}>
+      <div
+        style={{
+          ...styles.imageCardTop,
+          backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.10), rgba(24,12,12,0.62)), url('${image}')`,
+        }}
+      >
+        <div style={styles.rowBetweenTop}>
+          <div style={styles.rowGap8}>{badge}</div>
+          <button style={styles.iconGlassButton} onClick={onFavorite}>
+            <HeartIcon active={favoriteActive} />
+          </button>
+        </div>
+
+        <div>
+          <div style={styles.imageCardTitle}>{title}</div>
+          <div style={styles.imageCardSub}>{subtitle}</div>
+        </div>
+      </div>
+
+      <div style={styles.imageCardBody}>
+        <div style={styles.placeText}>{description}</div>
+        <div style={styles.rowBetweenCenter}>
+          <div style={styles.featureText}>{feature}</div>
+          <ChevronRightIcon />
+        </div>
       </div>
     </div>
   );
@@ -933,7 +997,7 @@ function RegionsScreen({
   ];
 
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <SectionTitle title="Descubrí por región" />
       <div style={styles.stack12}>
         {regionOrder.map((region) => {
@@ -949,10 +1013,21 @@ function RegionsScreen({
               <div
                 style={{
                   ...styles.regionCardTop,
-                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.60)), url('${meta.image}')`,
+                  backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.12), rgba(24,12,12,0.58)), url('${meta.image}')`,
                 }}
               >
-                <div style={styles.regionPill}>
+                <img
+                  src="/grapes.png"
+                  alt="Arte uvas"
+                  style={styles.regionArtImage}
+                />
+
+                <div
+                  style={{
+                    ...styles.regionPill,
+                    background: meta.tint,
+                  }}
+                >
                   {wineries.length} {wineries.length === 1 ? "bodega" : "bodegas"}
                 </div>
 
@@ -993,7 +1068,7 @@ function RegionWineriesScreen({
   const meta = REGION_META[region];
 
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1016,7 +1091,7 @@ function RegionWineriesScreen({
               <div
                 style={{
                   ...styles.imageCardTop,
-                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.60)), url('${w.image}')`,
+                  backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.10), rgba(24,12,12,0.58)), url('${w.image}')`,
                 }}
               >
                 <div style={styles.bodegaLogoBadge}>{w.name}</div>
@@ -1043,9 +1118,8 @@ function RegionWineriesScreen({
         <div style={styles.card}>
           <div style={styles.itemTitle}>Próximamente</div>
           <div style={styles.placeText}>
-            No pude verificar todavía una bodega activa de Línea Sur con la misma
-            solidez que el resto, así que dejé esta región lista para completar en
-            la próxima pasada.
+            Dejé esta región lista para completar cuando sumemos una bodega
+            verificada de Línea Sur.
           </div>
         </div>
       )}
@@ -1054,15 +1128,11 @@ function RegionWineriesScreen({
 }
 
 function MapScreen({
-  onOpenWinery,
-  onOpenShop,
   userLocation,
   locationStatus,
   locationError,
   requestUserLocation,
 }: {
-  onOpenWinery: (id: string) => void;
-  onOpenShop: (id: string) => void;
   userLocation: { lat: number; lng: number } | null;
   locationStatus: "idle" | "loading" | "granted" | "error";
   locationError: string;
@@ -1080,7 +1150,7 @@ function MapScreen({
   };
 
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.rowBetweenCenter}>
         <div style={styles.chipsRow}>
           {["Todos", "Bodegas", "Vinotecas", "Eventos", "Hoy"].map((item) => (
@@ -1100,22 +1170,14 @@ function MapScreen({
       </div>
 
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
-        <div
-          style={{
-            height: 420,
-            width: "100%",
-            background: "#eee",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <div style={styles.mapArea}>
+          <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
           <button style={styles.primaryButton} onClick={openGoogleMaps}>
             Abrir mapa real
           </button>
         </div>
 
-        <div style={{ padding: 16 }}>
+        <div style={{ padding: 18 }}>
           <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
 
           {locationStatus === "granted" && userLocation ? (
@@ -1126,8 +1188,7 @@ function MapScreen({
                 {userLocation.lng.toFixed(4)}
               </div>
               <div style={styles.placeText}>
-                Ya podemos usar tu ubicación y abrir Google Maps con tu posición
-                real.
+                Ya podemos usar tu ubicación y abrir Google Maps con tu posición real.
               </div>
             </>
           ) : locationStatus === "error" ? (
@@ -1175,7 +1236,7 @@ function SearchScreen({
   onOpenShop: (id: string) => void;
 }) {
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.card}>
         <div style={styles.searchInputWrap}>
           <SearchIcon />
@@ -1253,7 +1314,7 @@ function AgendaScreen() {
   const [filter, setFilter] = useState("Hoy");
 
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.rowGap10Wrap}>
         {["Ahora", "Hoy", "Este finde"].map((x) => (
           <button
@@ -1292,8 +1353,9 @@ function AgendaScreen() {
 
 function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.profileHeroCard}>
+        <img src="/grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
         <div>
           <div style={styles.membershipEyebrow}>Membresía activa</div>
           <div style={styles.membershipTitle}>Tus Beneficios</div>
@@ -1375,7 +1437,7 @@ function WineDetail({
   ).slice(0, 2);
 
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1409,7 +1471,7 @@ function WineDetail({
           <div style={styles.grid3}>
             <InfoBox label="Varietal" value={wine.varietal} />
             <InfoBox label="Estilo" value={wine.style} />
-            <InfoBox label="Ciudad" value="Río Negro" />
+            <InfoBox label="Origen" value="Río Negro" />
           </div>
 
           <div style={styles.placeText}>{wine.note}</div>
@@ -1473,7 +1535,7 @@ function WineryDetail({
   isFavorite: (id: string) => boolean;
 }) {
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1575,7 +1637,7 @@ function ShopDetail({
   isFavorite: (id: string) => boolean;
 }) {
   return (
-    <div style={styles.stack16}>
+    <div style={styles.stack18}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1646,42 +1708,6 @@ function ShopDetail({
           />
         ))}
       </Block>
-    </div>
-  );
-}
-
-function BottomNav({
-  tab,
-  setTab,
-}: {
-  tab: TabKey;
-  setTab: (tab: TabKey) => void;
-}) {
-  const items: Array<{ key: TabKey; label: string; icon: React.ReactNode }> = [
-    { key: "home", label: "Inicio", icon: <HomeIcon /> },
-    { key: "map", label: "Mapa", icon: <MapIcon /> },
-    { key: "search", label: "Buscar", icon: <SearchIcon /> },
-    { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
-    { key: "bodegas", label: "Bodegas", icon: <WineIcon /> },
-  ];
-
-  return (
-    <div style={styles.bottomNavWrap}>
-      <div style={styles.bottomNav}>
-        {items.map((item) => {
-          const active = tab === item.key;
-          return (
-            <button
-              key={item.key}
-              style={active ? styles.navItemActive : styles.navItem}
-              onClick={() => setTab(item.key)}
-            >
-              {item.icon}
-              <span style={styles.navLabel}>{item.label}</span>
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 }
@@ -1927,7 +1953,7 @@ function HeartIcon({ active }: { active: boolean }) {
   return svgBase(
     <>
       <path
-        fill={active ? "#a11d43" : "transparent"}
+        fill={active ? theme.primary : "transparent"}
         d="M12 20s-7-4.4-9-8.7C1.4 8 3.2 5 6.6 5c2 0 3.1 1 5.4 3.4C14.3 6 15.4 5 17.4 5 20.8 5 22.6 8 21 11.3 19 15.6 12 20 12 20z"
       />
       <path d="M12 20s-7-4.4-9-8.7C1.4 8 3.2 5 6.6 5c2 0 3.1 1 5.4 3.4C14.3 6 15.4 5 17.4 5 20.8 5 22.6 8 21 11.3 19 15.6 12 20 12 20z" />
@@ -1938,32 +1964,63 @@ function HeartIcon({ active }: { active: boolean }) {
 const styles: Record<string, React.CSSProperties> = {
   page: {
     minHeight: "100vh",
-    background: "#f5e9ea",
+    background: `linear-gradient(180deg, ${theme.backgroundTop} 0%, ${theme.backgroundBottom} 100%)`,
     display: "flex",
     justifyContent: "center",
     padding: 18,
     boxSizing: "border-box",
-    fontFamily:
-      "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+    fontFamily: '"Manrope", sans-serif',
+    position: "relative",
+    overflow: "hidden",
+  },
+  backgroundPaintA: {
+    position: "absolute",
+    width: 320,
+    height: 320,
+    borderRadius: "50%",
+    background: "rgba(223,188,197,0.18)",
+    top: -70,
+    left: -90,
+    filter: "blur(28px)",
+  },
+  backgroundPaintB: {
+    position: "absolute",
+    width: 260,
+    height: 260,
+    borderRadius: "50%",
+    background: "rgba(169,182,121,0.16)",
+    bottom: -50,
+    right: -60,
+    filter: "blur(28px)",
+  },
+  backgroundArt: {
+    position: "absolute",
+    inset: 0,
+    backgroundImage:
+      "radial-gradient(rgba(223,188,197,0.25) 1px, transparent 1px)",
+    backgroundSize: "22px 22px",
+    opacity: 0.28,
+    pointerEvents: "none",
   },
   phone: {
     width: "100%",
     maxWidth: 410,
     height: "92vh",
     maxHeight: 860,
-    background: "#fcfaf7",
-    border: "1px solid #eadfd8",
+    background: "rgba(255,253,251,0.94)",
+    border: `1px solid ${theme.border}`,
     borderRadius: 36,
     overflow: "hidden",
-    boxShadow: "0 22px 70px rgba(37,20,22,0.12)",
+    boxShadow: "0 22px 70px rgba(74, 31, 43, 0.12)",
     display: "flex",
     flexDirection: "column",
     position: "relative",
+    backdropFilter: "blur(10px)",
   },
   header: {
     padding: "16px 18px 18px 18px",
-    background: "rgba(252,250,247,0.95)",
-    borderBottom: "1px solid #efe4df",
+    background: "rgba(255,253,251,0.94)",
+    borderBottom: `1px dashed ${theme.border}`,
     position: "relative",
     zIndex: 4,
   },
@@ -1972,26 +2029,39 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "flex-start",
     marginBottom: 8,
   },
+  headerBrandRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 16,
+  },
+  headerBrandArt: {
+    width: 28,
+    height: 28,
+    objectFit: "contain",
+    opacity: 0.75,
+  },
   menuButton: {
     width: 42,
     height: 42,
-    borderRadius: 14,
-    border: "1px solid #ead9d7",
-    background: "#fff",
+    borderRadius: 16,
+    border: `1px solid ${theme.border}`,
+    background: theme.card,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-    color: "#211914",
+    color: theme.text,
+    boxShadow: "0 10px 24px rgba(74, 31, 43, 0.06)",
   },
   menuDropdown: {
     position: "absolute",
     top: 78,
     left: 18,
-    background: "#fff",
-    border: "1px solid #eadfd8",
-    borderRadius: 18,
-    boxShadow: "0 14px 30px rgba(33,22,16,0.12)",
+    background: theme.card,
+    border: `1px solid ${theme.border}`,
+    borderRadius: 22,
+    boxShadow: "0 14px 30px rgba(74, 31, 43, 0.12)",
     padding: 10,
     display: "grid",
     gap: 6,
@@ -2004,18 +2074,16 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 12,
     textAlign: "left",
     cursor: "pointer",
-    color: "#211914",
+    color: theme.text,
     fontWeight: 700,
   },
   headerTitle: {
-    fontFamily: "Manrope, Inter, sans-serif",
-    fontSize: 31,
-    fontWeight: 800,
-    color: "#1c1714",
-    letterSpacing: -1.2,
-    lineHeight: 1.04,
-    marginTop: 2,
-    marginBottom: 16,
+    fontFamily: '"Playfair Display", serif',
+    fontSize: 34,
+    fontWeight: 700,
+    color: theme.text,
+    letterSpacing: -1.1,
+    lineHeight: 1.02,
   },
   searchBar: {
     width: "100%",
@@ -2023,10 +2091,10 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: "center",
     gap: 10,
     padding: 16,
-    borderRadius: 20,
-    border: "1px solid #ead9d7",
-    background: "rgba(255,255,255,0.96)",
-    boxShadow: "0 8px 24px rgba(40,24,22,0.06)",
+    borderRadius: 999,
+    border: `1px solid ${theme.border}`,
+    background: "rgba(255,255,255,0.92)",
+    boxShadow: "0 8px 24px rgba(40,24,22,0.05)",
     cursor: "pointer",
   },
   content: {
@@ -2034,9 +2102,9 @@ const styles: Record<string, React.CSSProperties> = {
     overflowY: "auto",
     padding: "18px 16px 16px 16px",
   },
-  stack16: {
+  stack18: {
     display: "grid",
-    gap: 16,
+    gap: 18,
   },
   stack12: {
     display: "grid",
@@ -2083,85 +2151,101 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "11px 15px",
     fontSize: 13,
     fontWeight: 700,
-    border: "1px solid #e7ddd3",
-    background: "#fff",
-    color: "#65584e",
+    border: `1px solid ${theme.border}`,
+    background: theme.card,
+    color: theme.secondaryText,
     cursor: "pointer",
     whiteSpace: "nowrap",
-    boxShadow: "0 4px 10px rgba(26,18,15,0.03)",
   },
   chipActive: {
     borderRadius: 999,
     padding: "11px 15px",
     fontSize: 13,
     fontWeight: 700,
-    border: "1px solid #211914",
-    background: "#211914",
+    border: `1px solid ${theme.primary}`,
+    background: theme.primary,
     color: "#fff",
     cursor: "pointer",
     whiteSpace: "nowrap",
   },
   heroCard: {
-    border: "1px solid rgba(95,24,48,0.55)",
-    borderRadius: 28,
-    padding: 20,
+    border: `1px solid rgba(111,29,43,0.22)`,
+    borderRadius: 30,
+    padding: 22,
     color: "#fff",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    boxShadow: "0 18px 40px rgba(73,20,34,0.18)",
+    position: "relative",
+    overflow: "hidden",
+    background:
+      "linear-gradient(135deg, rgba(79,19,32,0.94), rgba(111,29,43,0.88) 48%, rgba(130,54,73,0.84) 100%)",
+    boxShadow: "0 20px 40px rgba(73,20,34,0.16)",
+  },
+  heroArtImage: {
+    position: "absolute",
+    top: 10,
+    right: -10,
+    width: 180,
+    opacity: 0.14,
+    pointerEvents: "none",
   },
   heroBadge: {
+    position: "relative",
+    zIndex: 2,
     display: "inline-flex",
     alignItems: "center",
     borderRadius: 999,
-    padding: "7px 12px",
+    padding: "8px 13px",
     fontSize: 12,
     fontWeight: 700,
     background: "rgba(255,255,255,0.12)",
     border: "1px solid rgba(255,255,255,0.18)",
   },
   heroTitle: {
-    marginTop: 14,
-    fontSize: 33,
+    position: "relative",
+    zIndex: 2,
+    marginTop: 16,
+    fontFamily: '"Playfair Display", serif',
+    fontSize: 34,
     lineHeight: 1.02,
-    fontWeight: 800,
+    fontWeight: 700,
     letterSpacing: -1.2,
     maxWidth: 300,
   },
   heroText: {
+    position: "relative",
+    zIndex: 2,
     marginTop: 12,
     fontSize: 15,
     color: "rgba(255,255,255,0.88)",
-    lineHeight: 1.5,
+    lineHeight: 1.55,
     maxWidth: 300,
   },
   primaryButton: {
     marginTop: 14,
-    borderRadius: 16,
-    padding: "12px 16px",
-    border: "1px solid #211914",
-    background: "#211914",
+    borderRadius: 999,
+    padding: "12px 18px",
+    border: `1px solid ${theme.primaryDark}`,
+    background: theme.primaryDark,
     color: "#fff",
     fontWeight: 700,
     cursor: "pointer",
   },
   primaryLightButton: {
     marginTop: 14,
-    borderRadius: 16,
-    padding: "12px 16px",
+    borderRadius: 999,
+    padding: "12px 18px",
     border: "1px solid #fff",
     background: "#fff",
-    color: "#211914",
+    color: theme.text,
     fontWeight: 700,
     cursor: "pointer",
   },
   secondaryButton: {
     marginTop: 14,
-    borderRadius: 16,
-    padding: "12px 16px",
-    border: "1px solid #e7ddd3",
-    background: "#fff",
-    color: "#211914",
+    borderRadius: 999,
+    padding: "12px 18px",
+    border: `1px solid ${theme.border}`,
+    background: theme.card,
+    color: theme.text,
     fontWeight: 700,
     cursor: "pointer",
     display: "inline-flex",
@@ -2169,27 +2253,28 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 8,
     justifyContent: "center",
   },
-  secondaryDarkButton: {
+  secondarySoftButton: {
     marginTop: 14,
-    borderRadius: 16,
-    padding: "12px 16px",
-    border: "1px solid rgba(255,255,255,0.2)",
-    background: "rgba(255,255,255,0.08)",
+    borderRadius: 999,
+    padding: "12px 18px",
+    border: "1px solid rgba(255,255,255,0.22)",
+    background: "rgba(255,255,255,0.12)",
     color: "#fff",
     fontWeight: 700,
     cursor: "pointer",
   },
   backButton: {
-    borderRadius: 16,
-    padding: "12px 16px",
-    border: "1px solid #e7ddd3",
-    background: "#fff",
-    color: "#211914",
+    borderRadius: 999,
+    padding: "12px 18px",
+    border: `1px solid ${theme.border}`,
+    background: theme.card,
+    color: theme.text,
     fontWeight: 700,
     cursor: "pointer",
     display: "inline-flex",
     alignItems: "center",
     gap: 8,
+    boxShadow: "0 10px 24px rgba(74, 31, 43, 0.06)",
   },
   grid2: {
     display: "grid",
@@ -2202,48 +2287,49 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 10,
   },
   card: {
-    background: "#fff",
-    border: "1px solid #eee5dc",
-    borderRadius: 24,
-    boxShadow: "0 10px 30px rgba(26,18,15,0.05)",
+    background: `linear-gradient(135deg, ${theme.card}, #f8f1ec)`,
+    border: `1px solid ${theme.border}`,
+    borderRadius: 28,
+    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
     padding: 16,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 800,
-    color: "#221914",
-    letterSpacing: -0.3,
+    fontFamily: '"Playfair Display", serif',
+    fontSize: 23,
+    fontWeight: 700,
+    color: theme.text,
+    letterSpacing: -0.5,
   },
   sectionAction: {
     border: 0,
     background: "transparent",
-    color: "#7d2237",
+    color: theme.primary,
     fontWeight: 700,
     cursor: "pointer",
   },
   itemTitle: {
     fontWeight: 800,
-    color: "#211914",
+    color: theme.text,
     fontSize: 15,
   },
   itemSub: {
     marginTop: 4,
-    color: "#8b7b70",
+    color: theme.secondaryText,
     fontSize: 14,
   },
   itemMeta: {
     marginTop: 10,
-    color: "#211914",
+    color: theme.text,
     fontSize: 14,
   },
   placeText: {
     marginTop: 12,
-    color: "#5f5249",
-    lineHeight: 1.55,
+    color: "#60554b",
+    lineHeight: 1.6,
     fontSize: 14,
   },
   featureText: {
-    color: "#7d2237",
+    color: theme.primary,
     fontWeight: 700,
     fontSize: 13,
     marginTop: 14,
@@ -2255,9 +2341,9 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "6px 10px",
     fontSize: 12,
     fontWeight: 700,
-    background: "#f5f1eb",
-    color: "#53473e",
-    border: "1px solid #ece2d8",
+    background: theme.neutralBg,
+    color: theme.neutralText,
+    border: `1px solid ${theme.neutralBorder}`,
   },
   badgeOpen: {
     display: "inline-flex",
@@ -2266,9 +2352,9 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "6px 10px",
     fontSize: 12,
     fontWeight: 700,
-    background: "#eaf7ee",
-    color: "#18623a",
-    border: "1px solid #d0e9d8",
+    background: theme.successBg,
+    color: theme.successText,
+    border: `1px solid ${theme.successBorder}`,
   },
   badgeClosed: {
     display: "inline-flex",
@@ -2277,9 +2363,9 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "6px 10px",
     fontSize: 12,
     fontWeight: 700,
-    background: "#f9ece8",
-    color: "#8a3f2f",
-    border: "1px solid #efd7cf",
+    background: theme.dangerBg,
+    color: theme.dangerText,
+    border: `1px solid ${theme.dangerBorder}`,
   },
   badgeBenefit: {
     display: "inline-flex",
@@ -2288,20 +2374,20 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "6px 10px",
     fontSize: 12,
     fontWeight: 700,
-    background: "#f9eef1",
-    color: "#7d2237",
-    border: "1px solid #f0d6de",
+    background: "#f3ebef",
+    color: theme.primary,
+    border: "1px solid #ead3db",
   },
   imageCard: {
-    background: "#fff",
-    border: "1px solid #eee5dc",
-    borderRadius: 24,
+    background: theme.card,
+    border: `1px solid ${theme.border}`,
+    borderRadius: 28,
     overflow: "hidden",
-    boxShadow: "0 10px 30px rgba(26,18,15,0.05)",
+    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
     cursor: "pointer",
   },
   imageCardTop: {
-    height: 180,
+    height: 188,
     backgroundSize: "cover",
     backgroundPosition: "center",
     display: "flex",
@@ -2310,32 +2396,44 @@ const styles: Record<string, React.CSSProperties> = {
     padding: 16,
   },
   regionCardTop: {
-    height: 190,
+    height: 196,
     backgroundSize: "cover",
     backgroundPosition: "center",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     padding: 16,
+    position: "relative",
+    overflow: "hidden",
+  },
+  regionArtImage: {
+    position: "absolute",
+    top: 6,
+    right: -8,
+    width: 150,
+    opacity: 0.12,
+    pointerEvents: "none",
   },
   imageCardBody: {
     padding: 16,
   },
   imageCardTitle: {
-    fontSize: 24,
-    fontWeight: 800,
+    fontFamily: '"Playfair Display", serif',
+    fontSize: 26,
+    fontWeight: 700,
     color: "#fff",
-    letterSpacing: -0.6,
+    letterSpacing: -0.8,
+    lineHeight: 1.04,
   },
   imageCardSub: {
     marginTop: 4,
-    color: "rgba(255,255,255,0.86)",
+    color: "rgba(255,255,255,0.88)",
     fontSize: 14,
   },
   iconGlassButton: {
     width: 42,
     height: 42,
-    borderRadius: 16,
+    borderRadius: 18,
     border: "1px solid rgba(255,255,255,0.25)",
     background: "rgba(255,255,255,0.16)",
     backdropFilter: "blur(8px)",
@@ -2348,21 +2446,21 @@ const styles: Record<string, React.CSSProperties> = {
   iconBadge: {
     width: 42,
     height: 42,
-    borderRadius: 16,
+    borderRadius: 18,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     background: "#f6f1eb",
-    color: "#211914",
+    color: theme.text,
   },
   iconBadgeWine: {
     width: 42,
     height: 42,
-    borderRadius: 16,
+    borderRadius: 18,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "#6f1d2b",
+    background: theme.primary,
     color: "#fff",
   },
   regionPill: {
@@ -2373,62 +2471,82 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "7px 12px",
     fontSize: 12,
     fontWeight: 700,
-    background: "rgba(255,255,255,0.14)",
     border: "1px solid rgba(255,255,255,0.18)",
     color: "#fff",
+    backdropFilter: "blur(4px)",
   },
   bodegaLogoBadge: {
     display: "inline-flex",
     alignItems: "center",
     alignSelf: "flex-start",
-    borderRadius: 14,
+    borderRadius: 16,
     padding: "8px 12px",
     fontSize: 12,
     fontWeight: 800,
     background: "rgba(255,255,255,0.88)",
-    color: "#6f1d2b",
+    color: theme.primary,
     border: "1px solid rgba(255,255,255,0.9)",
+    animation: "floatSoft 5s ease-in-out infinite",
+  },
+  mapArea: {
+    height: 420,
+    width: "100%",
+    background: "linear-gradient(180deg, #f3eadf 0%, #e9ddcf 100%)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    overflow: "hidden",
+  },
+  mapArtImage: {
+    position: "absolute",
+    right: -10,
+    top: 20,
+    width: 190,
+    opacity: 0.12,
+    pointerEvents: "none",
   },
   mapOverlayEyebrow: {
     fontSize: 11,
     letterSpacing: 1.8,
     textTransform: "uppercase",
-    color: "#8b7b70",
+    color: theme.secondaryText,
     fontWeight: 700,
   },
   mapOverlayTitle: {
     marginTop: 6,
-    fontSize: 24,
-    fontWeight: 800,
-    color: "#211914",
-    letterSpacing: -0.5,
+    fontFamily: '"Playfair Display", serif',
+    fontSize: 28,
+    fontWeight: 700,
+    color: theme.text,
+    letterSpacing: -0.6,
   },
   metricBox: {
-    background: "#f6f1eb",
-    border: "1px solid #ebe0d6",
-    borderRadius: 16,
+    background: "#faf6f0",
+    border: `1px solid ${theme.border}`,
+    borderRadius: 18,
     padding: 12,
   },
   metricLabel: {
     fontSize: 11,
     textTransform: "uppercase",
     letterSpacing: 1.2,
-    color: "#8b7b70",
+    color: theme.secondaryText,
     fontWeight: 700,
   },
   metricValue: {
     marginTop: 5,
     fontSize: 14,
     fontWeight: 800,
-    color: "#211914",
+    color: theme.text,
   },
   searchInputWrap: {
     display: "flex",
     alignItems: "center",
     gap: 10,
     padding: 14,
-    borderRadius: 18,
-    border: "1px solid #e9dfd5",
+    borderRadius: 999,
+    border: `1px solid ${theme.border}`,
     background: "#fff",
   },
   input: {
@@ -2437,13 +2555,13 @@ const styles: Record<string, React.CSSProperties> = {
     width: "100%",
     fontSize: 15,
     background: "transparent",
-    color: "#211914",
+    color: theme.text,
   },
   resultRow: {
-    background: "#fff",
-    border: "1px solid #eee5dc",
-    borderRadius: 24,
-    boxShadow: "0 10px 30px rgba(26,18,15,0.05)",
+    background: theme.card,
+    border: `1px solid ${theme.border}`,
+    borderRadius: 26,
+    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
     padding: 14,
     cursor: "pointer",
     display: "flex",
@@ -2452,13 +2570,23 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 12,
   },
   profileHeroCard: {
-    background: "linear-gradient(135deg,#1f1814,#6f1d2b)",
-    border: "1px solid #5f1830",
-    borderRadius: 24,
+    background: `linear-gradient(135deg, ${theme.primaryDark}, ${theme.primary})`,
+    border: "1px solid rgba(111,29,43,0.35)",
+    borderRadius: 28,
     padding: 18,
     color: "#fff",
     display: "grid",
     gap: 16,
+    position: "relative",
+    overflow: "hidden",
+  },
+  profileArtImage: {
+    position: "absolute",
+    right: -10,
+    top: 8,
+    width: 170,
+    opacity: 0.10,
+    pointerEvents: "none",
   },
   membershipEyebrow: {
     fontSize: 13,
@@ -2467,9 +2595,10 @@ const styles: Record<string, React.CSSProperties> = {
   },
   membershipTitle: {
     marginTop: 6,
-    fontSize: 29,
-    fontWeight: 800,
-    letterSpacing: -0.7,
+    fontFamily: '"Playfair Display", serif',
+    fontSize: 32,
+    fontWeight: 700,
+    letterSpacing: -0.8,
   },
   membershipText: {
     marginTop: 10,
@@ -2480,7 +2609,7 @@ const styles: Record<string, React.CSSProperties> = {
   savingsBigCard: {
     background: "rgba(255,255,255,0.12)",
     border: "1px solid rgba(255,255,255,0.15)",
-    borderRadius: 22,
+    borderRadius: 24,
     padding: 18,
   },
   savingsBigLabel: {
@@ -2500,42 +2629,43 @@ const styles: Record<string, React.CSSProperties> = {
     color: "rgba(255,255,255,0.8)",
   },
   notificationPreviewCard: {
-    background: "#fff",
-    border: "1px solid #eee5dc",
-    borderRadius: 24,
-    boxShadow: "0 10px 30px rgba(26,18,15,0.05)",
+    background: theme.card,
+    border: `1px solid ${theme.border}`,
+    borderRadius: 28,
+    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
     padding: 16,
   },
   infoBox: {
-    background: "#f7f2ec",
-    border: "1px solid #ede2d8",
+    background: "#faf6f0",
+    border: `1px solid ${theme.border}`,
     borderRadius: 18,
     padding: 14,
   },
   infoLabel: {
     fontSize: 12,
-    color: "#8b7b70",
+    color: theme.secondaryText,
     fontWeight: 700,
   },
   infoValue: {
     marginTop: 6,
-    color: "#211914",
+    color: theme.text,
     fontWeight: 800,
     fontSize: 14,
   },
   detailTitle: {
-    fontSize: 30,
+    fontFamily: '"Playfair Display", serif',
+    fontSize: 31,
     lineHeight: 1.02,
-    fontWeight: 800,
-    color: "#211914",
-    letterSpacing: -0.8,
+    fontWeight: 700,
+    color: theme.text,
+    letterSpacing: -0.9,
     marginTop: 10,
   },
   wineHeroCard: {
-    background: "#fff",
-    border: "1px solid #eee5dc",
-    borderRadius: 24,
-    boxShadow: "0 10px 30px rgba(26,18,15,0.05)",
+    background: theme.card,
+    border: `1px solid ${theme.border}`,
+    borderRadius: 28,
+    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
     overflow: "hidden",
   },
   wineBottleArea: {
@@ -2550,16 +2680,16 @@ const styles: Record<string, React.CSSProperties> = {
   bottleMockLarge: {
     width: 92,
     height: 160,
-    borderRadius: 28,
-    background: "linear-gradient(180deg,#6f1d2b,#201814)",
+    borderRadius: 30,
+    background: `linear-gradient(180deg, ${theme.primary}, ${theme.primaryDark})`,
     boxShadow: "0 12px 30px rgba(33,22,16,0.18)",
   },
   detailImageCard: {
-    background: "#fff",
-    border: "1px solid #eee5dc",
-    borderRadius: 24,
+    background: theme.card,
+    border: `1px solid ${theme.border}`,
+    borderRadius: 28,
     overflow: "hidden",
-    boxShadow: "0 10px 30px rgba(26,18,15,0.05)",
+    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
   },
   detailImageTop: {
     height: 210,
@@ -2571,25 +2701,25 @@ const styles: Record<string, React.CSSProperties> = {
   },
   bottomNavWrap: {
     padding: 14,
-    borderTop: "1px solid #ede4da",
-    background: "#fcfaf7",
+    borderTop: `1px dashed ${theme.border}`,
+    background: "rgba(255,253,251,0.94)",
   },
   bottomNav: {
     display: "grid",
     gridTemplateColumns: "repeat(5,1fr)",
     gap: 8,
     padding: 8,
-    borderRadius: 24,
-    background: "#fff",
-    border: "1px solid #eee4db",
-    boxShadow: "0 10px 24px rgba(26,18,15,0.08)",
+    borderRadius: 28,
+    background: theme.card,
+    border: `1px solid ${theme.border}`,
+    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
   },
   navItem: {
     border: 0,
-    borderRadius: 18,
+    borderRadius: 20,
     padding: "10px 4px",
     background: "transparent",
-    color: "#7f7267",
+    color: theme.secondaryText,
     cursor: "pointer",
     display: "flex",
     flexDirection: "column",
@@ -2598,9 +2728,9 @@ const styles: Record<string, React.CSSProperties> = {
   },
   navItemActive: {
     border: 0,
-    borderRadius: 18,
+    borderRadius: 20,
     padding: "10px 4px",
-    background: "#211914",
+    background: theme.primaryDark,
     color: "#fff",
     cursor: "pointer",
     display: "flex",
@@ -2615,16 +2745,48 @@ const styles: Record<string, React.CSSProperties> = {
   splashPage: {
     height: "100vh",
     width: "100%",
-    background: "#f3dfe3",
+    background: `linear-gradient(180deg, ${theme.backgroundTop} 0%, ${theme.backgroundBottom} 100%)`,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    position: "relative",
+    overflow: "hidden",
+  },
+  splashGlowOne: {
+    position: "absolute",
+    width: 260,
+    height: 260,
+    borderRadius: "50%",
+    background: "rgba(223,188,197,0.20)",
+    filter: "blur(30px)",
+    top: 80,
+    left: 40,
+  },
+  splashGlowTwo: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: "50%",
+    background: "rgba(169,182,121,0.18)",
+    filter: "blur(30px)",
+    bottom: 90,
+    right: 40,
+  },
+  splashArt: {
+    position: "absolute",
+    width: 240,
+    opacity: 0.10,
+    top: 120,
+    right: 40,
+    pointerEvents: "none",
   },
   splashLogoWrap: {
     textAlign: "center",
+    position: "relative",
+    zIndex: 2,
   },
   splashLogo: {
-    width: 140,
+    width: 150,
     height: "auto",
     animation: "splashLogoIn 1.4s ease-out",
   },
