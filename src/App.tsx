@@ -83,8 +83,6 @@ const theme = {
   line: "#eadfd5",
   wine: "#6c1527",
   wineDark: "#47101d",
-  leaf: "#a8b66f",
-  grape: "#dfbdc7",
   cream: "#f7f2ec",
 };
 
@@ -168,7 +166,7 @@ const WINERIES: Winery[] = [
       "Bodega histórica de Río Negro con etiquetas emblemáticas y visitas guiadas.",
     hours: "09:00 a 17:00",
     openNow: true,
-    wines: ["Old Vineyard Pinot Noir", "Gran Reserva Malbec"],
+    wines: ["Pinot Noir de viñedo antiguo", "Gran Reserva Malbec"],
     shops: ["Vinoteca del Río"],
     activity: "Visita guiada mañana 11:00",
     benefit: "Copa de regalo para socios",
@@ -227,7 +225,7 @@ const SHOPS: Shop[] = [
     wines: [
       "Miras Pinot Noir",
       "Aniello 006",
-      "Old Vineyard Pinot Noir",
+      "Pinot Noir de viñedo antiguo",
       "Calfulen Pinot Noir",
       "Wapisa Pinot Noir",
     ],
@@ -246,8 +244,8 @@ const SHOPS: Shop[] = [
     hours: "11:00 a 20:30",
     openNow: true,
     wines: [
-      "Miras Joven Malbec",
-      "Aniello Pinot Noir",
+      "Miras Pinot Noir",
+      "Pinot Noir Aniello",
       "Calfulen Malbec Reserva",
       "Wapisa Sauvignon Blanc",
     ],
@@ -430,7 +428,7 @@ export default function App() {
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowSplash(false), 2000);
+    const timer = setTimeout(() => setShowSplash(false), 1800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -492,18 +490,21 @@ export default function App() {
 
   const results = useMemo(() => {
     const q = search.toLowerCase().trim();
+
     const wines = WINES.filter((w) =>
       [w.name, w.varietal, w.winery, w.style, w.tag]
         .join(" ")
         .toLowerCase()
         .includes(q)
     );
+
     const wineries = WINERIES.filter((w) =>
       [w.name, w.city, w.region, w.description, ...w.wines]
         .join(" ")
         .toLowerCase()
         .includes(q)
     );
+
     const shops = SHOPS.filter((s) =>
       [s.name, s.city, s.description, ...s.wines]
         .join(" ")
@@ -685,32 +686,33 @@ function Header({
       <div
         style={{
           ...styles.headerTitleWrap,
-          minHeight: isHome ? 192 : 120,
-          paddingRight: isHome ? 150 : 96,
+          minHeight: isHome ? 210 : 130,
+          paddingRight: isHome ? 170 : 110,
         }}
       >
         <div
           style={{
             ...styles.headerTitle,
             whiteSpace: "pre-line",
-            fontSize: isHome ? 40 : 30,
+            fontSize: isHome ? 42 : 30,
             lineHeight: isHome ? 0.95 : 1,
-            marginTop: isHome ? 22 : 12,
+            marginTop: isHome ? 46 : 16,
+            maxWidth: isHome ? 240 : 280,
           }}
         >
           {title}
         </div>
 
         <img
-          src="/Grapes.png"
+          src="/grapes.png"
           alt="Arte uvas"
           style={{
             ...styles.headerBrandArt,
-            width: isHome ? 235 : 150,
-            height: isHome ? 235 : 150,
-            top: isHome ? -58 : -26,
-            right: isHome ? -46 : -18,
-            opacity: isHome ? 0.9 : 0.62,
+            width: isHome ? 285 : 150,
+            height: isHome ? 285 : 150,
+            top: isHome ? -72 : -24,
+            right: isHome ? -76 : -18,
+            opacity: isHome ? 0.94 : 0.62,
           }}
         />
       </div>
@@ -732,7 +734,7 @@ function SplashScreen() {
     <div style={styles.splashPage}>
       <div style={styles.splashGlowOne} />
       <div style={styles.splashGlowTwo} />
-      <img src="/Grapes.png" alt="Arte uvas" style={styles.splashArt} />
+      <img src="/grapes.png" alt="Arte uvas" style={styles.splashArt} />
       <div style={styles.splashLogoWrap}>
         <img src="/logo-app.png" style={styles.splashLogo} alt="Logo app" />
       </div>
@@ -767,7 +769,7 @@ function HomeScreen({
   return (
     <div style={styles.stack22}>
       <div style={styles.heroCard}>
-        <img src="/Grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
+        <img src="/grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
         <div style={styles.heroBadge}>La ruta del vino en tu celular</div>
         <div style={styles.heroTitle}>Vinos y actividades en un solo lugar</div>
         <div style={styles.heroText}>
@@ -902,7 +904,7 @@ function SearchScreen({
   return (
     <div style={styles.stack22}>
       <div style={styles.searchHeroCard}>
-        <img src="/Grapes.png" alt="Arte uvas" style={styles.searchHeroArt} />
+        <img src="/grapes.png" alt="Arte uvas" style={styles.searchHeroArt} />
         <div style={styles.searchInputWrapBig}>
           <SearchIcon />
           <input
@@ -1077,7 +1079,7 @@ function RegionsScreen({
                   backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.12), rgba(24,12,12,0.58)), url('${meta.image}')`,
                 }}
               >
-                <img src="/Grapes.png" alt="Arte uvas" style={styles.regionArtImage} />
+                <img src="/grapes.png" alt="Arte uvas" style={styles.regionArtImage} />
 
                 <div style={{ ...styles.regionPill, background: meta.tint }}>
                   {wineries.length} {wineries.length === 1 ? "bodega" : "bodegas"}
@@ -1223,7 +1225,7 @@ function MapScreen({
 
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
         <div style={styles.mapArea}>
-          <img src="/Grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
+          <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
           <button style={styles.primaryButton} onClick={openGoogleMaps}>
             Abrir mapa real
           </button>
@@ -1313,7 +1315,7 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
   return (
     <div style={styles.stack22}>
       <div style={styles.profileHeroCard}>
-        <img src="/Grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
+        <img src="/grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
         <div>
           <div style={styles.membershipEyebrow}>Membresía activa</div>
           <div style={styles.membershipTitle}>Tus Beneficios</div>
@@ -1997,9 +1999,11 @@ const styles: Record<string, React.CSSProperties> = {
   },
   header: {
     padding: "16px 18px 18px 18px",
+    paddingTop: 28,
     background: "rgba(255,253,251,0.94)",
     borderBottom: `1px dashed ${theme.line}`,
     position: "relative",
+    overflow: "hidden",
     zIndex: 4,
   },
   headerTopRow: {
@@ -2010,15 +2014,17 @@ const styles: Record<string, React.CSSProperties> = {
   menuButton: {
     width: 44,
     height: 44,
-    borderRadius: 18,
+    borderRadius: 14,
     border: `1px solid ${theme.line}`,
-    background: theme.paper,
+    background: "#fff",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
     color: theme.text,
     boxShadow: "0 10px 24px rgba(61, 23, 35, 0.06)",
+    position: "relative",
+    zIndex: 3,
   },
   menuDropdown: {
     position: "absolute",
@@ -2053,27 +2059,31 @@ const styles: Record<string, React.CSSProperties> = {
     objectFit: "contain",
     pointerEvents: "none",
     transform: "rotate(4deg)",
+    zIndex: 1,
   },
   headerTitle: {
     fontFamily: '"Playfair Display", serif',
-  fontWeight: 700,
-  color: theme.text,
-  letterSpacing: -1.2,
-  position: "relative",
-  zIndex: 2,
-  maxWidth: 280,
+    fontWeight: 700,
+    color: theme.text,
+    letterSpacing: -1.2,
+    position: "relative",
+    zIndex: 2,
+    textAlign: "left",
   },
   searchBar: {
+    marginTop: 18,
     width: "100%",
     display: "flex",
     alignItems: "center",
     gap: 10,
     padding: 16,
-    borderRadius: 999,
+    borderRadius: 20,
     border: `1px solid ${theme.line}`,
-    background: "rgba(255,255,255,0.95)",
+    background: "#fff",
     boxShadow: "0 8px 24px rgba(40,24,22,0.04)",
     cursor: "pointer",
+    position: "relative",
+    zIndex: 2,
   },
   searchBarText: {
     color: theme.subtext,
