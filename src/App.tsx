@@ -84,10 +84,8 @@ const theme = {
   wine: "#6c1527",
   wineDark: "#47101d",
   leaf: "#a8b66f",
-  leafSoft: "#dbe5b8",
   grape: "#dfbdc7",
   cream: "#f7f2ec",
-  creamDeep: "#efe6dc",
 };
 
 const REGION_META: Record<
@@ -512,6 +510,7 @@ export default function App() {
         .toLowerCase()
         .includes(q)
     );
+
     return {
       wines: q ? wines : WINES,
       wineries: q ? wineries : WINERIES,
@@ -673,6 +672,8 @@ function Header({
       ? "Perfil"
       : "Viví el Vino\nRionegrino";
 
+  const isHome = currentTab === "home";
+
   return (
     <div style={styles.header}>
       <div style={styles.headerTopRow}>
@@ -681,25 +682,44 @@ function Header({
         </button>
       </div>
 
-      <div style={styles.headerBrandWrap}>
-        <img src="/Grapes.png" alt="Arte uvas" style={styles.headerBrandArt} />
+      <div
+        style={{
+          ...styles.headerTitleWrap,
+          minHeight: isHome ? 148 : 112,
+          paddingRight: isHome ? 120 : 96,
+        }}
+      >
         <div
           style={{
             ...styles.headerTitle,
             whiteSpace: "pre-line",
-            fontSize: currentTab === "home" ? 40 : 30,
-            lineHeight: currentTab === "home" ? 0.95 : 1,
+            fontSize: isHome ? 40 : 30,
+            lineHeight: isHome ? 0.95 : 1,
+            marginTop: isHome ? 22 : 12,
           }}
         >
           {title}
         </div>
+
+        <img
+          src="/Grapes.png"
+          alt="Arte uvas"
+          style={{
+            ...styles.headerBrandArt,
+            width: isHome ? 150 : 110,
+            height: isHome ? 150 : 110,
+            top: isHome ? -30 : -18,
+            right: isHome ? -18 : -12,
+            opacity: isHome ? 0.82 : 0.58,
+          }}
+        />
       </div>
 
       {currentTab !== "search" && (
         <button style={styles.searchBar} onClick={onSearchClick}>
           <SearchIcon />
           <span style={styles.searchBarText}>
-            Busca tu vino, bodega o experiencia
+            Busca tu vino, bodega o experiencia.
           </span>
         </button>
       )}
@@ -745,7 +765,7 @@ function HomeScreen({
   };
 
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.heroCard}>
         <img src="/Grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
         <div style={styles.heroBadge}>La ruta del vino en tu celular</div>
@@ -774,7 +794,11 @@ function HomeScreen({
         </div>
       </div>
 
-      <SectionTitle title="Actividades destacadas" action="Ver todo" onAction={() => onSetTab("agenda")} />
+      <SectionTitle
+        title="Actividades destacadas"
+        action="Ver todo"
+        onAction={() => onSetTab("agenda")}
+      />
 
       <div style={styles.stack12}>
         {EVENTS.slice(0, 2).map((e) => (
@@ -802,7 +826,11 @@ function HomeScreen({
         ))}
       </div>
 
-      <SectionTitle title="Bodegas recomendadas" action="Ver mapa" onAction={() => onSetTab("map")} />
+      <SectionTitle
+        title="Bodegas recomendadas"
+        action="Ver mapa"
+        onAction={() => onSetTab("map")}
+      />
 
       <div style={styles.stack12}>
         {WINERIES.map((w) => (
@@ -832,6 +860,22 @@ function HomeScreen({
           />
         ))}
       </div>
+
+      <SectionTitle
+        title="Vinos recomendados"
+        action="Ver todos"
+        onAction={() => onSetTab("search")}
+      />
+
+      <div style={styles.stack12}>
+        {WINES.slice(0, 3).map((wine) => (
+          <WineVisualRow
+            key={wine.id}
+            wine={wine}
+            onClick={() => onOpenWine(wine.id)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -856,7 +900,7 @@ function SearchScreen({
   onOpenShop: (id: string) => void;
 }) {
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.searchHeroCard}>
         <img src="/Grapes.png" alt="Arte uvas" style={styles.searchHeroArt} />
         <div style={styles.searchInputWrapBig}>
@@ -1014,7 +1058,7 @@ function RegionsScreen({
   ];
 
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <SectionTitle title="Descubrí por región" />
       <div style={styles.stack12}>
         {regionOrder.map((region) => {
@@ -1076,7 +1120,7 @@ function RegionWineriesScreen({
   const meta = REGION_META[region];
 
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1158,7 +1202,7 @@ function MapScreen({
   };
 
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <div style={styles.chipsRow}>
           {["Todos", "Bodegas", "Vinotecas", "Eventos"].map((item) => (
@@ -1228,7 +1272,7 @@ function AgendaScreen() {
   const [filter, setFilter] = useState("Hoy");
 
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.rowGap10Wrap}>
         {["Ahora", "Hoy", "Este finde"].map((x) => (
           <button
@@ -1267,7 +1311,7 @@ function AgendaScreen() {
 
 function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.profileHeroCard}>
         <img src="/Grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
         <div>
@@ -1347,7 +1391,7 @@ function WineDetail({
   ).slice(0, 2);
 
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1440,7 +1484,7 @@ function WineryDetail({
   isFavorite: (id: string) => boolean;
 }) {
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1491,7 +1535,7 @@ function WineryDetail({
             <InfoBox label="Región" value={REGION_META[winery.region].title} />
           </div>
 
-          <div style={styles.rowGap10}>
+          <div style={styles.rowGap10Wrap}>
             <button style={{ ...styles.primaryButton, flex: 1 }}>
               Cómo llegar
             </button>
@@ -1547,7 +1591,7 @@ function ShopDetail({
   isFavorite: (id: string) => boolean;
 }) {
   return (
-    <div style={styles.stack18}>
+    <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
@@ -1598,7 +1642,7 @@ function ShopDetail({
             <InfoBox label="Beneficio" value={shop.benefit} />
           </div>
 
-          <div style={styles.rowGap10}>
+          <div style={styles.rowGap10Wrap}>
             <button style={{ ...styles.primaryButton, flex: 1 }}>
               Cómo llegar
             </button>
@@ -1844,15 +1888,6 @@ function WineIcon({ white = false }: { white?: boolean }) {
   );
 }
 
-function TicketIcon() {
-  return svgBase(
-    <>
-      <path d="M3 9a2 2 0 1 0 0 4v5h18v-5a2 2 0 1 0 0-4V4H3z" />
-      <path d="M13 4v14" />
-    </>
-  );
-}
-
 function SparklesIcon({ white = false }: { white?: boolean }) {
   return (
     <span style={{ color: white ? "#fff" : "currentColor" }}>
@@ -2008,25 +2043,24 @@ const styles: Record<string, React.CSSProperties> = {
     color: theme.text,
     fontWeight: 700,
   },
-  headerBrandWrap: {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: 14,
+  headerTitleWrap: {
+    position: "relative",
     marginBottom: 16,
   },
   headerBrandArt: {
-    width: 68,
-    height: 68,
+    position: "absolute",
     objectFit: "contain",
-    opacity: 0.95,
-    marginTop: 8,
-    flexShrink: 0,
+    pointerEvents: "none",
+    transform: "rotate(4deg)",
   },
   headerTitle: {
     fontFamily: '"Playfair Display", serif',
     fontWeight: 700,
     color: theme.text,
     letterSpacing: -1.2,
+    position: "relative",
+    zIndex: 2,
+    maxWidth: 260,
   },
   searchBar: {
     width: "100%",
@@ -2049,7 +2083,7 @@ const styles: Record<string, React.CSSProperties> = {
     overflowY: "auto",
     padding: "18px 16px 16px 16px",
   },
-  stack18: {
+  stack22: {
     display: "grid",
     gap: 22,
   },
