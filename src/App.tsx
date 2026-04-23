@@ -704,14 +704,14 @@ function Header({
         </div>
 
         <img
-          src="/Grapes.png"
+          src="/grapes.png"
           alt="Arte uvas"
           style={{
             ...styles.headerBrandArt,
             width: isHome ? 285 : 150,
             height: isHome ? 285 : 150,
-            top: isHome ? -72 : -24,
-            right: isHome ? -76 : -18,
+            top: isHome ? -112 : -24,
+            right: isHome ? -84 : -18,
             opacity: isHome ? 0.94 : 0.62,
           }}
         />
@@ -734,7 +734,7 @@ function SplashScreen() {
     <div style={styles.splashPage}>
       <div style={styles.splashGlowOne} />
       <div style={styles.splashGlowTwo} />
-      <img src="/Grapes.png" alt="Arte uvas" style={styles.splashArt} />
+      <img src="/grapes.png" alt="Arte uvas" style={styles.splashArt} />
       <div style={styles.splashLogoWrap}>
         <img src="/logo-app.png" style={styles.splashLogo} alt="Logo app" />
       </div>
@@ -769,7 +769,7 @@ function HomeScreen({
   return (
     <div style={styles.stack22}>
       <div style={styles.heroCard}>
-        <img src="/Grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
+        <img src="/grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
         <div style={styles.heroBadge}>La ruta del vino en tu celular</div>
         <div style={styles.heroTitle}>Vinos y actividades en un solo lugar</div>
         <div style={styles.heroText}>
@@ -904,7 +904,7 @@ function SearchScreen({
   return (
     <div style={styles.stack22}>
       <div style={styles.searchHeroCard}>
-        <img src="/Grapes.png" alt="Arte uvas" style={styles.searchHeroArt} />
+        <img src="/grapes.png" alt="Arte uvas" style={styles.searchHeroArt} />
         <div style={styles.searchInputWrapBig}>
           <SearchIcon />
           <input
@@ -1079,7 +1079,7 @@ function RegionsScreen({
                   backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.12), rgba(24,12,12,0.58)), url('${meta.image}')`,
                 }}
               >
-                <img src="/Grapes.png" alt="Arte uvas" style={styles.regionArtImage} />
+                <img src="/grapes.png" alt="Arte uvas" style={styles.regionArtImage} />
 
                 <div style={{ ...styles.regionPill, background: meta.tint }}>
                   {wineries.length} {wineries.length === 1 ? "bodega" : "bodegas"}
@@ -1225,7 +1225,7 @@ function MapScreen({
 
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
         <div style={styles.mapArea}>
-          <img src="/Grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
+          <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
           <button style={styles.primaryButton} onClick={openGoogleMaps}>
             Abrir mapa real
           </button>
@@ -1315,7 +1315,7 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
   return (
     <div style={styles.stack22}>
       <div style={styles.profileHeroCard}>
-        <img src="/Grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
+        <img src="/grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
         <div>
           <div style={styles.membershipEyebrow}>Membresía activa</div>
           <div style={styles.membershipTitle}>Tus Beneficios</div>
