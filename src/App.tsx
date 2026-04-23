@@ -2015,11 +2015,11 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: 16,
   },
   headerBrandArt: {
-    width: 54,
-    height: 54,
+    width: 68,
+    height: 68,
     objectFit: "contain",
     opacity: 0.95,
-    marginTop: 6,
+    marginTop: 8,
     flexShrink: 0,
   },
   headerTitle: {
@@ -2051,7 +2051,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   stack18: {
     display: "grid",
-    gap: 18,
+    gap: 22,
   },
   stack12: {
     display: "grid",
@@ -2124,10 +2124,10 @@ const styles: Record<string, React.CSSProperties> = {
   },
   heroArtImage: {
     position: "absolute",
-    top: -4,
-    right: -16,
-    width: 210,
-    opacity: 0.18,
+    top: -12,
+    right: -24,
+    width: 235,
+    opacity: 0.16,
     pointerEvents: "none",
   },
   heroBadge: {
