@@ -685,8 +685,8 @@ function Header({
       <div
         style={{
           ...styles.headerTitleWrap,
-          minHeight: isHome ? 148 : 112,
-          paddingRight: isHome ? 120 : 96,
+          minHeight: isHome ? 192 : 120,
+          paddingRight: isHome ? 150 : 96,
         }}
       >
         <div
@@ -706,11 +706,11 @@ function Header({
           alt="Arte uvas"
           style={{
             ...styles.headerBrandArt,
-            width: isHome ? 150 : 110,
-            height: isHome ? 150 : 110,
-            top: isHome ? -30 : -18,
-            right: isHome ? -18 : -12,
-            opacity: isHome ? 0.82 : 0.58,
+            width: isHome ? 235 : 150,
+            height: isHome ? 235 : 150,
+            top: isHome ? -58 : -26,
+            right: isHome ? -46 : -18,
+            opacity: isHome ? 0.9 : 0.62,
           }}
         />
       </div>
@@ -2045,7 +2045,8 @@ const styles: Record<string, React.CSSProperties> = {
   },
   headerTitleWrap: {
     position: "relative",
-    marginBottom: 16,
+    marginBottom: 18,
+    overflow: "visible",
   },
   headerBrandArt: {
     position: "absolute",
@@ -2055,12 +2056,12 @@ const styles: Record<string, React.CSSProperties> = {
   },
   headerTitle: {
     fontFamily: '"Playfair Display", serif',
-    fontWeight: 700,
-    color: theme.text,
-    letterSpacing: -1.2,
-    position: "relative",
-    zIndex: 2,
-    maxWidth: 260,
+  fontWeight: 700,
+  color: theme.text,
+  letterSpacing: -1.2,
+  position: "relative",
+  zIndex: 2,
+  maxWidth: 280,
   },
   searchBar: {
     width: "100%",
