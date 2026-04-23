@@ -721,7 +721,7 @@ function Header({
       </div>
 
       <div style={styles.headerBrandRow}>
-        <img src="/grapes.png" alt="Arte uvas" style={styles.headerBrandArt} />
+        <img src="/Grapes.png" alt="Arte uvas" style={styles.headerBrandArt} />
         <div style={styles.headerTitle}>Viví el Vino Rionegrino</div>
       </div>
 
@@ -742,7 +742,7 @@ function SplashScreen() {
     <div style={styles.splashPage}>
       <div style={styles.splashGlowOne} />
       <div style={styles.splashGlowTwo} />
-      <img src="/grapes.png" alt="Arte uvas" style={styles.splashArt} />
+      <img src="/Grapes.png" alt="Arte uvas" style={styles.splashArt} />
 
       <div style={styles.splashLogoWrap}>
         <img src="/logo-app.png" style={styles.splashLogo} alt="Logo app" />
@@ -785,7 +785,7 @@ function HomeScreen({
   return (
     <div style={styles.stack18}>
       <div style={styles.heroCard}>
-        <img src="/grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
+        <img src="/Grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
         <div style={styles.heroBadge}>La Ruta del Vino en tu celular</div>
         <div style={styles.heroTitle}>Vinos y actividades en un solo lugar</div>
         <div style={styles.heroText}>
@@ -1017,7 +1017,7 @@ function RegionsScreen({
                 }}
               >
                 <img
-                  src="/grapes.png"
+                  src="/Grapes.png"
                   alt="Arte uvas"
                   style={styles.regionArtImage}
                 />
@@ -1171,7 +1171,7 @@ function MapScreen({
 
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
         <div style={styles.mapArea}>
-          <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
+          <img src="/Grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
           <button style={styles.primaryButton} onClick={openGoogleMaps}>
             Abrir mapa real
           </button>
@@ -1355,7 +1355,7 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
   return (
     <div style={styles.stack18}>
       <div style={styles.profileHeroCard}>
-        <img src="/grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
+        <img src="/Grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
         <div>
           <div style={styles.membershipEyebrow}>Membresía activa</div>
           <div style={styles.membershipTitle}>Tus Beneficios</div>
