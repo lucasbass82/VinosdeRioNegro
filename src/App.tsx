@@ -2071,7 +2071,7 @@ const styles: Record<string, React.CSSProperties> = {
     textAlign: "left",
   },
   searchBar: {
-    marginTop: 8,
+    marginTop: 5,
     width: "100%",
     display: "flex",
     alignItems: "center",
