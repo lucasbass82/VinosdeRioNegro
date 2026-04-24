@@ -728,7 +728,7 @@ function Header({
     </div>
   );
 }
- 
+
 function SplashScreen() {
   return (
     <div style={styles.splashPage}>
@@ -802,11 +802,15 @@ function HomeScreen({
         onAction={() => onSetTab("agenda")}
       />
 
-      <div style={styles.stack12}>
-        {EVENTS.slice(0, 2).map((e) => (
+      <div style={styles.horizontalScroller}>
+        {EVENTS.map((e) => (
           <div
             key={e.id}
-            style={{ ...styles.card, cursor: "pointer" }}
+            style={{
+              ...styles.card,
+              ...styles.horizontalCard,
+              cursor: "pointer",
+            }}
             onClick={() => handleEventClick(e.place)}
           >
             <div style={styles.rowGap12}>
@@ -834,32 +838,33 @@ function HomeScreen({
         onAction={() => onSetTab("map")}
       />
 
-      <div style={styles.stack12}>
+      <div style={styles.horizontalScroller}>
         {WINERIES.map((w) => (
-          <ImageCard
-            key={w.id}
-            title={w.name}
-            subtitle={`${w.city} · ${w.distance} · ★ ${w.rating}`}
-            description={w.description}
-            feature={w.activity}
-            image={w.image}
-            badge={
-              <Badge kind={w.openNow ? "open" : "closed"}>
-                {w.openNow ? "Abierta" : "Cerrada"}
-              </Badge>
-            }
-            onFavorite={(e) => {
-              e.stopPropagation();
-              toggleFavorite({
-                id: w.id,
-                name: w.name,
-                city: w.city,
-                kind: "winery",
-              });
-            }}
-            favoriteActive={favorites.some((f) => f.id === w.id)}
-            onClick={() => onOpenWinery(w.id)}
-          />
+          <div key={w.id} style={styles.horizontalImageCard}>
+            <ImageCard
+              title={w.name}
+              subtitle={`${w.city} · ${w.distance} · ★ ${w.rating}`}
+              description={w.description}
+              feature={w.activity}
+              image={w.image}
+              badge={
+                <Badge kind={w.openNow ? "open" : "closed"}>
+                  {w.openNow ? "Abierta" : "Cerrada"}
+                </Badge>
+              }
+              onFavorite={(e) => {
+                e.stopPropagation();
+                toggleFavorite({
+                  id: w.id,
+                  name: w.name,
+                  city: w.city,
+                  kind: "winery",
+                });
+              }}
+              favoriteActive={favorites.some((f) => f.id === w.id)}
+              onClick={() => onOpenWinery(w.id)}
+            />
+          </div>
         ))}
       </div>
 
@@ -869,13 +874,14 @@ function HomeScreen({
         onAction={() => onSetTab("search")}
       />
 
-      <div style={styles.stack12}>
-        {WINES.slice(0, 3).map((wine) => (
-          <WineVisualRow
-            key={wine.id}
-            wine={wine}
-            onClick={() => onOpenWine(wine.id)}
-          />
+      <div style={styles.horizontalScroller}>
+        {WINES.map((wine) => (
+          <div key={wine.id} style={styles.horizontalWineCard}>
+            <WineVisualRow
+              wine={wine}
+              onClick={() => onOpenWine(wine.id)}
+            />
+          </div>
         ))}
       </div>
     </div>
@@ -2071,7 +2077,7 @@ const styles: Record<string, React.CSSProperties> = {
     textAlign: "left",
   },
   searchBar: {
-    marginTop: 1,
+    marginTop: 2,
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -2080,7 +2086,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 20,
     border: `1px solid ${theme.line}`,
     background: "#fff",
-    boxShadow: "0 8px 24px rgba(40,24,22,0.04)",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
     cursor: "pointer",
     position: "relative",
     zIndex: 2,
@@ -2101,6 +2107,25 @@ const styles: Record<string, React.CSSProperties> = {
   stack12: {
     display: "grid",
     gap: 12,
+  },
+  horizontalScroller: {
+    display: "flex",
+    gap: 14,
+    overflowX: "auto",
+    paddingBottom: 10,
+    scrollSnapType: "x mandatory",
+  },
+  horizontalCard: {
+    minWidth: 245,
+    scrollSnapAlign: "start",
+  },
+  horizontalImageCard: {
+    minWidth: 285,
+    scrollSnapAlign: "start",
+  },
+  horizontalWineCard: {
+    minWidth: 310,
+    scrollSnapAlign: "start",
   },
   rowGap12: {
     display: "flex",
