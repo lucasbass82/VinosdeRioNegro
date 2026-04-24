@@ -686,7 +686,7 @@ function Header({
       <div
         style={{
           ...styles.headerTitleWrap,
-          minHeight: isHome ? 210 : 130,
+          minHeight: isHome ? 158 : 130,
           paddingRight: isHome ? 170 : 110,
         }}
       >
@@ -696,7 +696,7 @@ function Header({
             whiteSpace: "pre-line",
             fontSize: isHome ? 42 : 30,
             lineHeight: isHome ? 0.95 : 1,
-            marginTop: isHome ? 46 : 16,
+            marginTop: isHome ? 18 : 16,
             maxWidth: isHome ? 240 : 280,
           }}
         >
@@ -2071,7 +2071,7 @@ const styles: Record<string, React.CSSProperties> = {
     textAlign: "left",
   },
   searchBar: {
-    marginTop: 18,
+    marginTop: 10,
     width: "100%",
     display: "flex",
     alignItems: "center",
