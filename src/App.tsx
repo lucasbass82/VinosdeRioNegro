@@ -736,7 +736,7 @@ function SplashScreen() {
       <div style={styles.splashGlowTwo} />
       <img src="/grapes.png" alt="Arte uvas" style={styles.splashArt} />
       <div style={styles.splashLogoWrap}>
-        <img src="/logo-app.png" style={styles.splashLogo} alt="Logo app" />
+        <img src="/logofinal.png" style={styles.splashLogo} alt="Logo app" />
       </div>
     </div>
   );
