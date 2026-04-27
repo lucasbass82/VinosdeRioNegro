@@ -986,20 +986,23 @@ function WineVisualRow({
           backgroundImage: `url('${wine.image}')`,
         }}
       />
-      <div style={{ flex: 1 }}>
-        <div style={styles.wineVisualTitle}>{wine.name}</div>
-        <div style={styles.wineVisualSub}>
-          {wine.winery} · {wine.varietal}
+
+      <div style={styles.wineVisualBody}>
+        <div>
+          <div style={styles.wineVisualTitle}>{wine.name}</div>
+          <div style={styles.wineVisualSub}>
+            {wine.winery} · {wine.varietal}
+          </div>
         </div>
-        <div style={{ marginTop: 12 }}>
+
+        <div style={styles.rowBetweenCenter}>
           <span style={styles.wineVisualTag}>{wine.tag}</span>
+          <ChevronRightIcon />
         </div>
       </div>
-      <ChevronRightIcon />
     </div>
   );
 }
-
 function ImageCard({
   title,
   subtitle,
@@ -2529,47 +2532,61 @@ const styles: Record<string, React.CSSProperties> = {
     color: theme.text,
   },
   wineVisualRow: {
-    background: theme.paper,
-    border: `1px solid ${theme.line}`,
-    borderRadius: 28,
-    boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
-    padding: 0,
-    cursor: "pointer",
-    display: "grid",
-    overflow: "hidden",
-    minHeight: 310,
-  },
-  wineVisualImage: {
-    width: 100%,
-    height: 175,
-    borderRadius: 0,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    flexShrink: 0,
-  },
-  wineVisualTitle: {
-    fontWeight: 800,
-    color: theme.text,
-    fontSize: 15,
-    lineHeight: 1.2,
-  },
-  wineVisualSub: {
-    marginTop: 6,
-    color: theme.subtext,
-    fontSize: 14,
-    lineHeight: 1.45,
-  },
-  wineVisualTag: {
-    display: "inline-flex",
-    alignItems: "center",
-    borderRadius: 999,
-    padding: "8px 14px",
-    fontSize: 12,
-    fontWeight: 700,
-    background: theme.cream,
-    color: "#5a4d43",
-    border: `1px solid ${theme.line}`,
-  },
+  background: theme.paper,
+  border: `1px solid ${theme.line}`,
+  borderRadius: 28,
+  boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
+  padding: 0,
+  cursor: "pointer",
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+  minHeight: 340,
+},
+
+wineVisualImage: {
+  width: "100%",
+  height: 188,
+  borderRadius: 0,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  flexShrink: 0,
+},
+
+wineVisualBody: {
+  padding: 16,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  gap: 16,
+  flex: 1,
+},
+
+wineVisualTitle: {
+  fontWeight: 800,
+  color: theme.text,
+  fontSize: 17,
+  lineHeight: 1.2,
+},
+
+wineVisualSub: {
+  marginTop: 6,
+  color: theme.subtext,
+  fontSize: 14,
+  lineHeight: 1.45,
+},
+
+wineVisualTag: {
+  display: "inline-flex",
+  alignItems: "center",
+  borderRadius: 999,
+  padding: "8px 14px",
+  fontSize: 12,
+  fontWeight: 700,
+  background: theme.cream,
+  color: "#5a4d43",
+  border: `1px solid ${theme.line}`,
+},
   mapArea: {
     height: 420,
     width: "100%",
