@@ -523,10 +523,41 @@ export default function App() {
     return (
       <>
         <GlobalStyles />
-        <SplashScreen />
-      </>
-    );
-  }
+<div
+  style={{
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "linear-gradient(180deg, #f6f1ee, #efe7e3)"
+  }}
+>
+  <img
+    src="/logo.png"
+    style={{
+      width: 140,
+      marginBottom: 20
+    }}
+  />
+
+  <h1
+    style={{
+      fontFamily: "Playfair Display, serif",
+      fontSize: "42px",
+      lineHeight: "1.1",
+      textAlign: "center",
+      letterSpacing: "-0.5px"
+    }}
+  >
+    <span style={{ fontSize: "20px" }}>Vinos de</span><br />
+    Río Negro
+  </h1>
+
+  <p style={{ marginTop: 10, opacity: 0.6 }}>
+    Viví el vino rionegrino
+  </p>
+</div>
 
   return (
     <>
