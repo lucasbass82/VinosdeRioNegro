@@ -558,7 +558,8 @@ export default function App() {
     Viví el vino rionegrino
   </p>
 </div>
-
+);
+        }
   return (
     <>
       <GlobalStyles />
