@@ -829,7 +829,7 @@ function HomeScreen({
         </div>
 
         <div style={styles.rowGap10Wrap}>
-          <button
+          <button 
             style={styles.primaryLightButton}
             onClick={() => {
               requestUserLocation();
