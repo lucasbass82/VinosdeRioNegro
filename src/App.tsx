@@ -537,7 +537,7 @@ export default function App() {
     src="/logofinal.png"
     style={{
       width: 180,
-      marginBottom: 8
+      marginBottom: 2
     }}
   />
 
