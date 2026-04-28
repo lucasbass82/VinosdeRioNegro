@@ -548,7 +548,7 @@ export default function App() {
       fontSize: "42px",
       lineHeight: "1.1",
       textAlign: "center",
-      letterSpacing: "-0.5px"
+      letterSpacing: "-0.5px",
     }}
   >
     <span style={{ fontSize: "20px" }}>Vinos de</span><br />
