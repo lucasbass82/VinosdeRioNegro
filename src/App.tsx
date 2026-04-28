@@ -824,8 +824,8 @@ function HomeScreen({
         <div style={styles.heroBadge}>La ruta del vino en tu celular</div>
         <div style={styles.heroTitle}>Vinos y actividades en un solo lugar</div>
         <div style={styles.heroText}>
-          Descubrí etiquetas, bodegas y experiencias con una estética más cálida,
-          editorial y bien rionegrina.
+          Descubrí etiquetas, bodegas y experiencias cerca tuyo.
+  
         </div>
 
         <div style={styles.rowGap10Wrap}>
