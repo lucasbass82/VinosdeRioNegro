@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 type RegionKey =
   | "alto-valle"
-  | "valle-medio"
+  | "valle-medio" 
   | "valle-inferior"
   | "linea-sur";
 
