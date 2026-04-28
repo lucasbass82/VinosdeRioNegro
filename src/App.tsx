@@ -2045,7 +2045,7 @@ const styles: Record<string, React.CSSProperties> = {
   phone: {
     width: "100%",
     maxWidth: 410,
-    height: "92vh",
+    height: "100dvh",
     maxHeight: 860,
     background: "rgba(255,253,251,0.95)",
     border: `1px solid ${theme.line}`,
