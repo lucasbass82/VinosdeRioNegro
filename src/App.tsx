@@ -554,7 +554,18 @@ export default function App() {
     <span style={{ fontSize: "20px" }}>Vinos de</span><br />
     Río Negro
   </h1>
-
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 15,
+  }}
+>
+  <div style={{ width: 40, height: 1, background: "#c9a96a" }} />
+  <div style={{ color: "#c9a96a", fontSize: 18 }}>✦</div>
+  <div style={{ width: 40, height: 1, background: "#c9a96a" }} />
+</div>
   <p style={{ marginTop: 10, opacity: 0.6 }}>
     Viví el vino rionegrino
   </p>
