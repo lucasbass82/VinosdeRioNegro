@@ -537,7 +537,7 @@ export default function App() {
     src="/logofinal.png"
     style={{
       width: 180,
-      marginBottom: 20
+      marginBottom: 8
     }}
   />
 
@@ -559,14 +559,14 @@ export default function App() {
     display: "flex",
     alignItems: "center",
     gap: 10,
-    marginTop: 15,
+    marginTop: 6,
   }} 
 >
   <div style={{ width: 40, height: 1, background: "#c9a96a" }} />
   <div style={{ color: "#c9a96a", fontSize: 18 }}>✦</div>
   <div style={{ width: 40, height: 1, background: "#c9a96a" }} />
 </div>
-  <p style={{ marginTop: 10, opacity: 0.6 }}>
+  <p style={{ marginTop: 6, opacity: 0.6 }}>
     Viví el vino rionegrino
   </p>
 </div>
