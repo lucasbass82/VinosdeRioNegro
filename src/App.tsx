@@ -761,20 +761,25 @@ function Header({
     </div>
   );
 }
-
 function SplashScreen() {
   return (
     <div style={styles.splashPage}>
-      <div style={styles.splashGlowOne} />
-      <div style={styles.splashGlowTwo} />
-      <img src="/grapes.png" alt="Arte uvas" style={styles.splashArt} />
       <div style={styles.splashLogoWrap}>
-        <img src="/logofinal.png" style={styles.splashLogo} alt="Logo app" />
+        <img
+          src="/logofinal.png"
+          alt="Logo Vinos de Río Negro"
+          style={styles.splashLogo}
+        />
+        <div style={styles.splashBrand}>
+          <span style={styles.splashBrandSmall}>Vinos de</span>
+          <br />
+          Río Negro
+        </div>
+        <div style={styles.splashClaim}>Viví el vino rionegrino</div>
       </div>
     </div>
   );
-}
-
+  }
 function HomeScreen({
   onOpenWine,
   onOpenWinery,
