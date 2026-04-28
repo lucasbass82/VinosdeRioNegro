@@ -560,7 +560,7 @@ export default function App() {
     alignItems: "center",
     gap: 10,
     marginTop: 15,
-  }}
+  }} 
 >
   <div style={{ width: 40, height: 1, background: "#c9a96a" }} />
   <div style={{ color: "#c9a96a", fontSize: 18 }}>✦</div>
