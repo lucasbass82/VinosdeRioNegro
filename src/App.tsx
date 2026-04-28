@@ -536,13 +536,14 @@ export default function App() {
   <img
     src="/logofinal.png"
     style={{
-      width: 140,
+      width: 180,
       marginBottom: 20
     }}
   />
 
   <h1
     style={{
+      color: "#6c1527"
       fontFamily: "Playfair Display, serif",
       fontSize: "42px",
       lineHeight: "1.1",
