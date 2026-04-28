@@ -543,7 +543,7 @@ export default function App() {
 
   <h1
     style={{
-      color: "#6c1527"
+      color: "#6c1527",
       fontFamily: "Playfair Display, serif",
       fontSize: "42px",
       lineHeight: "1.1",
