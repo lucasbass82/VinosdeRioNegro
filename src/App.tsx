@@ -278,8 +278,8 @@ const WINES: Wine[] = [
     note: "Muy versátil, ideal para una cena y uno de los más buscados.",
     availableAt: ["Vinoteca del Río"],
     tag: "Muy buscado",
-    image:
-      "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1200&q=80",
+    image: "/wines/anielo-merlot.png"
+    
   },
   {
     id: "v3",
@@ -302,8 +302,7 @@ const WINES: Wine[] = [
     note: "Una etiqueta muy patagónica, perfecta para quienes buscan algo delicado.",
     availableAt: ["Patagonia Wine House"],
     tag: "Descubrimiento",
-    image:
-      "https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80",
+    image: "/wines/anielo-pinot-noir.png"
   },
   {
     id: "v5",
@@ -314,8 +313,7 @@ const WINES: Wine[] = [
     note: "Expresa la elegancia del Valle Medio con fruta fresca, tensión y perfil refinado.",
     availableAt: ["Vinoteca del Río"],
     tag: "Valle Medio",
-    image:
-      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80",
+    image: "/wines/videla-dorna-pinot-noir.png"
   },
   {
     id: "v6",
@@ -326,8 +324,7 @@ const WINES: Wine[] = [
     note: "Pinot Noir de perfil atlántico, con frescura e identidad distinta dentro de Río Negro.",
     availableAt: ["Vinoteca del Río"],
     tag: "Atlántico",
-    image:
-      "https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80",
+    image:"/wines/wapisa-pinot-noir.png"
   },
 ];
 
@@ -2454,8 +2451,8 @@ const styles: Record<string, React.CSSProperties> = {
   },
   imageCardTop: {
     height: 188,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundSize: "contein",
+    backgroundPosition: "no-repeat",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
