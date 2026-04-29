@@ -696,7 +696,14 @@ export default function App() {
     </>
   );
 }
-
+function Shop() {
+  return (
+    <div style={styles.content}>
+      <h2>Tienda</h2>
+      <p>Muy pronto vas a poder comprar vinos de Río Negro en todo el país 🍷</p>
+    </div>
+  );
+}
 function Header({
   currentTab,
   onSearchClick,
