@@ -267,8 +267,7 @@ const WINES: Wine[] = [
     note: "Fruta roja, acidez equilibrada y perfil patagónico ideal para regalar.",
     availableAt: ["Vinoteca del Río", "Patagonia Wine House"],
     tag: "Ideal para regalar",
-    image:
-      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=80",
+    image: "/wines/miras-pinot-noir.png"
   },
   {
     id: "v2",
