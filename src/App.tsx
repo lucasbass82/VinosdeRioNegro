@@ -2450,7 +2450,7 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: "pointer",
   },
   imageCardTop: {
-    height: 188,
+    height: 120,
     backgroundSize: "contein",
     backgroundPosition: "no-repeat",
     display: "flex",
