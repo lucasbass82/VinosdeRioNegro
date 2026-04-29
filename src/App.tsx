@@ -1748,7 +1748,7 @@ function BottomNav({
     { key: "map", label: "Mapa", icon: <MapIcon /> },
     { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
     { key: "bodegas", label: "Bodegas", icon: <WineIcon /> },
-    { key: "shop", label: "Tienda", icon: <CartIcon /> },
+    { key: "shop", label: "Tienda", icon: <WineIcon /> },
   ];
 
   return (
