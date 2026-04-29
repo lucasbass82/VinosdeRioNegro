@@ -290,8 +290,7 @@ const WINES: Wine[] = [
     note: "Etiqueta clásica, con personalidad y excelente estructura.",
     availableAt: ["Vinoteca del Río"],
     tag: "Reserva",
-    image:
-      "https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=1200&q=80",
+    image: "/wines/canale-pinot-noir.png"
   },
   {
     id: "v4",
