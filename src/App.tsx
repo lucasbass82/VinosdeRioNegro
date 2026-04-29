@@ -2704,9 +2704,11 @@ wineVisualTag: {
     overflow: "hidden",
   },
   wineDetailImage: {
+    width: "100%" ,
     height: 260,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+  backgroundPosition: "center",
   },
   wineInfoArea: {
     padding: 18,
