@@ -750,11 +750,11 @@ function Header({
           alt="Arte uvas"
           style={{
             ...styles.headerBrandArt,
-            width: isHome ? 285 : 150,
-            height: isHome ? 285 : 150,
-            top: isHome ? -112 : -24,
-            right: isHome ? -84 : -18,
-            opacity: isHome ? 0.94 : 0.62,
+            width: 285,
+            height: 285,
+            top: -112,
+            right: -84,
+            opacity: 0.94,
           }}
         />
       </div>
