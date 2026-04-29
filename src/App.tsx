@@ -65,7 +65,7 @@ type FavoriteItem = {
   kind: "wine" | "winery" | "shop";
 };
 
-type TabKey = "home" | "map" | "search" | "agenda" | "bodegas" | "profile";
+type TabKey = "home" | "map" | "search" | "agenda" | "bodegas" | "profile" | "shop";
 
 type DetailState =
   | { kind: "wine"; id: string }
@@ -673,6 +673,8 @@ export default function App() {
               />
             ) : tab === "agenda" ? (
               <AgendaScreen />
+            ) : tab === "shop" ? (
+              <Shop />
             ) : tab === "bodegas" ? (
               selectedRegion ? (
                 <RegionWineriesScreen
@@ -1739,7 +1741,7 @@ function BottomNav({
     { key: "map", label: "Mapa", icon: <MapIcon /> },
     { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
     { key: "bodegas", label: "Bodegas", icon: <WineIcon /> },
-    { key: "search", label: "Tienda", icon: <WineIcon /> },
+    { key: "shop", label: "Tienda", icon: <CartIcon /> },
   ];
 
   return (
