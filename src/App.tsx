@@ -2592,10 +2592,11 @@ const styles: Record<string, React.CSSProperties> = {
 },
 
 wineVisualImage: {
-  width: "100%",
-  height: 188,
+  width: "120",
+  height: 160,
   borderRadius: 0,
-  backgroundSize: "cover",
+  backgroundSize: "contain",
+  backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
   flexShrink: 0,
 },
