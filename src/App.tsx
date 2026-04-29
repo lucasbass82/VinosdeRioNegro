@@ -2451,7 +2451,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   imageCardTop: {
     height: 120,
-    backgroundSize: "contein",
+    backgroundSize: "55%",
     backgroundPosition: "no-repeat",
     display: "flex",
     flexDirection: "column",
