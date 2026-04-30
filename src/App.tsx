@@ -137,7 +137,7 @@ const WINERIES: Winery[] = [
     rating: 4.8,
     distance: "245 km",
     image:
-      "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1200&q=80",
   },
   {
     id: "w2",
