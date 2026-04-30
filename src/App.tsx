@@ -349,6 +349,17 @@ const WINES: Wine[] = [
     tag: "Atlántico",
     image:"/wines/wapisa-pinot-noir.png"
   },
+  {
+  id: "v7",
+  name: "Finca Fraschetti Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Finca Fraschetti",
+  style: "Elegante y de montaña",
+  note: "Fruta roja fresca, acidez vibrante y final persistente.",
+  availableAt: ["Vinoteca del Río"],
+  tag: "Nuevo en Cordillera",
+  image: "/wines/finca-fraschetti-pinot-noir.png"
+},
 ];
 
 const EVENTS: EventItem[] = [
