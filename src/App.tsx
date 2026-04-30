@@ -4,7 +4,7 @@ type RegionKey =
   | "alto-valle"
   | "valle-medio" 
   | "valle-inferior"
-  | "linea-sur";
+  | "linea-sur"
   | "cordillera";
 
 type Winery = {
