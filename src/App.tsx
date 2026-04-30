@@ -217,6 +217,15 @@ const WINERIES: Winery[] = [
     distance: "32 km",
     image:
       "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80",
+},
+ {
+   
+  id: "w6",
+  name: "Finca Fraschetti",
+  region: "cordillera",
+  city: "San Carlos de Bariloche",
+  description: "Bodega de montaña que combina tradición, naturaleza y pasión por el vino.",
+  image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",  
   },
 ];
 
