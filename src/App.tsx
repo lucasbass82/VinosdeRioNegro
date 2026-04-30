@@ -5,6 +5,7 @@ type RegionKey =
   | "valle-medio" 
   | "valle-inferior"
   | "linea-sur";
+  | "cordillera";
 
 type Winery = {
   id: string;
