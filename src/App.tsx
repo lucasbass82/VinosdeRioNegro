@@ -117,6 +117,13 @@ const REGION_META: Record<
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
     tint: "rgba(223,189,199,0.16)",
+   },
+  "cordillera": {
+    title: "Cordillera",
+    subtitle: "Vinos de montaña y paisajes Patagonicos",
+    image:
+      image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80",
+    tint: "#efe7dc",
   }, 
 };
 
