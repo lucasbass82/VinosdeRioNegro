@@ -734,7 +734,7 @@ function Shop() {
   return (
     <div style={styles.content}>
       <h2>Tienda</h2>
-      <p>Muy pronto vas a poder vivir la experiencia de nuestros vinos con evnio a todo el pais 🍷</p>
+      <p>Muy pronto vas a poder vivir la experiencia de nuestros vinos con evníos a todo el país 🍷</p>
     </div>
   );
 }
