@@ -1156,6 +1156,7 @@ function RegionsScreen({
     "valle-medio",
     "valle-inferior",
     "linea-sur",
+    "cordillera",
   ];
 
   return (
