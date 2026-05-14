@@ -1308,6 +1308,7 @@ function MapScreen({
   };
 
   return (
+    <>
     <div style={{ ...styles.headerTitleWrap, marginBottom: 24}}>
   <div
     style={{
@@ -1402,7 +1403,8 @@ function MapScreen({
         </div>
       </div>
     </div>
-  );
+    </>
+      );
 }
 
 function AgendaScreen() {
