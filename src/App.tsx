@@ -1308,6 +1308,37 @@ function MapScreen({
   };
 
   return (
+    <div style={{ ...styles.headerTitleWrap, marginBottom: 24}}>
+  <div
+    style={{
+      ...styles.headerTitle,
+      whiteSpace: "pre-line",
+      fontSize: 36,
+      lineHeight: 1.02,
+      marginTop: 10,
+      maxWidth: 240,
+    }}
+  >
+    {"Buscá el vino\nrionegrino"}
+  </div>
+
+  <div style={styles.headerSubtitle}>
+    Encontrá bodegas, vinos y experiencias cerca tuyo.
+  </div>
+
+  <img
+    src="/grapes.png"
+    alt="Arte uvas"
+    style={{
+      position: "absolute",
+      top: -10,
+      right: -6,
+      width: 180,
+      opacity: 0.95,
+      pointerEvents: "none",
+    }}
+  />
+</div>
     <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <div style={styles.chipsRow}>
@@ -1746,7 +1777,7 @@ function ShopDetail({
           <div style={styles.grid2}>
             <InfoBox label="Horario" value={shop.hours} />
             <InfoBox label="Beneficio" value={shop.benefit} />
-          </div>
+          </div> 
 
           <div style={styles.rowGap10Wrap}>
             <button style={{ ...styles.primaryButton, flex: 1 }}>
