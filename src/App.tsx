@@ -772,7 +772,7 @@ function Header({
         style={{
           ...styles.headerTitleWrap,
           minHeight: isHome ? 158 : 130,
-          paddingRight: isHome ? 170 : 110,
+          paddingRight: isHome ? 130 : 110,
         }}
       >
         <div
