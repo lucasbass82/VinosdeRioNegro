@@ -779,15 +779,19 @@ function Header({
           style={{
             ...styles.headerTitle,
             whiteSpace: "pre-line",
-            fontSize: isHome ? 42 : 30,
-            lineHeight: isHome ? 0.95 : 1,
-            marginTop: isHome ? 18 : 16,
+            fontSize: isHome ? 36 : 30,
+            lineHeight: isHome ? 1.02 : 1,
+            marginTop: isHome ? 10 : 16,
             maxWidth: isHome ? 240 : 280,
           }}
         >
           {title}
         </div>
-
+{isHome && (
+  <div style={styles.headerSubtitle}>
+    Descubrí bodegas, vinos y experiencias únicas.
+  </div>
+)}
         <img
           src="/grapes.png"
           alt="Arte uvas"
@@ -2170,6 +2174,16 @@ const styles: Record<string, React.CSSProperties> = {
     zIndex: 2,
     textAlign: "left",
   },
+  headerSubtitle: {
+  marginTop: 10,
+  maxWidth: 240,
+  color: "#7d7066",
+  fontSize: 15,
+  lineHeight: 1.45,
+  fontWeight: 500,
+  position: "relative",
+  zIndex: 2,
+},
   searchBar: {
     marginTop: -22,
     width: "100%",
