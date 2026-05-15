@@ -1224,8 +1224,38 @@ function RegionWineriesScreen({
 }) {
   const wineries = WINERIES.filter((w) => w.region === region);
   const meta = REGION_META[region];
-
   return (
+      <div style={{ ...styles.headerTitleWrap, marginBottom: 24}}>
+  <div
+    style={{
+      ...styles.headerTitle,
+      whiteSpace: "pre-line",
+      fontSize: 36,
+      lineHeight: 1.02,
+      marginTop: 10,
+      maxWidth: 240,
+    }}
+  >
+    {"Buscá tu vino\nrionegrino"}
+  </div>
+
+  <div style={styles.headerSubtitle}>
+    Encontrá bodegas, vinos y experiencias cerca tuyo.
+  </div>
+
+  <img
+    src="/grapes.png"
+    alt="Arte uvas"
+    style={{
+      position: "absolute",
+      top: -10,
+      right: -6,
+      width: 180,
+      opacity: 0.95,
+      pointerEvents: "none",
+    }}
+  />
+</div>
     <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <button style={styles.backButton} onClick={onBack}>
