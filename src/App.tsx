@@ -1225,6 +1225,7 @@ function RegionWineriesScreen({
   const wineries = WINERIES.filter((w) => w.region === region);
   const meta = REGION_META[region];
   return (
+    <>
       <div style={{ ...styles.headerTitleWrap, marginBottom: 24}}>
   <div
     style={{
@@ -1312,6 +1313,7 @@ function RegionWineriesScreen({
         </div>
       )}
     </div>
+      </>
   );
 }
 
