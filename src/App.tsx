@@ -1358,21 +1358,7 @@ function MapScreen({
   <div style={styles.headerSubtitle}>
     Encontrá bodegas, vinos y experiencias cerca tuyo.
   </div>
-
-  <img
-    src="/grapes.png"
-    alt="Arte uvas"
-    style={{
-      position: "absolute",
-      top: -10,
-      right: -6,
-      width: 180,
-      opacity: 0.95,
-      pointerEvents: "none",
-    }}
-  />
-</div>
-    <div style={styles.stack22}>
+   <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
         <div style={styles.chipsRow}>
           {["Todos", "Bodegas", "Vinotecas", "Eventos"].map((item) => (
