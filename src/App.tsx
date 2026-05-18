@@ -1423,7 +1423,7 @@ function MapScreen({
     </div>
 
       );
-}
+};
 
 function AgendaScreen() {
   const [filter, setFilter] = useState("Hoy");
