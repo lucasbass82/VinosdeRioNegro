@@ -1421,9 +1421,8 @@ function MapScreen({
         </div>
       </div>
     </div>
-
       );
-};
+}
 
 function AgendaScreen() {
   const [filter, setFilter] = useState("Hoy");
