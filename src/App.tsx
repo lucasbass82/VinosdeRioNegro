@@ -1421,6 +1421,7 @@ function MapScreen({
         </div>
       </div>
     </div>
+      </div>
       );
 }
 
