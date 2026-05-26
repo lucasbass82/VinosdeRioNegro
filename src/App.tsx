@@ -747,20 +747,33 @@ function Header({
   onSearchClick: () => void;
   onMenuClick: () => void;
 }) {
-  const title =
-  currentTab === "map"
-    ? "Encontrá tu Vino\nRionegrino"
-    : currentTab === "search"
-    ? "Buscar vinos"
-    : currentTab === "agenda"
-    ? "Orden del día"
-    : currentTab === "bodegas"
-    ? "Bodegas"
-    : currentTab === "profile"
-    ? "Perfil"
-    : "Viví el Vino\nRionegrino";
-  
-  const isHome = currentTab === "home";
+ const title =
+    currentTab === "map"
+      ? "Encontrá tu Vino\nRionegrino"
+      : currentTab === "agenda"
+      ? "Agenda"
+      : currentTab === "bodegas"
+      ? "Bodegas"
+      : currentTab === "shop"
+      ? "Tienda"
+      : currentTab === "profile"
+      ? "Perfil"
+      : currentTab === "search"
+      ? "Buscar vinos"
+      : "Viví el Vino\nRionegrino";
+
+  const subtitle =
+    currentTab === "map"
+      ? "Encontrá bodegas, vinos y experiencias cerca tuyo."
+      : currentTab === "agenda"
+      ? "Eventos, degustaciones y actividades del vino."
+      : currentTab === "bodegas"
+      ? "Explorá bodegas y regiones de Río Negro."
+      : currentTab === "shop"
+      ? "Comprá vinos y experiencias seleccionadas."
+      : currentTab === "home"
+      ? "Descubrí bodegas, vinos y experiencias únicas."
+      : "";
 
   return (
     <div style={styles.header}>
@@ -773,29 +786,27 @@ function Header({
       <div
         style={{
           ...styles.headerTitleWrap,
-          minHeight: isHome ? 158 : 130,
-          paddingRight: isHome ? 130 : 110,
+          minHeight: 158,
+          paddingRight: 130,
         }}
       >
         <div
           style={{
             ...styles.headerTitle,
             whiteSpace: "pre-line",
-            fontSize: isHome ? 36 : 30,
-            lineHeight: isHome ? 1.02 : 1,
-            marginTop: isHome ? 10 : 16,
-            maxWidth: isHome ? 240 : 280,
+            fontSize: 36,
+            lineHeight: 1.02,
+            marginTop: 10,
+            maxWidth: 240,
           }}
         >
           {title}
         </div>
-{(isHome || currentTab === "map") && (
-  <div style={styles.headerSubtitle}>
-    {currentTab === "map"
-      ? "Encontrá bodegas, vinos y experiencias cerca tuyo."
-      : "Descubrí bodegas, vinos y experiencias únicas."}
-  </div>
-)}
+
+        {subtitle && (
+          <div style={styles.headerSubtitle}>{subtitle}</div>
+        )}
+
         <img
           src="/grapes.png"
           alt="Arte uvas"
@@ -809,6 +820,7 @@ function Header({
           }}
         />
       </div>
+
       {currentTab !== "search" && (
         <button style={styles.searchBar} onClick={onSearchClick}>
           <SearchIcon />
@@ -819,7 +831,6 @@ function Header({
       )}
     </div>
   );
-}
 function SplashScreen() {
   return (
     <div style={styles.splashPage}>
@@ -1343,32 +1354,24 @@ function MapScreen({
   };
 
 return (
-  <div style={styles.stack22}>
-    <div style={styles.rowBetweenCenter}>
-      <div style={styles.chipsRow}>
-        {["Todos", "Bodegas", "Vinotecas", "Eventos"].map((item) => (
-          <button
-            key={item}
-            style={filter === item ? styles.chipActive : styles.chip}
-            onClick={() => setFilter(item)}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
-
-      <button style={styles.secondaryButton} onClick={requestUserLocation}>
-        {locationStatus === "loading" ? "Buscando..." : "Mi ubicación"}
-      </button>
-    </div>
-
+  
     <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
       <div style={styles.mapArea}>
-        <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
-        <button style={styles.primaryButton} onClick={openGoogleMaps}>
-          Abrir mapa real
-        </button>
-      </div>
+  <iframe
+    title="Mapa"
+    src={
+      userLocation
+        ? `https://maps.google.com/maps?q=${userLocation.lat},${userLocation.lng}&z=14&output=embed`
+        : "https://maps.google.com/maps?q=Rio%20Negro%20Argentina&z=6&output=embed"
+    }
+    style={{
+      width: "100%",
+      height: "100%",
+      border: 0,
+      display: "block",
+    }}
+  />
+</div>
 
       <div style={{ padding: 18 }}>
         <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
