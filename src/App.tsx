@@ -748,16 +748,18 @@ function Header({
   onMenuClick: () => void;
 }) {
   const title =
-    currentTab === "search"
-      ? "Buscar vinos"
-      : currentTab === "agenda"
-      ? "Orden del día"
-      : currentTab === "bodegas"
-      ? "Bodegas"
-      : currentTab === "profile"
-      ? "Perfil"
-      : "Viví el Vino\nRionegrino";
-
+  currentTab === "map"
+    ? "Encontrá tu Vino\nRionegrino"
+    : currentTab === "search"
+    ? "Buscar vinos"
+    : currentTab === "agenda"
+    ? "Orden del día"
+    : currentTab === "bodegas"
+    ? "Bodegas"
+    : currentTab === "profile"
+    ? "Perfil"
+    : "Viví el Vino\nRionegrino";
+  
   const isHome = currentTab === "home";
 
   return (
@@ -787,7 +789,7 @@ function Header({
         >
           {title}
         </div>
-{isHome && (
+{(isHome || currentTab === "map") && (
   <div style={styles.headerSubtitle}>
     Descubrí bodegas, vinos y experiencias únicas.
   </div>
@@ -806,11 +808,9 @@ function Header({
         />
       </div>
 
-      {currentTab !== "search" && (
-        <button style={styles.searchBar} onClick={onSearchClick}>
-          <SearchIcon />
-          <span style={styles.searchBarText}>
-            Busca tu vino, bodega o experiencia.
+     {currentTab === "map"
+  ? "Encontrá bodegas, vinos y experiencias cerca tuyo."
+  : "Descubrí bodegas, vinos y experiencias únicas."}
           </span>
         </button>
       )}
@@ -1339,87 +1339,66 @@ function MapScreen({
     requestUserLocation();
   };
 
- return (
-  <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
-    <div style={{ ...styles.headerTitleWrap, marginBottom: 24, flexShrink: 0 }}>
-      <div
-        style={{
-          ...styles.headerTitle,
-          whiteSpace: "pre-line",
-          fontSize: 36,
-          lineHeight: 1.02,
-          marginTop: 10,
-          maxWidth: 240,
-        }}
-      >
-        {"Buscá el vino\nrionegrino"}
+return (
+  <div style={styles.stack22}>
+    <div style={styles.rowBetweenCenter}>
+      <div style={styles.chipsRow}>
+        {["Todos", "Bodegas", "Vinotecas", "Eventos"].map((item) => (
+          <button
+            key={item}
+            style={filter === item ? styles.chipActive : styles.chip}
+            onClick={() => setFilter(item)}
+          >
+            {item}
+          </button>
+        ))}
       </div>
 
-      <div style={styles.headerSubtitle}>
-        Encontrá bodegas, vinos y experiencias cerca tuyo.
-      </div>
-
-      <div style={{ ...styles.rowBetweenCenter, marginTop: 18 }}>
-        <div style={styles.chipsRow}>
-          {["Todos", "Bodegas", "Vinotecas", "Eventos"].map((item) => (
-            <button
-              key={item}
-              style={filter === item ? styles.chipActive : styles.chip}
-              onClick={() => setFilter(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-
-        <button style={styles.secondaryButton} onClick={requestUserLocation}>
-          {locationStatus === "loading" ? "Buscando..." : "Mi ubicación"}
-        </button>
-      </div>
+      <button style={styles.secondaryButton} onClick={requestUserLocation}>
+        {locationStatus === "loading" ? "Buscando..." : "Mi ubicación"}
+      </button>
     </div>
 
-    <div style={{ ...styles.stack22, overflowY: "auto", flex: 1, minHeight: 0, paddingBottom: 16 }}>
-      <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
-        <div style={styles.mapArea}>
-          <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
-          <button style={styles.primaryButton} onClick={openGoogleMaps}>
-            Abrir mapa real
-          </button>
-        </div>
+    <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
+      <div style={styles.mapArea}>
+        <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
+        <button style={styles.primaryButton} onClick={openGoogleMaps}>
+          Abrir mapa real
+        </button>
+      </div>
 
-        <div style={{ padding: 18 }}>
-          <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
+      <div style={{ padding: 18 }}>
+        <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
 
-          {locationStatus === "granted" && userLocation ? (
-            <>
-              <div style={styles.mapOverlayTitle}>Ubicación detectada</div>
-              <div style={styles.itemSub}>
-                Lat {userLocation.lat.toFixed(4)} · Lng{" "}
-                {userLocation.lng.toFixed(4)}
-              </div>
-              <div style={styles.placeText}>
-                Ya podemos abrir Google Maps con tu posición real.
-              </div>
-            </>
-          ) : locationStatus === "error" ? (
-            <>
-              <div style={styles.mapOverlayTitle}>No pudimos ubicarte</div>
-              <div style={styles.placeText}>{locationError}</div>
-            </>
-          ) : (
-            <>
-              <div style={styles.mapOverlayTitle}>Activá tu ubicación</div>
-              <div style={styles.placeText}>
-                Permití acceso a tu ubicación para ver opciones cerca tuyo.
-              </div>
-            </>
-          )}
+        {locationStatus === "granted" && userLocation ? (
+          <>
+            <div style={styles.mapOverlayTitle}>Ubicación detectada</div>
+            <div style={styles.itemSub}>
+              Lat {userLocation.lat.toFixed(4)} · Lng{" "}
+              {userLocation.lng.toFixed(4)}
+            </div>
+            <div style={styles.placeText}>
+              Ya podemos abrir Google Maps con tu posición real.
+            </div>
+          </>
+        ) : locationStatus === "error" ? (
+          <>
+            <div style={styles.mapOverlayTitle}>No pudimos ubicarte</div>
+            <div style={styles.placeText}>{locationError}</div>
+          </>
+        ) : (
+          <>
+            <div style={styles.mapOverlayTitle}>Activá tu ubicación</div>
+            <div style={styles.placeText}>
+              Permití acceso a tu ubicación para ver opciones cerca tuyo.
+            </div>
+          </>
+        )}
 
-          <div style={styles.grid3}>
-            <Metric label="Estado" value={locationStatus} />
-            <Metric label="Bodegas" value="5" />
-            <Metric label="Vinotecas" value="2" />
-          </div>
+        <div style={styles.grid3}>
+          <Metric label="Estado" value={locationStatus} />
+          <Metric label="Bodegas" value="5" />
+          <Metric label="Vinotecas" value="2" />
         </div>
       </div>
     </div>
