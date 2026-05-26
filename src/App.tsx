@@ -642,7 +642,7 @@ export default function App() {
             </div>
           )}
 
-          <div style={styles.content}>
+         <div style={tab === "map" ? { ...styles.content, overflowY: "hidden" } : styles.content}>
             {detail && detailView ? (
               detail.kind === "wine" ? (
                 <WineDetail
@@ -1339,26 +1339,28 @@ function MapScreen({
     requestUserLocation();
   };
 
-  return (
-    <>
-    <div style={{ ...styles.headerTitleWrap, marginBottom: 24}}>
-  <div
-    style={{
-      ...styles.headerTitle,
-      whiteSpace: "pre-line",
-      fontSize: 36,
-      lineHeight: 1.02,
-      marginTop: 10,
-      maxWidth: 240,
-    }}
-  >
-    {"Buscá el vino\nrionegrino"}
-  </div>
+ return (
+  <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <div style={{ ...styles.headerTitleWrap, marginBottom: 24, flexShrink: 0 }}>
+      <div
+        style={{
+          ...styles.headerTitle,
+          whiteSpace: "pre-line",
+          fontSize: 36,
+          lineHeight: 1.02,
+          marginTop: 10,
+          maxWidth: 240,
+        }}
+      >
+        {"Buscá el vino\nrionegrino"}
+      </div>
 
-  <div style={styles.headerSubtitle}>
-    Encontrá bodegas, vinos y experiencias cerca tuyo.
-  </div>
-   <div style={styles.stack22}>
+      <div style={styles.headerSubtitle}>
+        Encontrá bodegas, vinos y experiencias cerca tuyo.
+      </div>
+    </div>
+
+    <div style={{ ...styles.stack22, overflowY: "auto", flex: 1, paddingBottom: 16 }}>
       <div style={styles.rowBetweenCenter}>
         <div style={styles.chipsRow}>
           {["Todos", "Bodegas", "Vinotecas", "Eventos"].map((item) => (
@@ -1420,7 +1422,9 @@ function MapScreen({
           </div>
         </div>
       </div>
-      );
+    </div>
+  </div>
+);
 }
 
 function AgendaScreen() {
