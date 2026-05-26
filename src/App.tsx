@@ -791,7 +791,9 @@ function Header({
         </div>
 {(isHome || currentTab === "map") && (
   <div style={styles.headerSubtitle}>
-    Descubrí bodegas, vinos y experiencias únicas.
+    {currentTab === "map"
+      ? "Encontrá bodegas, vinos y experiencias cerca tuyo."
+      : "Descubrí bodegas, vinos y experiencias únicas."}
   </div>
 )}
         <img
@@ -807,10 +809,11 @@ function Header({
           }}
         />
       </div>
-
-     {currentTab === "map"
-  ? "Encontrá bodegas, vinos y experiencias cerca tuyo."
-  : "Descubrí bodegas, vinos y experiencias únicas."}
+      {currentTab !== "search" && (
+        <button style={styles.searchBar} onClick={onSearchClick}>
+          <SearchIcon />
+          <span style={styles.searchBarText}>
+            Busca tu vino, bodega o experiencia.
           </span>
         </button>
       )}
