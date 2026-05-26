@@ -2669,7 +2669,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: "flex",
     alignItems: "center",
     gap: 12,
-    padding: 18,
+    padding: 18, 
     borderRadius: 999,
     border: `1px solid ${theme.line}`,
     background: "#fff",
