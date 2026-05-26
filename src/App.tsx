@@ -1340,7 +1340,7 @@ function MapScreen({
   };
 
  return (
-  <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+  <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
     <div style={{ ...styles.headerTitleWrap, marginBottom: 24, flexShrink: 0 }}>
       <div
         style={{
@@ -1358,10 +1358,8 @@ function MapScreen({
       <div style={styles.headerSubtitle}>
         Encontrá bodegas, vinos y experiencias cerca tuyo.
       </div>
-    </div>
 
-    <div style={{ ...styles.stack22, overflowY: "auto", flex: 1, paddingBottom: 16 }}>
-      <div style={styles.rowBetweenCenter}>
+      <div style={{ ...styles.rowBetweenCenter, marginTop: 18 }}>
         <div style={styles.chipsRow}>
           {["Todos", "Bodegas", "Vinotecas", "Eventos"].map((item) => (
             <button
@@ -1378,7 +1376,9 @@ function MapScreen({
           {locationStatus === "loading" ? "Buscando..." : "Mi ubicación"}
         </button>
       </div>
+    </div>
 
+    <div style={{ ...styles.stack22, overflowY: "auto", flex: 1, minHeight: 0, paddingBottom: 16 }}>
       <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
         <div style={styles.mapArea}>
           <img src="/grapes.png" alt="Arte uvas" style={styles.mapArtImage} />
