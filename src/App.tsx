@@ -831,6 +831,7 @@ function Header({
       )}
     </div>
   );
+  }
 function SplashScreen() {
   return (
     <div style={styles.splashPage}>
