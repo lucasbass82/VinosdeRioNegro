@@ -1354,7 +1354,25 @@ function MapScreen({
   };
 
 return (
-  
+  <div style={styles.stack22}>
+    <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
+      <div style={styles.mapArea}>
+        <iframe
+          title="Mapa"
+          src={
+            userLocation
+              ? `https://maps.google.com/maps?q=${userLocation.lat},${userLocation.lng}&z=14&output=embed`
+              : "https://maps.google.com/maps?q=Rio%20Negro%20Argentina&z=6&output=embed"
+          }
+          style={{
+            width: "100%",
+            height: "100%",
+            border: 0,
+            display: "block",
+          }}
+        />
+      </div>
+
       <div style={{ padding: 18 }}>
         <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
 
@@ -1365,39 +1383,20 @@ return (
               Lat {userLocation.lat.toFixed(4)} · Lng{" "}
               {userLocation.lng.toFixed(4)}
             </div>
-            <div style={styles.placeText}>
-              Ya podemos abrir Google Maps con tu posición real.
-            </div>
           </>
         ) : locationStatus === "error" ? (
           <>
             <div style={styles.mapOverlayTitle}>No pudimos ubicarte</div>
             <div style={styles.placeText}>{locationError}</div>
           </>
-      <div style={styles.mapArea}>
-  <iframe
-    title="Mapa"
-    src={
-      userLocation
-        ? `https://maps.google.com/maps?q=${userLocation.lat},${userLocation.lng}&z=14&output=embed`
-        : "https://maps.google.com/maps?q=Rio%20Negro%20Argentina&z=6&output=embed"
-    }
-    style={{
-      width: "100%",
-      height: "100%",
-      border: 0,
-      display: "block",
-    }}
-  />
-</div>
+        ) : (
+          <>
+            <div style={styles.mapOverlayTitle}>Activá tu ubicación</div>
+            <div style={styles.placeText}>
+              Permití acceso a tu ubicación para ver el mapa de tu ciudad.
+            </div>
           </>
         )}
-
-        <div style={styles.grid3}>
-          <Metric label="Estado" value={locationStatus} />
-          <Metric label="Bodegas" value="5" />
-          <Metric label="Vinotecas" value="2" />
-        </div>
       </div>
     </div>
   </div>
