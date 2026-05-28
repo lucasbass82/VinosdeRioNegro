@@ -797,7 +797,7 @@ function Header({
             fontSize: 36,
             lineHeight: 1.02,
             marginTop: 10,
-            maxWidth: 240,
+            maxWidth: 280,
           }}
         >
           {title}
@@ -822,7 +822,10 @@ function Header({
       </div>
 
       {currentTab !== "search" && (
-        <button style={styles.searchBar} onClick={onSearchClick}>
+       <button
+  style={styles.searchBar}
+  onClick={currentTab === "map" ? undefined : onSearchClick}
+>
           <SearchIcon />
           <span style={styles.searchBarText}>
             Busca tu vino, bodega o experiencia.
@@ -1355,8 +1358,21 @@ function MapScreen({
   };
 
 return (
-  <div style={styles.stack22}>
-    <div style={{ ...styles.card, padding: 0, overflow: "hidden" }}>
+ <div
+  style={{
+    ...styles.stack22,
+    height: "100%",
+    overflow: "hidden",
+  }}
+>
+ <div
+  style={{
+    ...styles.card,
+    padding: 0,
+    overflow: "hidden",
+    flexShrink: 0,
+  }}
+>
       <div style={styles.mapArea}>
         <iframe
           title="Mapa"
@@ -1400,7 +1416,35 @@ return (
         )}
       </div>
     </div>
-  </div>
+ <div
+      style={{
+        overflowY: "auto",
+        display: "grid",
+        gap: 22,
+        paddingBottom: 120,
+      }}
+    >
+      <div style={styles.chipsRow}>
+        {["Pinot Noir", "Regalo", "Atlántico", "Bodega Miras"].map((chip) => (
+          <button key={chip} style={styles.chip}>
+            {chip}
+          </button>
+        ))}
+      </div>
+
+      <Block title="Vinos recomendados">
+        <div style={styles.stack12}>
+          {WINES.map((wine) => (
+            <WineVisualRow
+              key={wine.id}
+              wine={wine}
+              onClick={() => {}}
+            />
+          ))}
+        </div>
+      </Block>
+    </div>
+ </div>
 );
 }
 
