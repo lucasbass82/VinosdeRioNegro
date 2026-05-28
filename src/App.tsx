@@ -749,7 +749,7 @@ function Header({
 }) {
  const title =
     currentTab === "map"
-      ? "Encontrá tu Vino\nRionegrino"
+      ? "Encontrá tu Vino Rionegrino"
       : currentTab === "agenda"
       ? "Agenda"
       : currentTab === "bodegas"
@@ -797,7 +797,7 @@ function Header({
             fontSize: 36,
             lineHeight: 1.02,
             marginTop: 10,
-            maxWidth: 280,
+            maxWidth: 220,
           }}
         >
           {title}
@@ -1373,7 +1373,20 @@ return (
     flexShrink: 0,
   }}
 >
-      <div style={styles.mapArea}>
+     <div
+  style={{
+    ...styles.card,
+    padding: 0,
+    overflow: "hidden",
+    flexShrink: 0,
+  }}
+>
+  <div
+    style={{
+      ...styles.mapArea,
+      height: 320,
+    }}
+  >
         <iframe
           title="Mapa"
           src={
