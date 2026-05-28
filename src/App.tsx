@@ -1280,7 +1280,7 @@ function RegionWineriesScreen({
         <button style={styles.backButton} onClick={onBack}>
           <ArrowLeftIcon /> Volver
         </button>
-      </div>
+      </div> 
 
       <div style={styles.card}>
         <div style={styles.sectionTitle}>{meta.title}</div>
