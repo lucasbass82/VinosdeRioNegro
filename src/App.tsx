@@ -1376,7 +1376,7 @@ return (
       <div
         style={{
           ...styles.mapArea,
-          height: 520,
+          height: 620,
         }}
       >
         <iframe
