@@ -1358,35 +1358,27 @@ function MapScreen({
   };
 
 return (
- <div
-  style={{
-    ...styles.stack22,
-    height: "100%",
-    overflow: "hidden",
-  }}
->
- <div
-  style={{
-    ...styles.card,
-    padding: 0,
-    overflow: "hidden",
-    flexShrink: 0,
-  }}
->
-     <div
-  style={{
-    ...styles.card,
-    padding: 0,
-    overflow: "hidden",
-    flexShrink: 0,
-  }}
->
   <div
     style={{
-      ...styles.mapArea,
-      height: 320,
+      ...styles.stack22,
+      height: "100%",
+      overflow: "hidden",
     }}
   >
+    <div
+      style={{
+        ...styles.card,
+        padding: 0,
+        overflow: "hidden",
+        flexShrink: 0,
+      }}
+    >
+      <div
+        style={{
+          ...styles.mapArea,
+          height: 320,
+        }}
+      >
         <iframe
           title="Mapa"
           src={
@@ -1429,7 +1421,8 @@ return (
         )}
       </div>
     </div>
- <div
+
+    <div
       style={{
         overflowY: "auto",
         display: "grid",
@@ -1448,16 +1441,12 @@ return (
       <Block title="Vinos recomendados">
         <div style={styles.stack12}>
           {WINES.map((wine) => (
-            <WineVisualRow
-              key={wine.id}
-              wine={wine}
-              onClick={() => {}}
-            />
+            <WineVisualRow key={wine.id} wine={wine} onClick={() => {}} />
           ))}
         </div>
       </Block>
     </div>
- </div>
+  </div>
 );
 }
 
