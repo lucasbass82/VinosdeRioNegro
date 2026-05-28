@@ -787,7 +787,7 @@ function Header({
         style={{
           ...styles.headerTitleWrap,
           minHeight: 158,
-          paddingRight: 130,
+          paddingRight: 160,
         }}
       >
         <div
@@ -797,7 +797,7 @@ function Header({
             fontSize: 36,
             lineHeight: 1.02,
             marginTop: 10,
-            maxWidth: 260,
+            maxWidth: 320,
           }}
         >
           {title}
@@ -2770,7 +2770,7 @@ wineVisualTag: {
   border: `1px solid ${theme.line}`,
 },
   mapArea: {
-    height: 420,
+    height: 620,
     width: "100%",
     background: "linear-gradient(180deg, #f3eadf 0%, #e9ddcf 100%)",
     display: "flex",
