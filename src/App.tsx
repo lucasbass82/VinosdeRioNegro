@@ -642,7 +642,7 @@ export default function App() {
             </div>
           )}
 
-         <div style={tab === "map" ? { ...styles.content, overflowY: "hidden" } : styles.content}>
+       <div style={styles.content}>
             {detail && detailView ? (
               detail.kind === "wine" ? (
                 <WineDetail
@@ -787,7 +787,7 @@ function Header({
         style={{
           ...styles.headerTitleWrap,
           minHeight: 158,
-          paddingRight: 160,
+          paddingRight: 80,
         }}
       >
         <div
@@ -1358,13 +1358,7 @@ function MapScreen({
   };
 
 return (
-  <div
-    style={{
-      ...styles.stack22,
-      height: "100%",
-      overflow: "hidden",
-    }}
-  >
+  <div style={styles.stack22}>
     <div
       style={{
         ...styles.card,
@@ -1376,7 +1370,7 @@ return (
       <div
         style={{
           ...styles.mapArea,
-          height: 620,
+          height: 520,
         }}
       >
         <iframe
