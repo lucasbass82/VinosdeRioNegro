@@ -767,7 +767,7 @@ function Header({
       ? "Encontrá bodegas, vinos y experiencias cerca tuyo."
       : currentTab === "agenda"
       ? "Eventos, degustaciones y actividades del vino."
-      : currentTab === "bodegas"
+      : currentTab === "bodegas" 
       ? "Explorá bodegas y regiones de Río Negro."
       : currentTab === "shop"
       ? "Comprá vinos y experiencias seleccionadas."
