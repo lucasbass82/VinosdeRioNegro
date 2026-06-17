@@ -1368,7 +1368,7 @@ return (
       }}
     >
       <div
-        style={{
+        style={{ 
           ...styles.mapArea,
           height: 520,
         }}
