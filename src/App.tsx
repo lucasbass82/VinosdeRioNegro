@@ -1370,7 +1370,7 @@ return (
       <div
         style={{ 
           ...styles.mapArea,
-          height: 520,
+          height: 260,
         }}
       >
         <iframe
@@ -1388,33 +1388,6 @@ return (
           }}
         />
       </div>
-
-      <div style={{ padding: 18 }}>
-        <div style={styles.mapOverlayEyebrow}>Mapa activo</div>
-
-        {locationStatus === "granted" && userLocation ? (
-          <>
-            <div style={styles.mapOverlayTitle}>Ubicación detectada</div>
-            <div style={styles.itemSub}>
-              Lat {userLocation.lat.toFixed(4)} · Lng{" "}
-              {userLocation.lng.toFixed(4)}
-            </div>
-          </>
-        ) : locationStatus === "error" ? (
-          <>
-            <div style={styles.mapOverlayTitle}>No pudimos ubicarte</div>
-            <div style={styles.placeText}>{locationError}</div>
-          </>
-        ) : (
-          <>
-            <div style={styles.mapOverlayTitle}>Activá tu ubicación</div>
-            <div style={styles.placeText}>
-              Permití acceso a tu ubicación para ver el mapa de tu ciudad.
-            </div>
-          </>
-        )}
-      </div>
-    </div>
 
     <div
       style={{
