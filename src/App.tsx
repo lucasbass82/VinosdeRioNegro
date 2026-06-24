@@ -306,7 +306,7 @@ const WINES: Wine[] = [
     
   },
   {
-    id: "v3",
+    id: "v3", 
     name: "Pinot Noir de viñedo antiguo",
     varietal: "Pinot Noir",
     winery: "Humberto Canale",
