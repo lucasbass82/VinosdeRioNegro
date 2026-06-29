@@ -165,6 +165,40 @@ const WINERIES: Winery[] = [
     image:
       "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1200&q=80",
   },
+ {
+  id: "w2a",
+  name: "Antigua Bodega Patagónica",
+  city: "General Roca",
+  region: "alto-valle",
+  description:
+    "Proyecto del Alto Valle con una amplia línea de vinos que combina tradición e innovación, desde la línea UN hasta Bellaco Malcriado.",
+  hours: "10:00 a 18:00",
+  openNow: true,
+  wines: [
+    "UN Sauvignon Blanc",
+    "UN Chardonnay",
+    "UN Rosé",
+    "UN Malbec Reserva",
+    "UN Pinot Noir Reserva",
+    "UN Gran Corte",
+    "UN Malbec Gran Reserva",
+    "UN Merlot Gran Reserva",
+    "Bellaco Malcriado Pinot Noir",
+    "Bellaco Malcriado Merlot",
+    "Bellaco Malcriado Malbec"
+  ],
+  shops: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  activity: "Visitas y degustaciones",
+  benefit: "10% OFF socios",
+  rating: 4.8,
+  distance: "",
+  image: "/bodegas/antigua-bodega-patagonica.jpg"
+},
+  
+  
   {
     id: "w3",
     name: "Humberto Canale",
@@ -360,6 +394,160 @@ const WINES: Wine[] = [
   tag: "Nuevo en Cordillera",
   image: "/wines/finca-fraschetti-pinot-noir.png"
 },
+{
+  id: "v8",
+  name: "UN Sauvignon Blanc",
+  varietal: "Sauvignon Blanc",
+  winery: "Antigua Bodega Patagónica",
+  style: "Blanco fresco y aromático",
+  note: "Vino blanco de gran frescura, con notas cítricas y herbales características del Alto Valle.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Blanco recomendado",
+  image: "/wines/antigua-un-sauvignon-blanc.png"
+},
+{
+  id: "v9",
+  name: "UN Chardonnay",
+  varietal: "Chardonnay",
+  winery: "Antigua Bodega Patagónica",
+  style: "Blanco equilibrado y elegante",
+  note: "De gran expresión frutal, con buena estructura, frescura y un final persistente.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Blanco recomendado",
+  image: "/wines/antigua-un-chardonnay.png"
+},
+{
+  id: "v10",
+  name: "UN Rosé",
+  varietal: "Rosé",
+  winery: "Antigua Bodega Patagónica",
+  style: "Rosado fresco y frutado",
+  note: "Elegante y refrescante, con aromas de frutas rojas y una acidez equilibrada que invita a seguir disfrutándolo.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Ideal para el verano",
+  image: "/wines/antigua-un-rose.png"
+},
+  {
+  id: "v11",
+  name: "UN Malbec Reserva",
+  varietal: "Malbec",
+  winery: "Antigua Bodega Patagónica",
+  style: "Tinto intenso y equilibrado",
+  note: "Expresa el carácter del Alto Valle con notas de frutos negros, especias y taninos suaves. Crianza en roble que aporta complejidad sin perder frescura.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Reserva",
+  image: "/wines/antigua-un-malbec-reserva.png"
+},
+{
+  id: "v12",
+  name: "UN Pinot Noir Reserva",
+  varietal: "Pinot Noir",
+  winery: "Antigua Bodega Patagónica",
+  style: "Elegante y complejo",
+  note: "Pinot Noir de gran expresión, con aromas de cerezas, frambuesas y delicadas notas especiadas. La crianza en roble aporta complejidad y un final persistente.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Reserva",
+  image: "/wines/antigua-un-pinot-noir-reserva.png"
+},
+{
+  id: "v13",
+  name: "UN Gran Corte Reserva",
+  varietal: "Blend",
+  winery: "Antigua Bodega Patagónica",
+  style: "Blend complejo y elegante",
+  note: "Corte de variedades seleccionadas del Alto Valle, con gran concentración, equilibrio y una crianza en roble que aporta profundidad y persistencia.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Blend Reserva",
+  image: "/wines/antigua-un-gran-corte-reserva.png"
+},
+{
+  id: "v14",
+  name: "UN Malbec Gran Reserva",
+  varietal: "Malbec",
+  winery: "Antigua Bodega Patagónica",
+  style: "Gran Reserva de guarda",
+  note: "Malbec de gran concentración y elegancia, con aromas de frutos negros maduros, cacao y especias. Su prolongada crianza en roble aporta complejidad, estructura y un final persistente.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Gran Reserva",
+  image: "/wines/antigua-un-malbec-gran-reserva.png"
+},
+{
+  id: "v15",
+  name: "UN Merlot Gran Reserva",
+  varietal: "Merlot",
+  winery: "Antigua Bodega Patagónica",
+  style: "Gran Reserva de guarda",
+  note: "Merlot elegante y de gran complejidad, con notas de ciruelas maduras, frutos negros, vainilla y cacao. Su crianza en barricas aporta una textura sedosa y un final largo y armonioso.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Gran Reserva",
+  image: "/wines/antigua-un-merlot-gran-reserva.png"
+},
+{
+  id: "v16",
+  name: "Bellaco Malcriado Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Antigua Bodega Patagónica",
+  style: "Joven y expresivo",
+  note: "Pinot Noir de perfil moderno, con aromas de cerezas y frambuesas, taninos suaves y una marcada frescura que invita a seguir disfrutándolo.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Edición especial",
+  image: "/wines/antigua-bellaco-pinot-noir.png"
+},  
+{
+  id: "v17",
+  name: "Bellaco Malcriado Merlot",
+  varietal: "Merlot",
+  winery: "Antigua Bodega Patagónica",
+  style: "Joven y frutado",
+  note: "Merlot de gran expresión frutal, con notas de ciruelas maduras y frutas rojas, de cuerpo medio y final amable.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Edición especial",
+  image: "/wines/antigua-bellaco-merlot.png"
+},
+{
+  id: "v18",
+  name: "Bellaco Malcriado Malbec",
+  varietal: "Malbec",
+  winery: "Antigua Bodega Patagónica",
+  style: "Joven e intenso",
+  note: "Malbec vibrante, con aromas de frutos negros y violetas, taninos redondos y un final fresco que refleja el carácter del Alto Valle.",
+  availableAt: [
+    "Vinoteca del Río",
+    "Patagonia Wine House"
+  ],
+  tag: "Edición especial",
+  image: "/wines/antigua-bellaco-malbec.png"
+},  
 ];
 
 const EVENTS: EventItem[] = [
