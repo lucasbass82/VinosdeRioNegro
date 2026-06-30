@@ -195,7 +195,7 @@ const WINERIES: Winery[] = [
   benefit: "10% OFF socios",
   rating: 4.8,
   distance: "",
-  image: "/bodegas/antigua-bodega-patagonica.jpg"
+  image: "/antigua-bodega-patagonica.jpg"
 },
   
   
