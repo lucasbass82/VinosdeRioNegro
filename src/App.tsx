@@ -1382,32 +1382,6 @@ function RegionsScreen({
 
   return (
     <div style={styles.stack22}>
-      <div style={{ textAlign: "center" }}>
-        <div
-          style={{
-            fontFamily: '"Playfair Display", serif',
-            fontSize: 42,
-            lineHeight: 1,
-            color: theme.wineDark,
-            fontWeight: 700,
-            letterSpacing: -1,
-          }}
-        >
-          Ruta del Vino
-        </div>
-
-        <div
-          style={{
-            marginTop: 10,
-            color: theme.subtext,
-            fontSize: 15,
-            lineHeight: 1.5,
-          }}
-        >
-          Descubrí las bodegas, los viñedos y los paisajes que hacen única a la Ruta del Vino de Río Negro.
-        </div>
-      </div>
-
       <img
         src="/ruta-del-vino-rio-negro.png"
         alt="Mapa Ruta del Vino de Río Negro"
