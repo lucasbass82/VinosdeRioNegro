@@ -905,7 +905,7 @@ export default function App() {
                   onOpenWinery={openWinery}
                 />
               ) : (
-                <RegionsScreen onOpenRegion={setSelectedRegion} />
+                <RegionsScreen onOpenWinery={openWinery} />
               )
             ) : (
               <ProfileScreen favorites={favorites} />
@@ -941,7 +941,7 @@ function Header({
       : currentTab === "agenda"
       ? "Agenda"
       : currentTab === "bodegas"
-      ? "Bodegas"
+      ? "Ruta del Vino"
       : currentTab === "shop"
       ? "Tienda"
       : currentTab === "profile"
@@ -956,7 +956,7 @@ function Header({
       : currentTab === "agenda"
       ? "Eventos, degustaciones y actividades del vino."
       : currentTab === "bodegas" 
-      ? "Explorá bodegas y regiones de Río Negro."
+      ? "Descubrí las bodegas, los viñedos y los paisajes que hacen única a la Ruta del Vino de Río Negro."
       : currentTab === "shop"
       ? "Comprá vinos y experiencias seleccionadas."
       : currentTab === "home"
@@ -1355,65 +1355,115 @@ function ImageCard({
     </div>
   );
 }
-
 function RegionsScreen({
-  onOpenRegion,
+  onOpenWinery,
 }: {
-  onOpenRegion: (region: RegionKey) => void;
+  onOpenWinery: (id: string) => void;
 }) {
-  const regionOrder: RegionKey[] = [
-    "alto-valle",
-    "valle-medio",
-    "valle-inferior",
-    "linea-sur",
-    "cordillera",
+  const [activeRegion, setActiveRegion] = useState<RegionKey | "todas">("todas");
+
+  const regionButtons: Array<{ key: RegionKey | "todas"; label: string }> = [
+    { key: "todas", label: "Todas" },
+    { key: "alto-valle", label: "Alto Valle" },
+    { key: "valle-medio", label: "Valle Medio" },
+    { key: "valle-inferior", label: "Valle Inferior" },
+    { key: "cordillera", label: "Cordillera" },
   ];
+
+  const wineries =
+    activeRegion === "todas"
+      ? WINERIES
+      : WINERIES.filter((w) => w.region === activeRegion);
+
+  const title =
+    activeRegion === "todas"
+      ? "Bodegas de Río Negro"
+      : `Bodegas del ${REGION_META[activeRegion].title}`;
 
   return (
     <div style={styles.stack22}>
-      <SectionTitle title="Descubrí por región" />
+      <div style={{ textAlign: "center" }}>
+        <div
+          style={{
+            fontFamily: '"Playfair Display", serif',
+            fontSize: 42,
+            lineHeight: 1,
+            color: theme.wineDark,
+            fontWeight: 700,
+            letterSpacing: -1,
+          }}
+        >
+          Ruta del Vino
+        </div>
+
+        <div
+          style={{
+            marginTop: 10,
+            color: theme.subtext,
+            fontSize: 15,
+            lineHeight: 1.5,
+          }}
+        >
+          Descubrí las bodegas, los viñedos y los paisajes que hacen única a la Ruta del Vino de Río Negro.
+        </div>
+      </div>
+
+      <img
+        src="/ruta-del-vino-rio-negro.png"
+        alt="Mapa Ruta del Vino de Río Negro"
+        style={{
+          width: "100%",
+          display: "block",
+          borderRadius: 18,
+        }}
+      />
+
+      <SectionTitle title="Explorá por región" />
+
+      <div style={styles.chipsRow}>
+        {regionButtons.map((region) => (
+          <button
+            key={region.key}
+            style={activeRegion === region.key ? styles.chipActive : styles.chip}
+            onClick={() => setActiveRegion(region.key)}
+          >
+            {region.label}
+          </button>
+        ))}
+      </div>
+
+      <SectionTitle title={title} />
+
       <div style={styles.stack12}>
-        {regionOrder.map((region) => {
-          const wineries = WINERIES.filter((w) => w.region === region);
-          const meta = REGION_META[region];
-
-          return (
+        {wineries.map((w) => (
+          <div
+            key={w.id}
+            style={styles.resultRow}
+            onClick={() => onOpenWinery(w.id)}
+          >
             <div
-              key={region}
-              style={styles.imageCard}
-              onClick={() => onOpenRegion(region)}
-            >
-              <div
-                style={{
-                  ...styles.regionCardTop,
-                  backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.12), rgba(24,12,12,0.58)), url('${meta.image}')`,
-                }}
-              >
-                <img src="/grapes.png" alt="Arte uvas" style={styles.regionArtImage} />
+              style={{
+                width: 92,
+                height: 78,
+                borderRadius: 18,
+                backgroundImage: `url('${w.image}')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                flexShrink: 0,
+              }}
+            />
 
-                <div style={{ ...styles.regionPill, background: meta.tint }}>
-                  {wineries.length} {wineries.length === 1 ? "bodega" : "bodegas"}
-                </div>
-
-                <div>
-                  <div style={styles.imageCardTitle}>{meta.title}</div>
-                  <div style={styles.imageCardSub}>{meta.subtitle}</div>
-                </div>
+            <div style={{ flex: 1 }}>
+              <div style={styles.itemTitle}>{w.name}</div>
+              <div style={styles.itemSub}>
+                {w.city} · {REGION_META[w.region].title}
               </div>
-
-              <div style={styles.imageCardBody}>
-                <div style={styles.placeText}>
-                  Explorá las bodegas de esta región y conocé sus vinos, propuestas
-                  y experiencias.
-                </div>
-                <div style={styles.rowBetweenCenter}>
-                  <div style={styles.featureText}>Ver bodegas</div>
-                  <ChevronRightIcon />
-                </div>
-              </div>
+              <div style={styles.placeText}>{w.description}</div>
             </div>
-          );
-        })}
+
+            <ChevronRightIcon />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -2018,7 +2068,7 @@ function BottomNav({
     { key: "home", label: "Inicio", icon: <HomeIcon /> },
     { key: "map", label: "Mapa", icon: <MapIcon /> },
     { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
-    { key: "bodegas", label: "Bodegas", icon: <WineIcon /> },
+    { key: "bodegas", label: "Ruta del Vino", icon: <WineIcon /> },
     { key: "shop", label: "Tienda", icon: <WineIcon /> },
   ];
 
