@@ -830,7 +830,7 @@ export default function App() {
             </div>
           )}
 
-       <div style={styles.content}>
+      <div style={tab === "bodegas" && !detail ? { ...styles.content, overflowY: "hidden" } : styles.content}>
             {detail && detailView ? (
               detail.kind === "wine" ? (
                 <WineDetail
@@ -956,7 +956,7 @@ function Header({
       : currentTab === "agenda"
       ? "Eventos, degustaciones y actividades del vino."
       : currentTab === "bodegas" 
-      ? "Descubrí las bodegas, los viñedos y los paisajes que hacen única a la Ruta del Vino de Río Negro."
+      ? "Recorré la Ruta del Vino de Río Negro, un viaje que une la Cordillera de los Andes con el mar, entre viñedos, paisajes y experiencias únicas."
       : currentTab === "shop"
       ? "Comprá vinos y experiencias seleccionadas."
       : currentTab === "home"
@@ -1009,7 +1009,7 @@ function Header({
         />
       </div>
 
-      {currentTab !== "search" && (
+   {currentTab !== "search" && currentTab !== "bodegas" && (
        <button
   style={styles.searchBar}
   onClick={currentTab === "map" ? undefined : onSearchClick}
@@ -1381,7 +1381,15 @@ function RegionsScreen({
       : `Bodegas del ${REGION_META[activeRegion].title}`;
 
   return (
-    <div style={styles.stack22}>
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: 14,
+        overflow: "hidden",
+      }}
+    >
       <img
         src="/ruta-del-vino-rio-negro.png"
         alt="Mapa Ruta del Vino de Río Negro"
@@ -1389,12 +1397,15 @@ function RegionsScreen({
           width: "100%",
           display: "block",
           borderRadius: 18,
+          flexShrink: 0,
         }}
       />
 
-      <SectionTitle title="Explorá por región" />
+      <div style={{ flexShrink: 0 }}>
+        <SectionTitle title="Explorá por región" />
+      </div>
 
-      <div style={styles.chipsRow}>
+      <div style={{ ...styles.chipsRow, flexShrink: 0 }}>
         {regionButtons.map((region) => (
           <button
             key={region.key}
@@ -1406,9 +1417,21 @@ function RegionsScreen({
         ))}
       </div>
 
-      <SectionTitle title={title} />
+      <div style={{ flexShrink: 0 }}>
+        <SectionTitle
+          title={title}
+          action="Ver todas"
+          onAction={() => setActiveRegion("todas")}
+        />
+      </div>
 
-      <div style={styles.stack12}>
+      <div
+        style={{
+          ...styles.stack12,
+          overflowY: "auto",
+          paddingBottom: 110,
+        }}
+      >
         {wineries.map((w) => (
           <div
             key={w.id}
