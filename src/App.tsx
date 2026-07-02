@@ -1392,7 +1392,7 @@ function RegionsScreen({
       ? "Bodegas de Río Negro"
       : `Bodegas del ${REGION_META[activeRegion].title}`;
 
-  return (
+  return ( 
     <div
       style={{
         height: "100%",
