@@ -830,7 +830,19 @@ export default function App() {
             </div>
           )}
 
-      <div style={tab === "bodegas" && !detail ? { ...styles.content, overflowY: "hidden" } : styles.content}>
+     <div
+  style={
+    tab === "bodegas" && !detail
+      ? {
+          ...styles.content,
+          overflowY: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: 0,
+        }
+      : styles.content
+  }
+>
             {detail && detailView ? (
               detail.kind === "wine" ? (
                 <WineDetail
