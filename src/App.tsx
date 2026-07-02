@@ -1391,15 +1391,17 @@ function RegionsScreen({
       }}
     >
       <img
-        src="/ruta-del-vino-rio-negro.png"
-        alt="Mapa Ruta del Vino de Río Negro"
-        style={{
-          width: "100%",
-          display: "block",
-          borderRadius: 18,
-          flexShrink: 0,
-        }}
-      />
+  src="/ruta-del-vino-rio-negro.png"
+  alt="Mapa Ruta del Vino de Río Negro"
+  style={{
+    width: "100%",
+    height: 210,
+    objectFit: "contain",
+    display: "block",
+    borderRadius: 18,
+    flexShrink: 0,
+  }}
+/>
 
       <div style={{ flexShrink: 0 }}>
         <SectionTitle title="Explorá por región" />
@@ -1424,14 +1426,15 @@ function RegionsScreen({
           onAction={() => setActiveRegion("todas")}
         />
       </div>
-
-      <div
-        style={{
-          ...styles.stack12,
-          overflowY: "auto",
-          paddingBottom: 110,
-        }}
-      >
+    <div
+  style={{
+    ...styles.stack12,
+    flex: 1,
+    minHeight: 0,
+    overflowY: "auto",
+    paddingBottom: 110,
+  }}
+>
         {wineries.map((w) => (
           <div
             key={w.id}
