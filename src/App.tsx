@@ -801,11 +801,13 @@ export default function App() {
         <div style={styles.backgroundDots} />
 
         <div style={styles.phone}>
-          <Header
-            currentTab={tab}
-            onSearchClick={() => setTab("search")}
-            onMenuClick={() => setShowMenu((prev) => !prev)}
-          />
+         {!(tab === "bodegas" && !detail) && (
+  <Header
+    currentTab={tab}
+    onSearchClick={() => setTab("search")}
+    onMenuClick={() => setShowMenu((prev) => !prev)}
+  />
+)}
 
           {showMenu && !detail && (
             <div style={styles.menuDropdown}>
