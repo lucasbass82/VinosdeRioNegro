@@ -9,7 +9,7 @@ type RegionKey =
 
 type Winery = {
   id: string;
-  name: string;
+  name: string; 
   city: string;
   region: RegionKey;
   description: string;
