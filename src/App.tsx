@@ -75,16 +75,18 @@ type DetailState =
   | null;
 
 const theme = {
-  bgTop: "#f6efea",
-  bgBottom: "#f2e3e2",
-  paper: "#fffdfb",
-  card: "#fffdfa",
-  text: "#1e1714",
-  subtext: "#7d7066",
-  line: "#eadfd5",
-  wine: "#6c1527",
-  wineDark: "#47101d",
-  cream: "#f7f2ec",
+  bgTop: "#FAF8F5",
+  bgBottom: "#EEF4EA",
+  paper: "#FAF8F5",
+  card: "#FFFFFF",
+  text: "#1E1E1E",
+  subtext: "#777777",
+  line: "#E6DED5",
+  wine: "#6C1527",
+  wineDark: "#47101D",
+  cream: "#F2F6EF",
+  river: "#1577C8",
+  valley: "#3F8E4E",
 };
 
 const REGION_META: Record<
@@ -103,21 +105,21 @@ const REGION_META: Record<
     subtitle: "Historia familiar y nuevos proyectos con identidad.",
     image:
       "https://images.unsplash.com/photo-1464638681273-0962e9b53566?auto=format&fit=crop&w=1400&q=80",
-    tint: "rgba(223,189,199,0.18)",
+    tint: "rgba(63,142,78,0.10)",
   },
   "valle-inferior": {
     title: "Valle Inferior",
     subtitle: "Frescura atlántica y experiencias distintas.",
     image:
       "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80",
-    tint: "rgba(168,182,111,0.16)",
+    tint: "rgba(21,119,200,0.10)",
   },
   "linea-sur": {
     title: "Línea Sur",
     subtitle: "Territorio emergente para futuras experiencias.",
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
-    tint: "rgba(223,189,199,0.16)",
+    tint: "rgba(63,142,78,0.10)",
    },
   "cordillera": {
     title: "Cordillera",
@@ -615,7 +617,7 @@ function GlobalStyles() {
       }
 
       ::-webkit-scrollbar-thumb {
-        background: #d8cbc3;
+        background: #D9D1C8;
         border-radius: 999px;
       }
 
@@ -748,11 +750,11 @@ export default function App() {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    background: "linear-gradient(180deg, #f6f1ee, #efe7e3)"
+    background: "linear-gradient(180deg, #FAF8F5, #EEF4EA)"
   }}
 >
   <img
-    src="/logofinal.png"
+    src="/logo-vinos-rn.png"
     style={{
       width: 180,
       marginBottom: 2
@@ -761,7 +763,7 @@ export default function App() {
 
   <h1
     style={{
-      color: "#6c1527",
+      color: theme.text,
       fontFamily: "Playfair Display, serif",
       fontSize: "42px",
       lineHeight: "1.1",
@@ -781,9 +783,9 @@ export default function App() {
     marginTop: 6,
   }} 
 >
-  <div style={{ width: 40, height: 1, background: "#c9a96a" }} />
-  <div style={{ color: "#c9a96a", fontSize: 18 }}>✦</div>
-  <div style={{ width: 40, height: 1, background: "#c9a96a" }} />
+  <div style={{ width: 40, height: 1, background: theme.river }} />
+  <div style={{ color: theme.river, fontSize: 18 }}>✦</div>
+  <div style={{ width: 40, height: 1, background: theme.river }} />
 </div>
   <p style={{ marginTop: 6, opacity: 0.6 }}>
     Viví el vino rionegrino
@@ -933,445 +935,10 @@ export default function App() {
   );
 }
 function Shop() {
-  const [shopTab, setShopTab] = useState<"vinos" | "experiencias">("vinos");
-  const [shopSearch, setShopSearch] = useState("");
-  const [activeFilter, setActiveFilter] = useState("Todos");
-
-  const wineryByName = (name: string) => WINERIES.find((w) => w.name === name);
-
-  const getWineRegion = (wine: Wine) => {
-    const winery = wineryByName(wine.winery);
-    return winery ? REGION_META[winery.region].title : "Río Negro";
-  };
-
-  const antiguaFirst = (a: Wine, b: Wine) => {
-    const aAntigua = a.winery === "Antigua Bodega Patagónica";
-    const bAntigua = b.winery === "Antigua Bodega Patagónica";
-    if (aAntigua && !bAntigua) return -1;
-    if (!aAntigua && bAntigua) return 1;
-    return a.name.localeCompare(b.name);
-  };
-
-  const filterOptions = [
-    "Todos",
-    "Antigua Bodega Patagónica",
-    "Pinot Noir",
-    "Malbec",
-    "Merlot",
-    "Chardonnay",
-    "Sauvignon Blanc",
-    "Rosé",
-    "Alto Valle",
-    "Valle Medio",
-    "Valle Inferior",
-    "Cordillera",
-  ];
-
-  const normalizedSearch = shopSearch.toLowerCase().trim();
-
-  const filteredWines = WINES
-    .slice()
-    .sort(antiguaFirst)
-    .filter((wine) => {
-      const winery = wineryByName(wine.winery);
-      const regionName = winery ? REGION_META[winery.region].title : "";
-      const haystack = [
-        wine.name,
-        wine.varietal,
-        wine.winery,
-        wine.style,
-        wine.tag,
-        wine.note,
-        regionName,
-      ]
-        .join(" ")
-        .toLowerCase();
-
-      const matchesSearch = !normalizedSearch || haystack.includes(normalizedSearch);
-
-      const matchesFilter =
-        activeFilter === "Todos" ||
-        wine.winery === activeFilter ||
-        wine.varietal === activeFilter ||
-        regionName === activeFilter;
-
-      return matchesSearch && matchesFilter;
-    });
-
-  const featuredWines = WINES
-    .filter((wine) => wine.winery === "Antigua Bodega Patagónica")
-    .slice(0, 6);
-
-  const experiences = [
-    {
-      title: "Experiencia Pinot Noir",
-      eyebrow: "Selección por varietal",
-      description:
-        "Una experiencia para recorrer una de las variedades emblemáticas de Río Negro a través de distintas bodegas, paisajes y estilos.",
-      detail:
-        "Incluye vinos seleccionados, historia del varietal, guía de degustación, maridajes sugeridos y contenido exclusivo dentro de la app.",
-      meta: "Selección x6 · Contenido incluido",
-      kind: "degustacion",
-    },
-    {
-      title: "Experiencia Malbec",
-      eyebrow: "Selección por varietal",
-      description:
-        "Una mirada rionegrina sobre una cepa clásica argentina, interpretada desde el Alto Valle hasta nuevos paisajes productivos.",
-      detail:
-        "Incluye guía de servicio, historia de las bodegas, orden sugerido de degustación y maridajes para cada vino.",
-      meta: "Selección x6 · Contenido incluido",
-      kind: "degustacion",
-    },
-    {
-      title: "Experiencia Merlot",
-      eyebrow: "Selección por varietal",
-      description:
-        "Vinos amables, profundos y expresivos para descubrir otra cara del territorio rionegrino.",
-      detail:
-        "Una propuesta pensada para comparar estilos, regiones y perfiles sensoriales con acompañamiento de la app.",
-      meta: "Selección x6 · Contenido incluido",
-      kind: "degustacion",
-    },
-    {
-      title: "Experiencia Alto Valle",
-      eyebrow: "Selección por región",
-      description:
-        "Un recorrido por el corazón histórico del vino rionegrino: bodegas, tradición y etiquetas con identidad propia.",
-      detail:
-        "Incluye vinos de la región, relato territorial, bodegas recomendadas y guía de degustación paso a paso.",
-      meta: "Selección regional · Contenido incluido",
-      kind: "territorio",
-    },
-    {
-      title: "De la Cordillera al Mar",
-      eyebrow: "Experiencia premium",
-      description:
-        "La selección que mejor resume la identidad de Río Negro: un viaje por vinos que nacen entre montaña, valle y Atlántico.",
-      detail:
-        "Pensada como experiencia insignia de la app, con contenido especial sobre paisaje, historia y maridajes patagónicos.",
-      meta: "Selección especial · Contenido incluido",
-      kind: "territorio",
-    },
-    {
-      title: "Introducción al vino",
-      eyebrow: "Academia",
-      description:
-        "Un curso pago para empezar a degustar, reconocer estilos y disfrutar mejor cada botella.",
-      detail:
-        "Dictado por profesionales certificados. La modalidad puede ser online, presencial o por videos según cada propuesta.",
-      meta: "Curso pago · Cupos limitados",
-      kind: "academia",
-    },
-    {
-      title: "Curso de Sommelier",
-      eyebrow: "Academia",
-      description:
-        "Formación guiada por sommeliers profesionales para quienes quieran profundizar en servicio, degustación y cultura del vino.",
-      detail:
-        "La app funciona como plataforma de inscripción y acceso. El contenido lo define el profesional a cargo.",
-      meta: "Formación paga · Próximamente",
-      kind: "academia",
-    },
-  ];
-
-  const filteredExperiences = experiences.filter((experience) => {
-    const haystack = [
-      experience.title,
-      experience.eyebrow,
-      experience.description,
-      experience.detail,
-      experience.meta,
-      experience.kind,
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    const matchesSearch = !normalizedSearch || haystack.includes(normalizedSearch);
-
-    const matchesFilter =
-      activeFilter === "Todos" ||
-      (activeFilter === "Pinot Noir" && experience.title.includes("Pinot")) ||
-      (activeFilter === "Malbec" && experience.title.includes("Malbec")) ||
-      (activeFilter === "Merlot" && experience.title.includes("Merlot")) ||
-      (activeFilter === "Alto Valle" && experience.title.includes("Alto Valle")) ||
-      activeFilter === "Antigua Bodega Patagónica";
-
-    return matchesSearch && matchesFilter;
-  });
-
   return (
-    <div style={styles.stack22}>
-      <div
-        style={{
-          ...styles.card,
-          padding: 20,
-          background:
-            "linear-gradient(135deg, rgba(108,21,39,0.08), rgba(21,119,200,0.08))",
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            width: 130,
-            height: 130,
-            borderRadius: "50%",
-            background: "rgba(63,142,78,0.12)",
-            right: -40,
-            top: -40,
-          }}
-        />
-
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "7px 11px",
-              borderRadius: 999,
-              background: "rgba(255,255,255,0.76)",
-              border: `1px solid ${theme.line}`,
-              color: theme.wine,
-              fontSize: 12,
-              fontWeight: 800,
-              marginBottom: 12,
-            }}
-          >
-            Tienda oficial
-          </div>
-
-          <div
-            style={{
-              fontFamily: '"Playfair Display", serif',
-              fontSize: 31,
-              lineHeight: 1.05,
-              letterSpacing: -0.8,
-              color: theme.text,
-              fontWeight: 700,
-              maxWidth: 310,
-            }}
-          >
-            Vinos que cuentan un territorio único
-          </div>
-
-          <div
-            style={{
-              marginTop: 10,
-              color: theme.subtext,
-              fontSize: 14,
-              lineHeight: 1.45,
-              maxWidth: 340,
-            }}
-          >
-            Descubrí vinos y experiencias que recorren Río Negro desde la
-            Cordillera de los Andes hasta el mar.
-          </div>
-        </div>
-      </div>
-
-      <div style={styles.searchInputWrapBig}>
-        <SearchIcon />
-        <input
-          value={shopSearch}
-          onChange={(e) => setShopSearch(e.target.value)}
-          style={styles.inputBig}
-          placeholder="Buscar vinos, bodegas o experiencias"
-        />
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-        <button
-          style={shopTab === "vinos" ? styles.chipActive : styles.chip}
-          onClick={() => setShopTab("vinos")}
-        >
-          Vinos
-        </button>
-        <button
-          style={shopTab === "experiencias" ? styles.chipActive : styles.chip}
-          onClick={() => setShopTab("experiencias")}
-        >
-          Experiencias
-        </button>
-      </div>
-
-      <div style={styles.chipsRow}>
-        {filterOptions.map((filter) => (
-          <button
-            key={filter}
-            style={activeFilter === filter ? styles.chipActive : styles.chip}
-            onClick={() => setActiveFilter(filter)}
-          >
-            {filter}
-          </button>
-        ))}
-      </div>
-
-      {shopTab === "vinos" ? (
-        <>
-          <SectionTitle title="Destacados" action="Ver todos" onAction={() => setActiveFilter("Todos")} />
-
-          <div style={styles.horizontalScroller}>
-            {featuredWines.map((wine) => (
-              <div
-                key={wine.id}
-                style={{
-                  ...styles.card,
-                  minWidth: 185,
-                  padding: 14,
-                  cursor: "pointer",
-                }}
-              >
-                <div
-                  style={{
-                    height: 150,
-                    borderRadius: 18,
-                    background: theme.cream,
-                    backgroundImage: `url('${wine.image}')`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "contain",
-                    backgroundPosition: "center",
-                    marginBottom: 12,
-                  }}
-                />
-                <div style={styles.itemTitle}>{wine.name}</div>
-                <div style={styles.itemSub}>
-                  {wine.varietal} · {getWineRegion(wine)}
-                </div>
-                <div style={{ marginTop: 10 }}>
-                  <Badge kind="benefit">Botella · Caja x6</Badge>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <SectionTitle title="Catálogo de vinos" />
-
-          <div style={styles.stack12}>
-            {filteredWines.map((wine) => (
-              <div key={wine.id} style={styles.wineVisualRow}>
-                <div
-                  style={{
-                    ...styles.wineVisualImage,
-                    backgroundImage: `url('${wine.image}')`,
-                  }}
-                />
-
-                <div style={styles.wineVisualBody}>
-                  <div>
-                    <div style={styles.wineVisualTitle}>{wine.name}</div>
-                    <div style={styles.wineVisualSub}>
-                      {wine.winery} · {wine.varietal}
-                    </div>
-                    <div style={{ ...styles.placeText, marginTop: 6 }}>
-                      {getWineRegion(wine)} · {wine.style}
-                    </div>
-                  </div>
-
-                  <div style={styles.rowGap10Wrap}>
-                    <button style={{ ...styles.secondaryButton, flex: 1 }}>
-                      Botella
-                    </button>
-                    <button style={{ ...styles.primaryButton, flex: 1 }}>
-                      Caja
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {!filteredWines.length && (
-              <div style={styles.card}>
-                <div style={styles.itemTitle}>No encontramos vinos</div>
-                <div style={styles.placeText}>
-                  Probá con otra bodega, varietal o región.
-                </div>
-              </div>
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          <SectionTitle title="Experiencias exclusivas" />
-
-          <div style={styles.stack12}>
-            {filteredExperiences.map((experience) => (
-              <div
-                key={experience.title}
-                style={{
-                  ...styles.card,
-                  padding: 18,
-                  background:
-                    experience.kind === "academia"
-                      ? "linear-gradient(135deg, rgba(30,30,30,0.05), rgba(21,119,200,0.08))"
-                      : "linear-gradient(135deg, rgba(108,21,39,0.07), rgba(63,142,78,0.08))",
-                }}
-              >
-                <div style={styles.rowBetweenTop}>
-                  <Badge kind={experience.kind === "academia" ? "neutral" : "benefit"}>
-                    {experience.eyebrow}
-                  </Badge>
-                  <div style={{ color: theme.wine, fontWeight: 900 }}>✦</div>
-                </div>
-
-                <div
-                  style={{
-                    marginTop: 12,
-                    fontFamily: '"Playfair Display", serif',
-                    fontSize: 25,
-                    lineHeight: 1.05,
-                    color: theme.text,
-                    fontWeight: 700,
-                  }}
-                >
-                  {experience.title}
-                </div>
-
-                <div style={{ ...styles.placeText, marginTop: 10 }}>
-                  {experience.description}
-                </div>
-
-                <div
-                  style={{
-                    marginTop: 12,
-                    padding: 12,
-                    borderRadius: 16,
-                    background: "rgba(255,255,255,0.72)",
-                    border: `1px solid ${theme.line}`,
-                    color: theme.subtext,
-                    fontSize: 13,
-                    lineHeight: 1.45,
-                  }}
-                >
-                  {experience.detail}
-                </div>
-
-                <div style={styles.rowBetweenCenter}>
-                  <div style={{ ...styles.featureText, marginTop: 14 }}>
-                    {experience.meta}
-                  </div>
-                  <button style={styles.primaryButton}>
-                    {experience.kind === "academia"
-                      ? "Ver curso"
-                      : "Agregar experiencia"}
-                  </button>
-                </div>
-              </div>
-            ))}
-
-            {!filteredExperiences.length && (
-              <div style={styles.card}>
-                <div style={styles.itemTitle}>No encontramos experiencias</div>
-                <div style={styles.placeText}>
-                  Probá limpiando los filtros o buscá por varietal.
-                </div>
-              </div>
-            )}
-          </div>
-        </>
-      )}
+    <div style={styles.content}>
+      <h2>Tienda</h2>
+      <p>Muy pronto vas a poder vivir la experiencia de nuestros vinos con evníos a todo el país 🍷</p>
     </div>
   );
 }
@@ -1407,7 +974,7 @@ function Header({
       : currentTab === "bodegas" 
       ? "Recorré la Ruta del Vino de Río Negro, un viaje que une la Cordillera de los Andes con el mar, entre viñedos, paisajes y experiencias únicas."
       : currentTab === "shop"
-      ? "Comprá vinos y experiencias seleccionadas."
+      ? "Vinos, cajas y experiencias creadas para descubrir Río Negro."
       : currentTab === "home"
       ? "Descubrí bodegas, vinos y experiencias únicas."
       : "";
@@ -1423,8 +990,8 @@ function Header({
       <div
         style={{
           ...styles.headerTitleWrap,
-          minHeight: 158,
-          paddingRight: 80,
+          minHeight: 118,
+          paddingRight: 0,
         }}
       >
         <div
@@ -1445,7 +1012,7 @@ function Header({
         )}
 
         <img
-          src="/grapes.png"
+          src="/logo-vinos-rn.png"
           alt="Arte uvas"
           style={{
             ...styles.headerBrandArt,
@@ -1477,7 +1044,7 @@ function SplashScreen() {
     <div style={styles.splashPage}>
       <div style={styles.splashLogoWrap}>
         <img
-          src="/logofinal.png"
+          src="/logo-vinos-rn.png"
           alt="Logo Vinos de Río Negro"
           style={styles.splashLogo}
         />
@@ -1518,7 +1085,7 @@ function HomeScreen({
   return (
     <div style={styles.stack22}>
       <div style={styles.heroCard}>
-        <img src="/grapes.png" alt="Arte uvas" style={styles.heroArtImage} />
+        <img src="/logo-vinos-rn.png" alt="Arte uvas" style={styles.heroArtImage} />
         <div style={styles.heroBadge}>La ruta del vino en tu celular</div>
         <div style={styles.heroTitle}>Vinos y actividades en un solo lugar</div>
         <div style={styles.heroText}>
@@ -1659,7 +1226,7 @@ function SearchScreen({
   return (
     <div style={styles.stack22}>
       <div style={styles.searchHeroCard}>
-        <img src="/grapes.png" alt="Arte uvas" style={styles.searchHeroArt} />
+        <img src="/logo-vinos-rn.png" alt="Arte uvas" style={styles.searchHeroArt} />
         <div style={styles.searchInputWrapBig}>
           <SearchIcon />
           <input
@@ -1950,9 +1517,10 @@ function RegionWineriesScreen({
   </div>
 
   <img
-    src="/grapes.png"
+    src="/logo-vinos-rn.png"
     alt="Arte uvas"
     style={{
+      display: "none",
       position: "absolute",
       top: -10,
       right: -6,
@@ -2150,7 +1718,7 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
   return (
     <div style={styles.stack22}>
       <div style={styles.profileHeroCard}>
-        <img src="/grapes.png" alt="Arte uvas" style={styles.profileArtImage} />
+        <img src="/logo-vinos-rn.png" alt="Arte uvas" style={styles.profileArtImage} />
         <div>
           <div style={styles.membershipEyebrow}>Membresía activa</div>
           <div style={styles.membershipTitle}>Tus Beneficios</div>
@@ -2793,7 +2361,7 @@ const styles: Record<string, React.CSSProperties> = {
     width: 340,
     height: 340,
     borderRadius: "50%",
-    background: "rgba(223,189,199,0.18)",
+    background: "rgba(63,142,78,0.10)",
     top: -90,
     left: -90,
     filter: "blur(30px)",
@@ -2803,7 +2371,7 @@ const styles: Record<string, React.CSSProperties> = {
     width: 280,
     height: 280,
     borderRadius: "50%",
-    background: "rgba(168,182,111,0.14)",
+    background: "rgba(21,119,200,0.10)",
     right: -70,
     bottom: -60,
     filter: "blur(30px)",
@@ -2812,7 +2380,7 @@ const styles: Record<string, React.CSSProperties> = {
     position: "absolute",
     inset: 0,
     backgroundImage:
-      "radial-gradient(rgba(223,189,199,0.22) 1px, transparent 1px)",
+      "radial-gradient(rgba(63,142,78,0.12) 1px, transparent 1px)",
     backgroundSize: "22px 22px",
     opacity: 0.25,
     pointerEvents: "none",
@@ -2890,6 +2458,7 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: "visible",
   },
   headerBrandArt: {
+    display: "none",
     position: "absolute",
     objectFit: "contain",
     pointerEvents: "none",
@@ -2908,7 +2477,7 @@ const styles: Record<string, React.CSSProperties> = {
   headerSubtitle: {
   marginTop: 10,
   maxWidth: 240,
-  color: "#7d7066",
+  color: "#777777",
   fontSize: 15,
   lineHeight: 1.45,
   fontWeight: 500,
@@ -3032,6 +2601,7 @@ const styles: Record<string, React.CSSProperties> = {
     boxShadow: "0 22px 44px rgba(73,20,34,0.16)",
   },
   heroArtImage: {
+    display: "none",
     position: "absolute",
     top: -12,
     right: -24,
@@ -3176,7 +2746,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   placeText: {
     marginTop: 12,
-    color: "#60554b",
+    color: "#777777",
     lineHeight: 1.6,
     fontSize: 14,
   },
@@ -3194,7 +2764,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 12,
     fontWeight: 700,
     background: theme.cream,
-    color: "#5a4d43",
+    color: "#777777",
     border: `1px solid ${theme.line}`,
   },
   badgeOpen: {
@@ -3204,9 +2774,9 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "6px 10px",
     fontSize: 12,
     fontWeight: 700,
-    background: "#eef5e5",
-    color: "#5b6a34",
-    border: "1px solid #dce7bc",
+    background: "#EEF4EA",
+    color: "#3F8E4E",
+    border: "1px solid #D7E7D9",
   },
   badgeClosed: {
     display: "inline-flex",
@@ -3215,8 +2785,8 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "6px 10px",
     fontSize: 12,
     fontWeight: 700,
-    background: "#f6e8eb",
-    color: "#8a4252",
+    background: "#F5E9EC",
+    color: "#6C1527",
     border: "1px solid #ead0d7",
   },
   badgeBenefit: {
@@ -3226,9 +2796,9 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "6px 10px",
     fontSize: 12,
     fontWeight: 700,
-    background: "#f3ebef",
+    background: "#F5E9EC",
     color: theme.wine,
-    border: "1px solid #ead3db",
+    border: "1px solid #E6DED5",
   },
   imageCard: {
     background: theme.paper,
@@ -3340,6 +2910,7 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: "hidden",
   },
   searchHeroArt: {
+    display: "none",
     position: "absolute",
     top: -8,
     right: -10,
@@ -3421,13 +2992,13 @@ wineVisualTag: {
   fontSize: 12,
   fontWeight: 700,
   background: theme.cream,
-  color: "#5a4d43",
+  color: "#777777",
   border: `1px solid ${theme.line}`,
 },
   mapArea: {
     height: 620,
     width: "100%",
-    background: "linear-gradient(180deg, #f3eadf 0%, #e9ddcf 100%)",
+    background: "linear-gradient(180deg, #F2F6EF 0%, #E6DED5 100%)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -3458,7 +3029,7 @@ wineVisualTag: {
     letterSpacing: -0.6,
   },
   metricBox: {
-    background: "#faf6f0",
+    background: "#FAF8F5",
     border: `1px solid ${theme.line}`,
     borderRadius: 18,
     padding: 12,
@@ -3529,6 +3100,7 @@ wineVisualTag: {
     overflow: "hidden",
   },
   profileArtImage: {
+    display: "none",
     position: "absolute",
     right: -6,
     top: 6,
@@ -3577,7 +3149,7 @@ wineVisualTag: {
     color: "rgba(255,255,255,0.8)",
   },
   infoBox: {
-    background: "#faf6f0",
+    background: "#FAF8F5",
     border: `1px solid ${theme.line}`,
     borderRadius: 18,
     padding: 14,
@@ -3665,7 +3237,7 @@ wineVisualTag: {
     width: 260,
     height: 260,
     borderRadius: "50%",
-    background: "rgba(223,189,199,0.20)",
+    background: "rgba(63,142,78,0.12)",
     filter: "blur(30px)",
     top: 80,
     left: 40,
@@ -3675,7 +3247,7 @@ wineVisualTag: {
     width: 220,
     height: 220,
     borderRadius: "50%",
-    background: "rgba(168,182,111,0.18)",
+    background: "rgba(21,119,200,0.10)",
     filter: "blur(30px)",
     bottom: 90,
     right: 40,
