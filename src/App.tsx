@@ -15,6 +15,9 @@ import marEspiPhoto from "./assets/mar-espi.png";
 import experienciaPinotPhoto from "./assets/experiencia-pinot.png";
 import cursosPhoto from "./assets/cursos.png";
 import oliviasYSaboresPhoto from "./assets/olivas-y-sabores.png";
+import vinopolitanPhoto from "./assets/vinopolitan.png";
+import piquillinPhoto from "./assets/piquillin.png";
+import rioTintoPhoto from "./assets/rio-tinto.png";
 
 type RegionKey =
   | "alto-valle"
@@ -656,6 +659,11 @@ function GlobalStyles() {
         100% { opacity: 1; transform: scale(1); }
       }
 
+      @keyframes splashTextIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -686,8 +694,8 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const fadeTimer = setTimeout(() => setSplashFading(true), 2000);
-    const hideTimer = setTimeout(() => setShowSplash(false), 2400);
+    const fadeTimer = setTimeout(() => setSplashFading(true), 3400);
+    const hideTimer = setTimeout(() => setShowSplash(false), 3800);
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(hideTimer);
@@ -797,6 +805,7 @@ export default function App() {
               style={styles.splashLogo}
             />
           </div>
+          <div style={styles.splashText}>Vinos de Río Negro</div>
         </div>
       </>
     );
@@ -1785,6 +1794,7 @@ function PhotoHeader({
   onMenuClick,
   gradient,
   height = 230,
+  backgroundSize = "cover",
 }: {
   imageUrl: string;
   title: string;
@@ -1792,12 +1802,14 @@ function PhotoHeader({
   onMenuClick: () => void;
   gradient?: string;
   height?: number;
+  backgroundSize?: string;
 }) {
   return (
     <div
       style={{
         ...styles.homePhoto,
         height,
+        backgroundSize,
         backgroundImage: `${gradient || DEFAULT_HEADER_GRADIENT}, url('${imageUrl}')`,
       }}
     >
@@ -1815,7 +1827,9 @@ function PhotoHeader({
       </div>
 
       <div style={styles.homePhotoTextWrap}>
-        <div style={styles.homePhotoTitle}>{title}</div>
+        <div style={styles.homePhotoTitle} translate="no">
+          {title}
+        </div>
         <div style={styles.homePhotoSubtitle}>{subtitle}</div>
       </div>
     </div>
@@ -1837,6 +1851,7 @@ const PHOTO_HEADER_CONFIG: Record<
     subtitle: string;
     gradient?: string;
     height?: number;
+    backgroundSize?: string;
   }
 > = {
   home: {
@@ -1855,6 +1870,7 @@ const PHOTO_HEADER_CONFIG: Record<
     subtitle: "Nuestros vinos, para vos.",
     gradient: RUTA_DEL_VINO_GRADIENT,
     height: 180,
+    backgroundSize: "contain",
   },
   winelist: {
     imageUrl: HOME_PHOTO_URL,
@@ -2496,7 +2512,9 @@ function WineThumbRow({
 }
 
 function MapWineRow({ wine, onClick }: { wine: Wine; onClick: () => void }) {
-  const shopName = wine.availableAt[0] || "Vinoteca a confirmar";
+  const shopName = wine.availableAt.includes("Vinoteca Olivas y Sabores")
+    ? "Vinoteca Olivas y Sabores"
+    : wine.availableAt[0] || "Vinoteca a confirmar";
   return (
     <WineThumbRow
       image={wine.image}
@@ -2521,6 +2539,17 @@ function eventHeaderImage(place: string): string {
   const winery = WINERIES.find((w) => w.name === place);
   if (winery) return winery.image;
   return GENERIC_VINOTECA_PHOTO;
+}
+
+const SHOP_HEADER_IMAGES: Record<string, string> = {
+  "Vinoteca Olivas y Sabores": oliviasYSaboresPhoto,
+  "Vinoteca Vinopolitan": vinopolitanPhoto,
+  "Vinoteca Piquillín": piquillinPhoto,
+  "Vinoteca Río Tinto": rioTintoPhoto,
+};
+
+function shopHeaderImage(name: string): string {
+  return SHOP_HEADER_IMAGES[name] || GENERIC_VINOTECA_PHOTO;
 }
 
 function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
@@ -2990,7 +3019,9 @@ function ShopDetail({
         <div
           style={{
             ...styles.detailImageTop,
-            backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.58)), url('${shop.image}')`,
+            backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.58)), url('${shopHeaderImage(
+              shop.name
+            )}')`,
           }}
         >
           <div>
@@ -3070,7 +3101,9 @@ function BottomNav({
               onClick={() => setTab(item.key)}
             >
               {item.icon}
-              <span style={styles.navLabel}>{item.label}</span>
+              <span style={styles.navLabel} translate="no">
+                {item.label}
+              </span>
             </button>
           );
         })}
@@ -4579,6 +4612,7 @@ wineVisualTag: {
     width: "100%",
     background: `linear-gradient(135deg, ${theme.text} 0%, ${theme.river} 100%)`,
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -4591,6 +4625,16 @@ wineVisualTag: {
     overflow: "hidden",
     background: "#fff",
     animation: "splashLogoIn 1.4s ease-out",
+  },
+  splashText: {
+    marginTop: 18,
+    fontFamily: '"Lora", serif',
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: 600,
+    textAlign: "center",
+    opacity: 0,
+    animation: "splashTextIn 1s ease-out 0.6s forwards",
   },
   splashLogo: {
     width: "100%",

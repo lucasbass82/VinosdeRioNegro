@@ -1,0 +1,58 @@
+Este archivo contiene los últimos ajustes a aplicar sobre el estado actual de la app. Antes de tocar código, presentame el plan completo y esperá mi aprobación.
+
+============================
+1. PANTALLA SPLASH
+============================
+
+A) DURACIÓN DE LA ANIMACIÓN: aumentá la duración total de la animación del logo — que el logo se vea por más tiempo antes de que la app navegue a Inicio. Actualmente dura aproximadamente 2 segundos, extendelo a 3.5-4 segundos en total (el fade-in y scale pueden ser iguales, solo extendé el tiempo que el logo permanece visible antes de navegar).
+
+B) TEXTO DEBAJO DEL LOGO: agregá el texto "Vinos de Río Negro" debajo del logo, centrado, en blanco, usando la tipografía Lora, tamaño aproximado 20px, con un fade-in suave que aparezca junto con el logo o un instante después.
+
+============================
+2. PANTALLA MAPA
+============================
+
+En las tarjetas de vinos de la sección "Vinos cerca tuyo", todas las referencias a "Vinoteca Vinopolitan" como lugar donde encontrar el vino deben cambiarse por "Vinoteca Olivas y Sabores". Buscá en el código dónde se asigna la vinoteca a mostrar en esas cards (puede ser en el array WINES campo availableAt, o puede ser un valor hardcodeado en el componente) y reemplazá "Vinoteca Vinopolitan" por "Vinoteca Olivas y Sabores" en ese contexto específico de la pantalla Mapa.
+
+============================
+3. PANTALLA AGENDA
+============================
+
+BUG "Orden del día": el tab de Agenda y su botón en la barra de navegación inferior están mostrando "Orden del día" en vez de "Agenda". Esto es probablemente una traducción automática del navegador o del sistema operativo (el atributo lang del HTML está en español y el navegador traduce "Agenda" al español rioplatense como "Orden del día"). 
+
+Para evitarlo, en el componente de la barra de navegación inferior, en vez de usar el texto "Agenda" directamente, usá un string que no sea susceptible a traducción automática, como por ejemplo usando un atributo translate="no" en el elemento, o cambiando el texto a "Eventos" (que no se traduce) y actualizando el título de la pantalla también a "Eventos". 
+
+Alternativamente, si la solución más limpia es agregar translate="no" o lang="es" al elemento específico, hacé eso. Lo importante es que el usuario vea siempre "Agenda" o "Eventos" (elegí el que quede más consistente con el resto de la app) y nunca "Orden del día".
+
+============================
+4. PANTALLA RUTA DEL VINO
+============================
+
+La imagen mapa-provincia.jpg en el photo header de Ruta del Vino se ve demasiado cortada y no se ven todas las localidades. Achicá la imagen aproximadamente un 20% — esto se puede lograr de dos maneras, elegí la que mejor funcione:
+- Reducir la altura del photo-hero en esta pantalla específica (de los valores actuales a un 20% menos)
+- O usar background-size con un valor menor al actual para que se vea más del mapa (por ejemplo si está en "cover", cambiarlo a "80%" o similar)
+El objetivo es que se vean más localidades del mapa sin que quede demasiado pequeño.
+
+============================
+5. FOTOS DE VINOTECAS EN PHOTO HEADER
+============================
+
+Cuando se abre la ficha de una vinoteca (ShopDetailScreen o como se llame), el photo header debe mostrar la imagen real de esa vinoteca. Ya implementamos esto para Vinoteca Olivas y Sabores con olivas-y-sabores.png. Ahora agregá las imágenes para las tres vinotecas restantes:
+
+- Vinoteca Vinopolitan → src/assets/vinopolitan.png
+- Vinoteca Piquillín → src/assets/piquillin.png
+- Vinoteca Río Tinto → src/assets/rio-tinto.png
+
+Implementalo de la misma forma que ya está hecho para Olivas y Sabores: mapeá el nombre de la vinoteca a su imagen correspondiente, y si no tiene imagen asignada, usá la foto genérica que ya existe como fallback.
+
+============================
+ORDEN DE IMPLEMENTACIÓN SUGERIDO
+============================
+
+1. Bug "Orden del día" en Agenda (es el más crítico visualmente)
+2. Splash: duración + texto
+3. Mapa: cambio de vinoteca en tarjetas de vinos
+4. Ruta del Vino: ajuste de tamaño del mapa
+5. Fotos de vinotecas en photo header
+
+Al terminar decime qué archivos tocaste y si encontraste algún caso sin resolver.
