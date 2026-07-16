@@ -1,0 +1,106 @@
+Este archivo contiene ajustes visuales y funcionales a aplicar sobre el rediseño que ya hicimos. Antes de tocar el código, presentame el plan de qué vas a cambiar y en qué orden.
+
+============================
+AJUSTES GLOBALES (todas las pantallas)
+============================
+
+1. TÍTULOS Y SUBTÍTULOS EN EL PHOTO HEADER
+En todas las pantallas, el título y el subtítulo están demasiado abajo dentro de la foto del header y casi tocan el borde de la hoja crema. Subí el bloque de texto (photo-textblock o como se llame en el código) hacia arriba dentro del header — aumentá el padding-bottom o bajá el bottom del bloque para que quede con más aire entre el subtítulo y el borde inferior de la foto.
+
+2. FONDO CIRCULAR DEL LOGO
+El círculo blanco detrás del logo (logo-icon.png) en el header es demasiado grande y deja un borde blanco visible alrededor de la imagen. Ajustalo para que el círculo blanco sea exactamente del tamaño de la imagen, sin sobrar. Reducí el padding del contenedor circular al mínimo (1-2px) o quitalo del todo, y asegurate de que el width/height del contenedor coincida con el de la imagen.
+
+3. ORDEN DE PRIORIDAD DE BODEGAS
+En cualquier lugar de la app donde se muestre una lista de bodegas, "Antigua Bodega Patagónica" debe aparecer siempre primera. Implementá esto ordenando el array o colocando esa bodega al inicio donde corresponda.
+
+4. ORDEN DE PRIORIDAD DE VINOS
+En cualquier lugar donde se muestren vinos de una bodega o listas generales de vinos, los vinos de "Antigua Bodega Patagónica" deben aparecer primero.
+
+5. ORDEN DE PRIORIDAD DE VINOTECAS
+En cualquier lugar donde se muestren vinotecas, "Vinoteca Olivas y Sabores" debe aparecer siempre primera.
+
+============================
+PANTALLA DE SPLASH (cuando abre la app)
+============================
+
+Reemplazá la pantalla de inicio/splash actual por una nueva pantalla de bienvenida moderna y animada. Debe mostrar únicamente el logo (src/assets/logo-icon.png) centrado en pantalla, sobre un fondo con el degradado de marca (negro cordillera #141410 → azul río #0a3a5c, diagonal 135deg).
+
+Animaciones sugeridas (implementá con CSS keyframes o React Native Animated):
+- El logo aparece con un fade-in suave (opacidad 0 → 1, duración ~800ms)
+- Luego un leve scale up (escala 0.85 → 1, duración ~600ms)
+- Después de ~2 segundos totales, transición suave a la pantalla de Inicio
+
+Sin texto, sin subtítulos — solo el logo animado sobre el degradado.
+
+============================
+PANTALLA: INICIO
+============================
+
+1. TARJETA DEGRADADA (la de "Hola, Viedma"):
+- Cambiá el texto a "¡Hola, Viedma!" (con signo de exclamación al inicio para darle calidez)
+- Cambiá el subtítulo de "4 vinotecas cerca tuyo tienen disponibilidad ahora mismo" por:
+  "Más de [N] etiquetas de los mejores vinos Rionegrinos disponibles ahora mismo"
+  Donde [N] es la cantidad real de vinos en el array WINES (calculala dinámicamente con WINES.length, no la hardcodees)
+- El botón "Ver disponibles cerca →": cuando el usuario lo toca, debe navegar a la pantalla de búsqueda/listado de vinos (la misma que abre "Ver todos" en la sección Vinos recomendados) y mostrar todos los vinos disponibles en Viedma.
+
+2. SECCIÓN "VINOS RECOMENDADOS" → botón "Ver todos":
+- Cuando el usuario toca "Ver todos", va a la pantalla de listado de vinos (WineListScreen o como se llame)
+- En esa pantalla, agregá un PhotoHeader con una foto de viñedo de fondo. Podés usar esta URL: https://images.unsplash.com/photo-1763786470689-5ff88c985885?fm=jpg&q=70&w=1400&auto=format&fit=crop
+- Título: "Buscá tu Vino"
+- Subtítulo: "Todos los vinos Rionegrinos, en un solo lugar."
+- Las tarjetas de filtro rápido debajo del buscador (si existen) reemplazalas por chips de varietal, igual que hicimos en Mapa y Tienda. Buscá todos los varietales únicos que existen en el array WINES y mostralos como chips horizontales scrolleables.
+
+3. SECCIÓN "BODEGAS RECOMENDADAS":
+- La primera bodega que aparece debe ser "Antigua Bodega Patagónica" (ver ajuste global #3)
+- El botón "Ver mapa" reemplazalo por "Ver todas" y que al tocarlo navegue a la pantalla de Ruta del Vino (la que lista todas las bodegas)
+
+============================
+PANTALLA: MAPA
+============================
+
+1. TARJETA DEGRADADA ("Estás en Viedma"):
+- Cambiá el subtítulo por: "Más de [N] etiquetas de los mejores vinos Rionegrinos cerca tuyo"
+  Donde [N] es WINES.length (dinámico)
+- El botón "Ver disponibles →": mismo comportamiento que en Inicio — navega a la pantalla de listado de todos los vinos disponibles en Viedma.
+
+2. CHIPS DE VARIETAL:
+- Los chips de filtro debajo de la tarjeta deben incluir TODOS los varietales únicos que existan en el array WINES (no solo Pinot Noir, Malbec, Merlot, Cabernet — pueden ser más). Generalos dinámicamente.
+
+============================
+PANTALLA: AGENDA
+============================
+
+- En la tarjeta degradada, eliminá el botón "Ver todos hoy →". La tarjeta queda solo con el badge, el título y el texto del próximo evento, sin botón.
+
+============================
+PANTALLA: RUTA DEL VINO
+============================
+
+1. IMAGEN DEL HEADER (mapa de la provincia):
+- La imagen del mapa de Río Negro está muy cortada y se ve solo la mitad. Achicá la altura del photo-hero en esta pantalla (probá con 180px en vez de 210-240px) para que se vea más del mapa completo.
+
+2. IMÁGENES REALES DE CADA BODEGA (en la ficha WineryDetail):
+Reemplazá el placeholder genérico de cada ficha de bodega por su imagen real. Todos los archivos están en src/assets/:
+
+- Bodega Miras → src/assets/bodega-miras.png
+- Bodega Aniello → src/assets/bodega-aniello.png
+- Antigua Bodega Patagónica → ya tiene su imagen original, no la toques
+- Humberto Canale → src/assets/bodega-humberto-canale.png
+- Bodega Videla Dorna → src/assets/bodega-videla-dorna.png
+- Wapisa → src/assets/bodega-wapisa.png
+- Finca Fraschetti → src/assets/finca-fraschetti.png
+
+Para asignar la imagen correcta a cada bodega, usá el nombre de la bodega como clave (winery.name) y mapealo al archivo correspondiente. Si una bodega no tiene imagen asignada, usá el placeholder que ya existe.
+
+============================
+ORDEN DE IMPLEMENTACIÓN SUGERIDO
+============================
+
+1. Ajustes globales (posición título/subtítulo en headers, tamaño círculo logo, orden de prioridad)
+2. Splash screen animada
+3. Ajustes de Inicio (tarjeta, vinos, bodegas)
+4. Ajustes de Mapa (tarjeta, chips dinámicos)
+5. Ajuste de Agenda (sacar botón)
+6. Ajustes de Ruta del Vino (altura header, imágenes reales de bodegas)
+
+Al terminar, decime qué archivos tocaste y si encontraste algún caso que no supiste cómo resolver.

@@ -1,0 +1,109 @@
+Este archivo contiene ajustes y nuevas funcionalidades a aplicar sobre el estado actual de la app. Antes de tocar código, presentame el plan completo de lo que vas a hacer y en qué orden.
+
+============================
+1. PANTALLA SPLASH
+============================
+
+Modificá el fondo del logo en la splash screen: el logo (logo-icon.png) debe tener un fondo blanco SOLO dentro del ícono, sin borde blanco sobrante. Implementalo usando border-radius: 50% con overflow: hidden y ajustando el tamaño del contenedor exactamente al del logo, sin padding extra. El fondo de la pantalla sigue siendo el degradado negro→azul.
+
+============================
+2. PANTALLA MAPA
+============================
+
+A) BUSCADOR: el buscador no permite escribir. Revisá que el input tenga un onChangeText/onChange conectado a un estado, y que no haya ningún elemento superpuesto (overlay, touchable, etc.) bloqueando los toques sobre él. Arreglalo para que sea completamente funcional.
+
+B) ORDEN DE CHIPS DE VARIETAL: los chips de filtro de la tarjeta de varietales deben seguir este orden exacto:
+1. Cerca mío (activo por defecto)
+2. Pinot Noir
+3. Merlot
+4. Malbec
+5. Blend
+6. Rosé
+7. Chardonnay
+
+Si alguno de estos varietales no existe en el array WINES, incluilo igual en el chip pero que al tocarlo simplemente no filtre nada (lista vacía) o muestre un mensaje "Próximamente".
+
+C) FOTOS DE BOTELLAS EN "VINOS CERCA TUYO": las cards de vinos en la sección "Vinos cerca tuyo" deben mostrar la imagen real de cada vino (el campo image que ya tiene cada vino en el array WINES) en vez del ícono genérico de botella SVG. Usá la misma imagen que se muestra en las otras pantallas para ese vino.
+
+============================
+3. PANTALLA AGENDA
+============================
+
+ACTIVAR BOTÓN "VER ACTIVIDAD": actualmente el botón no hace nada. Al tocarlo, debe navegar a una pantalla de detalle del evento (EventDetailScreen). Esta nueva pantalla debe tener:
+
+- PhotoHeader: usá la imagen de la bodega o vinoteca que menciona el evento como fondo del header.
+  - Si el evento es en una bodega, buscá esa bodega en el array WINERIES por nombre y usá su imagen (winery.image).
+  - Si el evento es en una vinoteca, buscá esa vinoteca en el array SHOPS por nombre. Como las vinotecas no tienen foto propia todavía, usá una foto genérica de vinoteca: https://images.unsplash.com/photo-1528823872057-9c018a7a7553?fm=jpg&q=70&w=1400&auto=format&fit=crop
+- Título en el header: nombre del evento
+- Subtítulo: nombre del lugar · ciudad
+
+Dentro de la hoja crema, mostrá:
+- Nombre completo del evento (Lora, grande)
+- Lugar y ciudad
+- Horario
+- Beneficio (si tiene)
+- Descripción del evento (si existe en los datos, sino generá un placeholder genérico como "Una experiencia única para descubrir los mejores vinos de Río Negro.")
+- Botón bordó: "Quiero ir →" (visual por ahora, sin funcionalidad real)
+
+============================
+4. PANTALLA RUTA DEL VINO
+============================
+
+A) IMAGEN DE LA ZONA "MAR": en la grilla de 4 zonas, reemplazá la imagen de la tile "Mar" por src/assets/mar-espi.png.
+
+B) FOTOS DE BOTELLAS EN FICHA DE BODEGA: dentro de WineryDetailScreen, en la sección "Vinos destacados", las cards de vino deben mostrar la imagen real de cada vino (campo image del array WINES) en vez del ícono SVG genérico.
+
+C) NAVEGAR A FICHA DEL VINO: al tocar una card de vino en "Vinos destacados" dentro de la ficha de bodega, debe navegar a la pantalla de detalle del vino (WineDetailScreen) que ya existe en la app. Conectá el onPress/onClick de esas cards al navegador correspondiente.
+
+============================
+5. PANTALLA TIENDA
+============================
+
+A) PRECIOS: en las cards de vinos de la grilla, mostrá solo el símbolo "$" sin número. No inventes precios.
+
+B) BUSCADOR Y BOTÓN FILTRAR: el buscador no permite escribir y el botón de filtrar no responde. Arreglá ambos:
+- El input del buscador debe tener estado propio y permitir escribir (igual que el fix del Mapa).
+- El botón de filtrar puede abrir un panel simple o simplemente quedar activo visualmente por ahora — lo importante es que no esté bloqueado.
+
+C) HERO CARD "EXPERIENCIA PINOT": reemplazá el fondo degradado negro→azul de esa tarjeta por la imagen src/assets/experiencia-pinot.png como fondo (backgroundImage), manteniendo un velo oscuro semitransparente encima para que el texto se siga leyendo. El texto y el botón "Ver la caja →" quedan igual.
+
+D) BOTÓN "VER LA CAJA →": al tocarlo, navega a una nueva pantalla ProductDetailScreen con:
+- PhotoHeader con src/assets/experiencia-pinot.png como fondo
+- Título: "Experiencia Pinot"
+- Subtítulo: "La Patagonia en una caja"
+- Dentro de la hoja crema:
+  - Descripción: "Una selección de 6 Pinot Noir de las mejores bodegas de Río Negro, curada especialmente para descubrir la diversidad de esta variedad en la Patagonia. Cada botella cuenta una historia diferente, desde la cordillera hasta el mar."
+  - Detalle: "6 botellas · Envío a todo el país · Selección curada"
+  - Botón bordó: "Comprar — $" (sin precio real por ahora)
+
+E) TAB "CAJAS EXPERIENCIA": al tocarlo, muestra una pantalla/sección con:
+- PhotoHeader con src/assets/experiencia-pinot.png
+- Título: "Cajas Experiencia"
+- Subtítulo: "La provincia entera, en una caja."
+- Lista de 3 cajas, cada una con la imagen src/assets/experiencia-pinot.png, nombre, descripción corta y botón "Ver →":
+  1. Experiencia Pinot Noir — "6 Pinot Noir de toda la provincia, de la cordillera al mar."
+  2. Experiencia Malbec — "6 Malbec rionegrinos para descubrir el carácter patagónico."
+  3. Experiencia Merlot — "6 Merlot seleccionados de las mejores bodegas del Alto y Valle Medio."
+- Al tocar "Ver →" en cualquier caja, navega a ProductDetailScreen con el nombre y descripción de esa caja.
+
+F) TAB "CURSOS": al tocarlo, muestra una pantalla/sección con:
+- PhotoHeader con src/assets/cursos.png (si el archivo no existe en assets, usá src/assets/experiencia-pinot.png como fallback)
+- Título: "Cursos de Vino"
+- Subtítulo: "Aprendé, descubrí y viví el vino Rionegrino."
+- Lista de 3 cursos, cada uno usando src/assets/cursos.png (o el fallback) como imagen, con nombre, descripción y botón "Ver curso →" (visual, sin funcionalidad real):
+  1. Introducción al Vino Rionegrino — "Descubrí las regiones, varietales y estilos únicos de Río Negro. Ideal para principiantes."
+  2. Maridaje Patagónico — "Aprendé a combinar los mejores vinos locales con la gastronomía de la región."
+  3. Sommelier Nivel 1 — "El primer paso para convertirte en un experto en vinos. Certificación incluida."
+
+============================
+ORDEN DE IMPLEMENTACIÓN SUGERIDO
+============================
+
+1. Fix de buscadores (Mapa y Tienda) — primero para no bloquear otras funcionalidades
+2. Splash screen (fondo blanco del logo)
+3. Chips de varietal en Mapa + fotos de botellas en Mapa
+4. Agenda: EventDetailScreen
+5. Ruta del Vino: imagen Mar, fotos de botellas, navegación a WineDetail
+6. Tienda: precios, hero card con imagen, ProductDetailScreen, tabs Cajas y Cursos
+
+Al terminar, decime qué archivos tocaste y si encontraste algún caso que no pudiste resolver.

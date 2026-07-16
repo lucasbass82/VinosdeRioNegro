@@ -1,0 +1,82 @@
+Este archivo contiene los ajustes finales a aplicar sobre el estado actual de la app. Antes de tocar código, presentame el plan completo y esperá mi aprobación.
+
+============================
+1. PANTALLA SPLASH
+============================
+
+El logo (logo-icon.png) no se ve porque es transparente y el fondo de la splash es oscuro (degradado negro→azul). Agregale un fondo blanco circular al contenedor del logo, igual que como está implementado en los headers de las otras pantallas (círculo blanco ceñido, border-radius: 50%, sin padding extra). El tamaño del círculo debe ser exactamente el del logo, sin borde blanco sobrante.
+
+============================
+2. PANTALLA INICIO
+============================
+
+En la sección "Bodegas Recomendadas", las imágenes de las tarjetas de bodega están duplicadas (la imagen se repite para llenar el espacio). Corregí esto para que cada tarjeta muestre UNA SOLA imagen de la bodega que ocupe todo el ancho de la tarjeta, sin repetición. Usá object-fit: cover con una sola instancia de la imagen.
+
+============================
+3. PANTALLA AGENDA
+============================
+
+A) CONTENIDO DE LOS EVENTOS: Reemplazá los eventos actuales del array EVENTS por eventos que sean de Antigua Bodega Patagónica (como bodega organizadora) y en Vinoteca Olivas y Sabores (como lugar del evento). Creá al menos 3 eventos con datos coherentes:
+1. "Cata de Malbecs Rionegrinos" — Hoy · 19:00 — Beneficio: 1 copa de regalo
+2. "Noche de Vinos Patagónicos" — Sábado · 20:30 — Beneficio: 10% OFF socios
+3. "Maridaje en la Vinoteca" — Este finde · 18:00 — Beneficio: Entrada libre
+
+B) PHOTO HEADER EN DETALLE DE EVENTO (EventDetailScreen): cuando el evento es en Vinoteca Olivas y Sabores, usá src/assets/olivas-y-sabores.png como imagen del photo header. Implementalo como caso especial: si el nombre del lugar contiene "Olivas y Sabores", usá esa imagen; sino seguí con la lógica actual.
+
+============================
+4. PANTALLA TIENDA
+============================
+
+A) IMÁGENES DE VINOS EN LA GRILLA: en la pantalla principal de Tienda, las cards de la grilla "Vinos disponibles" muestran un emoji de botella. Reemplazalos por la imagen real de cada vino (campo image del array WINES), igual que en Mapa y Ruta del Vino con el componente WineThumbRow.
+
+B) FICHA DE VINO (WineDetailScreen) DESDE TIENDA: cuando se abre un vino desde la Tienda, NO mostrar la sección "Disponible en" con el listado de vinotecas. En su lugar, mostrar una tarjeta prominente bordó (#6b1a2c) con botón "Agregar al carrito" funcional (ver punto D). Debajo, la sección "También te puede gustar" que ya existe. Implementá pasando un prop fromShop: true cuando se navega desde Tienda.
+
+C) CORAZÓN DE FAVORITOS EN TIENDA: el corazón en las cards de vinos de la Tienda debe ser funcional usando el mismo toggleFavorite que ya existe en la app.
+
+D) CARRITO FUNCIONAL — FLUJO COMPLETO DE COMPRA SIMULADA:
+
+Estado del carrito en App o ShopScreen:
+- Array de items: { wine: Wine, quantity: number }
+- Funciones: addToCart(wine), removeFromCart(wineId), updateQuantity(wineId, qty), clearCart()
+
+Botón "Agregar al carrito" en WineDetailScreen (contexto Tienda):
+- Agrega el vino con quantity 1, o incrementa si ya está
+- Feedback visual: botón cambia a "✓ Agregado" por 1 segundo
+
+Barra carrito flotante en ShopScreen:
+- Muestra cantidad total y "Ver carrito →"
+- Al tocarla navega a CartScreen
+
+CartScreen:
+- PhotoHeader con src/assets/experiencia-pinot.png, título "Tu carrito"
+- Lista de items: imagen + nombre + bodega + controles de cantidad (- y +) + botón eliminar
+- Precio: solo "$" sin número real
+- Botón bordó: "Finalizar compra →" → navega a CheckoutScreen
+
+CheckoutScreen:
+- PhotoHeader con src/assets/experiencia-pinot.png, título "Finalizar compra"
+- Campos visuales (no funcionales): Nombre, Email, Dirección, Ciudad y provincia
+- Resumen del pedido con "$"
+- Botón bordó: "Confirmar pedido →" → navega a OrderConfirmScreen
+
+OrderConfirmScreen:
+- Fondo con degradado de marca (negro→azul)
+- Ícono ✓ grande
+- Título: "¡Pedido recibido!" (Lora, blanco)
+- Subtexto: "Te contactaremos pronto para coordinar el envío. Los vinos de Río Negro ya están en camino."
+- Botón: "Volver a la tienda" → limpia carrito y vuelve a ShopScreen
+
+============================
+ORDEN DE IMPLEMENTACIÓN SUGERIDO
+============================
+
+1. Splash: círculo blanco en logo
+2. Inicio: fix imagen duplicada en bodegas
+3. Agenda: nuevos eventos + foto olivas-y-sabores
+4. Tienda: imágenes reales en grilla de vinos
+5. Tienda: WineDetail con prop fromShop
+6. Tienda: estado del carrito + addToCart
+7. CartScreen, CheckoutScreen, OrderConfirmScreen
+8. Corazón de favoritos funcional en Tienda
+
+Al terminar decime qué archivos tocaste y si encontraste algún caso sin resolver.

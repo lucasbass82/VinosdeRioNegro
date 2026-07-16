@@ -1,0 +1,16 @@
+Necesito que actualices los datos de las vinotecas de Viedma en src/App.tsx para reemplazar información de prueba por datos reales. Hacé lo siguiente:
+
+1. En el tipo Shop, agregá un campo nuevo address: string (dirección de calle) y quitá el campo rating: number (era un dato inventado de prueba, ya no lo vamos a usar).
+
+2. Reemplazá por completo las dos vinotecas actuales ("Vinoteca del Río" y "Patagonia Wine House") por estas 4, con datos reales. Donde falte un dato (description, hours, openNow, image), no inventes contenido específico: usá algo genérico tipo "Horario a confirmar" o dejalo como placeholder claro.
+
+   - Vinoteca Vinopolitan — Rivadavia 890, Viedma
+   - Vinoteca Río Tinto — San Martín 420, Viedma
+   - Vinoteca Piquillín — Colón 508, Viedma
+   - Vinoteca Olivas y Sabores — Moreno 973, Viedma
+
+3. Por ahora, TODOS los vinos del array WINES deben figurar como disponibles en estas 4 vinotecas (el campo availableAt de cada vino debe incluir los 4 nombres nuevos). Es algo temporal, mientras confirmamos catálogo real con cada comercio.
+
+4. Buscá cualquier otro lugar del código donde se mencionen las vinotecas viejas por nombre (por ejemplo el campo shops dentro de WINERIES) y actualizalos para que apunten a estas 4 vinotecas nuevas. No debe quedar ninguna referencia colgada a "Vinoteca del Río" ni "Patagonia Wine House".
+
+5. Al terminar, mostrame un resumen de qué archivos y qué partes cambiaste, y avisame si encontraste alguna referencia vieja que no supiste cómo resolver.

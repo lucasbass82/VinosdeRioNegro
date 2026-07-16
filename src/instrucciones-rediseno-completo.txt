@@ -1,0 +1,220 @@
+Necesito que apliques un rediseño visual completo a la app en src/App.tsx. Son muchos cambios, así que primero presentame un plan ordenado de qué vas a tocar y en qué orden, y luego esperá mi aprobación antes de empezar.
+
+============================
+PASO PREVIO: IMÁGENES
+============================
+
+Antes de tocar el código, verificá que estos archivos existan en src/assets/:
+- logo-icon.png (ya debería estar de la etapa anterior)
+- rio-negro-river.jpg
+- mapa-provincia.jpg
+- agenda-brindis.jpg
+- tienda-header.jpg
+
+Si alguno falta, avisame antes de continuar. No inventes imágenes alternativas.
+
+============================
+SISTEMA DE DISEÑO GLOBAL
+============================
+
+1. PALETA DE COLORES
+Reemplazá toda la paleta de colores existente por este sistema:
+
+- Negro cordillera: #141410 → títulos principales, texto, navegación activa en la barra inferior
+- Azul río/mar: #0a3a5c → links secundarios ("Ver todo", "Ver mapa"), parte final del degradado de los banners
+- Verde valle: #3c7824 → indicadores de estado ("Abierta")
+- Bordó (acento único): #6b1a2c → SOLO para: botón principal de acción de cada pantalla, marcadores de actividades/degustaciones (los círculos bordó), y botones de agregar al carrito en Tienda. No lo uses en NINGÚN otro lugar.
+- Fondo general: #FBF8F3 (crema cálido)
+
+2. TIPOGRAFÍAS
+Asegurate de que Google Fonts cargue Lora (pesos 500, 600, 700) e Inter (pesos 400, 500, 600) en public/index.html.
+- Lora: títulos de página, nombres de bodegas/vinos, títulos de secciones
+- Inter: todo el resto (subtítulos, body text, etiquetas, precios)
+
+3. ICONOS
+Reemplazá todos los emojis que se usen como íconos por SVG de línea (trazo fino, sin relleno, estilo Lucide/Feather). Esto incluye:
+- El botón hamburguesa (menú)
+- La lupa del buscador
+- El corazón de favoritos
+- Los íconos de la barra de navegación inferior (Inicio, Mapa, Agenda, Ruta del Vino, Tienda)
+
+4. BARRA DE NAVEGACIÓN INFERIOR
+El ícono de la pestaña activa tiene fondo negro (#141410) con ícono blanco. Las inactivas tienen ícono en gris (#9a8f85). NO uses bordó acá.
+
+5. PATRÓN DE HEADER CON FOTO (se repite en todas las pantallas)
+Todas las pantallas usan el mismo patrón de encabezado:
+- Foto de fondo que ocupa todo el ancho, sin margen, altura aproximada de 210-240px según la pantalla
+- Sobre la foto: un degradado diagonal negro→azul con opacidad media (no tape del todo la foto)
+  Valor: linear-gradient(135deg, rgba(20,20,16,0.55) 0%, rgba(23,48,63,0.5) 55%, rgba(10,58,92,0.72) 100%)
+- Arriba de la foto: botón hamburguesa a la izquierda (vidrio esmerilado: fondo blanco semitransparente con backdrop-filter blur) y logo a la derecha dentro de un círculo blanco ceñido (#fff, border-radius: 50%, padding: 3px)
+- El título y subtítulo flotan abajo de la foto, en blanco, con text-shadow suave
+- La hoja de contenido crema se monta encima del borde inferior de la foto (margin-top: -20px, border-radius: 24px 24px 0 0, z-index: 3)
+
+6. TARJETA DEGRADADA (se repite en todas las pantallas salvo Ruta del Vino)
+En cada pantalla, dentro de la hoja crema, hay una tarjeta con este degradado:
+background: linear-gradient(135deg, #141410 0%, #17303f 55%, #0a3a5c 100%)
+border-radius: 22-24px, padding: 20-22px, color de texto: blanco
+Cada pantalla tiene contenido propio (ver detalle por pantalla abajo).
+
+============================
+PANTALLA: INICIO (HomeScreen)
+============================
+
+FOTO DE HEADER: usar src/assets/logo-icon.png ya está para el logo. Para la foto de fondo del hero de inicio, usá esta URL de Unsplash (funciona sin API key): https://images.unsplash.com/photo-1763786470689-5ff88c985885?fm=jpg&q=70&w=1400&auto=format&fit=crop
+(Es una foto de viñedo al atardecer, placeholder hasta reemplazarla por una foto real de Río Negro)
+
+LOGO: en la parte superior derecha, dentro de un círculo blanco ceñido (no una caja cuadrada). El logo es src/assets/logo-icon.png.
+
+TÍTULO: "Viví el Vino Rionegrino"
+SUBTÍTULO: "Descubrí bodegas, vinos y experiencias, de la cordillera al mar."
+
+BUSCADOR: dentro de la hoja crema, justo al entrar, barra de búsqueda blanca con lupa SVG.
+
+TARJETA DEGRADADA:
+- Badge: punto verde animado + "Ubicación detectada"
+- Título: "Hola, Viedma" (hardcodeado por ahora, la detección real viene en otra etapa)
+- Texto: "4 vinotecas cerca tuyo tienen disponibilidad ahora mismo" (usá SHOPS.length en vez de "4" para que sea dinámico)
+- Botones: "Ver disponibles cerca →" (bordó #6b1a2c) y "Cambiar ciudad" (vidrio: rgba(255,255,255,0.12), borde rgba(255,255,255,0.25))
+
+SECCIONES (en este orden, dentro de la hoja crema):
+1. Buscador
+2. Tarjeta degradada (Hola, Viedma)
+3. "Actividades destacadas" con "Ver todo" (azul) → scroll horizontal de cards, los círculos de ícono de cada actividad son BORDÓ
+4. "Vinos recomendados" con "Ver todos" (azul) → scroll horizontal de cards de vino
+5. "Bodegas recomendadas" con "Ver mapa" (azul) → cards de bodega SIN rating de estrellas (eliminalo si quedó del código viejo), solo con distancia en km
+
+============================
+PANTALLA: MAPA (MapScreen)
+============================
+
+FOTO DE HEADER: src/assets/rio-negro-river.jpg
+TÍTULO: "Mapa"
+SUBTÍTULO: "Encontrá vinos, bodegas y experiencias cerca tuyo."
+
+BARRA DE UBICACIÓN: debajo del buscador, una fila compacta que muestre "📍 Estás en Viedma" con botón "Cambiar" (azul) a la derecha.
+
+TARJETA DEGRADADA:
+- Badge: punto verde + "Ubicación detectada"
+- Título: "Estás en Viedma"
+- Texto: "4 vinotecas cerca tuyo tienen vinos disponibles ahora mismo."
+- Botones: "Ver disponibles →" (bordó) y "Cambiar ciudad" (vidrio)
+
+CHIPS DE FILTRO (después de la tarjeta):
+Reemplazá los chips actuales (que eran etiquetas genéricas como "Regalo", "Atlántico") por chips de VARIETAL:
+"Cerca mío" (activo por defecto, fondo negro), "Pinot Noir", "Malbec", "Merlot", "Cabernet Sauvignon"
+
+LISTA: "Vinos cerca tuyo" con "Ver todos" (azul). Cada card muestra: nombre del vino, bodega/varietal, y la vinoteca donde conseguirlo (con ícono de pin azul).
+
+============================
+PANTALLA: AGENDA (AgendaScreen)
+============================
+
+FOTO DE HEADER: src/assets/agenda-brindis.jpg
+TÍTULO: "Agenda"
+SUBTÍTULO: "Eventos y degustaciones para vivir el vino en tu ciudad."
+
+TARJETA DEGRADADA:
+- Badge: punto verde + "Hoy en Río Negro"
+- Título: dinámico según cantidad de eventos del día, ej: "3 eventos cerca tuyo"
+- Texto: el evento más próximo del día (nombre, bodega, horario)
+- Botón: "Ver todos hoy →" (bordó)
+
+FILTROS: "Ahora" / "Hoy" (activo por defecto en negro) / "Este finde"
+
+CARDS DE EVENTO: mantener la estructura actual (Horario + Beneficio + botón "Ver actividad" en BORDÓ). El botón "Ver actividad" es uno de los pocos lugares donde va el bordó.
+
+IMPORTANTE: verificá que ningún evento en el array EVENTS mencione vinotecas viejas ("Vinoteca del Río", "Patagonia Wine House"). Si las hay, reemplazalas por "Vinoteca Vinopolitan".
+
+============================
+PANTALLA: RUTA DEL VINO (WineryScreen)
+============================
+
+FOTO DE HEADER: src/assets/mapa-provincia.jpg
+(Es el mapa de la provincia de Río Negro con pines bordó. Poné un velo MUY suave encima — solo en la parte inferior para que se lea el título, pero que el mapa y los pines sean claramente visibles. Velo sugerido: linear-gradient(to bottom, rgba(10,10,8,0.02) 0%, rgba(10,10,8,0.05) 55%, rgba(10,10,8,0.72) 100%))
+TÍTULO: "Ruta del Vino"
+SUBTÍTULO: "Nuestros vinos, para vos."
+
+GRILLA DE 4 ZONAS (reemplaza el mapa ilustrado que había):
+Una grilla 2x2 de tiles con foto de fondo, label en blanco abajo, y un velo oscuro suave de abajo hacia arriba. Cada tile es clickeable (filtra las bodegas de abajo). Las fotos de cada zona:
+
+- "Cordillera": https://images.unsplash.com/photo-1517407480684-1fbac65ad9a4?fm=jpg&q=70&w=800&auto=format&fit=crop
+- "Alto Valle": https://images.unsplash.com/photo-1730058518963-55bc7a9eb791?fm=jpg&q=70&w=800&auto=format&fit=crop
+- "Valle Medio": src/assets/rio-negro-river.jpg (la foto real del río)
+- "Mar": https://images.unsplash.com/photo-1774142532286-2ae46f0c3563?fm=jpg&q=70&w=800&auto=format&fit=crop
+
+Debajo de la grilla: texto pequeño gris "Tocá una zona para filtrar sus bodegas"
+
+CHIPS DE REGIÓN: mantener "Todas" / "Alto Valle" / "Valle Medio" / "Valle Inferior" / "Línea Sur" / "Cordillera" (sincronizados con los tiles de arriba: tocar un tile activa el chip correspondiente y viceversa)
+
+LISTA DE BODEGAS: mantener la lista actual de bodegas con sus datos reales.
+
+NUEVA PANTALLA: FICHA DE BODEGA (WineryDetailScreen)
+Cuando el usuario toca una bodega en la lista, en vez de mostrar el header genérico "Ruta del Vino - Recorre la Ruta del Vino", se abre una pantalla nueva donde:
+
+- Arriba: foto de fondo de la bodega (la que ya tienen, por ahora con el mismo placeholder de viñedo), altura 200-220px. Solo el botón de volver (flecha) arriba a la izquierda.
+- Hoja crema montada encima, con una tarjeta degradada (negro→azul) que muestra:
+  - Pill "Abierta ahora" (verde) y corazón (favoritos) a la derecha
+  - Nombre de la bodega (Lora, grande)
+  - Ciudad · Región (gris)
+  - Descripción corta de la bodega
+  - Chip de beneficio si tiene (ej: "🎁 15% OFF para socios")
+  - Dos botones: "Cómo llegar" (vidrio semitransparente) y "Ver vinos →" (BORDÓ, más ancho, es el protagonista)
+- Sección "Varietales": chips con los varietales de esa bodega (Pinot Noir, Merlot, etc.)
+- Sección "Vinos destacados" con "Ver todos" (azul): cards de los vinos de esa bodega
+- Sección "Dónde conseguir sus vinos": las vinotecas donde están disponibles, con nombre y dirección
+
+============================
+PANTALLA: TIENDA (ShopScreen)
+============================
+
+FOTO DE HEADER: src/assets/tienda-header.jpg
+TÍTULO: "Tienda"
+SUBTÍTULO: "Nuestros vinos, para vos — con envío a todo el país."
+
+BUSCADOR: con botón de filtro a la derecha (ícono SVG de embudo).
+
+TARJETA DEGRADADA:
+- Badge: punto verde + "Nuevo"
+- Título: "Experiencia Pinot 🍷"
+- Texto: "6 Pinot Noir de distintas bodegas de la provincia, en una sola caja. Envío a todo el país."
+- Botón: "Ver la caja →" (bordó)
+
+TABS: "Vinos" (activo por defecto, fondo negro) / "Cajas Experiencia" / "Cursos"
+
+BANNERS DE VARIETAL:
+Fila de tiles horizontales scrolleables (100x76px aprox), con fondo degradado bordó oscuro, label en blanco:
+- "Pinot Noir" (gradiente: #6b1a2c → #4a1220)
+- "Malbec" (gradiente: #5c1522 → #3d0f18)
+- "Merlot" (gradiente: #7d2436 → #57182a)
+- "Cabernet" (gradiente: #4a1535 → #2d0d22)
+
+Al tocar un varietal → se abre una pantalla de filtro (VarietalDetailScreen) que muestra:
+- Header compacto con el nombre del varietal como título y flecha de volver
+- Subtítulo: "Todos los [varietal] de la provincia, de todas las bodegas."
+- Chips horizontales: "Todos" (activo, negro) + una chip por cada bodega que tenga ese varietal
+- Lista de vinos filtrados por ese varietal (grilla 2 columnas)
+
+SECCIÓN "Vinos disponibles" con "Ver todos" (azul):
+Grilla de 2 columnas con cards de vino. Cada card tiene:
+- Thumbnail (fondo crema cálido con ícono de botella)
+- Nombre del vino (bold)
+- Bodega (gris)
+- Precio (hardcodeado por ahora, placeholder)
+- Botón "+" bordó redondeado a la derecha del precio
+
+CARRITO FLOTANTE PERSISTENTE:
+Una barra negra (#141410) fija en la parte inferior, encima de la barra de navegación, visible en todo momento mientras estés en la pantalla de Tienda. Muestra: badge bordó con la cantidad de items + ícono de carrito + "Ver carrito" a la izquierda, y el total a la derecha. Por ahora puede ser visual (no funcional).
+
+============================
+ORDEN DE IMPLEMENTACIÓN SUGERIDO
+============================
+
+1. Sistema de diseño global (colores, tipografías, íconos SVG de la barra de navegación)
+2. Patrón de header con foto (creá un componente reutilizable PhotoHeader si es posible)
+3. Pantalla Inicio
+4. Pantalla Mapa
+5. Pantalla Agenda
+6. Pantalla Ruta del Vino (listado) + Ficha de Bodega (detalle)
+7. Pantalla Tienda (completa con tabs, varietales, grilla y carrito)
+
+Antes de empezar, presentame el plan y avisame si encontrás algún conflicto o ambigüedad con el código existente.

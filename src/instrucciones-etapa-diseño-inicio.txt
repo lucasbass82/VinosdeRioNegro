@@ -1,0 +1,39 @@
+Antes que nada, guardá el archivo logo-icon-transparent.png (te lo pasé aparte, recortado del logo real sin el texto y con fondo transparente) dentro de la carpeta src/assets/ de tu proyecto, con el nombre logo-icon.png. Este prompt asume que ese archivo ya está ahí.
+
+Necesito que actualices el sistema de diseño de toda la app y que apliques ese sistema a la pantalla Inicio (Home) en src/App.tsx. Es un cambio grande, así que quiero que primero me expliques tu plan antes de tocar código, y después lo apliques.
+
+PARTE 1: Sistema de diseño global
+
+Agregá las tipografías Lora (pesos 500, 600, 700) e Inter (pesos 400, 500, 600) desde Google Fonts, igual que ya estará configurado si usaste Tailwind o CSS global del proyecto. Lora se usa para todos los títulos y nombres de vino/bodega. Inter se usa para el resto del texto.
+
+Definí estas variables de color como constantes o como variables CSS, para reemplazar los colores bordó que se usan hoy en toda la app:
+
+- Negro cordillera: #141410 — se usa en títulos, texto principal, y en el estado activo de la barra de navegación inferior.
+- Azul río o mar: #0a3a5c — se usa en links secundarios como "Ver todo" o "Ver mapa", y en degradados de fondo.
+- Verde valle: #3c7824 — se usa en indicadores de estado como "Abierta".
+- Bordó: #6b1a2c — importante: este color queda reservado únicamente para "momentos de vino": el botón principal de acción de cada pantalla, los marcadores de actividades o degustaciones, y los botones de agregar al carrito en la Tienda. No lo uses en ningún otro lugar de la interfaz, para que mantenga fuerza cuando aparece.
+- Fondo general: crema cálido #FBF8F3.
+
+Reemplazá todos los íconos que hoy son emojis (el menú hamburguesa, la lupa de búsqueda, el corazón de favoritos, y los íconos de la barra de navegación inferior: Inicio, Mapa, Agenda, Ruta del Vino, Tienda) por íconos SVG de línea, estilo similar a los que usan apps como Airbnb o Instagram (trazo fino, sin relleno excepto cuando el ícono está activo). Esto es importante: los emojis se ven distinto según el celular y no cambian de color cuando el usuario selecciona una pestaña, lo cual rompe la experiencia. Podés usar una librería de íconos como lucide-react si el proyecto la tiene disponible, o crear los SVG a mano si no.
+
+PARTE 2: Pantalla Inicio
+
+Con el sistema de diseño ya aplicado, actualizá específicamente la pantalla de Inicio así:
+
+El encabezado ya no debe ser una franja de color sólido. Ahora arriba de todo va una foto (por ahora podés usar una imagen de placeholder de un viñedo, ya la reemplazaremos por una foto real de una bodega de Río Negro más adelante) que ocupa todo el ancho de la pantalla, sin recuadro ni margen, con una altura aproximada de 300 píxeles. Sobre esa foto va un degradado muy suave, casi transparente arriba y oscureciéndose hacia abajo, solo para que el texto se lea bien, sin tapar la foto.
+
+Arriba de la foto, en una fila, van dos elementos flotando en estilo "vidrio esmerilado" (fondo blanco semitransparente con desenfoque): a la izquierda el botón de menú hamburguesa, y a la derecha el ícono del logo (el archivo logo-icon.png que guardaste), con un pequeño fondo blanco detrás para que se vea bien sobre cualquier foto.
+
+Sobre la parte de abajo de la foto, en texto blanco, van el título "Viví el Vino Rionegrino" y debajo el subtítulo "Descubrí bodegas, vinos y experiencias, de la cordillera al mar."
+
+Debajo de la foto, el resto del contenido (buscador, sección de ubicación, actividades destacadas, bodegas recomendadas) va dentro de una superficie de color crema con las esquinas superiores redondeadas, que se monta ligeramente por encima del borde inferior de la foto (como una hoja que se desliza encima), dándole profundidad a la transición entre la foto y el contenido.
+
+Adentro de esa superficie, en este orden:
+1. El buscador, con el ícono de lupa SVG.
+2. Una tarjeta con degradado que va de negro (#141410) a azul (#0a3a5c) en diagonal — esto representa literalmente "de la cordillera al mar". Adentro de esta tarjeta va un indicador pequeño de "Ubicación detectada" con un punto verde, el texto "Hola, Viedma" (por ahora Viedma queda fijo como texto, la detección real de ciudad la resolvemos en otra etapa), una línea que diga algo como "4 vinotecas cerca tuyo tienen disponibilidad ahora mismo", y dos botones: uno bordó que diga "Ver disponibles cerca" y otro más sutil (fondo blanco semitransparente) que diga "Cambiar ciudad". Ninguno de los dos botones necesita funcionar todavía, son visuales.
+3. La sección "Actividades destacadas" que ya existe, pero con los círculos de ícono de cada actividad en color bordó (no azul), ya que representan literalmente momentos de vino.
+4. La sección "Bodegas recomendadas" que ya existe, pero sacale el puntaje de estrellas inventado (el "4.8⭐") de cada bodega si todavía lo tiene, y en su lugar dejá solo el dato real de distancia en kilómetros que ya existe en los datos.
+
+Por último, la barra de navegación inferior: el ícono de la pestaña activa debe tener fondo negro (#141410), no bordó, para que el bordó quede exclusivo de los "momentos de vino" que mencioné arriba.
+
+Mostrame tu plan antes de tocar el código, y al terminar, decime qué archivos tocaste y si encontraste algo que no supiste cómo resolver.
