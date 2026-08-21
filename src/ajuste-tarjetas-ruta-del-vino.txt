@@ -1,0 +1,70 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTE
+Proyecto: Vinos de Río Negro
+Pantalla: Ruta del Vino (ya implementamos las 5 tarjetas de región en el paso anterior, esto
+es un ajuste de tamaño y tipografía sobre ese mismo componente)
+
+Antes de tocar el código, presentame el plan completo y esperá mi aprobación.
+
+============================================
+CONTEXTO
+============================================
+
+Las tarjetas de región quedaron demasiado grandes (altura fija con aspect-ratio 2.6/1) y
+rompían la armonía con el resto de la app. Además reemplacé las 5 fotos en src/assets/ por
+versiones nuevas, recortadas mucho más finas (cada una con su propia proporción, ver tabla
+abajo). Hay que ajustar el CSS para que la tarjeta acompañe la nueva proporción de cada foto,
+y cambiar la tipografía del nombre de zona.
+
+============================================
+CAMBIO 1: Ajustar proporción de cada tarjeta a su nueva foto
+============================================
+
+Las fotos en src/assets/ ya fueron reemplazadas (mismo nombre de archivo, contenido nuevo).
+Cada una tiene ahora una proporción distinta y más fina que antes. Usar exactamente estas
+proporciones en el aspect-ratio de cada tarjeta (no un valor único para las 5, cada zona tiene
+la suya):
+
+- zona-cordillera.jpg    → aspect-ratio: 5.58 / 1   (547 x 98 px)
+- zona-alto-valle.jpg    → aspect-ratio: 6.64 / 1   (823 x 124 px)
+- zona-valle-medio.jpg   → aspect-ratio: 6.78 / 1   (637 x 94 px)
+- zona-mar.jpg           → aspect-ratio: 6.47 / 1   (466 x 72 px)
+- zona-linea-sur.jpg     → aspect-ratio: 6.61 / 1   (549 x 83 px)
+
+Si el componente RUTA_ZONES ya tiene un campo por zona (como la imagen), sumar un campo más
+con este valor de aspect-ratio por zona, o el nombre que uses para esa estructura de datos.
+
+El resto de las propiedades de la tarjeta se mantienen igual que en la implementación anterior:
+- Ancho: 100% del contenedor
+- object-fit: cover (las fotos ya vienen recortadas a su proporción final, cover no debería
+  recortar de más)
+- Borde redondeado: 16px
+- Separación entre tarjetas: 10px (se puede achicar un poco a 8-10px si con las tarjetas más
+  finas queda mucho espacio, a tu criterio visual)
+- Degradado diagonal igual que antes:
+  linear-gradient(135deg, rgba(20,20,16,0.5) 0%, rgba(23,48,63,0.4) 55%, rgba(10,58,92,0.65) 100%)
+
+============================================
+CAMBIO 2: Tipografía del nombre de zona (Lora → Inter)
+============================================
+
+El nombre de la zona sobre la foto (ej. "Cordillera", "Alto Valle") actualmente usa Lora
+(serif). Cambiarlo a Inter (sans-serif, la misma que se usa en el resto de la interfaz para
+todo lo que no es título de página ni nombre de bodega/vino).
+
+- Tipografía: Inter
+- Peso: 600 (semibold)
+- Tamaño: ~13px (antes estaba en ~16-17px con Lora; como las tarjetas son mucho más finas
+  ahora, achicar el texto en proporción — probar 13px y ajustar si no se lee bien)
+- Posición: se mantiene igual, abajo a la izquierda, padding ~10-14px desde los bordes (ajustar
+  el padding hacia abajo/izquierda proporcionalmente a la nueva altura de tarjeta, que es mucho
+  menor)
+- Mantener el text-shadow sutil (0 1px 4px rgba(0,0,0,0.5)) para que se siga leyendo bien sobre
+  cualquier foto
+
+============================================
+NOTA
+============================================
+
+Este es un ajuste sobre el trabajo ya hecho en el paso anterior (5 tarjetas, chips unificados,
+corrección de Wapisa/clave "mar"). No hace falta tocar nada de eso salvo lo que se pide acá:
+proporción de cada tarjeta y tipografía del label.

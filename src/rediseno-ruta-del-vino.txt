@@ -1,0 +1,84 @@
+INSTRUCCIONES PARA CLAUDE CODE
+Proyecto: Vinos de Río Negro
+Pantalla: Ruta del Vino (RutaDelVinoScreen o el componente equivalente dentro de src/App.tsx)
+
+Antes de tocar el código, presentame el plan completo de los cambios y esperá mi aprobación.
+
+============================================
+CAMBIO 1: Tarjetas de región (reemplazan la grilla 2x2 actual)
+============================================
+
+Actualmente las tarjetas de zona (Cordillera, Alto Valle, Valle Medio, Mar) están en una
+grilla 2x2. Hay que reemplazar esa grilla por 5 tarjetas rectangulares, ancho completo,
+apiladas una debajo de la otra (una sola columna).
+
+Zonas y orden exacto (de arriba hacia abajo):
+1. Cordillera
+2. Alto Valle
+3. Valle Medio
+4. Mar
+5. Línea Sur   <-- zona nueva, no existía antes
+
+Especificaciones de cada tarjeta:
+- Ancho: 100% del contenedor (igual que el resto de las tarjetas de la app)
+- Alto: proporción 2.6:1 (ancho:alto). Es decir, si el contenedor mide por ejemplo 343px de
+  ancho, la tarjeta debe medir ~132px de alto. Usar esa proporción con CSS (aspect-ratio: 2.6
+  / 1, o el equivalente que ya uses en el proyecto), no un alto fijo en píxeles, para que
+  escale bien en distintos anchos de pantalla.
+- Borde redondeado: 16px
+- Separación entre tarjetas: 10px
+- Imagen de fondo: object-fit: cover (las imágenes ya vienen recortadas a la proporción 2.6:1
+  exacta, así que "cover" no va a recortar nada de más, solo va a encajar la imagen tal cual)
+- Degradado diagonal encima de la imagen (el mismo patrón que ya se usa en los headers de las
+  demás pantallas):
+  linear-gradient(135deg, rgba(20,20,16,0.5) 0%, rgba(23,48,63,0.4) 55%, rgba(10,58,92,0.65) 100%)
+- Nombre de la zona: texto blanco, tipografía Lora, weight 600/semibold, tamaño ~16-17px,
+  posicionado abajo a la izquierda de la tarjeta con un padding de ~14px desde el borde
+  izquierdo y ~11px desde abajo. Agregar un text-shadow sutil (0 1px 4px rgba(0,0,0,0.5)) para
+  que se lea bien sobre cualquier foto.
+- Al tocar la tarjeta, debe filtrar/navegar igual que hacían las tarjetas de la grilla vieja
+  (mismo comportamiento de click, solo cambia el diseño visual).
+
+Imágenes a usar (ya están en src/assets/, recortadas y listas, NO recortar de nuevo ni aplicar
+otro object-fit que no sea cover):
+- Cordillera:    src/assets/zona-cordillera.jpg     (547 x 210 px)
+- Alto Valle:    src/assets/zona-alto-valle.jpg      (631 x 243 px)
+- Valle Medio:   src/assets/zona-valle-medio.jpg     (613 x 236 px)
+- Mar:           src/assets/zona-mar.jpg             (442 x 170 px)
+- Línea Sur:     src/assets/zona-linea-sur.jpg       (549 x 211 px)
+
+============================================
+CAMBIO 2: Unificar los chips de filtro
+============================================
+
+Debajo de las tarjetas hay chips de filtro rápido. Actualmente dicen: "Valle Medio",
+"Valle Inferior", "Línea Sur", "Cordillera" (no coinciden exactamente con las zonas).
+
+Reemplazar esos chips para que sean EXACTAMENTE estas 5 opciones, en este orden, coincidiendo
+con las tarjetas de arriba:
+1. Cordillera
+2. Alto Valle
+3. Valle Medio
+4. Mar
+5. Línea Sur
+
+El chip seleccionado debe verse igual que ahora (fondo Negro cordillera #141410, texto blanco);
+los no seleccionados con borde gris claro, texto gris oscuro (mismo estilo que ya existe).
+
+============================================
+CAMBIO 3: Corrección de zona - Wapisa
+============================================
+
+La bodega Wapisa está actualmente etiquetada en la zona incorrecta. Corregir su campo de
+zona/región a "Costa/Mar" (no Alto Valle ni Cordillera, que es donde probablemente está ahora).
+Esto es solo un cambio de dato, no de diseño: buscar el objeto de datos de Wapisa en el código
+y actualizar el campo de zona.
+
+============================================
+NOTA GENERAL
+============================================
+
+Por ahora estas 5 zonas van a mostrar las bodegas que ya están cargadas con el zona
+correspondiente. La carga de bodegas nuevas por zona (28 bodegas) se hace en un paso aparte,
+con otro archivo de instrucciones. No hace falta cargar bodegas nuevas en este paso, solo el
+rediseño visual de las tarjetas y los chips, más la corrección de Wapisa.

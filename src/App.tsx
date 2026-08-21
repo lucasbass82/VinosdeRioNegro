@@ -18,11 +18,16 @@ import oliviasYSaboresPhoto from "./assets/olivas-y-sabores.png";
 import vinopolitanPhoto from "./assets/vinopolitan.png";
 import piquillinPhoto from "./assets/piquillin.png";
 import rioTintoPhoto from "./assets/rio-tinto.png";
+import zonaCordilleraPhoto from "./assets/zona-cordillera.jpg";
+import zonaAltoVallePhoto from "./assets/zona-alto-valle.jpg";
+import zonaValleMedioPhoto from "./assets/zona-valle-medio.jpg";
+import zonaMarPhoto from "./assets/zona-mar.jpg";
+import zonaLineaSurPhoto from "./assets/zona-linea-sur.jpg";
 
 type RegionKey =
   | "alto-valle"
-  | "valle-medio" 
-  | "valle-inferior"
+  | "valle-medio"
+  | "mar"
   | "linea-sur"
   | "cordillera";
 
@@ -140,8 +145,8 @@ const REGION_META: Record<
       "https://images.unsplash.com/photo-1464638681273-0962e9b53566?auto=format&fit=crop&w=1400&q=80",
     tint: "rgba(63,142,78,0.10)",
   },
-  "valle-inferior": {
-    title: "Valle Inferior",
+  "mar": {
+    title: "Mar",
     subtitle: "Frescura atlántica y experiencias distintas.",
     image:
       "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1400&q=80",
@@ -274,7 +279,7 @@ const WINERIES_DATA: Winery[] = [
     id: "w5",
     name: "Wapisa",
     city: "San Javier",
-    region: "valle-inferior",
+    region: "mar",
     description:
       "Bodega con impronta atlántica, vinos frescos y una propuesta singular vinculada al mar.",
     hours: "11:00 a 18:00",
@@ -2248,28 +2253,41 @@ function ImageCard({
     </div>
   );
 }
-const RUTA_ZONES: Array<{ label: string; region: RegionKey; image: string }> = [
+const RUTA_ZONES: Array<{
+  label: string;
+  region: RegionKey;
+  image: string;
+  aspectRatio: string;
+}> = [
   {
     label: "Cordillera",
     region: "cordillera",
-    image:
-      "https://images.unsplash.com/photo-1517407480684-1fbac65ad9a4?fm=jpg&q=70&w=800&auto=format&fit=crop",
+    image: zonaCordilleraPhoto,
+    aspectRatio: "5.58 / 1",
   },
   {
     label: "Alto Valle",
     region: "alto-valle",
-    image:
-      "https://images.unsplash.com/photo-1730058518963-55bc7a9eb791?fm=jpg&q=70&w=800&auto=format&fit=crop",
+    image: zonaAltoVallePhoto,
+    aspectRatio: "6.64 / 1",
   },
   {
     label: "Valle Medio",
     region: "valle-medio",
-    image: rioNegroRiverPhoto,
+    image: zonaValleMedioPhoto,
+    aspectRatio: "6.78 / 1",
   },
   {
     label: "Mar",
-    region: "valle-inferior",
-    image: marEspiPhoto,
+    region: "mar",
+    image: zonaMarPhoto,
+    aspectRatio: "6.47 / 1",
+  },
+  {
+    label: "Línea Sur",
+    region: "linea-sur",
+    image: zonaLineaSurPhoto,
+    aspectRatio: "6.61 / 1",
   },
 ];
 
@@ -2280,13 +2298,12 @@ function RegionsScreen({
 }) {
   const [activeRegion, setActiveRegion] = useState<RegionKey | "todas">("todas");
 
-  const regionButtons: Array<{ key: RegionKey | "todas"; label: string }> = [
-    { key: "todas", label: "Todas" },
+  const regionButtons: Array<{ key: RegionKey; label: string }> = [
+    { key: "cordillera", label: "Cordillera" },
     { key: "alto-valle", label: "Alto Valle" },
     { key: "valle-medio", label: "Valle Medio" },
-    { key: "valle-inferior", label: "Valle Inferior" },
+    { key: "mar", label: "Mar" },
     { key: "linea-sur", label: "Línea Sur" },
-    { key: "cordillera", label: "Cordillera" },
   ];
 
   const wineries =
@@ -2307,7 +2324,8 @@ function RegionsScreen({
             key={zone.label}
             style={{
               ...styles.zoneTile,
-              backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.05) 0%, rgba(16,10,9,0.7) 100%), url('${zone.image}')`,
+              aspectRatio: zone.aspectRatio,
+              backgroundImage: `linear-gradient(135deg, rgba(20,20,16,0.5) 0%, rgba(23,48,63,0.4) 55%, rgba(10,58,92,0.65) 100%), url('${zone.image}')`,
               outline:
                 activeRegion === zone.region
                   ? `3px solid ${theme.text}`
@@ -3890,25 +3908,27 @@ const styles: Record<string, React.CSSProperties> = {
     whiteSpace: "nowrap",
   },
   zoneGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 12,
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
   },
   zoneTile: {
-    height: 110,
-    borderRadius: 18,
+    width: "100%",
+    borderRadius: 16,
     backgroundSize: "cover",
     backgroundPosition: "center",
     display: "flex",
     alignItems: "flex-end",
-    padding: 12,
+    justifyContent: "flex-start",
+    padding: "0 0 6px 10px",
     cursor: "pointer",
   },
   zoneTileLabel: {
     color: "#fff",
-    fontWeight: 700,
-    fontSize: 14,
-    textShadow: "0 1px 6px rgba(0,0,0,0.35)",
+    fontFamily: '"Inter", sans-serif',
+    fontWeight: 600,
+    fontSize: 13,
+    textShadow: "0 1px 4px rgba(0,0,0,0.5)",
   },
   zoneHint: {
     fontSize: 13,
