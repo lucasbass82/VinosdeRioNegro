@@ -1,0 +1,292 @@
+INSTRUCCIONES PARA CLAUDE CODE - CARGA DE BODEGAS (Prompt 1 de 4)
+Proyecto: Vinos de Río Negro
+Zonas: Costa/Mar, Valle Medio, Cordillera, Línea Sur (7 bodegas nuevas en total)
+
+Antes de tocar el código, presentame el plan completo y esperá mi aprobación.
+
+============================================
+CONTEXTO
+============================================
+
+Hay que agregar 7 bodegas nuevas al array de datos de bodegas en src/App.tsx (el mismo array
+donde ya están Bodega Miras, Bodega Aniello, Antigua Bodega Patagónica, Humberto Canale, Videla
+Dorna, Wapisa y Finca Fraschetti). Cada bodega nueva necesita: datos de ubicación/contacto/
+visitas, y su lista de vinos con foto.
+
+Las fotos de las botellas ya están en src/assets/vinos/ (206 archivos en total, todos en
+formato .jpg, mismo fondo crema uniforme detrás de cada botella). Para esta tanda usamos los
+que se listan abajo. Los nombres de archivo están puestos sin extensión en esta lista — agregar
+".jpg" a cada uno al importarlos (ejemplo: "savu-malbec" -> "savu-malbec.jpg").
+
+Para la FOTO DE PORTADA de cada bodega (la ficha tipo WineryDetailScreen): si en la lista de
+abajo la bodega tiene un archivo de foto de portada indicado (carpeta src/assets/, formato
+"bodega-nombre.jpg"), usarlo como imagen de fondo del header de esa ficha, igual que ya se
+hace con las bodegas existentes (Miras, Wapisa, etc.). Si la bodega NO tiene foto de portada
+indicada, usar el mismo placeholder con degradado + inicial del nombre que ya se usa en otras
+partes de la app (revisar cómo está implementado ese patrón y reutilizarlo, no inventar uno
+nuevo).
+
+Cada vino, además del nombre y la foto, ahora tiene un campo "Descripción". Hay dos tipos:
+- Descripciones específicas de ese vino puntual (encontradas en fuentes reales: prensa,
+  vinotecas, sitio de la bodega) — estas van directo, sin ninguna aclaración adicional.
+- Descripciones marcadas con "(descripción genérica del varietal)" al principio — son notas
+  de cata típicas de esa uva en general, no específicas de esa etiqueta puntual (no se
+  encontró información propia de ese vino). Cargar este texto igual como descripción del
+  vino, no hace falta mostrar la aclaración "(descripción genérica del varietal)" en la UI —
+  esa aclaración es solo para que vos sepas el origen del texto al revisar el plan.
+
+============================================
+BODEGA 1: Viñas de Lucía
+============================================
+Zona: Costa/Mar
+Localidad: San Javier
+Dirección: Entrada de San Javier, ~25 km de Viedma, Valle de Viedma (sin altura exacta)
+Contacto: no confirmado
+Visitas: sin horario publicado. Marca Savu, ~30.000 botellas/año. Aparece en circuito
+municipal de agroturismo (chacras).
+Foto de portada: SIN FOTO — usar placeholder con degradado + inicial
+Descripción de la bodega (contexto general, no de un vino puntual): emprendimiento familiar
+que arrancó en 2004 con la plantación de sus primeros viñedos, a cargo del enólogo Juan
+Alberto Millamán. Elabora unas 30.000 botellas anuales bajo la marca Savu. Es de los pocos
+proyectos vitivinícolas del Valle Inferior de Río Negro, marcado por el viento y la
+influencia marítima de la Patagonia atlántica.
+
+Vinos:
+- Savu Malbec -> savu-malbec
+  Descripción: Malbec patagónico de zona marítima, con aromas frutados de ciruela dulce,
+  notas ahumadas y un toque floral. En boca es redondo y sobrio, con buen equilibrio, taninos
+  jóvenes y cuerpo medio elegante.
+- Savu Malbec Rosado -> savu-malbec-rosado
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.
+- Savu Syrah -> savu-syrah
+  Descripción: Syrah patagónico de zona marítima, con aromas de fruta negra, moras y un toque
+  especiado. En boca es suave y delicado, con correcto equilibrio y cuerpo ligero.
+- Savu Cabernet Sauvignon -> savu-cabernet-sauvignon
+  Descripción: (descripción genérica del varietal) Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.
+
+============================================
+BODEGA 2: Familia Herrero
+============================================
+Zona: Costa/Mar
+Localidad: Guardia Mitre
+Dirección: Guardia Mitre, Río Negro (sin dirección exacta)
+Contacto: Facebook "Familia Herrero" (Guardia Mitre)
+Visitas: sin horarios públicos. Mini emprendimiento familiar, tratar como producción sin
+visitas públicas confirmadas.
+Foto de portada: SIN FOTO — usar placeholder con degradado + inicial
+
+Vinos:
+- Tinto (Malbec y Cabernet Sauvignon) -> familia-herrero-tinto-malbec-y-cabernet-sauvignon
+  Descripción: (descripción genérica del varietal) Corte de Malbec y Cabernet Sauvignon que combina la fruta madura y untuosidad del Malbec con la estructura y frescura herbácea del Cabernet. Tinto de cuerpo medio a alto y buena complejidad.
+- Blanco (Chenin) -> familia-herrero-blanco-chenin
+  Descripción: (descripción genérica del varietal) Blanco versátil de acidez marcada, con aromas a manzana verde, membrillo y flores blancas. Fresco y mineral, ideal para climas fríos como el patagónico.
+
+============================================
+BODEGA 3: Bodega Don Amaro
+============================================
+Zona: Costa/Mar
+Localidad: San Antonio Oeste
+Dirección: Cruce de Ruta 3 y Ruta 251, cerca de San Antonio Oeste (~10 km de Las Grutas)
+Contacto: a través de turismo provincial / Oleosan
+Visitas: ABRE TODOS LOS DÍAS de 8:00 a 20:00. Recorrido por viñedos, olivares y bodega +
+degustación de Malbec y aceite de oliva. Marca también "Don Maro". En el circuito oficial
+Caminos del Vino (establecimiento N° 14, sumado en marzo 2025).
+Foto de portada: SIN FOTO — usar placeholder con degradado + inicial
+
+Vinos:
+- Don Amaro Malbec -> bodega-amaro-don-amaro-malbec
+  Descripción: Vino artesanal y orgánico que rinde tributo al espíritu pionero de la familia
+  Mañana, pionera en la olivicultura de San Antonio Oeste (marca Oleosan). Es el primer vino
+  elaborado en la región. Aromas a frutos rojos maduros, especias sutiles y notas terrosas,
+  con elegancia en boca y taninos suaves. La influencia de los vientos marítimos y el cambio
+  de mareas le aporta gran concentración de polifenoles, dando un vino de cuerpo robusto y
+  color intenso.
+
+============================================
+BODEGA 4: Enclave Sur
+============================================
+Zona: Valle Medio
+Localidad: Choele Choel / Darwin / Luis Beltrán
+Dirección: Grupo Trafen, chacras en la isla de Choele Choel, Darwin, Luis Beltrán y Paso
+Piedra (sin dirección exacta)
+Contacto: Facebook "Enclave Sur | Choele Choel"
+Visitas: sin evidencia de visitas turísticas públicas. Entrega a domicilio en Choele Choel.
+Tratar como producción/venta directa solamente.
+Foto de portada: SIN FOTO — usar placeholder con degradado + inicial
+
+Vinos (no se encontró fuente pública específica para ninguno de los 10; se usa descripción
+genérica del varietal en todos):
+- Pinot Noir -> enclave-sur-pinot-noir
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+- Rosado -> enclave-sur-rosado
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.
+- Chardonnay -> enclave-sur-chardonnay
+  Descripción: (descripción genérica del varietal) Blanco de cuerpo medio a alto, con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.
+- Malbec -> enclave-sur-malbec
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.
+- Cabernet Sauvignon -> enclave-seleccion-cabernet-sauvignon
+  Descripción: (descripción genérica del varietal) Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.
+- Malbec Blend -> enclave-sur-reserva-malbec-blend
+  Descripción: (descripción genérica del varietal) Corte con base de Malbec, que aporta fruta madura y untuosidad, combinado con otras variedades para sumar estructura y complejidad. Tinto de cuerpo medio a alto.
+- Reserva Malbec -> enclave-sur-reserva-malbec
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.
+- Reserva Cabernet Franc -> enclave-sur-reserva-cabernet-franc
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un carácter vegetal elegante. Taninos suaves y acidez viva.
+- Cabernet Sauvignon (Reserva) -> enclave-sur-reserva-cabernet-sauvignon
+  Descripción: (descripción genérica del varietal) Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.
+- Reserva Merlot -> enclave-sur-reserva-merlot
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.
+
+NOTA: hay dos vinos que se llaman "Cabernet Sauvignon" (uno joven, uno reserva) con archivos
+de foto distintos. Usar el nombre completo para diferenciarlos en la ficha, por ejemplo
+"Cabernet Sauvignon" y "Cabernet Sauvignon Reserva".
+
+============================================
+BODEGA 5: Bodega Trina
+============================================
+Zona: Valle Medio
+Localidad: Río Colorado
+Dirección: Arturo Benini 1471, Colonia Reig, Río Colorado, Río Negro (a orillas del Río
+Colorado)
+Contacto: WhatsApp +54 9 2931 41-1915 · Email bodegatrina@gmail.com · Instagram @bodegatrina ·
+Sitio bodegatrina.com.ar
+Visitas: visitas guiadas, degustaciones, restaurante propio y alojamiento boutique.
+Restaurante abre todos los días excepto sábados. Se recomienda reservar. Fundada en 2020,
+orgánica/biodinámica. En el circuito oficial Caminos del Vino.
+Foto de portada: SIN FOTO — usar placeholder con degradado + inicial
+Descripción de la bodega (contexto general): proyecto familiar que revitalizó viñedos
+antiguos del Valle de Río Colorado desde 2021. La chacra tiene tres tipos de suelo distintos
+(arcilloso con clones de Tupungato, calcáreo y rocoso con clones del Alto Valle, y arenoso
+característico de la costa de Río Colorado), y de esa combinación surge su blend de Malbec
+insignia. También suman Pinot Noir y Merlot para sumar acento patagónico a los cortes.
+
+Vinos:
+- Trina Blend de Malbec -> bodega-trina-blend-de-malbec
+  Descripción: Vino insignia de la bodega, resultado del corte de tres clones de Malbec
+  provenientes de los tres suelos distintos de la chacra (arcilloso, calcáreo y arenoso).
+- Naranjo de Criollas -> bodega-trina-naranjo-de-criollas
+  Descripción: (descripción genérica del varietal) Vino "naranjo", elaborado con uvas blancas maceradas con su piel, lo que le da un color ámbar/naranja y mayor estructura tánica que un blanco tradicional. Aromas a fruta madura, cáscara de naranja y notas herbales.
+- Trina Reserva de Malbec -> bodega-trina-reserva-de-malbec
+  Descripción: Se sabe que es un "vino de dos inviernos", de decantación natural de dos años,
+  sin paso por madera. (descripción genérica del varietal, complementaria) Malbec de color rojo
+  violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En
+  boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.
+
+============================================
+BODEGA 6: Familia De Bernardi
+============================================
+Zona: Cordillera
+Localidad: El Bolsón
+Dirección: Al pie del Cerro Piltriquitrón, "Villa Turismo", El Bolsón
+Contacto: WhatsApp +54 9 2945 46-8170 · Email bodega@debernardi.com.ar · Instagram
+@bodegadebernardi
+Visitas: visitas guiadas y degustaciones con reserva previa, maridaje con quesos y fiambres.
+Sin horario fijo. Ofrece alojamiento en la cabaña "Las Viñas del Piltri". La bodega más
+austral de Río Negro, fundada en 2011. En el circuito oficial Caminos del Vino.
+Foto de portada: SIN FOTO — usar placeholder con degradado + inicial
+Descripción de la bodega (contexto general): trabajan con prácticas orgánicas y biodinámicas,
+sin filtrar ni clarificar, con levaduras nativas y muy pocos sulfitos. El Pinot Noir 2020 fue
+reconocido con 95 puntos por el crítico internacional Tim Atkin, entre los 4 mejores Pinot
+Noir del país.
+
+Vinos:
+- Pinot Noir -> familia-de-bernardi-pinot-noir
+  Descripción: Vino tinto delicado, elegante y sutil, con notas de frutos rojos, flores,
+  tierra húmeda y tostados, que expresa la elegancia y complejidad del terroir patagónico. No
+  pasa por madera. 95 puntos Tim Atkin (2023).
+- Gewürztraminer -> familia-de-bernardi-gewurztraminer
+  Descripción: Vino blanco exótico, perfumado y complejo, con notas de lichi, rosas, jazmín y
+  especias.
+- Merlot -> familia-de-bernardi-merlot
+  Descripción: Vino tinto intenso, estructurado y complejo, con notas de frutos negros,
+  chocolate, café y vainilla. Pasa dos años por barricas de primer uso de roble francés. 92
+  puntos Tim Atkin.
+- Merlot Rosé -> familia-de-bernardi-merlot-rose
+  Descripción: Fresco y aromático, con esencias de frutos rojos, especias y hierbas. Es la
+  versión de Merlot que no pasa por madera: más frutado y ligero que el tinto.
+
+============================================
+BODEGA 7: Ribera del Cuarzo
+============================================
+Zona: Línea Sur
+Localidad: El Cuy (Valle Azul)
+Dirección: Ruta Provincial N° 7, Km 12, Valle Azul, Río Negro. CP 8336.
+Contacto: no confirmado en fuente real
+Visitas: sin horario publicado. Marca Araucana, boutique orientada a exportación (~180.000
+botellas/año, 23 mercados). Liderada por Felipe Menéndez desde 2018.
+Foto de portada: SIN FOTO — usar placeholder con degradado + inicial
+Descripción de la bodega (contexto general): viñedo único en Valle Azul, sobre la barda del
+antiguo lecho del Río Negro, con suelos de ceniza, cuarzo y carbonato de calcio de origen
+eólico y volcánico. Filosofía de "vigneron" francés, con mínima intervención.
+
+IMPORTANTE: esta es la ÚNICA bodega de la zona "Línea Sur". Usar exactamente esa clave/zona
+("linea-sur" o el formato que ya uses internamente para las zonas), ya que la zona ya existe
+en RUTA_ZONES (se agregó en el rediseño de tarjetas). No inventar una zona nueva ni agrupar
+esta bodega con Cordillera.
+
+Vinos:
+- Araucana Río de los Ciervos Malbec Rosé -> ribera-del-cuarzo-araucana-río-de-los-ciervos-malbec-rose
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.
+- Araucana Río de los Ciervos Pinot Noir -> ribera-del-cuarzo-araucana-río-de-los-ciervos-pinot-noir
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+- Araucana Río de los Ciervos Malbec -> ribera-del-cuarzo-araucana-río-de-los-ciervos-malbec
+  Descripción: Viñedos de más de 40 años de antigüedad en los suelos clásicos del Alto Valle.
+  Tintos redondos, complejos y equilibrados, con taninos elegantes. Aromas a frutos negros con
+  sutiles notas ahumadas y mentoladas, carácter frutal combinado con notas minerales y final
+  persistente. 95% Malbec, 5% Petit Verdot, crianza en roble francés.
+- Araucana Azul -> ribera-del-cuarzo-araucana-azul
+  Descripción: Blend elegante y exclusivo de Malbec, Merlot y Petit Verdot.
+- Clásico Patinas Blancas -> ribera-del-cuarzo-clásico-patinas-blancas
+  Descripción: (descripción genérica del varietal) Blanco fresco de la Patagonia, con acidez natural marcada por el clima frío y ventoso de la región. Notas cítricas y florales, ideal para acompañar mariscos y pescados.
+- Clásico Merlot Rosé -> ribera-del-cuarzo-clásico-merlot-rose
+  Descripción: (descripción genérica del varietal) Rosado elaborado a partir de Merlot, de color salmón vivo, con aromas a frutos rojos frescos y un perfil suave y liviano en boca.
+- Clásico Merlot -> ribera-del-cuarzo-clásico-merlot
+  Descripción: 100% Merlot de viñedos en ambas márgenes del Río Negro. Perfil estructurado y
+  expresivo, con notas a frutos negros maduros, cassis y sutiles toques especiados. Cuerpo
+  medio, taninos suaves y final redondo.
+- Clásico Malbec -> ribera-del-cuarzo-clásico-malbec
+  Descripción: Uvas de 8 viñedos antiguos de ambas márgenes del Río Negro. Busca mostrar la
+  diversidad de la zona clásica del valle: frescura, elegancia y sentido de lugar.
+- Parcela Única -> ribera-del-cuarzo-parcela-unica
+  Descripción: Blend de 48% Malbec, 40% Merlot, 12% Petit Verdot. Suelos de origen eólico,
+  enriquecidos con ceniza volcánica y potasio, con alto contenido de carbonato de calcio — una
+  composición química poco común incluso a nivel mundial.
+
+============================================
+REGLAS GENERALES (aplican a las 7 bodegas de este prompt)
+============================================
+
+- Regla de prioridad existente: Antigua Bodega Patagónica siempre primera en los listados de
+  bodegas, y sus vinos primero. Esta regla NO cambia con las bodegas nuevas — se agregan
+  después de las que ya están, respetando ese orden.
+- Cada bodega nueva debe aparecer en el listado de su zona correspondiente en Ruta del Vino
+  (ya filtran correctamente porque el campo de zona coincide con las claves que ya usa
+  RUTA_ZONES).
+- Si alguna bodega no tiene datos de contacto o dirección exacta confirmados (ver arriba,
+  varias dicen "sin confirmar" o "sin dirección exacta"), mostrar el dato que sí tenemos
+  (localidad, o "Contactar por Instagram/Facebook") en vez de dejar el campo vacío o inventar
+  un dato.
+- No tocar ninguna bodega existente, ni las pantallas de Inicio/Mapa/Agenda/Tienda — solo
+  sumar estas 7 bodegas nuevas y sus vinos.
+
+Después de aplicar los cambios, corré el chequeo de tipos (npx tsc --noEmit) y el build de
+producción para confirmar que compila sin errores antes de darlo por terminado. NO levantes
+tu propio servidor de desarrollo — yo lo reviso desde mi propia ventana con npm start.
+
+============================================
+NOTA SOBRE FOTOS DE PORTADA
+============================================
+Este archivo dice "SIN FOTO — usar placeholder" para las 7 bodegas, porque al momento de
+escribir este prompt todavía no estaban listas. ANTES de aplicar el placeholder a cada una,
+fijate primero si en src/assets/ ya existe un archivo con alguno de estos nombres (pueden
+haberse agregado después de escribir este prompt):
+- bodega-vinas-de-lucia.jpg
+- bodega-familia-herrero.jpg
+- bodega-don-amaro.jpg
+- bodega-enclave-sur.jpg
+- bodega-trina.jpg
+- bodega-familia-de-bernardi.jpg
+- bodega-ribera-del-cuarzo.jpg
+
+Si existe el archivo para alguna bodega, usalo como foto de portada real en vez del
+placeholder. Si no existe, ahí sí aplicar el placeholder con degradado + inicial.

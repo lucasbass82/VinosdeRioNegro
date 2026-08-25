@@ -1,0 +1,53 @@
+INSTRUCCIONES PARA CLAUDE CODE
+Proyecto: Vinos de Río Negro
+Continuación del cambio anterior de grilla de vinos (WineGridCard). Esta vez se
+aplica en dos lugares más, más un arreglo de imagen recortada en vinotecas.
+
+Antes de tocar el código, presentame el plan completo y esperá mi aprobación.
+
+============================================
+CAMBIO 1: Grilla en "También te pueden gustar" (ficha de detalle de vino)
+============================================
+
+En la ficha de detalle de un vino, la sección "También te pueden gustar" muestra
+vinos relacionados en filas angostas sin foto. Reemplazar esa lista por el mismo
+componente WineGridCard que ya se usa en la ficha de bodega (grilla de 2 columnas,
+foto grande arriba con fondo crema, nombre + varietal debajo). Reutilizar el
+componente tal cual existe, no crear uno nuevo. Si hoy se muestra algún badge o
+etiqueta corta debajo del nombre (vi textos como "Blanco recomendado" o "Ideal para
+el verano" en la versión actual), mantener ese detalle si es fácil de conservar
+dentro del nuevo diseño de tarjeta; si no entra bien, se puede omitir.
+
+============================================
+CAMBIO 2: Grilla en "Vinos disponibles" (ficha de detalle de vinoteca)
+============================================
+
+En la ficha de detalle de una vinoteca (shop), la sección "Vinos disponibles"
+también muestra los vinos en filas angostas sin foto. Reemplazar por el mismo
+componente WineGridCard, mismo criterio que el cambio anterior (grilla de 2
+columnas, reutilizar el componente existente).
+
+============================================
+CAMBIO 3: Imagen de header de vinoteca recortada
+============================================
+
+En la ficha de detalle de vinoteca, la foto/logo de fondo del header se ve
+recortada de forma fea — por ejemplo, en Vinoteca Vinopolitan se corta el logo
+"VINOPOLITAN" y se superpone raro con el texto "Vinoteca Vinopolitan" de abajo.
+Parece un problema de object-fit/backgroundSize en esa imagen puntual (probablemente
+"cover" recortando demasiado en vez de mostrar el logo completo).
+
+Investigá cómo está armado ese header (background-size, background-position) y
+ajustalo para que el logo/imagen de cada vinoteca se vea completo y prolijo, sin
+recortarse ni superponerse feo con el texto. Si el problema es que la imagen en sí
+es muy chica o de mala proporción para ese contenedor, avisame cuál archivo es y
+qué proporción tiene antes de aplicar un cambio, para que decidamos si conseguimos
+una imagen mejor o ajustamos el encuadre.
+
+============================================
+FUERA DE ALCANCE
+============================================
+
+No tocar la carga de datos de vinos/bodegas/vinotecas, ni ninguna otra pantalla.
+No modificar WineThumbRow ni su uso en MapWineRow (pantalla Mapa) — eso ya había
+quedado afuera del cambio anterior y sigue afuera de este también.

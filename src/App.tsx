@@ -24,6 +24,116 @@ import zonaValleMedioPhoto from "./assets/zona-valle-medio.jpg";
 import zonaMarPhoto from "./assets/zona-mar.jpg";
 import zonaLineaSurPhoto from "./assets/zona-linea-sur.jpg";
 
+import bodegaVinasDeLuciaPhoto from "./assets/bodega-vinas-de-lucia.jpg";
+import bodegaFamiliaHerreroPhoto from "./assets/bodega-familia-herrero.jpg";
+import bodegaDonAmaroPhoto from "./assets/bodega-don-amaro.jpg";
+import bodegaEnclaveSurPhoto from "./assets/bodega-enclave-sur.jpg";
+import bodegaTrinaPhoto from "./assets/bodega-trina.jpg";
+import bodegaFamiliaDeBernardiPhoto from "./assets/bodega-familia-de-bernardi.jpg";
+import bodegaRiberaDelCuarzoPhoto from "./assets/bodega-ribera-del-cuarzo.jpg";
+
+import savuMalbecPhoto from "./assets/vinos/savu-malbec.jpg";
+import savuMalbecRosadoPhoto from "./assets/vinos/savu-malbec-rosado.jpg";
+import savuSyrahPhoto from "./assets/vinos/savu-syrah.jpg";
+import savuCabernetSauvignonPhoto from "./assets/vinos/savu-cabernet-sauvignon.jpg";
+import familiaHerreroTintoPhoto from "./assets/vinos/familia-herrero-tinto-malbec-y-cabernet-sauvignon.jpg";
+import familiaHerreroBlancoPhoto from "./assets/vinos/familia-herrero-blanco-chenin.jpg";
+import donAmaroMalbecPhoto from "./assets/vinos/bodega-amaro-don-amaro-malbec.jpg";
+import enclaveSurPinotNoirPhoto from "./assets/vinos/enclave-sur-pinot-noir.jpg";
+import enclaveSurRosadoPhoto from "./assets/vinos/enclave-sur-rosado.jpg";
+import enclaveSurChardonnayPhoto from "./assets/vinos/enclave-sur-chardonnay.jpg";
+import enclaveSurMalbecPhoto from "./assets/vinos/enclave-sur-malbec.jpg";
+import enclaveSeleccionCabernetSauvignonPhoto from "./assets/vinos/enclave-seleccion-cabernet-sauvignon.jpg";
+import enclaveSurReservaMalbecBlendPhoto from "./assets/vinos/enclave-sur-reserva-malbec-blend.jpg";
+import enclaveSurReservaMalbecPhoto from "./assets/vinos/enclave-sur-reserva-malbec.jpg";
+import enclaveSurReservaCabernetFrancPhoto from "./assets/vinos/enclave-sur-reserva-cabernet-franc.jpg";
+import enclaveSurReservaCabernetSauvignonPhoto from "./assets/vinos/enclave-sur-reserva-cabernet-sauvignon.jpg";
+import enclaveSurReservaMerlotPhoto from "./assets/vinos/enclave-sur-reserva-merlot.jpg";
+import trinaBlendDeMalbecPhoto from "./assets/vinos/bodega-trina-blend-de-malbec.jpg";
+import trinaNaranjoDeCriollasPhoto from "./assets/vinos/bodega-trina-naranjo-de-criollas.jpg";
+import trinaReservaDeMalbecPhoto from "./assets/vinos/bodega-trina-reserva-de-malbec.jpg";
+import deBernardiPinotNoirPhoto from "./assets/vinos/familia-de-bernardi-pinot-noir.jpg";
+import deBernardiGewurztraminerPhoto from "./assets/vinos/familia-de-bernardi-gewurztraminer.jpg";
+import deBernardiMerlotPhoto from "./assets/vinos/familia-de-bernardi-merlot.jpg";
+import deBernardiMerlotRosePhoto from "./assets/vinos/familia-de-bernardi-merlot-rose.jpg";
+import araucanaRioDeLosCiervosMalbecRosePhoto from "./assets/vinos/ribera-del-cuarzo-araucana-río-de-los-ciervos-malbec-rose.jpg";
+import araucanaRioDeLosCiervosPinotNoirPhoto from "./assets/vinos/ribera-del-cuarzo-araucana-río-de-los-ciervos-pinot-noir.jpg";
+import araucanaRioDeLosCiervosMalbecPhoto from "./assets/vinos/ribera-del-cuarzo-araucana-río-de-los-ciervos-malbec.jpg";
+import araucanaAzulPhoto from "./assets/vinos/ribera-del-cuarzo-araucana-azul.jpg";
+import clasicoPatinasBlancasPhoto from "./assets/vinos/ribera-del-cuarzo-clásico-patinas-blancas.jpg";
+import clasicoMerlotRosePhoto from "./assets/vinos/ribera-del-cuarzo-clásico-merlot-rose.jpg";
+import clasicoMerlotPhoto from "./assets/vinos/ribera-del-cuarzo-clásico-merlot.jpg";
+import clasicoMalbecPhoto from "./assets/vinos/ribera-del-cuarzo-clásico-malbec.jpg";
+import parcelaUnicaPhoto from "./assets/vinos/ribera-del-cuarzo-parcela-unica.jpg";
+
+import mirasJovemMalbecPhoto from "./assets/vinos/bodega-miras-jovem-malbec.jpg";
+import humbertoCanaleGranReservaMalbecPhoto from "./assets/vinos/bodega-humberto-canale-gran-reserva-malbec.jpg";
+import wapisaSauvignonBlancPhoto from "./assets/vinos/wapisa-sauvignon-blanc.jpg";
+import videlaDornaGranCalfuenMalbecPhoto from "./assets/vinos/videla-dorna-gran-calfuen-malbec.jpg";
+
+// Fotos reales que reemplazan las imágenes viejas de fichas ya cargadas (Aniello, Miras, Humberto Canale, Videla Dorna)
+import anielo006MerlotPhoto from "./assets/vinos/bodega-finca-anielo-006-merlot.jpg";
+import anielo006PinotNoirPhoto from "./assets/vinos/bodega-finca-anielo-006-pinot-noir.jpg";
+import mirasPinotSalvajeCuriosoPhoto from "./assets/vinos/bodega-miras-pinot-salvaje-curiosos.jpg";
+import humbertoCanaleOldVineyardPinotNoirPhoto from "./assets/vinos/bodega-humberto-canale-old-vineyard-pinot-noir.jpg";
+import videlaDornaCalfuenPinotNoirReservaPhoto from "./assets/vinos/videla-dorna-calfuen-pinot-noir-reserva.jpg";
+
+// Catálogo nuevo — Bodega Finca Aniello
+import anielo006ChardonnayPhoto from "./assets/vinos/bodega-finca-anielo-006-chardonnay.jpg";
+import anielo006MalbecPhoto from "./assets/vinos/bodega-finca-anielo-006-malbec.jpg";
+import anieloSoilPinotNoirPhoto from "./assets/vinos/bodega-finca-anielo-soil-pinot-noir.jpg";
+import anieloSoilMalbecPhoto from "./assets/vinos/bodega-finca-anielo-soil-malbec.jpg";
+import anieloSoilMerlotPhoto from "./assets/vinos/bodega-finca-anielo-soil-merlot.jpg";
+import anieloSoilBlancoPinotNoirPhoto from "./assets/vinos/bodega-finca-anielo-soil-blanco-pinot-noir.jpg";
+import anieloVina1932TrousseauPhoto from "./assets/vinos/bodega-finca-anielo-viña-1932-trousseau.jpg";
+
+// Catálogo nuevo — Bodega Miras
+import mirasCrianzaMalbecPhoto from "./assets/vinos/bodega-miras-crianza-malbec.jpg";
+import mirasCrianzaMerlotPhoto from "./assets/vinos/bodega-miras-crianza-merlot.jpg";
+import familiaMirasMalbecPhoto from "./assets/vinos/bodega-miras-familia-miras-malbec.jpg";
+import familiaMirasSemillonPhoto from "./assets/vinos/bodega-miras-familia-miras-semillon.jpg";
+import mirasJovemChardonnayPhoto from "./assets/vinos/bodega-miras-jovem-chardonnay.jpg";
+import mirasJovemMerlotPhoto from "./assets/vinos/bodega-miras-jovem-merlot.jpg";
+import mirasNaranjoCuriososPhoto from "./assets/vinos/bodega-miras-jovem-naranjo-curiosos.jpg";
+import mirasJovemPinotNoirPhoto from "./assets/vinos/bodega-miras-jovem-pinot-noir.jpg";
+import mirasJovemRosePhoto from "./assets/vinos/bodega-miras-jovem-rose.jpg";
+import mirasJovemSemillonPhoto from "./assets/vinos/bodega-miras-jovem-semillon.jpg";
+import mirasTrosseauCuriosoPhoto from "./assets/vinos/bodega-miras-jovem-trosseau-curiosos.jpg";
+import mirasLivianoMalbecPhoto from "./assets/vinos/bodega-miras-liviano-malbec.jpg";
+
+// Catálogo nuevo — Humberto Canale
+import barziCanaleBlendDeFamiliaPhoto from "./assets/vinos/bodega-humberto-canale-barzi-canale-blend-de-familia.jpg";
+import barziCanalePinotNoirPhoto from "./assets/vinos/bodega-humberto-canale-barzi-canale-pinot-noir.jpg";
+import humbertoCanaleBlushPhoto from "./assets/vinos/bodega-humberto-canale-blush.jpg";
+import estateCabernetFrancPhoto from "./assets/vinos/bodega-humberto-canale-estate-cabernet-franc.jpg";
+import estateCabernetSauvignonPhoto from "./assets/vinos/bodega-humberto-canale-estate-cabernet-sauvignon.jpg";
+import estateMalbecPhoto from "./assets/vinos/bodega-humberto-canale-estate-malbec.jpg";
+import estateMerlotPhoto from "./assets/vinos/bodega-humberto-canale-estate-merlot.jpg";
+import estatePinotNoirPhoto from "./assets/vinos/bodega-humberto-canale-estate-pinot-noir.jpg";
+import estateSauvignonBlancPhoto from "./assets/vinos/bodega-humberto-canale-estate-sauvignon-blanc.jpg";
+import estateSauvignonGrisPhoto from "./assets/vinos/bodega-humberto-canale-estate-sauvignon-gris.jpg";
+import granReservaCabernetFrancPhoto from "./assets/vinos/bodega-humberto-canale-gran-reserva-cabernet-franc.jpg";
+import granReservaMerlotPhoto from "./assets/vinos/bodega-humberto-canale-gran-reserva-merlot.jpg";
+import granReservaPinotNoirPhoto from "./assets/vinos/bodega-humberto-canale-gran-reserva-pinot-noir.jpg";
+import intimoCabernetSauvignonPhoto from "./assets/vinos/bodega-humberto-canale-intimo-cabernet-sauvignon.jpg";
+import intimoMalbecMerlotCabernetPhoto from "./assets/vinos/bodega-humberto-canale-intimo-malbec-merlot-cabernet.jpg";
+import intimoMalbecPhoto from "./assets/vinos/bodega-humberto-canale-intimo-malbec.jpg";
+import intimoSauvignonSemillonPhoto from "./assets/vinos/bodega-humberto-canale-intimo-sauvignon-semillon.jpg";
+import oldVineyardBlendPhoto from "./assets/vinos/bodega-humberto-canale-old-vineyard-blend.jpg";
+import oldVineyardMalbecPhoto from "./assets/vinos/bodega-humberto-canale-old-vineyard-malbec.jpg";
+import oldVineyardRieslingPhoto from "./assets/vinos/bodega-humberto-canale-old-vineyard-riesling.jpg";
+import oldVineyardSemillonPhoto from "./assets/vinos/bodega-humberto-canale-old-vineyard-semillon.jpg";
+import humbertoCanaleRoseNoirPhoto from "./assets/vinos/bodega-humberto-canale-rose-noir.jpg";
+
+// Catálogo nuevo — Bodega Videla Dorna
+import calfulenMalbecPhoto from "./assets/vinos/videla-dorna-calfuen-malbec.jpg";
+import calfulenMerlotPhoto from "./assets/vinos/videla-dorna-calfuen-merlot.jpg";
+import calfulenRieslingPhoto from "./assets/vinos/videla-dorna-calfuen-riesling.jpg";
+import calfulenTorrontesPhoto from "./assets/vinos/videla-dorna-calfuen-torrontes.jpg";
+import maromaBlendPhoto from "./assets/vinos/videla-dorna-maroma-blend.jpg";
+import maromaRosadoPhoto from "./assets/vinos/videla-dorna-maroma-rosado.jpg";
+import maromaSauvignonBlancPhoto from "./assets/vinos/videla-dorna-maroma-sauvignon-blanc.jpg";
+
 type RegionKey =
   | "alto-valle"
   | "valle-medio"
@@ -37,15 +147,22 @@ type Winery = {
   city: string;
   region: RegionKey;
   description: string;
+  shortDescription: string;
   hours: string;
   openNow: boolean;
   wines: string[];
   shops: string[];
   activity: string;
   benefit: string;
-  rating: number;
+  rating?: number;
   distance: string;
   image: string;
+  address?: string;
+  whatsapp?: string;
+  email?: string;
+  instagram?: string;
+  website?: string;
+  visitNotes?: string;
 };
 
 type Shop = {
@@ -68,7 +185,8 @@ type Wine = {
   varietal: string;
   winery: string;
   style: string;
-  note: string;
+  note?: string;
+  description?: string;
   availableAt: string[];
   tag: string;
   image: string;
@@ -183,9 +301,26 @@ const WINERIES_DATA: Winery[] = [
     region: "alto-valle",
     description:
       "Bodega patagónica enfocada en Pinot Noir, visitas y degustaciones con identidad local.",
+    shortDescription:
+      "Bodega patagónica de Mainqué enfocada en Pinot Noir, con visitas y degustaciones.",
     hours: "10:00 a 18:00",
     openNow: true,
-    wines: ["Miras Pinot Noir", "Miras Joven Malbec"],
+    wines: [
+      "Miras Pinot Noir Salvaje Curioso",
+      "Miras Joven Malbec",
+      "Miras Crianza Malbec",
+      "Miras Crianza Merlot",
+      "Familia Miras Malbec",
+      "Familia Miras Semillón",
+      "Miras Joven Chardonnay",
+      "Miras Joven Merlot",
+      "Miras Naranjo Curioso",
+      "Miras Joven Pinot Noir",
+      "Miras Joven Rosé",
+      "Miras Joven Semillón",
+      "Miras Trosseau Curioso",
+      "Miras Liviano Malbec",
+    ],
     shops: ALL_SHOP_NAMES,
     activity: "Degustación hoy 19:00",
     benefit: "15% OFF socios",
@@ -195,14 +330,26 @@ const WINERIES_DATA: Winery[] = [
   },
   {
     id: "w2",
-    name: "Bodega Aniello",
+    name: "Bodega Finca Aniello",
     city: "Mainqué",
     region: "alto-valle",
     description:
       "Proyecto del Alto Valle con experiencias, música en vivo y vinos muy buscados.",
+    shortDescription:
+      "Bodega familiar del Alto Valle con líneas 006 y Soil, música en vivo y vinos muy buscados.",
     hours: "11:00 a 19:00",
     openNow: false,
-    wines: ["Aniello 006", "Aniello Pinot Noir"],
+    wines: [
+      "Aniello 006",
+      "Aniello 006 Pinot Noir",
+      "Aniello 006 Chardonnay",
+      "Aniello 006 Malbec",
+      "Aniello Soil Pinot Noir",
+      "Aniello Soil Malbec",
+      "Aniello Soil Merlot",
+      "Aniello Soil Blanco de Pinot Noir",
+      "Aniello Viña 1932 Trousseau",
+    ],
     shops: ALL_SHOP_NAMES,
     activity: "Música en vivo sábado 20:30",
     benefit: "10% OFF socios",
@@ -217,6 +364,8 @@ const WINERIES_DATA: Winery[] = [
   region: "alto-valle",
   description:
     "Proyecto del Alto Valle con una amplia línea de vinos que combina tradición e innovación, desde la línea UN hasta Bellaco Malcriado.",
+  shortDescription:
+    "Bodega insignia de Cervantes, con las líneas Un y Bellaco Malcriado.",
   hours: "10:00 a 18:00",
   openNow: true,
   wines: [
@@ -225,7 +374,7 @@ const WINERIES_DATA: Winery[] = [
     "UN Rosé",
     "UN Malbec Reserva",
     "UN Pinot Noir Reserva",
-    "UN Gran Corte",
+    "UN Gran Corte Reserva",
     "UN Malbec Gran Reserva",
     "UN Merlot Gran Reserva",
     "Bellaco Malcriado Pinot Noir",
@@ -248,9 +397,36 @@ const WINERIES_DATA: Winery[] = [
     region: "alto-valle",
     description:
       "Bodega histórica de Río Negro con etiquetas emblemáticas y visitas guiadas.",
+    shortDescription:
+      "Bodega histórica de Río Negro con etiquetas emblemáticas y visitas guiadas.",
     hours: "09:00 a 17:00",
     openNow: true,
-    wines: ["Pinot Noir de viñedo antiguo", "Gran Reserva Malbec"],
+    wines: [
+      "Pinot Noir de viñedo antiguo",
+      "Gran Reserva Malbec",
+      "Barzi Canale Blend de Familia",
+      "Barzi Canale Pinot Noir",
+      "Humberto Canale Blush",
+      "Estate Cabernet Franc",
+      "Estate Cabernet Sauvignon",
+      "Estate Malbec",
+      "Estate Merlot",
+      "Estate Pinot Noir",
+      "Estate Sauvignon Blanc",
+      "Estate Sauvignon Gris",
+      "Gran Reserva Cabernet Franc",
+      "Gran Reserva Merlot",
+      "Gran Reserva Pinot Noir",
+      "Intimo Cabernet Sauvignon",
+      "Intimo Malbec Merlot Cabernet",
+      "Intimo Malbec",
+      "Intimo Sauvignon Semillón",
+      "Old Vineyard Blend",
+      "Old Vineyard Malbec",
+      "Old Vineyard Riesling",
+      "Old Vineyard Semillón",
+      "Humberto Canale Rosé Noir",
+    ],
     shops: ALL_SHOP_NAMES,
     activity: "Visita guiada mañana 11:00",
     benefit: "Copa de regalo para socios",
@@ -265,9 +441,21 @@ const WINERIES_DATA: Winery[] = [
     region: "valle-medio",
     description:
       "Bodega familiar del Valle Medio con fuerte raíz territorial y vinos de perfil rionegrino.",
+    shortDescription:
+      "Bodega de Luis Beltrán en el Valle Medio, conocida por su línea Calfulén.",
     hours: "10:30 a 17:30",
     openNow: true,
-    wines: ["Calfulen Pinot Noir", "Calfulen Malbec Reserva"],
+    wines: [
+      "Calfulen Pinot Noir Reserva",
+      "Gran Calfuen Malbec",
+      "Calfulen Malbec",
+      "Calfulen Merlot",
+      "Calfulen Riesling",
+      "Calfulen Torrontés",
+      "Maroma Blend",
+      "Maroma Rosado",
+      "Maroma Sauvignon Blanc",
+    ],
     shops: ALL_SHOP_NAMES,
     activity: "Visita guiada y experiencia campestre",
     benefit: "10% OFF socios",
@@ -282,6 +470,8 @@ const WINERIES_DATA: Winery[] = [
     region: "mar",
     description:
       "Bodega con impronta atlántica, vinos frescos y una propuesta singular vinculada al mar.",
+    shortDescription:
+      "Bodega de San Javier con cava submarina en el Golfo San Matías.",
     hours: "11:00 a 18:00",
     openNow: true,
     wines: ["Wapisa Pinot Noir", "Wapisa Sauvignon Blanc"],
@@ -298,6 +488,8 @@ const WINERIES_DATA: Winery[] = [
   region: "cordillera",
   city: "San Carlos de Bariloche",
   description: "Bodega de montaña que combina tradición, naturaleza y pasión por el vino.",
+  shortDescription:
+    "Bodega de El Bolsón, en la Comarca Andina, con vinos de clima frío.",
   hours: "10:00 a 18:00",
   openNow: true,
   wines: ["Finca Fraschetti Pinot Noir"],
@@ -308,6 +500,180 @@ const WINERIES_DATA: Winery[] = [
   distance: "160 km",
   image: fincaFraschettiPhoto,
 },
+{
+  id: "w7",
+  name: "Viñas de Lucía",
+  city: "San Javier",
+  region: "mar",
+  description:
+    "Emprendimiento familiar que arrancó en 2004 con la plantación de sus primeros viñedos, a cargo del enólogo Juan Alberto Millamán. Elabora unas 30.000 botellas anuales bajo la marca Savu. Es de los pocos proyectos vitivinícolas del Valle Inferior de Río Negro, marcado por el viento y la influencia marítima de la Patagonia atlántica.",
+  shortDescription:
+    "Emprendimiento familiar de San Javier, sobre la costa, bajo la marca Savu.",
+  hours: "Horario a confirmar",
+  visitNotes: "Sin horario publicado. Aparece en el circuito municipal de agroturismo (chacras).",
+  openNow: false,
+  wines: ["Savu Malbec", "Savu Malbec Rosado", "Savu Syrah", "Savu Cabernet Sauvignon"],
+  shops: [],
+  activity: "Circuito municipal de agroturismo",
+  benefit: "",
+  distance: "",
+  image: bodegaVinasDeLuciaPhoto,
+  address: "Entrada de San Javier, ~25 km de Viedma, Valle de Viedma",
+},
+{
+  id: "w8",
+  name: "Familia Herrero",
+  city: "Guardia Mitre",
+  region: "mar",
+  description:
+    "Mini emprendimiento familiar en Guardia Mitre, sobre la costa del Río Negro. Producción a pequeña escala, sin visitas turísticas públicas confirmadas por el momento.",
+  shortDescription:
+    "Mini bodega familiar de Guardia Mitre, sobre la costa del Río Negro.",
+  hours: "Sin visitas públicas confirmadas",
+  visitNotes: "Sin horarios públicos. Mini emprendimiento familiar, sin visitas públicas confirmadas.",
+  openNow: false,
+  wines: ["Tinto (Malbec y Cabernet Sauvignon)", "Blanco (Chenin)"],
+  shops: [],
+  activity: "Producción familiar, contactar por Facebook",
+  benefit: "",
+  distance: "",
+  image: bodegaFamiliaHerreroPhoto,
+  instagram: "Facebook: Familia Herrero (Guardia Mitre)",
+},
+{
+  id: "w9",
+  name: "Bodega Don Amaro",
+  city: "San Antonio Oeste",
+  region: "mar",
+  description:
+    "Bodega y olivar de la familia Mañana, pionera en la olivicultura de San Antonio Oeste (marca Oleosan), en el cruce de Ruta 3 y Ruta 251. Es el primer vino elaborado en la región, hoy también bajo la marca Don Maro. Forma parte del circuito oficial Caminos del Vino (establecimiento N° 14, sumado en marzo 2025).",
+  shortDescription:
+    "Bodega y olivar de San Antonio Oeste, con recorrido por viñedos y degustación.",
+  hours: "08:00 a 20:00, todos los días",
+  visitNotes: "Abre todos los días de 8:00 a 20:00. Recorrido por viñedos, olivares y bodega + degustación de Malbec y aceite de oliva.",
+  openNow: true,
+  wines: ["Don Amaro Malbec"],
+  shops: [],
+  activity: "Recorrido por viñedos, olivares y bodega + degustación",
+  benefit: "",
+  distance: "",
+  image: bodegaDonAmaroPhoto,
+  address: "Cruce de Ruta 3 y Ruta 251, cerca de San Antonio Oeste (~10 km de Las Grutas)",
+  website: "Turismo provincial / Oleosan",
+},
+{
+  id: "w10",
+  name: "Enclave Sur",
+  city: "Choele Choel",
+  region: "valle-medio",
+  description:
+    "Proyecto del Grupo Trafen, con chacras en la isla de Choele Choel, Darwin, Luis Beltrán y Paso Piedra, en pleno Valle Medio. Producción orientada a la venta directa y entrega a domicilio en Choele Choel.",
+  shortDescription:
+    "Bodega del Valle Medio, con vinos artesanales de Choele Choel.",
+  hours: "Solo entrega a domicilio en Choele Choel",
+  visitNotes: "Sin evidencia de visitas turísticas públicas. Entrega a domicilio en Choele Choel.",
+  openNow: false,
+  wines: [
+    "Enclave Sur Pinot Noir",
+    "Enclave Sur Rosado",
+    "Enclave Sur Chardonnay",
+    "Enclave Sur Malbec",
+    "Enclave Sur Cabernet Sauvignon",
+    "Enclave Sur Malbec Blend",
+    "Enclave Sur Reserva Malbec",
+    "Enclave Sur Reserva Cabernet Franc",
+    "Enclave Sur Cabernet Sauvignon Reserva",
+    "Enclave Sur Reserva Merlot",
+  ],
+  shops: [],
+  activity: "Venta directa, sin visitas públicas",
+  benefit: "",
+  distance: "",
+  image: bodegaEnclaveSurPhoto,
+  instagram: "Facebook: Enclave Sur | Choele Choel",
+},
+{
+  id: "w11",
+  name: "Bodega Trina",
+  city: "Río Colorado",
+  region: "valle-medio",
+  description:
+    "Proyecto familiar que revitalizó viñedos antiguos del Valle de Río Colorado desde 2021. La chacra tiene tres tipos de suelo distintos (arcilloso con clones de Tupungato, calcáreo y rocoso con clones del Alto Valle, y arenoso característico de la costa de Río Colorado), y de esa combinación surge su blend de Malbec insignia. También suman Pinot Noir y Merlot para sumar acento patagónico a los cortes.",
+  shortDescription:
+    "Bodega de Río Colorado, con restaurante propio y alojamiento boutique junto al río.",
+  hours: "Todos los días excepto sábados (reservar)",
+  visitNotes: "Visitas guiadas, degustaciones, restaurante propio y alojamiento boutique. Restaurante abre todos los días excepto sábados. Se recomienda reservar. Fundada en 2020, orgánica/biodinámica.",
+  openNow: true,
+  wines: ["Trina Blend de Malbec", "Trina Naranjo de Criollas", "Trina Reserva de Malbec"],
+  shops: [],
+  activity: "Visitas guiadas, restaurante y alojamiento boutique",
+  benefit: "",
+  distance: "",
+  image: bodegaTrinaPhoto,
+  address: "Arturo Benini 1471, Colonia Reig, Río Colorado, Río Negro",
+  whatsapp: "+54 9 2931 41-1915",
+  email: "bodegatrina@gmail.com",
+  instagram: "@bodegatrina",
+  website: "bodegatrina.com.ar",
+},
+{
+  id: "w12",
+  name: "Familia De Bernardi",
+  city: "El Bolsón",
+  region: "cordillera",
+  description:
+    "Trabajan con prácticas orgánicas y biodinámicas, sin filtrar ni clarificar, con levaduras nativas y muy pocos sulfitos. La bodega más austral de Río Negro, fundada en 2011. El Pinot Noir 2020 fue reconocido con 95 puntos por el crítico internacional Tim Atkin, entre los 4 mejores Pinot Noir del país.",
+  shortDescription:
+    "La bodega más austral de Río Negro, en El Bolsón, con Pinot Noir premiado.",
+  hours: "Con reserva previa (sin horario fijo)",
+  visitNotes: "Visitas guiadas y degustaciones con reserva previa, maridaje con quesos y fiambres. Sin horario fijo. Ofrece alojamiento en la cabaña \"Las Viñas del Piltri\".",
+  openNow: false,
+  wines: [
+    "De Bernardi Pinot Noir",
+    "De Bernardi Gewürztraminer",
+    "De Bernardi Merlot",
+    "De Bernardi Merlot Rosé",
+  ],
+  shops: [],
+  activity: "Visitas y degustaciones con reserva previa",
+  benefit: "",
+  distance: "",
+  image: bodegaFamiliaDeBernardiPhoto,
+  address: "Al pie del Cerro Piltriquitrón, \"Villa Turismo\", El Bolsón",
+  whatsapp: "+54 9 2945 46-8170",
+  email: "bodega@debernardi.com.ar",
+  instagram: "@bodegadebernardi",
+},
+{
+  id: "w13",
+  name: "Ribera del Cuarzo",
+  city: "El Cuy (Valle Azul)",
+  region: "linea-sur",
+  description:
+    "Viñedo único en Valle Azul, sobre la barda del antiguo lecho del Río Negro, con suelos de ceniza, cuarzo y carbonato de calcio de origen eólico y volcánico. Filosofía de \"vigneron\" francés, con mínima intervención. Marca Araucana, boutique orientada a exportación (~180.000 botellas/año, 23 mercados), liderada por Felipe Menéndez desde 2018.",
+  shortDescription:
+    "Bodega boutique de Línea Sur, orientada a exportación, en la barda de Valle Azul.",
+  hours: "Horario a confirmar",
+  visitNotes: "Sin horario publicado.",
+  openNow: false,
+  wines: [
+    "Araucana Río de los Ciervos Malbec Rosé",
+    "Araucana Río de los Ciervos Pinot Noir",
+    "Araucana Río de los Ciervos Malbec",
+    "Araucana Azul",
+    "Clásico Patinas Blancas",
+    "Clásico Merlot Rosé",
+    "Clásico Merlot",
+    "Clásico Malbec",
+    "Parcela Única",
+  ],
+  shops: [],
+  activity: "Bodega boutique orientada a exportación",
+  benefit: "",
+  distance: "",
+  image: bodegaRiberaDelCuarzoPhoto,
+  address: "Ruta Provincial N° 7, Km 12, Valle Azul, Río Negro. CP 8336.",
+},
 ];
 
 const WINERIES = [...WINERIES_DATA].sort((a, b) => {
@@ -317,112 +683,29 @@ const WINERIES = [...WINERIES_DATA].sort((a, b) => {
   return 0;
 });
 
-const ALL_WINE_NAMES = [
-  "Miras Pinot Noir",
-  "Aniello 006",
-  "Pinot Noir de viñedo antiguo",
-  "Pinot Noir Aniello",
-  "Calfulen Pinot Noir",
-  "Wapisa Pinot Noir",
-  "Finca Fraschetti Pinot Noir",
-  "UN Sauvignon Blanc",
-  "UN Chardonnay",
-  "UN Rosé",
-  "UN Malbec Reserva",
-  "UN Pinot Noir Reserva",
-  "UN Gran Corte Reserva",
-  "UN Malbec Gran Reserva",
-  "UN Merlot Gran Reserva",
-  "Bellaco Malcriado Pinot Noir",
-  "Bellaco Malcriado Merlot",
-  "Bellaco Malcriado Malbec",
-];
-
-// Datos reales de contacto/ubicación; el resto de los campos son placeholders
-// hasta confirmar catálogo, horarios y beneficios con cada comercio.
-const SHOPS: Shop[] = [
-  {
-    id: "s1",
-    name: "Vinoteca Vinopolitan",
-    city: "Viedma",
-    address: "Rivadavia 890",
-    description: "Descripción pendiente de confirmar con el comercio.",
-    hours: "Horario a confirmar",
-    openNow: false,
-    wines: ALL_WINE_NAMES,
-    benefit: "Beneficio a confirmar",
-    distance: "Distancia a confirmar",
-    image: "/grapes.png",
-  },
-  {
-    id: "s2",
-    name: "Vinoteca Río Tinto",
-    city: "Viedma",
-    address: "San Martín 420",
-    description: "Descripción pendiente de confirmar con el comercio.",
-    hours: "Horario a confirmar",
-    openNow: false,
-    wines: ALL_WINE_NAMES,
-    benefit: "Beneficio a confirmar",
-    distance: "Distancia a confirmar",
-    image: "/grapes.png",
-  },
-  {
-    id: "s3",
-    name: "Vinoteca Piquillín",
-    city: "Viedma",
-    address: "Colón 508",
-    description: "Descripción pendiente de confirmar con el comercio.",
-    hours: "Horario a confirmar",
-    openNow: false,
-    wines: ALL_WINE_NAMES,
-    benefit: "Beneficio a confirmar",
-    distance: "Distancia a confirmar",
-    image: "/grapes.png",
-  },
-  {
-    id: "s4",
-    name: "Vinoteca Olivas y Sabores",
-    city: "Viedma",
-    address: "Moreno 973",
-    description: "Descripción pendiente de confirmar con el comercio.",
-    hours: "Horario a confirmar",
-    openNow: false,
-    wines: ALL_WINE_NAMES,
-    benefit: "Beneficio a confirmar",
-    distance: "Distancia a confirmar",
-    image: "/grapes.png",
-  },
-].sort((a, b) => {
-  const priority = "Vinoteca Olivas y Sabores";
-  if (a.name === priority) return -1;
-  if (b.name === priority) return 1;
-  return 0;
-});
-
 const WINES: Wine[] = [
   {
     id: "v1",
-    name: "Miras Pinot Noir",
+    name: "Miras Pinot Noir Salvaje Curioso",
     varietal: "Pinot Noir",
     winery: "Bodega Miras",
     style: "Elegante y fresco",
     note: "Fruta roja, acidez equilibrada y perfil patagónico ideal para regalar.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Ideal para regalar",
-    image: "/wines/miras-pinot-noir.png"
+    image: mirasPinotSalvajeCuriosoPhoto
   },
   {
     id: "v2",
     name: "Aniello 006",
     varietal: "Merlot",
-    winery: "Bodega Aniello",
+    winery: "Bodega Finca Aniello",
     style: "Amable y redondo",
     note: "Muy versátil, ideal para una cena y uno de los más buscados.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Muy buscado",
-    image: "/wines/anielo-merlot.png"
-    
+    image: anielo006MerlotPhoto
+
   },
   {
     id: "v3", 
@@ -433,29 +716,29 @@ const WINES: Wine[] = [
     note: "Etiqueta clásica, con personalidad y excelente estructura.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Reserva",
-    image: "/wines/canale-pinot-noir.png"
+    image: humbertoCanaleOldVineyardPinotNoirPhoto
   },
   {
     id: "v4",
-    name: "Pinot Noir Aniello",
+    name: "Aniello 006 Pinot Noir",
     varietal: "Pinot Noir",
-    winery: "Bodega Aniello",
+    winery: "Bodega Finca Aniello",
     style: "Suave y expresivo",
     note: "Una etiqueta muy patagónica, perfecta para quienes buscan algo delicado.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Descubrimiento",
-    image: "/wines/anielo-pinot-noir.png"
+    image: anielo006PinotNoirPhoto
   },
   {
     id: "v5",
-    name: "Calfulen Pinot Noir",
+    name: "Calfulen Pinot Noir Reserva",
     varietal: "Pinot Noir",
     winery: "Bodega Videla Dorna",
     style: "Patagónico y delicado",
     note: "Expresa la elegancia del Valle Medio con fruta fresca, tensión y perfil refinado.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Valle Medio",
-    image: "/wines/videla-dorna-pinot-noir.png"
+    image: videlaDornaCalfuenPinotNoirReservaPhoto
   },
   {
     id: "v6",
@@ -600,12 +883,1009 @@ const WINES: Wine[] = [
   tag: "Edición especial",
   image: "/wines/antigua-bellaco-malbec.png"
 },
+{
+  id: "v19",
+  name: "Savu Malbec",
+  varietal: "Malbec",
+  winery: "Viñas de Lucía",
+  style: "Redondo y ahumado",
+  description: "Malbec patagónico de zona marítima, con aromas frutados de ciruela dulce, notas ahumadas y un toque floral. En boca es redondo y sobrio, con buen equilibrio, taninos jóvenes y cuerpo medio elegante.",
+  availableAt: [],
+  tag: "Costa/Mar",
+  image: savuMalbecPhoto,
+},
+{
+  id: "v20",
+  name: "Savu Malbec Rosado",
+  varietal: "Rosado",
+  winery: "Viñas de Lucía",
+  style: "Fresco y frutado",
+  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  availableAt: [],
+  tag: "Costa/Mar",
+  image: savuMalbecRosadoPhoto,
+},
+{
+  id: "v21",
+  name: "Savu Syrah",
+  varietal: "Syrah",
+  winery: "Viñas de Lucía",
+  style: "Suave y especiado",
+  description: "Syrah patagónico de zona marítima, con aromas de fruta negra, moras y un toque especiado. En boca es suave y delicado, con correcto equilibrio y cuerpo ligero.",
+  availableAt: [],
+  tag: "Costa/Mar",
+  image: savuSyrahPhoto,
+},
+{
+  id: "v22",
+  name: "Savu Cabernet Sauvignon",
+  varietal: "Cabernet Sauvignon",
+  winery: "Viñas de Lucía",
+  style: "Estructurado y herbáceo",
+  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  availableAt: [],
+  tag: "Costa/Mar",
+  image: savuCabernetSauvignonPhoto,
+},
+{
+  id: "v23",
+  name: "Tinto (Malbec y Cabernet Sauvignon)",
+  varietal: "Malbec y Cabernet Sauvignon",
+  winery: "Familia Herrero",
+  style: "Corte con cuerpo",
+  description: "Corte de Malbec y Cabernet Sauvignon que combina la fruta madura y untuosidad del Malbec con la estructura y frescura herbácea del Cabernet. Tinto de cuerpo medio a alto y buena complejidad.",
+  availableAt: [],
+  tag: "Costa/Mar",
+  image: familiaHerreroTintoPhoto,
+},
+{
+  id: "v24",
+  name: "Blanco (Chenin)",
+  varietal: "Chenin Blanc",
+  winery: "Familia Herrero",
+  style: "Fresco y mineral",
+  description: "Blanco versátil de acidez marcada, con aromas a manzana verde, membrillo y flores blancas. Fresco y mineral, ideal para climas fríos como el patagónico.",
+  availableAt: [],
+  tag: "Costa/Mar",
+  image: familiaHerreroBlancoPhoto,
+},
+{
+  id: "v25",
+  name: "Don Amaro Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Don Amaro",
+  style: "Robusto e intenso",
+  description: "Vino artesanal y orgánico que rinde tributo al espíritu pionero de la familia Mañana, pionera en la olivicultura de San Antonio Oeste (marca Oleosan). Es el primer vino elaborado en la región. Aromas a frutos rojos maduros, especias sutiles y notas terrosas, con elegancia en boca y taninos suaves. La influencia de los vientos marítimos y el cambio de mareas le aporta gran concentración de polifenoles, dando un vino de cuerpo robusto y color intenso.",
+  availableAt: [],
+  tag: "Costa/Mar",
+  image: donAmaroMalbecPhoto,
+},
+{
+  id: "v26",
+  name: "Enclave Sur Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Enclave Sur",
+  style: "Delicado y elegante",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: enclaveSurPinotNoirPhoto,
+},
+{
+  id: "v27",
+  name: "Enclave Sur Rosado",
+  varietal: "Rosado",
+  winery: "Enclave Sur",
+  style: "Fresco y frutado",
+  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: enclaveSurRosadoPhoto,
+},
+{
+  id: "v28",
+  name: "Enclave Sur Chardonnay",
+  varietal: "Chardonnay",
+  winery: "Enclave Sur",
+  style: "Untuoso y cítrico",
+  description: "Blanco de cuerpo medio a alto, con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: enclaveSurChardonnayPhoto,
+},
+{
+  id: "v29",
+  name: "Enclave Sur Malbec",
+  varietal: "Malbec",
+  winery: "Enclave Sur",
+  style: "Untuoso e intenso",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: enclaveSurMalbecPhoto,
+},
+{
+  id: "v30",
+  name: "Enclave Sur Cabernet Sauvignon",
+  varietal: "Cabernet Sauvignon",
+  winery: "Enclave Sur",
+  style: "Estructurado y herbáceo",
+  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: enclaveSeleccionCabernetSauvignonPhoto,
+},
+{
+  id: "v31",
+  name: "Enclave Sur Malbec Blend",
+  varietal: "Malbec Blend",
+  winery: "Enclave Sur",
+  style: "Corte con estructura",
+  description: "Corte con base de Malbec, que aporta fruta madura y untuosidad, combinado con otras variedades para sumar estructura y complejidad. Tinto de cuerpo medio a alto.",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: enclaveSurReservaMalbecBlendPhoto,
+},
+{
+  id: "v32",
+  name: "Enclave Sur Reserva Malbec",
+  varietal: "Malbec",
+  winery: "Enclave Sur",
+  style: "Untuoso e intenso",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: [],
+  tag: "Reserva",
+  image: enclaveSurReservaMalbecPhoto,
+},
+{
+  id: "v33",
+  name: "Enclave Sur Reserva Cabernet Franc",
+  varietal: "Cabernet Franc",
+  winery: "Enclave Sur",
+  style: "Fresco y herbáceo",
+  description: "Tinto de perfil más fresco y herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un carácter vegetal elegante. Taninos suaves y acidez viva.",
+  availableAt: [],
+  tag: "Reserva",
+  image: enclaveSurReservaCabernetFrancPhoto,
+},
+{
+  id: "v34",
+  name: "Enclave Sur Cabernet Sauvignon Reserva",
+  varietal: "Cabernet Sauvignon",
+  winery: "Enclave Sur",
+  style: "Estructurado y herbáceo",
+  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  availableAt: [],
+  tag: "Reserva",
+  image: enclaveSurReservaCabernetSauvignonPhoto,
+},
+{
+  id: "v35",
+  name: "Enclave Sur Reserva Merlot",
+  varietal: "Merlot",
+  winery: "Enclave Sur",
+  style: "Suave y aterciopelado",
+  description: "Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.",
+  availableAt: [],
+  tag: "Reserva",
+  image: enclaveSurReservaMerlotPhoto,
+},
+{
+  id: "v36",
+  name: "Trina Blend de Malbec",
+  varietal: "Blend de Malbec",
+  winery: "Bodega Trina",
+  style: "Vino insignia",
+  description: "Vino insignia de la bodega, resultado del corte de tres clones de Malbec provenientes de los tres suelos distintos de la chacra (arcilloso, calcáreo y arenoso).",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: trinaBlendDeMalbecPhoto,
+},
+{
+  id: "v37",
+  name: "Trina Naranjo de Criollas",
+  varietal: "Naranjo (uvas blancas criollas)",
+  winery: "Bodega Trina",
+  style: "Ámbar y tánico",
+  description: "Vino \"naranjo\", elaborado con uvas blancas maceradas con su piel, lo que le da un color ámbar/naranja y mayor estructura tánica que un blanco tradicional. Aromas a fruta madura, cáscara de naranja y notas herbales.",
+  availableAt: [],
+  tag: "Valle Medio",
+  image: trinaNaranjoDeCriollasPhoto,
+},
+{
+  id: "v38",
+  name: "Trina Reserva de Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Trina",
+  style: "Decantación natural",
+  description: "Vino de dos inviernos, de decantación natural de dos años, sin paso por madera. Malbec de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: [],
+  tag: "Reserva",
+  image: trinaReservaDeMalbecPhoto,
+},
+{
+  id: "v39",
+  name: "De Bernardi Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Familia De Bernardi",
+  style: "Delicado y terroso",
+  description: "Vino tinto delicado, elegante y sutil, con notas de frutos rojos, flores, tierra húmeda y tostados, que expresa la elegancia y complejidad del terroir patagónico. No pasa por madera. 95 puntos Tim Atkin (2023).",
+  availableAt: [],
+  tag: "Cordillera",
+  image: deBernardiPinotNoirPhoto,
+},
+{
+  id: "v40",
+  name: "De Bernardi Gewürztraminer",
+  varietal: "Gewürztraminer",
+  winery: "Familia De Bernardi",
+  style: "Exótico y perfumado",
+  description: "Vino blanco exótico, perfumado y complejo, con notas de lichi, rosas, jazmín y especias.",
+  availableAt: [],
+  tag: "Cordillera",
+  image: deBernardiGewurztraminerPhoto,
+},
+{
+  id: "v41",
+  name: "De Bernardi Merlot",
+  varietal: "Merlot",
+  winery: "Familia De Bernardi",
+  style: "Intenso y estructurado",
+  description: "Vino tinto intenso, estructurado y complejo, con notas de frutos negros, chocolate, café y vainilla. Pasa dos años por barricas de primer uso de roble francés. 92 puntos Tim Atkin.",
+  availableAt: [],
+  tag: "Cordillera",
+  image: deBernardiMerlotPhoto,
+},
+{
+  id: "v42",
+  name: "De Bernardi Merlot Rosé",
+  varietal: "Merlot Rosé",
+  winery: "Familia De Bernardi",
+  style: "Fresco y aromático",
+  description: "Fresco y aromático, con esencias de frutos rojos, especias y hierbas. Es la versión de Merlot que no pasa por madera: más frutado y ligero que el tinto.",
+  availableAt: [],
+  tag: "Cordillera",
+  image: deBernardiMerlotRosePhoto,
+},
+{
+  id: "v43",
+  name: "Araucana Río de los Ciervos Malbec Rosé",
+  varietal: "Malbec Rosé",
+  winery: "Ribera del Cuarzo",
+  style: "Fresco y frutado",
+  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: araucanaRioDeLosCiervosMalbecRosePhoto,
+},
+{
+  id: "v44",
+  name: "Araucana Río de los Ciervos Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Ribera del Cuarzo",
+  style: "Delicado y elegante",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: araucanaRioDeLosCiervosPinotNoirPhoto,
+},
+{
+  id: "v45",
+  name: "Araucana Río de los Ciervos Malbec",
+  varietal: "Malbec",
+  winery: "Ribera del Cuarzo",
+  style: "Complejo y mineral",
+  description: "Viñedos de más de 40 años de antigüedad en los suelos clásicos del Alto Valle. Tintos redondos, complejos y equilibrados, con taninos elegantes. Aromas a frutos negros con sutiles notas ahumadas y mentoladas, carácter frutal combinado con notas minerales y final persistente. 95% Malbec, 5% Petit Verdot, crianza en roble francés.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: araucanaRioDeLosCiervosMalbecPhoto,
+},
+{
+  id: "v46",
+  name: "Araucana Azul",
+  varietal: "Malbec, Merlot y Petit Verdot",
+  winery: "Ribera del Cuarzo",
+  style: "Blend elegante",
+  description: "Blend elegante y exclusivo de Malbec, Merlot y Petit Verdot.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: araucanaAzulPhoto,
+},
+{
+  id: "v47",
+  name: "Clásico Patinas Blancas",
+  varietal: "Blanco",
+  winery: "Ribera del Cuarzo",
+  style: "Fresco y cítrico",
+  description: "Blanco fresco de la Patagonia, con acidez natural marcada por el clima frío y ventoso de la región. Notas cítricas y florales, ideal para acompañar mariscos y pescados.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: clasicoPatinasBlancasPhoto,
+},
+{
+  id: "v48",
+  name: "Clásico Merlot Rosé",
+  varietal: "Merlot Rosé",
+  winery: "Ribera del Cuarzo",
+  style: "Suave y liviano",
+  description: "Rosado elaborado a partir de Merlot, de color salmón vivo, con aromas a frutos rojos frescos y un perfil suave y liviano en boca.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: clasicoMerlotRosePhoto,
+},
+{
+  id: "v49",
+  name: "Clásico Merlot",
+  varietal: "Merlot",
+  winery: "Ribera del Cuarzo",
+  style: "Estructurado y expresivo",
+  description: "100% Merlot de viñedos en ambas márgenes del Río Negro. Perfil estructurado y expresivo, con notas a frutos negros maduros, cassis y sutiles toques especiados. Cuerpo medio, taninos suaves y final redondo.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: clasicoMerlotPhoto,
+},
+{
+  id: "v50",
+  name: "Clásico Malbec",
+  varietal: "Malbec",
+  winery: "Ribera del Cuarzo",
+  style: "Fresco y con sentido de lugar",
+  description: "Uvas de 8 viñedos antiguos de ambas márgenes del Río Negro. Busca mostrar la diversidad de la zona clásica del valle: frescura, elegancia y sentido de lugar.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: clasicoMalbecPhoto,
+},
+{
+  id: "v51",
+  name: "Parcela Única",
+  varietal: "Malbec, Merlot y Petit Verdot",
+  winery: "Ribera del Cuarzo",
+  style: "Composición única de suelo",
+  description: "Blend de 48% Malbec, 40% Merlot, 12% Petit Verdot. Suelos de origen eólico, enriquecidos con ceniza volcánica y potasio, con alto contenido de carbonato de calcio — una composición química poco común incluso a nivel mundial.",
+  availableAt: [],
+  tag: "Línea Sur",
+  image: parcelaUnicaPhoto,
+},
+{
+  id: "v52",
+  name: "Miras Joven Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Miras",
+  style: "Joven y frutado",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Joven",
+  image: mirasJovemMalbecPhoto,
+},
+{
+  id: "v53",
+  name: "Gran Reserva Malbec",
+  varietal: "Malbec",
+  winery: "Humberto Canale",
+  style: "Estructurado y de guarda",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Reserva",
+  image: humbertoCanaleGranReservaMalbecPhoto,
+},
+{
+  id: "v54",
+  name: "Wapisa Sauvignon Blanc",
+  varietal: "Sauvignon Blanc",
+  winery: "Wapisa",
+  style: "Fresco y herbáceo",
+  description: "Blanco de aromas frescos y herbáceos, con notas cítricas, hierba recién cortada y en ocasiones pomelo. En boca es seco, de acidez marcada y cuerpo liviano, ideal como aperitivo.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Atlántico",
+  image: wapisaSauvignonBlancPhoto,
+},
+{
+  id: "v55",
+  name: "Gran Calfuen Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Videla Dorna",
+  style: "Intenso y untuoso",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Valle Medio",
+  image: videlaDornaGranCalfuenMalbecPhoto,
+},
+{
+  id: "v56",
+  name: "Aniello 006 Chardonnay",
+  varietal: "Chardonnay",
+  winery: "Bodega Finca Aniello",
+  style: "Riverside Estate",
+  description: "Blanco de cuerpo medio a alto, con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "006",
+  image: anielo006ChardonnayPhoto,
+},
+{
+  id: "v57",
+  name: "Aniello 006 Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Finca Aniello",
+  style: "Riverside Estate",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "006",
+  image: anielo006MalbecPhoto,
+},
+{
+  id: "v58",
+  name: "Aniello Soil Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Bodega Finca Aniello",
+  style: "Mineral y de suelo",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Soil",
+  image: anieloSoilPinotNoirPhoto,
+},
+{
+  id: "v59",
+  name: "Aniello Soil Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Finca Aniello",
+  style: "Mineral y de suelo",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Soil",
+  image: anieloSoilMalbecPhoto,
+},
+{
+  id: "v60",
+  name: "Aniello Soil Merlot",
+  varietal: "Merlot",
+  winery: "Bodega Finca Aniello",
+  style: "Mineral y de suelo",
+  description: "Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Soil",
+  image: anieloSoilMerlotPhoto,
+},
+{
+  id: "v61",
+  name: "Aniello Soil Blanco de Pinot Noir",
+  varietal: "Pinot Noir (vinificado en blanco)",
+  winery: "Bodega Finca Aniello",
+  style: "Mineral y de suelo",
+  description: "Blanco elaborado a partir de uva tinta Pinot Noir vinificada sin contacto con los hollejos, de color pálido y perfil delicado. Aromas a frutas blancas y cítricos, con la textura y sutileza características de la variedad.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Soil",
+  image: anieloSoilBlancoPinotNoirPhoto,
+},
+{
+  id: "v62",
+  name: "Aniello Viña 1932 Trousseau",
+  varietal: "Trousseau",
+  winery: "Bodega Finca Aniello",
+  style: "Viñedo histórico",
+  description: "Tinto ligero de color rubí pálido, con aromas a frutos rojos frescos, especias suaves y un carácter terroso. Taninos delicados y acidez marcada, de estilo cercano al Pinot Noir.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Viña 1932",
+  image: anieloVina1932TrousseauPhoto,
+},
+{
+  id: "v63",
+  name: "Miras Crianza Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Miras",
+  style: "Con paso por madera",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Crianza",
+  image: mirasCrianzaMalbecPhoto,
+},
+{
+  id: "v64",
+  name: "Miras Crianza Merlot",
+  varietal: "Merlot",
+  winery: "Bodega Miras",
+  style: "Con paso por madera",
+  description: "Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Crianza",
+  image: mirasCrianzaMerlotPhoto,
+},
+{
+  id: "v65",
+  name: "Familia Miras Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Miras",
+  style: "Selección de familia",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Familia Miras",
+  image: familiaMirasMalbecPhoto,
+},
+{
+  id: "v66",
+  name: "Familia Miras Semillón",
+  varietal: "Semillón",
+  winery: "Bodega Miras",
+  style: "Selección de familia",
+  description: "Blanco de cuerpo untuoso, con aromas a cera de abeja, frutos secos y flores blancas, y un fondo cítrico. Buena acidez y textura suave en boca; gana complejidad y notas a miel con el tiempo en botella.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Familia Miras",
+  image: familiaMirasSemillonPhoto,
+},
+{
+  id: "v67",
+  name: "Miras Joven Chardonnay",
+  varietal: "Chardonnay",
+  winery: "Bodega Miras",
+  style: "Fresco y accesible",
+  description: "Blanco de cuerpo medio a alto, con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Joven",
+  image: mirasJovemChardonnayPhoto,
+},
+{
+  id: "v68",
+  name: "Miras Joven Merlot",
+  varietal: "Merlot",
+  winery: "Bodega Miras",
+  style: "Fresco y accesible",
+  description: "Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Joven",
+  image: mirasJovemMerlotPhoto,
+},
+{
+  id: "v69",
+  name: "Miras Naranjo Curioso",
+  varietal: "Naranjo (uva blanca macerada)",
+  winery: "Bodega Miras",
+  style: "Experimental y curioso",
+  description: "Vino \"naranjo\", elaborado con uvas blancas maceradas con su piel, lo que le da un color ámbar/naranja y mayor estructura tánica que un blanco tradicional. Aromas a fruta madura, cáscara de naranja y notas herbales.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Curiosos",
+  image: mirasNaranjoCuriososPhoto,
+},
+{
+  id: "v70",
+  name: "Miras Joven Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Bodega Miras",
+  style: "Fresco y accesible",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Joven",
+  image: mirasJovemPinotNoirPhoto,
+},
+{
+  id: "v71",
+  name: "Miras Joven Rosé",
+  varietal: "Rosado",
+  winery: "Bodega Miras",
+  style: "Fresco y accesible",
+  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Joven",
+  image: mirasJovemRosePhoto,
+},
+{
+  id: "v72",
+  name: "Miras Joven Semillón",
+  varietal: "Semillón",
+  winery: "Bodega Miras",
+  style: "Fresco y accesible",
+  description: "Blanco de cuerpo untuoso, con aromas a cera de abeja, frutos secos y flores blancas, y un fondo cítrico. Buena acidez y textura suave en boca; gana complejidad y notas a miel con el tiempo en botella.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Joven",
+  image: mirasJovemSemillonPhoto,
+},
+{
+  id: "v73",
+  name: "Miras Trosseau Curioso",
+  varietal: "Trousseau",
+  winery: "Bodega Miras",
+  style: "Experimental y curioso",
+  description: "Tinto ligero de color rubí pálido, con aromas a frutos rojos frescos, especias suaves y un carácter terroso. Taninos delicados y acidez marcada, de estilo cercano al Pinot Noir.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Curiosos",
+  image: mirasTrosseauCuriosoPhoto,
+},
+{
+  id: "v74",
+  name: "Miras Liviano Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Miras",
+  style: "Ligero y fácil de tomar",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Liviano",
+  image: mirasLivianoMalbecPhoto,
+},
+{
+  id: "v75",
+  name: "Barzi Canale Blend de Familia",
+  varietal: "Blend",
+  winery: "Humberto Canale",
+  style: "Elegante de familia",
+  description: "Corte de varias variedades que combina la fruta y estructura de cada una, buscando equilibrio, complejidad y un perfil de cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Barzi Canale",
+  image: barziCanaleBlendDeFamiliaPhoto,
+},
+{
+  id: "v76",
+  name: "Barzi Canale Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Humberto Canale",
+  style: "Elegante de familia",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Barzi Canale",
+  image: barziCanalePinotNoirPhoto,
+},
+{
+  id: "v77",
+  name: "Humberto Canale Blush",
+  varietal: "Rosado",
+  winery: "Humberto Canale",
+  style: "Fresco y liviano",
+  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Blush",
+  image: humbertoCanaleBlushPhoto,
+},
+{
+  id: "v78",
+  name: "Estate Cabernet Franc",
+  varietal: "Cabernet Franc",
+  winery: "Humberto Canale",
+  style: "Accesible y frutado",
+  description: "Tinto de perfil más fresco y herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un carácter vegetal elegante. Taninos suaves y acidez viva.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Estate",
+  image: estateCabernetFrancPhoto,
+},
+{
+  id: "v79",
+  name: "Estate Cabernet Sauvignon",
+  varietal: "Cabernet Sauvignon",
+  winery: "Humberto Canale",
+  style: "Accesible y frutado",
+  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Estate",
+  image: estateCabernetSauvignonPhoto,
+},
+{
+  id: "v80",
+  name: "Estate Malbec",
+  varietal: "Malbec",
+  winery: "Humberto Canale",
+  style: "Accesible y frutado",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Estate",
+  image: estateMalbecPhoto,
+},
+{
+  id: "v81",
+  name: "Estate Merlot",
+  varietal: "Merlot",
+  winery: "Humberto Canale",
+  style: "Accesible y frutado",
+  description: "Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Estate",
+  image: estateMerlotPhoto,
+},
+{
+  id: "v82",
+  name: "Estate Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Humberto Canale",
+  style: "Accesible y frutado",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Estate",
+  image: estatePinotNoirPhoto,
+},
+{
+  id: "v83",
+  name: "Estate Sauvignon Blanc",
+  varietal: "Sauvignon Blanc",
+  winery: "Humberto Canale",
+  style: "Accesible y frutado",
+  description: "Blanco de aromas frescos y herbáceos, con notas cítricas, hierba recién cortada y en ocasiones pomelo. En boca es seco, de acidez marcada y cuerpo liviano, ideal como aperitivo.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Estate",
+  image: estateSauvignonBlancPhoto,
+},
+{
+  id: "v84",
+  name: "Estate Sauvignon Gris",
+  varietal: "Sauvignon Gris",
+  winery: "Humberto Canale",
+  style: "Accesible y frutado",
+  description: "Blanco de perfil aromático intermedio entre el Sauvignon Blanc y el Pinot Gris, con notas a durazno, flores blancas y un toque mineral. Cuerpo medio y acidez fresca.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Estate",
+  image: estateSauvignonGrisPhoto,
+},
+{
+  id: "v85",
+  name: "Gran Reserva Cabernet Franc",
+  varietal: "Cabernet Franc",
+  winery: "Humberto Canale",
+  style: "Estructurado y de guarda",
+  description: "Tinto de perfil más fresco y herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un carácter vegetal elegante. Taninos suaves y acidez viva.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Reserva",
+  image: granReservaCabernetFrancPhoto,
+},
+{
+  id: "v86",
+  name: "Gran Reserva Merlot",
+  varietal: "Merlot",
+  winery: "Humberto Canale",
+  style: "Estructurado y de guarda",
+  description: "Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Reserva",
+  image: granReservaMerlotPhoto,
+},
+{
+  id: "v87",
+  name: "Gran Reserva Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Humberto Canale",
+  style: "Estructurado y de guarda",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Reserva",
+  image: granReservaPinotNoirPhoto,
+},
+{
+  id: "v88",
+  name: "Intimo Cabernet Sauvignon",
+  varietal: "Cabernet Sauvignon",
+  winery: "Humberto Canale",
+  style: "Boutique y concentrado",
+  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Intimo",
+  image: intimoCabernetSauvignonPhoto,
+},
+{
+  id: "v89",
+  name: "Intimo Malbec Merlot Cabernet",
+  varietal: "Malbec, Merlot y Cabernet Sauvignon",
+  winery: "Humberto Canale",
+  style: "Boutique y concentrado",
+  description: "Corte de varias variedades que combina la fruta y estructura de cada una, buscando equilibrio, complejidad y un perfil de cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Intimo",
+  image: intimoMalbecMerlotCabernetPhoto,
+},
+{
+  id: "v90",
+  name: "Intimo Malbec",
+  varietal: "Malbec",
+  winery: "Humberto Canale",
+  style: "Boutique y concentrado",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Intimo",
+  image: intimoMalbecPhoto,
+},
+{
+  id: "v91",
+  name: "Intimo Sauvignon Semillón",
+  varietal: "Sauvignon Blanc y Semillón",
+  winery: "Humberto Canale",
+  style: "Boutique y concentrado",
+  description: "Corte de varias variedades que combina la fruta y estructura de cada una, buscando equilibrio, complejidad y un perfil de cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Intimo",
+  image: intimoSauvignonSemillonPhoto,
+},
+{
+  id: "v92",
+  name: "Old Vineyard Blend",
+  varietal: "Blend",
+  winery: "Humberto Canale",
+  style: "Carácter de viñedo antiguo",
+  description: "Corte de varias variedades que combina la fruta y estructura de cada una, buscando equilibrio, complejidad y un perfil de cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Viñedo antiguo",
+  image: oldVineyardBlendPhoto,
+},
+{
+  id: "v93",
+  name: "Old Vineyard Malbec",
+  varietal: "Malbec",
+  winery: "Humberto Canale",
+  style: "Carácter de viñedo antiguo",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Viñedo antiguo",
+  image: oldVineyardMalbecPhoto,
+},
+{
+  id: "v94",
+  name: "Old Vineyard Riesling",
+  varietal: "Riesling",
+  winery: "Humberto Canale",
+  style: "Carácter de viñedo antiguo",
+  description: "Blanco de acidez marcada y aromas florales, con notas cítricas, de durazno y un carácter mineral distintivo. Seco o semiseco según el estilo, ideal para climas fríos como el patagónico.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Viñedo antiguo",
+  image: oldVineyardRieslingPhoto,
+},
+{
+  id: "v95",
+  name: "Old Vineyard Semillón",
+  varietal: "Semillón",
+  winery: "Humberto Canale",
+  style: "Carácter de viñedo antiguo",
+  description: "Blanco de cuerpo untuoso, con aromas a cera de abeja, frutos secos y flores blancas, y un fondo cítrico. Buena acidez y textura suave en boca; gana complejidad y notas a miel con el tiempo en botella.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Viñedo antiguo",
+  image: oldVineyardSemillonPhoto,
+},
+{
+  id: "v96",
+  name: "Humberto Canale Rosé Noir",
+  varietal: "Pinot Noir (vinificado en rosado)",
+  winery: "Humberto Canale",
+  style: "Fresco y liviano",
+  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Rosé Noir",
+  image: humbertoCanaleRoseNoirPhoto,
+},
+{
+  id: "v97",
+  name: "Calfulen Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Videla Dorna",
+  style: "Fresco del Valle Medio",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Valle Medio",
+  image: calfulenMalbecPhoto,
+},
+{
+  id: "v98",
+  name: "Calfulen Merlot",
+  varietal: "Merlot",
+  winery: "Bodega Videla Dorna",
+  style: "Fresco del Valle Medio",
+  description: "Tinto suave y aterciopelado, con aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de perfil más amable que otros tintos de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Valle Medio",
+  image: calfulenMerlotPhoto,
+},
+{
+  id: "v99",
+  name: "Calfulen Riesling",
+  varietal: "Riesling",
+  winery: "Bodega Videla Dorna",
+  style: "Fresco del Valle Medio",
+  description: "Blanco de acidez marcada y aromas florales, con notas cítricas, de durazno y un carácter mineral distintivo. Seco o semiseco según el estilo, ideal para climas fríos como el patagónico.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Valle Medio",
+  image: calfulenRieslingPhoto,
+},
+{
+  id: "v100",
+  name: "Calfulen Torrontés",
+  varietal: "Torrontés",
+  winery: "Bodega Videla Dorna",
+  style: "Fresco del Valle Medio",
+  description: "Blanco muy aromático, con notas florales intensas (jazmín, geranio) y de frutas frescas como durazno y uva moscatel. Sorprende por ser seco en boca pese a lo perfumado, con buena acidez.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Valle Medio",
+  image: calfulenTorrontesPhoto,
+},
+{
+  id: "v101",
+  name: "Maroma Blend",
+  varietal: "Blend",
+  winery: "Bodega Videla Dorna",
+  style: "Suave y versátil",
+  description: "Corte de varias variedades que combina la fruta y estructura de cada una, buscando equilibrio, complejidad y un perfil de cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Maroma",
+  image: maromaBlendPhoto,
+},
+{
+  id: "v102",
+  name: "Maroma Rosado",
+  varietal: "Rosado",
+  winery: "Bodega Videla Dorna",
+  style: "Suave y versátil",
+  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Maroma",
+  image: maromaRosadoPhoto,
+},
+{
+  id: "v103",
+  name: "Maroma Sauvignon Blanc",
+  varietal: "Sauvignon Blanc",
+  winery: "Bodega Videla Dorna",
+  style: "Suave y versátil",
+  description: "Blanco de aromas frescos y herbáceos, con notas cítricas, hierba recién cortada y en ocasiones pomelo. En boca es seco, de acidez marcada y cuerpo liviano, ideal como aperitivo.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Maroma",
+  image: maromaSauvignonBlancPhoto,
+},
 ].sort((a, b) => {
   const priority = "Antigua Bodega Patagónica";
   const aPriority = a.winery === priority;
   const bPriority = b.winery === priority;
   if (aPriority && !bPriority) return -1;
   if (!aPriority && bPriority) return 1;
+  return 0;
+});
+
+// Datos reales de contacto/ubicación; el resto de los campos son placeholders
+// hasta confirmar catálogo, horarios y beneficios con cada comercio.
+const SHOPS: Shop[] = [
+  {
+    id: "s1",
+    name: "Vinoteca Vinopolitan",
+    city: "Viedma",
+    address: "Rivadavia 890",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Horario a confirmar",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s2",
+    name: "Vinoteca Río Tinto",
+    city: "Viedma",
+    address: "San Martín 420",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Horario a confirmar",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s3",
+    name: "Vinoteca Piquillín",
+    city: "Viedma",
+    address: "Colón 508",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Horario a confirmar",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s4",
+    name: "Vinoteca Olivas y Sabores",
+    city: "Viedma",
+    address: "Moreno 973",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Horario a confirmar",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+].sort((a, b) => {
+  const priority = "Vinoteca Olivas y Sabores";
+  if (a.name === priority) return -1;
+  if (b.name === priority) return 1;
   return 0;
 });
 
@@ -690,7 +1970,7 @@ export default function App() {
   const [tab, setTab] = useState<TabKey>("home");
   const [detail, setDetail] = useState<DetailState>(null);
   const [favorites, setFavorites] = useState<FavoriteItem[]>([
-    { id: "v1", name: "Miras Pinot Noir", kind: "wine" },
+    { id: "v1", name: "Miras Pinot Noir Salvaje Curioso", kind: "wine" },
   ]);
   const [search, setSearch] = useState("");
   const [showSplash, setShowSplash] = useState(true);
@@ -907,6 +2187,10 @@ export default function App() {
                   wine={detailView as Wine}
                   onBack={closeDetail}
                   onOpenShop={openShop}
+                  onOpenWine={(name) => {
+                    const found = WINES.find((w) => w.name === name);
+                    if (found) openWine(found.id);
+                  }}
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
                   fromShop={detail.fromShop}
@@ -1901,7 +3185,7 @@ function HomeScreen({
 }) {
   const handleEventClick = (place: string) => {
     if (place === "Bodega Miras") return onOpenWinery("w1");
-    if (place === "Bodega Aniello") return onOpenWinery("w2");
+    if (place === "Bodega Finca Aniello") return onOpenWinery("w2");
     if (place === "Vinoteca Vinopolitan") return onOpenShop("s1");
     onSetTab("agenda");
   };
@@ -2383,7 +3667,7 @@ function RegionsScreen({
               <div style={styles.itemSub}>
                 {w.city} · {REGION_META[w.region].title}
               </div>
-              <div style={styles.placeText}>{w.description}</div>
+              <div style={styles.placeText}>{w.shortDescription}</div>
             </div>
 
             <ChevronRightIcon />
@@ -2525,6 +3809,40 @@ function WineThumbRow({
         {extra}
       </div>
       <ChevronRightIcon />
+    </div>
+  );
+}
+
+function WineGridCard({
+  image,
+  title,
+  subtitle,
+  tag,
+  onClick,
+}: {
+  image: string;
+  title: string;
+  subtitle: string;
+  tag?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <div style={styles.wineGridCard} onClick={onClick}>
+      <div
+        style={{
+          ...styles.wineGridCardPhoto,
+          backgroundImage: `url('${image}')`,
+        }}
+      />
+      <div style={styles.wineGridCardBody}>
+        <div style={styles.wineGridCardTitle}>{title}</div>
+        <div style={styles.wineGridCardSubtitle}>{subtitle}</div>
+        {tag && (
+          <div style={{ marginTop: 6 }}>
+            <Badge kind="neutral">{tag}</Badge>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -2770,6 +4088,7 @@ function WineDetail({
   wine,
   onBack,
   onOpenShop,
+  onOpenWine,
   toggleFavorite,
   isFavorite,
   fromShop,
@@ -2778,6 +4097,7 @@ function WineDetail({
   wine: Wine;
   onBack: () => void;
   onOpenShop: (id: string) => void;
+  onOpenWine: (name: string) => void;
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
   fromShop?: boolean;
@@ -2838,7 +4158,7 @@ function WineDetail({
             <InfoBox label="Origen" value="Río Negro" />
           </div>
 
-          <div style={styles.placeText}>{wine.note}</div>
+          <div style={styles.placeText}>{wine.description || wine.note}</div>
         </div>
       </div>
 
@@ -2869,13 +4189,15 @@ function WineDetail({
       )}
 
       <Block title="También te pueden gustar">
-        <div style={styles.stack12}>
+        <div style={styles.wineCardGrid}>
           {similar.map((w) => (
-            <ResultRow
+            <WineGridCard
               key={w.id}
+              image={w.image}
               title={w.name}
-              subtitle={`${w.winery} · ${w.varietal}`}
+              subtitle={w.varietal}
               tag={w.tag}
+              onClick={() => onOpenWine(w.name)}
             />
           ))}
         </div>
@@ -2904,6 +4226,17 @@ function WineryDetail({
         .filter((v): v is string => Boolean(v))
     )
   );
+
+  const contactInfo = (
+    [
+      { label: "Dirección", value: winery.address },
+      { label: "Horario / visitas", value: winery.visitNotes || winery.hours },
+      { label: "WhatsApp", value: winery.whatsapp },
+      { label: "Email", value: winery.email },
+      { label: "Instagram", value: winery.instagram },
+      { label: "Sitio web", value: winery.website },
+    ] as Array<{ label: string; value?: string }>
+  ).filter((item): item is { label: string; value: string } => Boolean(item.value));
 
   return (
     <div style={styles.stack22}>
@@ -2949,6 +4282,16 @@ function WineryDetail({
         </div>
       </div>
 
+      {contactInfo.length > 0 && (
+        <Block title="Contacto y visitas">
+          <div style={styles.grid2}>
+            {contactInfo.map((item) => (
+              <InfoBox key={item.label} label={item.label} value={item.value} />
+            ))}
+          </div>
+        </Block>
+      )}
+
       {varietals.length > 0 && (
         <Block title="Varietales">
           <div style={styles.chipsRow}>
@@ -2962,11 +4305,11 @@ function WineryDetail({
       )}
 
       <SectionTitle title="Vinos destacados" action="Ver todos" />
-      <div style={styles.stack12}>
+      <div style={styles.wineCardGrid}>
         {winery.wines.map((w) => {
           const wineData = WINES.find((x) => x.name === w);
           return (
-            <WineThumbRow
+            <WineGridCard
               key={w}
               image={wineData?.image || ""}
               title={w}
@@ -3036,22 +4379,18 @@ function ShopDetail({
       <div style={styles.detailImageCard}>
         <div
           style={{
-            ...styles.detailImageTop,
-            backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.58)), url('${shopHeaderImage(
-              shop.name
-            )}')`,
+            ...styles.shopLogoPanel,
+            backgroundImage: `url('${shopHeaderImage(shop.name)}')`,
           }}
-        >
-          <div>
-            <div style={styles.imageCardTitle}>{shop.name}</div>
-            <div style={styles.imageCardSub}>
-              {shop.city} · {shop.distance}
-            </div>
-          </div>
-        </div>
+        />
 
         <div style={styles.imageCardBody}>
-          <div style={styles.rowGap8}>
+          <div style={styles.sectionTitle}>{shop.name}</div>
+          <div style={styles.itemSub}>
+            {shop.city} · {shop.distance}
+          </div>
+
+          <div style={{ ...styles.rowGap8, marginTop: 10 }}>
             <Badge kind={shop.openNow ? "open" : "closed"}>
               {shop.openNow ? "Abierta ahora" : "Cerrada ahora"}
             </Badge>
@@ -3077,15 +4416,19 @@ function ShopDetail({
       </div>
 
       <Block title="Vinos disponibles">
-        <div style={styles.stack12}>
-          {shop.wines.map((w) => (
-            <ResultRow
-              key={w}
-              title={w}
-              subtitle={`${WINES.find((x) => x.name === w)?.winery || ""}`}
-              onClick={() => onOpenWine(w)}
-            />
-          ))}
+        <div style={styles.wineCardGrid}>
+          {shop.wines.map((w) => {
+            const wineData = WINES.find((x) => x.name === w);
+            return (
+              <WineGridCard
+                key={w}
+                image={wineData?.image || ""}
+                title={w}
+                subtitle={wineData?.varietal || ""}
+                onClick={() => onOpenWine(w)}
+              />
+            );
+          })}
         </div>
       </Block>
     </div>
@@ -4483,6 +5826,14 @@ wineVisualTag: {
     display: "flex",
     alignItems: "end",
   },
+  shopLogoPanel: {
+    height: 140,
+    background: theme.cream,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    borderBottom: `1px solid ${theme.line}`,
+  },
   profileHeroCard: {
     background: `linear-gradient(135deg, ${theme.wineDark}, ${theme.wine})`,
     border: "1px solid rgba(108,21,39,0.35)",
@@ -4581,6 +5932,44 @@ wineVisualTag: {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     flexShrink: 0,
+  },
+  wineCardGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 10,
+  },
+  wineGridCard: {
+    background: theme.paper,
+    border: `1px solid ${theme.line}`,
+    borderRadius: 12,
+    overflow: "hidden",
+    cursor: "pointer",
+  },
+  wineGridCardPhoto: {
+    height: 136,
+    background: theme.cream,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  },
+  wineGridCardBody: {
+    padding: 10,
+  },
+  wineGridCardTitle: {
+    fontFamily: '"Lora", serif',
+    fontWeight: 700,
+    color: theme.text,
+    fontSize: 13,
+    lineHeight: 1.3,
+    display: "-webkit-box",
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+  },
+  wineGridCardSubtitle: {
+    marginTop: 4,
+    color: theme.subtext,
+    fontSize: 11,
   },
   bottomNavWrap: {
     padding: 14,

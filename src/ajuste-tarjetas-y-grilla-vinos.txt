@@ -1,0 +1,87 @@
+INSTRUCCIONES PARA CLAUDE CODE
+Proyecto: Vinos de Río Negro
+Dos cambios de diseño en la pantalla Ruta del Vino, sin relación con carga de datos.
+
+Antes de tocar el código, presentame el plan completo y esperá mi aprobación.
+
+============================================
+CAMBIO 1: Descripciones cortas en la tarjeta de bodega
+============================================
+
+Hoy, la tarjeta de cada bodega en el listado de Ruta del Vino muestra la descripción
+larga completa (el mismo texto que después aparece en la ficha de detalle), lo que
+hace que algunas tarjetas queden muy altas y desparejas con el resto.
+
+Reemplazar el texto que se muestra en la TARJETA del listado (no en la ficha de
+detalle, ahí se mantiene el texto largo completo) por una descripción corta nueva,
+de una sola oración, para cada una de las 14 bodegas. Si el tipo de datos no tiene
+un campo para esto, agregar un campo nuevo (por ejemplo shortDescription) a cada
+bodega, y usar ese campo en la tarjeta del listado en vez del campo description
+largo. La ficha de detalle de la bodega sigue mostrando el description largo como
+hasta ahora, sin cambios ahí.
+
+Textos exactos a usar (uno por bodega):
+
+- Antigua Bodega Patagónica: "Bodega insignia de Cervantes, con las líneas Un y
+  Bellaco Malcriado."
+- Bodega Miras: "Bodega patagónica de Mainqué enfocada en Pinot Noir, con visitas y
+  degustaciones."
+- Bodega Finca Aniello: "Bodega familiar del Alto Valle con líneas 006 y Soil,
+  música en vivo y vinos muy buscados."
+- Humberto Canale: "Bodega histórica de Río Negro con etiquetas emblemáticas y
+  visitas guiadas."
+- Videla Dorna: "Bodega de Luis Beltrán en el Valle Medio, conocida por su línea
+  Calfulén."
+- Wapisa: "Bodega de San Javier con cava submarina en el Golfo San Matías."
+- Finca Fraschetti: "Bodega de El Bolsón, en la Comarca Andina, con vinos de clima
+  frío."
+- Viñas de Lucía: "Emprendimiento familiar de San Javier, sobre la costa, bajo la
+  marca Savu."
+- Familia Herrero: "Mini bodega familiar de Guardia Mitre, sobre la costa del Río
+  Negro."
+- Bodega Don Amaro: "Bodega y olivar de San Antonio Oeste, con recorrido por
+  viñedos y degustación."
+- Enclave Sur: "Bodega del Valle Medio, con vinos artesanales de Choele Choel."
+- Bodega Trina: "Bodega de Río Colorado, con restaurante propio y alojamiento
+  boutique junto al río."
+- Familia De Bernardi: "La bodega más austral de Río Negro, en El Bolsón, con Pinot
+  Noir premiado."
+- Ribera del Cuarzo: "Bodega boutique de Línea Sur, orientada a exportación, en la
+  barda de Valle Azul."
+
+============================================
+CAMBIO 2: Grilla de vinos estilo MercadoLibre
+============================================
+
+Hoy, dentro de la ficha de cada bodega, la lista de vinos se muestra como filas
+angostas (una debajo de la otra), con la foto de la botella chica pegada a la
+izquierda y el nombre al costado.
+
+Reemplazar esa lista por una GRILLA DE 2 COLUMNAS, estilo catálogo de producto
+(como MercadoLibre):
+
+- 2 columnas, mismo ancho cada una, con separación de ~10px entre tarjetas
+- Cada tarjeta de vino:
+  - Foto de la botella arriba, ocupando todo el ancho de la tarjeta, con fondo
+    crema (el mismo #FBF8F3 de fondo de la app, ya que las fotos de botella vienen
+    con ese fondo incorporado) — usar object-fit: contain para que la botella
+    entera se vea sin recortarse, centrada
+  - Alto del contenedor de la foto: ~130-140px
+  - Debajo de la foto, con un poco de padding: nombre del vino (texto principal,
+    ~12-13px, hasta 2 líneas con "..." si no entra) y el varietal debajo en gris
+    más chico (~11px)
+  - Borde sutil y esquinas redondeadas (12px), igual que el resto de las tarjetas
+    de la app
+  - Al tocar la tarjeta, sigue llevando al detalle del vino, mismo comportamiento
+    que ya existe hoy
+
+Este cambio aplica a la grilla de vinos dentro de CUALQUIER ficha de bodega (no es
+específico de una bodega en particular) — es un cambio de diseño del componente que
+ya se reutiliza para las 14 bodegas actuales y todas las que se carguen después.
+
+============================================
+FUERA DE ALCANCE
+============================================
+
+No tocar la carga de datos de bodegas ni vinos, ni ninguna otra pantalla
+(Inicio/Mapa/Agenda/Tienda). Estos dos cambios son solo de diseño/presentación.
