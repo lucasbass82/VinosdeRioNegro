@@ -69,6 +69,23 @@ import parcelaUnicaPhoto from "./assets/vinos/ribera-del-cuarzo-parcela-unica.jp
 import mirasJovemMalbecPhoto from "./assets/vinos/bodega-miras-jovem-malbec.jpg";
 import humbertoCanaleGranReservaMalbecPhoto from "./assets/vinos/bodega-humberto-canale-gran-reserva-malbec.jpg";
 import wapisaSauvignonBlancPhoto from "./assets/vinos/wapisa-sauvignon-blanc.jpg";
+import wapisaPinotNoirPhoto from "./assets/vinos/wapisa-pinot-noir.jpg";
+import wapisaCabernetSauvignonPhoto from "./assets/vinos/wapisa-cabernet-sauvignon.jpg";
+import wapisaMalbecPhoto from "./assets/vinos/wapisa-malbec.jpg";
+
+// Fotos reales de Antigua Bodega Patagónica (reemplazan las imágenes viejas /wines/antigua-*.png)
+import antiguaUnSauvignonBlancPhoto from "./assets/vinos/antigua-bodega-patagonica-un-sauvignon-blanc.jpg";
+import antiguaUnChardonnayPhoto from "./assets/vinos/antigua-bodega-patagonica-un-chardonnay.jpg";
+import antiguaUnRosePhoto from "./assets/vinos/antigua-bodega-patagonica-un-rose.jpg";
+import antiguaUnMalbecReservaPhoto from "./assets/vinos/antigua-bodega-patagonica-un-malbec-reserva.jpg";
+import antiguaUnPinotNoirReservaPhoto from "./assets/vinos/antigua-bodega-patagonica-un-pinot-noir-reserva.jpg";
+import antiguaUnGranCorteReservaPhoto from "./assets/vinos/antigua-bodega-patagonica-un-gran-corte-reserva.jpg";
+import antiguaUnMalbecGranReservaPhoto from "./assets/vinos/antigua-bodega-patagonica-un-malbec-gran-reserva.jpg";
+import antiguaUnMerlotGranReservaPhoto from "./assets/vinos/antigua-bodega-patagonica-un-merlot-gran-reserva.jpg";
+import antiguaBellacoPinotNoirPhoto from "./assets/vinos/antigua-bodega-patagonica-bellaco-malcriado-pinot-noir.jpg";
+import antiguaBellacoMerlotPhoto from "./assets/vinos/antigua-bodega-patagonica-bellaco-malcriado-merlot.jpg";
+import antiguaBellacoMalbecPhoto from "./assets/vinos/antigua-bodega-patagonica-bellaco-malcriado-malbec.jpg";
+import antiguaUnPinotNoirGranReservaPhoto from "./assets/vinos/antigua-bodega-patagonica-un-pinot-noir-gran-reserva.jpg";
 import videlaDornaGranCalfuenMalbecPhoto from "./assets/vinos/videla-dorna-gran-calfuen-malbec.jpg";
 
 // Fotos reales que reemplazan las imágenes viejas de fichas ya cargadas (Aniello, Miras, Humberto Canale, Videla Dorna)
@@ -377,6 +394,7 @@ const WINERIES_DATA: Winery[] = [
     "UN Gran Corte Reserva",
     "UN Malbec Gran Reserva",
     "UN Merlot Gran Reserva",
+    "UN Pinot Noir Gran Reserva",
     "Bellaco Malcriado Pinot Noir",
     "Bellaco Malcriado Merlot",
     "Bellaco Malcriado Malbec"
@@ -474,7 +492,12 @@ const WINERIES_DATA: Winery[] = [
       "Bodega de San Javier con cava submarina en el Golfo San Matías.",
     hours: "11:00 a 18:00",
     openNow: true,
-    wines: ["Wapisa Pinot Noir", "Wapisa Sauvignon Blanc"],
+    wines: [
+      "Wapisa Pinot Noir",
+      "Wapisa Sauvignon Blanc",
+      "Wapisa Cabernet Sauvignon",
+      "Wapisa Malbec",
+    ],
     shops: ALL_SHOP_NAMES,
     activity: "Recorrido y degustación con perfil oceánico",
     benefit: "Beneficio especial para socios",
@@ -749,7 +772,7 @@ const WINES: Wine[] = [
     note: "Pinot Noir de perfil atlántico, con frescura e identidad distinta dentro de Río Negro.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Atlántico",
-    image:"/wines/wapisa-pinot-noir.png"
+    image: wapisaPinotNoirPhoto
   },
   {
   id: "v7",
@@ -771,7 +794,7 @@ const WINES: Wine[] = [
   note: "Vino blanco de gran frescura, con notas cítricas y herbales características del Alto Valle.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Blanco recomendado",
-  image: "/wines/antigua-un-sauvignon-blanc.png"
+  image: antiguaUnSauvignonBlancPhoto
 },
 {
   id: "v9",
@@ -782,7 +805,7 @@ const WINES: Wine[] = [
   note: "De gran expresión frutal, con buena estructura, frescura y un final persistente.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Blanco recomendado",
-  image: "/wines/antigua-un-chardonnay.png"
+  image: antiguaUnChardonnayPhoto
 },
 {
   id: "v10",
@@ -793,7 +816,7 @@ const WINES: Wine[] = [
   note: "Elegante y refrescante, con aromas de frutas rojas y una acidez equilibrada que invita a seguir disfrutándolo.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Ideal para el verano",
-  image: "/wines/antigua-un-rose.png"
+  image: antiguaUnRosePhoto
 },
   {
   id: "v11",
@@ -804,7 +827,7 @@ const WINES: Wine[] = [
   note: "Expresa el carácter del Alto Valle con notas de frutos negros, especias y taninos suaves. Crianza en roble que aporta complejidad sin perder frescura.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Reserva",
-  image: "/wines/antigua-un-malbec-reserva.png"
+  image: antiguaUnMalbecReservaPhoto
 },
 {
   id: "v12",
@@ -815,7 +838,7 @@ const WINES: Wine[] = [
   note: "Pinot Noir de gran expresión, con aromas de cerezas, frambuesas y delicadas notas especiadas. La crianza en roble aporta complejidad y un final persistente.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Reserva",
-  image: "/wines/antigua-un-pinot-noir-reserva.png"
+  image: antiguaUnPinotNoirReservaPhoto
 },
 {
   id: "v13",
@@ -826,7 +849,7 @@ const WINES: Wine[] = [
   note: "Corte de variedades seleccionadas del Alto Valle, con gran concentración, equilibrio y una crianza en roble que aporta profundidad y persistencia.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Blend Reserva",
-  image: "/wines/antigua-un-gran-corte-reserva.png"
+  image: antiguaUnGranCorteReservaPhoto
 },
 {
   id: "v14",
@@ -837,7 +860,7 @@ const WINES: Wine[] = [
   note: "Malbec de gran concentración y elegancia, con aromas de frutos negros maduros, cacao y especias. Su prolongada crianza en roble aporta complejidad, estructura y un final persistente.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Gran Reserva",
-  image: "/wines/antigua-un-malbec-gran-reserva.png"
+  image: antiguaUnMalbecGranReservaPhoto
 },
 {
   id: "v15",
@@ -848,7 +871,7 @@ const WINES: Wine[] = [
   note: "Merlot elegante y de gran complejidad, con notas de ciruelas maduras, frutos negros, vainilla y cacao. Su crianza en barricas aporta una textura sedosa y un final largo y armonioso.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Gran Reserva",
-  image: "/wines/antigua-un-merlot-gran-reserva.png"
+  image: antiguaUnMerlotGranReservaPhoto
 },
 {
   id: "v16",
@@ -859,8 +882,8 @@ const WINES: Wine[] = [
   note: "Pinot Noir de perfil moderno, con aromas de cerezas y frambuesas, taninos suaves y una marcada frescura que invita a seguir disfrutándolo.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Edición especial",
-  image: "/wines/antigua-bellaco-pinot-noir.png"
-},  
+  image: antiguaBellacoPinotNoirPhoto
+},
 {
   id: "v17",
   name: "Bellaco Malcriado Merlot",
@@ -870,7 +893,7 @@ const WINES: Wine[] = [
   note: "Merlot de gran expresión frutal, con notas de ciruelas maduras y frutas rojas, de cuerpo medio y final amable.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Edición especial",
-  image: "/wines/antigua-bellaco-merlot.png"
+  image: antiguaBellacoMerlotPhoto
 },
 {
   id: "v18",
@@ -881,7 +904,18 @@ const WINES: Wine[] = [
   note: "Malbec vibrante, con aromas de frutos negros y violetas, taninos redondos y un final fresco que refleja el carácter del Alto Valle.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Edición especial",
-  image: "/wines/antigua-bellaco-malbec.png"
+  image: antiguaBellacoMalbecPhoto
+},
+{
+  id: "v106",
+  name: "UN Pinot Noir Gran Reserva",
+  varietal: "Pinot Noir",
+  winery: "Antigua Bodega Patagónica",
+  style: "Gran Reserva de guarda",
+  description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Gran Reserva",
+  image: antiguaUnPinotNoirGranReservaPhoto,
 },
 {
   id: "v19",
@@ -1817,6 +1851,28 @@ const WINES: Wine[] = [
   availableAt: ALL_SHOP_NAMES,
   tag: "Maroma",
   image: maromaSauvignonBlancPhoto,
+},
+{
+  id: "v104",
+  name: "Wapisa Cabernet Sauvignon",
+  varietal: "Cabernet Sauvignon",
+  winery: "Wapisa",
+  style: "Estructurado y herbáceo",
+  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Atlántico",
+  image: wapisaCabernetSauvignonPhoto,
+},
+{
+  id: "v105",
+  name: "Wapisa Malbec",
+  varietal: "Malbec",
+  winery: "Wapisa",
+  style: "Untuoso e intenso",
+  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Atlántico",
+  image: wapisaMalbecPhoto,
 },
 ].sort((a, b) => {
   const priority = "Antigua Bodega Patagónica";
