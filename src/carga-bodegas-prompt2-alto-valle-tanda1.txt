@@ -1,0 +1,363 @@
+INSTRUCCIONES PARA CLAUDE CODE - CARGA DE BODEGAS (Prompt 2 de 4)
+Proyecto: Vinos de Río Negro
+Zona: Alto Valle (primera de 3 tandas para esta zona) + Bodega Costa
+8 bodegas nuevas en total, todas con foto de portada real ya en src/assets/.
+
+Antes de tocar el código, presentame el plan completo y esperá mi aprobación.
+
+============================================
+CONTEXTO
+============================================
+
+Este es el mismo tipo de carga que ya se hizo antes para 14 bodegas (7 en Costa/Mar,
+Valle Medio, Cordillera y Línea Sur; y el catálogo completo de Miras, Humberto
+Canale, Videla Dorna, Finca Aniello, Wapisa y Antigua Bodega Patagónica). Mismo
+patrón de datos: Winery con address/whatsapp/email/instagram/website/visitNotes
+opcionales, Wine con description (texto largo) y note opcional.
+
+La zona "Alto Valle" ya existe en RUTA_ZONES con la clave "alto-valle" — no hay que
+crear nada nuevo ahí, solo asignar esa clave a las 8 bodegas.
+
+Las 8 fotos de portada YA ESTÁN en src/assets/ con estos nombres exactos (ya no hace
+falta usar placeholder para ninguna de esta tanda):
+- bodega-costa.jpg
+- chacras-del-figaro.png
+- bodega-familia-dellanzo.png
+- bodega-y-viñedos-san-sebastian.png
+- bodega-gennari.jpg
+- bodega-aonikenk.jpg
+- bodega-agrestis.jpg
+- bodega-humberto-tronelli.png
+
+Las fotos de las botellas ya están en src/assets/vinos/, todas en formato .jpg, con
+fondo crema uniforme (mismo tratamiento que las 206+ fotos ya cargadas anteriormente).
+
+Cada vino tiene un campo "Descripción". Las marcadas con "(descripción genérica del
+varietal)" son notas de cata típicas de esa uva en general, no específicas de esa
+etiqueta puntual (no se encontró información propia de ese vino). Cargar igual como
+descripción del vino — no hace falta mostrar esa aclaración en la UI, es solo para
+que sepas el origen del texto.
+
+============================================
+BODEGA 1: Bodega Costa
+============================================
+Zona: Alto Valle
+Localidad: General Roca (Mainqué)
+Dirección/contacto: sin confirmar todavía
+Foto de portada: bodega-costa.jpg
+Descripción de la bodega: "Vinos de autor. Viticultura de precisión, producción
+limitada y biológica."
+
+Vinos:
+- Bodega Costa Chardonnay Patagónico -> bodega-costa-chardonnay.jpg
+  Descripción: (descripción genérica del varietal) Blanco de cuerpo medio a alto,
+  con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de
+  manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.
+- Bodega Costa Riesling Patagónico -> bodega-costa-riesling.jpg
+  Descripción: (descripción genérica del varietal) Blanco de acidez marcada y
+  aromas florales, con notas cítricas, de durazno y un carácter mineral distintivo.
+  Seco o semiseco según el estilo, ideal para climas fríos como el patagónico.
+- Bodega Costa Sapo Pinot Noir -> bodega-costa-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+- Bodega Costa Sapo Malbec -> bodega-costa-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Bodega Costa Sapo Petit Verdot -> bodega-costa-petit-verdot.jpg
+  Descripción: (descripción genérica del varietal) Tinto de color muy oscuro e
+  intenso, con taninos firmes y estructura robusta. Aromas a frutos negros, violetas
+  y notas especiadas. Variedad usada tradicionalmente en cortes por el color y
+  cuerpo que aporta, aquí expresada como varietal.
+
+============================================
+BODEGA 2: Chacras de Fígaro (localidad corregida a Allen)
+============================================
+Zona: Alto Valle
+Localidad: Allen
+Dirección exacta: sin confirmar (contacto también sin confirmar) — dejar constancia
+de que falta, no inventar ningún dato.
+Foto de portada: chacras-del-figaro.png
+Descripción de la bodega: sin información pública disponible más allá de la
+localidad; usar una descripción breve y honesta (ej. "Bodega boutique de Allen,
+Alto Valle de Río Negro.") sin inventar historia ni detalles no confirmados.
+
+Vinos:
+- Primo Bacio Malbec -> chacras-del-figaro-primo-bacio-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Fígaro 9 -> chacras-del-figaro-figaro-9.jpg
+  Descripción: Malbec de guarda, criado en barricas de roble francés y americano,
+  que suma notas de vainilla, especias y tostado sobre la fruta madura típica de la
+  variedad. Tinto de cuerpo alto y buena estructura.
+
+============================================
+BODEGA 3: Bodega Familia Dellanzo
+============================================
+Zona: Alto Valle
+Localidad: Barda del Medio (posiblemente vinculada a Campo Grande — dejar la
+localidad como "Barda del Medio" salvo que el código ya tenga otro criterio para
+esto)
+Dirección: Sección Chacras, Lote 69, Calle Rural 11, Campo Grande/Colonia El
+Manzano. CP 8305.
+Contacto: Instagram @familiadellanzo
+Visitas: venta directa en bodega, sin horario publicado.
+Foto de portada: bodega-familia-dellanzo.png
+Descripción de la bodega: "Bodega familiar del Alto Valle, con producción en tres
+chacras propias y venta directa de sus vinos."
+
+Vinos:
+- Punta de Riel Blend Estiba Única -> bodega-familia-dellanzo-punta-de-riel-blend-estiba-unica.jpg
+  Descripción: (descripción genérica, corte sin nota específica) Corte de varias
+  variedades que combina la fruta y estructura de cada una, buscando equilibrio,
+  complejidad y un perfil de cuerpo medio a alto.
+- Punta de Riel Malbec -> bodega-familia-dellanzo-punta-de-riel-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Buona Terra Rosado -> bodega-familia-dellanzo-buona-terra-rosado.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+- Buona Terra Torrontés -> bodega-familia-dellanzo-buona-terra-torrontes.jpg
+  Descripción: (descripción genérica del varietal) Blanco muy aromático, con notas
+  florales intensas (jazmín, geranio) y de frutas frescas como durazno y uva
+  moscatel. Sorprende por ser seco en boca pese a lo perfumado, con buena acidez.
+
+============================================
+BODEGA 4: Bodega y Viñedos San Sebastián (marca Lechuza)
+============================================
+Zona: Alto Valle
+Localidad: Cervantes
+Dirección: Chacra N° 297, Cervantes, Río Negro.
+Contacto: WhatsApp +54 9 298 440-6555 · Email enologia.tello@gmail.com · Instagram
+@vsspatagonia · Sitio vsspatagonia.wixsite.com/vsspatagonia
+Visitas: guiada (~1h) + degustación con reserva previa, sin horario fijo. En el
+circuito Caminos del Vino.
+Foto de portada: bodega-y-viñedos-san-sebastian.png
+Descripción de la bodega: "Bodega familiar boutique de Cervantes, en el circuito
+Caminos del Vino, con las líneas Lechuza y Fenómeno."
+
+Vinos:
+- Lechuza Reserva Malbec -> bodega-y-viñedos-san-sebastian-lechuza-reserva-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Lechuza Reserva Cabernet Franc -> bodega-y-viñedos-san-sebastian-lechuza-reserva-cabernet-franc.jpg
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y
+  herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un
+  carácter vegetal elegante. Taninos suaves y acidez viva.
+- Lechuza Reserva Merlot -> bodega-y-viñedos-san-sebastian-lechuza-reserva-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Lechuza Reserva Trousseau -> bodega-y-viñedos-san-sebastian-lechuza-reserva-trousseau.jpg
+  Descripción: (descripción genérica del varietal) Tinto ligero de color rubí
+  pálido, con aromas a frutos rojos frescos, especias suaves y un carácter terroso.
+  Taninos delicados y acidez marcada, de estilo cercano al Pinot Noir.
+- Gran Reserva Lechuza Blend Malbec Merlot -> bodega-y-viñedos-san-sebastian-gran-reserva-lechuza-blend-malbec-merlot.jpg
+  Descripción: (descripción genérica, corte sin nota específica) Corte de Malbec y
+  Merlot que combina la fruta madura y untuosidad del Malbec con la suavidad y
+  redondez del Merlot. Tinto de cuerpo medio a alto y buena complejidad.
+- Fenómeno Malbec Rosé -> bodega-y-viñedos-san-sebastian-fenómeno-malbec-rose.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+- Fenómeno Malbec -> bodega-y-viñedos-san-sebastian-fenómeno-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Fenómeno Naranjo Torrontés -> bodega-y-viñedos-san-sebastian-fenómeno-naranjo-torrontes.jpg
+  Descripción: (descripción genérica del varietal) Vino "naranjo", elaborado con
+  uvas Torrontés maceradas con su piel, lo que le da un color ámbar/naranja y mayor
+  estructura tánica que un blanco tradicional. Aromas a fruta madura, flores y
+  notas herbales.
+- Fenómeno Merlot -> bodega-y-viñedos-san-sebastian-fenómeno-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Reserva Hollejos Cabernet Franc -> bodega-y-viñedos-san-sebastian-reserva-hollejos-cabernet-franc.jpg
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y
+  herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un
+  carácter vegetal elegante. Taninos suaves y acidez viva.
+- Reserva Hollejos Malbec -> bodega-y-viñedos-san-sebastian-reserva-hollejos-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+
+============================================
+BODEGA 5: Bodega Gennari
+============================================
+Zona: Alto Valle
+Localidad: Fernández Oro
+Dirección: Ruta Provincial N° 65, Km 1181, General Fernández Oro.
+Contacto: Tel 0299 4996013 / 4996343 · Email ventas@gennarisa.com · Facebook
+Gennari S.A.
+Visitas: funciona principalmente como local de venta (vinos + frutos secos).
+Confirmar por teléfono si ofrecen recorrido guiado. En el circuito Caminos del
+Vino.
+Foto de portada: bodega-gennari.jpg
+Descripción de la bodega: "Negocio familiar de Fernández Oro fundado en 1957,
+dedicado a la elaboración de vinos y frutos secos."
+
+Vinos:
+- Gennari Malbec -> bodega-gennari-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Gennari Rosé -> bodega-gennari-rose.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+- Gennari Single Vineyard -> bodega-gennari-single-vineyard.jpg
+  Descripción: (descripción genérica del varietal) Malbec de una única parcela
+  seleccionada de la bodega, sin corte con otras variedades. Color rojo violáceo
+  intenso, aromas a ciruela madura y frutos negros, taninos suaves y buena
+  expresión del terroir de Fernández Oro.
+
+============================================
+BODEGA 6: Bodega Aonikenk (marca Pincén)
+============================================
+Zona: Alto Valle
+Localidad: Fernández Oro
+Dirección: Chacra 129, Ruta Provincial 65, General Fernández Oro (Barrio Los
+Frutales).
+Contacto: WhatsApp +54 9 299 456-2516 · Email bodegaaonikenk@gmail.com ·
+Instagram @bodegaaonikenk · Sitio bodegaaonikenk.com
+Visitas: guiadas con/sin degustación, reserva previa. Abre ~11:00 miércoles a
+viernes y ~12:00 fines de semana. En el circuito Caminos del Vino.
+Foto de portada: bodega-aonikenk.jpg
+Descripción de la bodega: "Bodega familiar de Fernández Oro (familia Rastrilla),
+con su línea Pincén, en el circuito Caminos del Vino."
+
+Vinos:
+- Pincén Merlot -> bodega-aonikenk-pincen-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Pincén Cabernet Sauvignon -> bodega-aonikenk-pincen-cabernet-sauvignon.jpg
+  Descripción: (descripción genérica del varietal) Tinto de cuerpo firme y
+  estructurado, con aromas a cassis, pimiento verde y notas herbáceas que
+  evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena
+  capacidad de guarda.
+- Pincén Rosado -> bodega-aonikenk-pincen-rosado.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+
+============================================
+BODEGA 7: Bodega Agrestis
+============================================
+Zona: Alto Valle
+Localidad: General Roca
+Dirección: Gobernador Castello 1539, General Roca. CP 8334.
+Contacto: Tel 0299-154293284 / 0298-154641269 · Email
+turismo@bodegaagrestis.com.ar · Sitio bodegaagrestis.com.ar
+Visitas: guiada + degustación + almuerzos (asado), con reserva previa. Grupos
+hasta 35 personas. En el circuito Caminos del Vino.
+Foto de portada: bodega-agrestis.jpg
+Descripción de la bodega: "Bodega de General Roca especializada en espumante
+(método champenoise) y Pinot Noir, con visitas y almuerzos con reserva previa."
+
+Vinos:
+- Agrestis Malbec -> bodega-agrestis-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Agrestis Cabernet Sauvignon -> bodega-agrestis-cabernet-sauvignon.jpg
+  Descripción: (descripción genérica del varietal) Tinto de cuerpo firme y
+  estructurado, con aromas a cassis, pimiento verde y notas herbáceas que
+  evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena
+  capacidad de guarda.
+- Tenuis Pinot Noir -> bodega-agrestis-tenuis-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+
+============================================
+BODEGA 8: Bodega Tronelli (Humberto Tronelli)
+============================================
+Zona: Alto Valle
+Localidad: General Roca
+Dirección: Martín Miguel de Güemes 1614, General Roca (zona Stefenelli).
+Contacto: Instagram @bodegatronelli · Facebook "Bodega de Vinos Humberto
+Tronelli"
+Visitas: sin horarios publicados, contactar por Instagram/teléfono.
+Foto de portada: bodega-humberto-tronelli.png
+Descripción de la bodega: "Bodega familiar de General Roca, con casi 100 años de
+historia."
+
+Vinos:
+- Gran Reserva Cabernet Franc -> bodega-humberto-tronelli-gran-reserva-cabernet-franc.jpg
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y
+  herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un
+  carácter vegetal elegante. Taninos suaves y acidez viva.
+- Gran Reserva Malbec -> bodega-humberto-tronelli-gran-reserva-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Reserva Malbec -> bodega-humberto-tronelli-reserva-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Tronelli Malbec -> bodega-humberto-tronelli-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Tronelli Merlot -> bodega-humberto-tronelli-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Tronelli Rosé -> bodega-humberto-tronelli-rose.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+- Tronelli Torrontés -> bodega-humberto-tronelli-torrontes.jpg
+  Descripción: (descripción genérica del varietal) Blanco muy aromático, con notas
+  florales intensas (jazmín, geranio) y de frutas frescas como durazno y uva
+  moscatel. Sorprende por ser seco en boca pese a lo perfumado, con buena acidez.
+- Tronelli Cosecha Tardía -> bodega-humberto-tronelli-cosecha-tardia.jpg
+  Descripción: (descripción genérica del estilo) Vino de cosecha tardía, dulce y
+  untuoso, con aromas a fruta madura, miel y notas de pasas de uva. Ideal para
+  acompañar postres o quesos de sabor intenso.
+- Tronelli Blend (Malbec-Cabernet Franc-Merlot) -> bodega-humberto-tronelli-blend-malbec-cabernet-franc-merlot.jpg
+  Descripción: (descripción genérica, corte sin nota específica) Corte de Malbec,
+  Cabernet Franc y Merlot que combina fruta madura, frescura herbácea y suavidad,
+  buscando equilibrio y complejidad. Tinto de cuerpo medio a alto.
+
+============================================
+REGLAS GENERALES (aplican a las 8 bodegas de este prompt)
+============================================
+
+- Regla de prioridad existente: Antigua Bodega Patagónica siempre primera en los
+  listados de bodegas, y sus vinos primero. Esta regla NO cambia — las 8 bodegas
+  nuevas se agregan después de las que ya están, respetando ese orden.
+- Cada bodega nueva debe aparecer en el listado de la zona "Alto Valle" en Ruta del
+  Vino.
+- Si alguna bodega no tiene datos de contacto o dirección exacta confirmados (ver
+  arriba, varias dicen "sin confirmar" o "no verificados"), mostrar el dato que sí
+  tenemos (localidad, o "Contactar por Instagram/Facebook") en vez de dejar el
+  campo vacío o inventar un dato.
+- No tocar ninguna bodega existente, ni las pantallas de Inicio/Mapa/Agenda/Tienda
+  — solo sumar estas 8 bodegas nuevas y sus vinos.
+- Usar el mismo componente de grilla de vinos (WineGridCard) ya implementado para
+  el resto de las bodegas — no crear nada nuevo para esto.
+
+Después de aplicar los cambios, corré el chequeo de tipos (npx tsc --noEmit), el
+build de producción, y el script de validación cruzada wines[] ↔ WINES para
+confirmar que no queden referencias rotas ni duplicados en las 22 bodegas
+resultantes. NO levantes tu propio servidor de desarrollo — el usuario lo revisa
+desde su propia ventana con npm start.
