@@ -1,0 +1,596 @@
+INSTRUCCIONES PARA CLAUDE CODE - CARGA DE BODEGAS (Prompt 3 de 3, tanda final)
+Proyecto: Vinos de Río Negro
+Zona: Alto Valle (tanda final — completa las 20 bodegas de Alto Valle + Bodega Costa)
+13 bodegas nuevas, todas con foto de portada real ya en src/assets/.
+
+Antes de tocar el código, presentame el plan completo y esperá mi aprobación.
+
+============================================
+CONTEXTO
+============================================
+
+Mismo tipo de carga que las tandas anteriores (14 bodegas iniciales + Tanda 1 de
+Alto Valle con 8 bodegas, incluida Bodega Costa). Mismo patrón de datos: Winery con
+address/whatsapp/email/instagram/website/visitNotes opcionales, Wine con
+description (texto largo) y note opcional. Zona "Alto Valle" ya existe en
+RUTA_ZONES con la clave "alto-valle".
+
+Las 13 fotos de portada YA ESTÁN en src/assets/ con estos nombres exactos:
+- bodega-weinglas.jpg (o .png, verificar extensión real del archivo)
+- bodega-fabre-montmayou.jpg
+- viñas-del-lago.jpg
+- bodega-tierra-del-viento.jpg
+- bodega-y-viñedos-moschini.jpg
+- bodega-chacra.jpg
+- bodega-noemia.jpg
+- bodega-favretto.jpg
+- bodega-flor-del-prado.jpg
+- bodega-bonomi-y-bernal.jpg
+- bodega-pujante-viñedos-patagonicos.jpg
+- bodega-dominio-de-fereneza.jpg
+- bodega-gerome-marteau.jpg
+
+Las fotos de las botellas ya están en src/assets/vinos/, con fondo crema uniforme,
+mismo tratamiento que el resto del catálogo.
+
+Como en tandas anteriores, las descripciones marcadas "(descripción genérica del
+varietal)" son notas de cata típicas de esa uva en general, no específicas de esa
+etiqueta puntual — cargar igual como descripción del vino, sin mostrar la
+aclaración en la UI.
+
+============================================
+BODEGA 1: Bodega Weinglas
+============================================
+Zona: Alto Valle
+Localidad: General Roca
+Dirección/contacto/horario: NO VERIFICADOS — no se encontró sitio oficial,
+dirección, teléfono ni horarios en ninguna fuente pública. Dejar constancia de que
+falta confirmar, no inventar ningún dato.
+Foto de portada: bodega-weinglas.jpg
+Descripción de la bodega: descripción breve y honesta, sin inventar historia (ej.
+"Bodega de General Roca, Alto Valle de Río Negro.").
+
+Vinos:
+- Quinta 12 Merlot -> bodega-weinglas-quinta-12-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Quinta 12 Malbec -> bodega-weinglas-quinta-12-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Black Gran Reserva Merlot -> bodega-weinglas-black-gran-reserva-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Black Gran Reserva Cabernet Sauvignon -> bodega-weinglas-black-gran-reserva-cabernet-sauvignon.jpg
+  Descripción: (descripción genérica del varietal) Tinto de cuerpo firme y
+  estructurado, con aromas a cassis, pimiento verde y notas herbáceas que
+  evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena
+  capacidad de guarda.
+- Black Gran Reserva Malbec -> bodega-weinglas-black-gran-reserva-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+
+============================================
+BODEGA 2: Bodega Fabre Montmayou (marca Infinitus)
+============================================
+Zona: Alto Valle
+Localidad: General Roca
+Dirección: Ruta 22 y Rajneri, General Roca, Río Negro. CP 8332. También tiene
+viñedos en Allen (~60 ha).
+Contacto: a través de fabremontmayou.com/contacto
+Visitas: ⚠️ el horario publicado corresponde a la sede de Mendoza, no está
+confirmado si el predio de Río Negro recibe visitantes — usar "Horario a
+confirmar con la bodega", no mostrar el horario de Mendoza como si fuera el de
+Río Negro. En el circuito Caminos del Vino (a confirmar en esta sede puntual).
+Foto de portada: bodega-fabre-montmayou.jpg
+Descripción de la bodega: "Bodega con sede en General Roca y viñedos en Allen,
+parte del grupo Fabre Montmayou (marca Infinitus)."
+
+Vinos:
+- Fabre Montmayou Patagonia Gran Reserva Merlot -> bodega-fabre-montmayou-patagonia-gran-reserva-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Fabre Montmayou Patagonia Barrel Select Malbec -> bodega-fabre-montmayou-patagonia-gran-reserva-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+
+============================================
+BODEGA 3: Viñas del Lago Pellegrini
+============================================
+Zona: Alto Valle
+Localidad: Contralmirante Cordero (nota: fuentes oficiales la listan bajo "Cinco
+Saltos" — si el sistema de localidades del código ya tiene una convención para
+esto, avisar antes de decidir cuál usar; si no, usar "Contralmirante Cordero" como
+pide este prompt).
+Dirección: a metros del Lago Pellegrini.
+Contacto: WhatsApp +54 9 299-3269738 / 299-6309971 · Email
+valeriapinto75@yahoo.com.ar · Instagram @vinedosdellagopellegrini · Sitio
+vinasdellagopellegrini.com
+Visitas: guiadas, degustaciones, caminatas, observación de flora/fauna.
+Alojamiento tipo hostel. Con reserva. En el circuito Caminos del Vino.
+Foto de portada: viñas-del-lago.jpg
+Descripción de la bodega: "Viñedo junto al Lago Pellegrini, con visitas guiadas,
+degustaciones y alojamiento tipo hostel."
+
+Vinos:
+- Cabernet Sauvignon -> viñas-del-lago-pellegrini-cabernet-sauvignon.jpg
+  Nombre a cargar: "Viñas del Lago Pellegrini Cabernet Sauvignon" (agregar el
+  nombre de la bodega al vino, ya que el nombre original es solo el varietal — mismo
+  criterio que ya se usó con otras bodegas para evitar nombres de vino ambiguos o
+  duplicados con otras bodegas)
+  Descripción: (descripción genérica del varietal) Tinto de cuerpo firme y
+  estructurado, con aromas a cassis, pimiento verde y notas herbáceas que
+  evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena
+  capacidad de guarda.
+- Malbec -> viñas-del-lago-pellegrini-malbec.jpg
+  Nombre a cargar: "Viñas del Lago Pellegrini Malbec"
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Merlot -> viñas-del-lago-pellegrini-merlot.jpg
+  Nombre a cargar: "Viñas del Lago Pellegrini Merlot"
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+
+IMPORTANTE: verificar antes de cargar que ninguno de estos 3 nombres ("Viñas del
+Lago Pellegrini Cabernet Sauvignon/Malbec/Merlot") choque con un nombre ya
+existente de otra bodega. Si hay colisión, agregar un diferenciador adicional
+(como se hizo antes con "Enclave Sur Pinot Noir" vs "De Bernardi Pinot Noir").
+
+============================================
+BODEGA 4: Tierra del Viento
+============================================
+Zona: Alto Valle
+Localidad: Contralmirante Cordero
+Dirección: cerca del Lago Pellegrini, sin dirección exacta (antes estuvo en La
+Falda, Cipolletti).
+Contacto: Facebook "Tierra Del Viento Bodega" (@tierradelvientobodega.ginobili)
+Visitas: venta directa, sin horarios de recorrido publicados.
+Foto de portada: bodega-tierra-del-viento.jpg
+Descripción de la bodega: "Proyecto artesanal de venta directa cerca del Lago
+Pellegrini, a cargo del enólogo Nicolás Ginóbili."
+
+Vinos:
+- Reserva Malbec -> bodega-tierra-del-viento-reserva-malbec.jpg
+  Nombre a cargar: "Tierra del Viento Reserva Malbec"
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Reserva Syrah -> bodega-tierra-del-viento-reserva-syrah.jpg
+  Nombre a cargar: "Tierra del Viento Reserva Syrah"
+  Descripción: (descripción genérica del varietal) Tinto de fruta negra madura
+  (moras, ciruela negra), con notas especiadas y a veces ahumadas. Cuerpo medio a
+  alto, taninos firmes pero maduros.
+- Malbec -> bodega-tierra-del-viento-malbec.jpg
+  Nombre a cargar: "Tierra del Viento Malbec"
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Merlot -> bodega-tierra-del-viento-merlot.jpg
+  Nombre a cargar: "Tierra del Viento Merlot"
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+
+============================================
+BODEGA 5: Bodega y Viñedos Moschini
+============================================
+Zona: Alto Valle
+Localidad: Ingeniero Huergo
+Dirección: Chacra 433, Lote 6, Ingeniero Huergo.
+Contacto: WhatsApp +54 9 298 437-8910 · Email chacramoschini@gmail.com ·
+Instagram @bodegamoschini · Sitio bodegamoschini.com.ar
+Visitas: guiada + degustación + almuerzo (cocina italiana). "Fiesta del Vino
+Patero" anual. Con reserva previa. En el circuito Caminos del Vino.
+Foto de portada: bodega-y-viñedos-moschini.jpg
+Descripción de la bodega: "Bodega familiar de Ingeniero Huergo, con impronta
+italiana, recorridos con almuerzo y su tradicional Fiesta del Vino Patero."
+
+Vinos:
+- Km1120 Malbec Reserva -> bodega-y-viñedos-moschini-km-1120-malbec-reserva.jpg
+  Nombre a cargar: "Moschini Km1120 Malbec Reserva"
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Km1120 Malbec Joven -> bodega-y-viñedos-moschini-km-1120-malbec.jpg
+  Nombre a cargar: "Moschini Km1120 Malbec Joven"
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Km1120 Merlot -> bodega-y-viñedos-moschini-km-1120-merlot.jpg
+  Nombre a cargar: "Moschini Km1120 Merlot"
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Km1120 Cabernet Franc -> bodega-y-viñedos-moschini-km-1120-cabernet-franc.jpg
+  Nombre a cargar: "Moschini Km1120 Cabernet Franc"
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y
+  herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un
+  carácter vegetal elegante. Taninos suaves y acidez viva.
+- Dolzó Blanco Natural Dulce -> bodega-y-viñedos-moschini-km-1120-dolzo-blanco-natural-dulce.jpg
+  Nombre a cargar: "Moschini Dolzó Blanco Natural Dulce"
+  Descripción: (descripción genérica del estilo) Blanco dulce natural, de aromas
+  florales y frutados intensos (durazno, miel), con buena acidez que equilibra el
+  dulzor. Ideal para acompañar postres o tomar solo, bien frío.
+- Moschini Blanco -> bodega-y-viñedos-moschini-km-1120-blanco.jpg
+  Descripción: (descripción genérica, varietal no especificado) Blanco fresco de la
+  Patagonia, con acidez natural marcada por el clima frío y ventoso de la región.
+  Notas cítricas y florales, ideal para acompañar mariscos y pescados.
+
+============================================
+BODEGA 6: Bodega Chacra
+============================================
+Zona: Alto Valle
+Localidad: Mainqué
+Dirección: distrito Mainqué (zona Chacra 357). Sin dirección pública para
+visitas.
+Contacto: a través de bodegachacra.com
+Visitas: sin sala de degustación pública. Visitas (si las hay) estrictamente con
+cita privada — no listar como bodega "visitable" de forma general.
+Foto de portada: bodega-chacra.jpg
+Descripción de la bodega: "Productora de renombre mundial de Pinot Noir y
+Chardonnay biodinámicos, fundada en 2004 por Piero Incisa della Rocchetta
+(nieto del creador del Sassicaia). Sin sala de degustación pública."
+
+Vinos:
+- Roka Malbec -> bodega-chacra-roka-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Lunita Pinot Noir -> bodega-chacra-lunita-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+- Mainqué Chardonnay -> bodega-chacra-mainque-chardonnay.jpg
+  Descripción: (descripción genérica del varietal) Blanco de cuerpo medio a alto,
+  con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de
+  manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.
+- Chacra Chardonnay -> bodega-chacra-chardonnay.jpg
+  Descripción: (descripción genérica del varietal) Blanco de cuerpo medio a alto,
+  con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de
+  manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.
+- Chacra Cincuenta y Cinco Pinot Noir -> bodega-chacra-cincuenta-y-cinco-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca. (Línea de viñedo
+  identificada por el año de plantación, "55".)
+- Chacra Treinta y Dos Pinot Noir -> bodega-chacra-treinta-y-dos-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca. (Línea de viñedo
+  identificada por el año de plantación, "32", una de las más antiguas y
+  cotizadas de la bodega.)
+- Chacra Trousseau -> bodega-chacra-trosseau.jpg
+  Descripción: (descripción genérica del varietal) Tinto ligero de color rubí
+  pálido, con aromas a frutos rojos frescos, especias suaves y un carácter
+  terroso. Taninos delicados y acidez marcada, de estilo cercano al Pinot Noir.
+- Sin Azufre Pinot Noir -> bodega-chacra-sin-azufre-pinot-noir.jpg
+  Descripción: Pinot Noir elaborado sin agregado de sulfitos. (descripción
+  genérica del varietal) Tinto delicado y elegante, de color rubí claro, con
+  aromas a frutos rojos, flores y notas terrosas. Cuerpo liviano, taninos suaves y
+  acidez fresca.
+- Barda Pinot Noir -> bodega-chacra-barda-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+
+============================================
+BODEGA 7: Bodega Noemía
+============================================
+Zona: Alto Valle
+Localidad: Mainqué
+Dirección: Chacra 357, Mainqué (junto a Bodega Chacra).
+Contacto: a través de bodeganoemia.com
+Visitas: solo con cita previa. Sin sala de degustación pública ni horario fijo.
+Foto de portada: bodega-noemia.jpg
+Descripción de la bodega: "Productora premium biodinámica fundada en 2001 por
+la condesa Noemi Marone Cinzano y el enólogo Hans Vinding-Diers, en Mainqué."
+
+Vinos:
+- A Lisa Malbec -> bodega-noemia-alisa-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- J Alberto Malbec -> bodega-noemia-j-alberto-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Noemía Malbec -> bodega-noemia-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto. Etiqueta insignia de la bodega, de alta cotización.
+
+============================================
+BODEGA 8: Bodega Favretto
+============================================
+Zona: Alto Valle
+Localidad: Villa Regina
+Dirección: Chacra 104, Lote 4, Villa Regina (segunda chacra en General Godoy).
+Contacto: Tel +54 9 0298 446-1090 · Email consultas@bodegafavretto.com ·
+WhatsApp visitas +54 9 11 6618-5997 · Instagram @bodegafavretto · Sitio
+bodegafavretto.com
+Visitas: Lunes a Viernes 8:00-12:00 y 15:00-19:00 · Sábado 8:00-12:00 · Domingo
+cerrado. Recorrido + degustación de 3 vinos. En el circuito Caminos del Vino.
+Foto de portada: bodega-favretto.jpg
+Descripción de la bodega: "Bodega familiar de Villa Regina desde 1948, con
+horario de atención fijo y recorrido con degustación de 3 vinos."
+
+Vinos:
+- Ferruccio Favretto 70 Años (Malbec y Cabernet Sauvignon) -> bodega-favretto-ferruiccio-favretto-70-años-malbec-cabernet-sauvignon.jpg
+  Descripción: (descripción genérica, corte sin nota específica) Corte de Malbec y
+  Cabernet Sauvignon que combina la fruta madura y untuosidad del Malbec con la
+  estructura y frescura herbácea del Cabernet. Tinto de cuerpo medio a alto y
+  buena complejidad.
+- Ferruccio Favretto Gran Malbec -> bodega-favretto-ferruiccio-favretto-gran-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- OIR Merlot -> bodega-favretto-oir-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- OIR Cabernet Franc -> bodega-favretto-oir-cabernet-franc.jpg
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y
+  herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un
+  carácter vegetal elegante. Taninos suaves y acidez viva.
+- OIR Sauvignon Blanc -> bodega-favretto-oir-sauvignon-blanc.jpg
+  Descripción: (descripción genérica del varietal) Blanco de aromas frescos y
+  herbáceos, con notas cítricas, hierba recién cortada y en ocasiones pomelo. En
+  boca es seco, de acidez marcada y cuerpo liviano, ideal como aperitivo.
+- OIR Syrah -> bodega-favretto-oir-syrah.jpg
+  Descripción: (descripción genérica del varietal) Tinto de fruta negra madura
+  (moras, ciruela negra), con notas especiadas y a veces ahumadas. Cuerpo medio a
+  alto, taninos firmes pero maduros.
+- OIR Pinot Noir -> bodega-favretto-oir-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+
+============================================
+BODEGA 9: Bodega Flor del Prado
+============================================
+Zona: Alto Valle
+Localidad: Cipolletti
+Dirección: Chacra El Puente, Ruta Nacional 22 Km 1215 y Calle 225, CP 8324,
+Cipolletti. (⚠️ El local de Mariano Moreno 416 es un espacio distinto — un
+shopping — no es la bodega, no confundir.)
+Contacto: Tel (0299) 15 574 0166 · Email info@flordelprado.com.ar · Instagram
+@fdp.patagonia · Sitio flordelprado.com
+Visitas: contactar por Instagram/sitio web para coordinar. Sin horario público
+fijo.
+Foto de portada: bodega-flor-del-prado.jpg
+Descripción de la bodega: "Marca histórica cipoleña recuperada, con producción
+en Chacra El Puente, Cipolletti."
+
+Vinos:
+- Flor del Prado Pinot Noir -> bodega-flor-del-prado-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+- Flor del Prado Chardonnay -> bodega-flor-del-prado-chardonnay.jpg
+  Descripción: (descripción genérica del varietal) Blanco de cuerpo medio a alto,
+  con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de
+  manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.
+- Flor del Prado Sauvignon Blanc -> bodega-flor-del-prado-sauvignon-blanc.jpg
+  Descripción: (descripción genérica del varietal) Blanco de aromas frescos y
+  herbáceos, con notas cítricas, hierba recién cortada y en ocasiones pomelo. En
+  boca es seco, de acidez marcada y cuerpo liviano, ideal como aperitivo.
+- Flor del Prado Malbec Rosé -> bodega-flor-del-prado-malbec-rose.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+- Flor del Prado Malbec -> bodega-flor-del-prado-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Flor del Prado Cabernet Franc -> bodega-flor-del-prado-cabernet-franc.jpg
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y
+  herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un
+  carácter vegetal elegante. Taninos suaves y acidez viva.
+
+============================================
+BODEGA 10: Bodega Bonomi y Bernal
+============================================
+Zona: Alto Valle
+Localidad: Cipolletti
+Dirección/contacto exacto: sin confirmar (se presenta como "premium luxury
+winery", requiere verificación adicional). No inventar dato.
+Visitas: sin confirmar.
+Foto de portada: bodega-bonomi-y-bernal.jpg
+Descripción de la bodega: "Bodega de Cipolletti, se presenta como 'premium
+luxury winery'."
+
+Vinos:
+- Tormini Blanc de Blancs -> bodega-bonomi-y-bernal-tormini-blanc-de-blancs.jpg
+  Descripción: (descripción genérica, corte de blancos sin nota específica) Blanco
+  de corte, elaborado a partir de más de una variedad blanca. Perfil fresco, con
+  notas cítricas y florales, y buena acidez.
+- Verziere Malbec -> bodega-bonomi-y-bernal-tormini-verziere-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Selvapiana Blend de Guarda -> bodega-bonomi-y-bernal-selvapiana-blend-de-guarda.jpg
+  Descripción: (descripción genérica, corte sin nota específica) Corte de varias
+  variedades tintas pensado para la guarda, que combina la fruta y estructura de
+  cada una, buscando equilibrio y complejidad. Cuerpo medio a alto.
+
+============================================
+BODEGA 11: Bodega Pujante Viñedos Patagónicos (marca Arrayán)
+============================================
+Zona: Alto Valle
+Localidad: zona rural de Allen/Guerrico (⚠️ la fuente original decía "Cipolletti",
+pero el viñedo real está entre Allen y Guerrico — usar esta localidad corregida).
+Dirección: entre Allen y Guerrico, ~10 ha.
+Contacto: Instagram @bodegapujante · Sitio bodegapujante.com (en construcción)
+Visitas: sin edificio de bodega propio todavía, sin visitas públicas disponibles
+por ahora.
+Foto de portada: bodega-pujante-viñedos-patagonicos.jpg
+Descripción de la bodega: "Proyecto joven entre Allen y Guerrico, marca Arrayán,
+aún sin bodega propia construida."
+
+Vinos:
+- Arrayán Gran Pinot -> bodega-pujante-viñedos-patagonicos-arrayan-gran-pinot.jpg
+  Descripción: (descripción genérica del varietal, probablemente Pinot Noir)
+  Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos
+  (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y
+  acidez fresca.
+- Arrayán Gran Malbec -> bodega-pujante-viñedos-patagonicos-arrayan-gran-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Arrayán Malbec Burdeos Eco -> bodega-pujante-viñedos-patagonicos-arrayan-malbec-burdeos-eco.jpg
+  Descripción: (descripción genérica del varietal, producción ecológica) Malbec de
+  producción ecológica, con el perfil típico de la variedad: color rojo violáceo
+  intenso, aromas a ciruela madura y frutos rojos, taninos suaves y buena acidez.
+- Arrayán Cabernet Franc Malbec Burdeos Eco -> bodega-pujante-viñedos-patagonicos-arrayan-cabernet-franc-malbec-burdeos-eco.jpg
+  Descripción: (descripción genérica, corte sin nota específica, producción
+  ecológica) Corte de Cabernet Franc y Malbec de producción ecológica, que combina
+  frescura herbácea y fruta madura. Tinto de cuerpo medio a alto.
+
+============================================
+BODEGA 12: Bodega Dominio de Freneza
+============================================
+Zona: Alto Valle
+Localidad: Fernández Oro (viñedos en Mainqué y San Patricio del Chañar, Neuquén)
+Dirección/contacto: sin confirmar en fuente real.
+Visitas: sin horarios públicos, parece producción/boutique.
+Foto de portada: bodega-dominio-de-fereneza.jpg
+Descripción de la bodega: "Proyecto boutique a cargo del enólogo Agustín
+Lombroni, con viñedos en Mainqué y San Patricio del Chañar, vinificado en
+Bodega Gennari."
+
+Vinos:
+- La Voja Pinot Noir -> bodega-dominio-de-fereneza-la-voja-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+- La Voja Chardonnay -> bodega-dominio-de-fereneza-la-voja-chardonnay.jpg
+  Descripción: (descripción genérica del varietal) Blanco de cuerpo medio a alto,
+  con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de
+  manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.
+- La Freneza Pinot Noir -> bodega-dominio-de-fereneza-la-freneza-pinot-noir.jpg
+  Descripción: (descripción genérica del varietal) Tinto delicado y elegante, de
+  color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas
+  terrosas. Cuerpo liviano, taninos suaves y acidez fresca.
+- La Rufa Pinot Noir Rosé -> bodega-dominio-de-fereneza-la-rufa-pinot-noir-rose.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+- Il Kavaliro -> bodega-dominio-de-fereneza-il-kavaliro.jpg
+  Descripción: (descripción genérica, corte/varietal no especificado) Vino de
+  autor de la bodega, de perfil de cuerpo medio a alto, elaborado con especial
+  cuidado enológico.
+
+============================================
+BODEGA 13: Bodega Gérôme Marteau
+============================================
+Zona: Alto Valle
+Localidad: Fernández Oro (producción actual en General Roca y Allen; espacio "La
+Falda" en Cipolletti)
+Dirección/contacto: Tel/WhatsApp +54 9 299 411-3947 · Email
+bodega.geromemarteau@gmail.com · Facebook BodegaGeromeMarteau · Sitio
+geromemarteau.com.ar
+Visitas: espacio visitable "Gérôme Marteau - La Falda" (restaurante/museo,
+Cipolletti). Horario exacto sin confirmar, chequear por teléfono.
+Foto de portada: bodega-gerome-marteau.jpg
+Descripción de la bodega: "Bodega con orígenes en Fernández Oro, hoy con
+producción en General Roca y Allen, y el histórico espacio recuperado 'La
+Falda' en Cipolletti."
+
+Vinos:
+- Joven Malbec -> bodega-gerome-marteau-linea-joven-malbec.jpg
+  Nombre a cargar: "Gérôme Marteau Joven Malbec"
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Fresca Rosé de Malbec -> bodega-gerome-marteau-rose-de-malbec.jpg
+  Descripción: (descripción genérica del varietal) Rosado fresco de color salmón o
+  frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez
+  viva, ideal para tomar bien frío.
+- Fresca Torrontés Tardío -> bodega-gerome-marteau-torrontes-tardio.jpg
+  Descripción: (descripción genérica del estilo) Blanco de cosecha tardía
+  elaborado con Torrontés, dulce y aromático, con notas florales y de fruta
+  madura. Ideal para acompañar postres.
+- Fresca Torrontés -> bodega-gerome-marteau-torrontes.jpg
+  Descripción: (descripción genérica del varietal) Blanco muy aromático, con notas
+  florales intensas (jazmín, geranio) y de frutas frescas como durazno y uva
+  moscatel. Sorprende por ser seco en boca pese a lo perfumado, con buena acidez.
+- Premium Malbec -> bodega-gerome-marteau-premium-malbec.jpg
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Premium Merlot -> bodega-gerome-marteau-premium-merlot.jpg
+  Descripción: (descripción genérica del varietal) Tinto suave y aterciopelado, con
+  aromas a ciruela, cereza y chocolate. Taninos redondeados y buena estructura, de
+  perfil más amable que otros tintos de guarda.
+- Reserva Cabernet Franc -> bodega-gerome-marteau-reserva-cabernet-franc.jpg
+  Nombre a cargar: "Gérôme Marteau Reserva Cabernet Franc"
+  Descripción: (descripción genérica del varietal) Tinto de perfil más fresco y
+  herbáceo que el Cabernet Sauvignon, con notas a frutos rojos, pimienta y un
+  carácter vegetal elegante. Taninos suaves y acidez viva.
+- Reserva Malbec -> bodega-gerome-marteau-reserva-malbec.jpg
+  Nombre a cargar: "Gérôme Marteau Reserva Malbec"
+  Descripción: (descripción genérica del varietal) Variedad insignia de Argentina.
+  Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y
+  negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez,
+  con cuerpo medio a alto.
+- Rebeca Blend de Terroirs -> bodega-gerome-marteau-rebeca-de-terroirs.jpg
+  Descripción: (descripción genérica, corte sin nota específica) Corte que combina
+  uvas de distintos terroirs de la bodega, buscando equilibrio y complejidad entre
+  los distintos orígenes. Tinto de cuerpo medio a alto.
+
+============================================
+REGLAS GENERALES (aplican a las 13 bodegas de este prompt)
+============================================
+
+- Regla de prioridad existente: Antigua Bodega Patagónica siempre primera en los
+  listados de bodegas, y sus vinos primero. No cambia.
+- Cada bodega nueva debe aparecer en el listado de la zona "Alto Valle" en Ruta del
+  Vino.
+- Donde el dato de contacto/dirección/horario no esté confirmado, mostrar lo que sí
+  se tiene (localidad, o "contactar por Instagram/Facebook") en vez de inventar.
+- Antes de cargar cada vino, verificar que el nombre final no choque con ningún
+  nombre de vino ya existente en otras bodegas — varios de estos vinos vienen con
+  nombre genérico (solo el varietal, ej. "Malbec", "Merlot") en la planilla
+  original, así que este prompt ya les agregó el nombre de la bodega adelante para
+  evitar colisiones, pero igual conviene que hagas una verificación final con el
+  mismo script de validación cruzada que se usó en tandas anteriores.
+- No tocar ninguna bodega existente, ni las pantallas de Inicio/Mapa/Agenda/Tienda.
+- Usar el mismo componente de grilla de vinos (WineGridCard) ya implementado.
+
+Después de aplicar los cambios, corré el chequeo de tipos (npx tsc --noEmit), el
+build de producción, y el script de validación cruzada wines[] ↔ WINES (incluido
+chequeo de nombres duplicados) para confirmar que no queden referencias rotas ni
+duplicados en las 35 bodegas resultantes (22 ya cargadas + estas 13). NO levantes
+tu propio servidor de desarrollo — el usuario lo revisa desde su propia ventana
+con npm start.
+
+NOTA: como son 13 bodegas con casi 60 vinos en una sola pasada, si te resulta más
+manejable dividir la aplicación del cambio en 2 o 3 bloques internos (por ejemplo,
+primero las 7 bodegas de la mitad superior de este archivo, después las 6
+restantes) para revisar mejor cada bloque antes de seguir, hacelo con confianza —
+lo importante es el resultado final: las 13 bodegas completas y sin errores.
