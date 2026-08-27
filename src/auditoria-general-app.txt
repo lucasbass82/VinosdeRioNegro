@@ -1,0 +1,108 @@
+INSTRUCCIONES PARA CLAUDE CODE - AUDITORÍA GENERAL DE LA APP
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan de auditoría y esperá mi
+aprobación. Esta tarea es de revisión, no de carga de datos — no se espera que
+modifiques WINERIES_DATA ni WINES salvo que encuentres un error puntual (dato
+roto, referencia inexistente, imagen faltante); en ese caso, listalo aparte y
+pedime aprobación antes de corregirlo.
+
+============================================
+CONTEXTO
+============================================
+La app ya tiene 35 bodegas y 212 vinos cargados (Costa/Mar, Valle Medio,
+Cordillera, Línea Sur y las 21 de Alto Valle incluida Bodega Costa). Se agregaron
+varias secciones y rediseños en el camino: tarjetas de bodega, grilla de vinos
+estilo MercadoLibre (ficha de bodega, "También te pueden gustar", "Vinos
+disponibles" de vinotecas), contactInfo con Teléfono/Facebook, navegación por
+zonas (RUTA_ZONES), buscador, favoritos y carrito/tienda.
+
+Quiero que recorras la app de punta a punta como lo haría un usuario real,
+probando cada botón, cada tarjeta clickeable y cada link, y que documentes todo
+lo que encuentres roto o inconsistente. La única excepción es la pantalla
+Tienda (vinotecas/carrito/favoritos), que está en construcción y queda
+explícitamente fuera de esta auditoría — ver punto 7. No hace falta arreglar
+nada todavía — primero quiero el diagnóstico completo.
+
+============================================
+QUÉ REVISAR
+============================================
+
+1) NAVEGACIÓN PRINCIPAL
+- Los 5 tabs de la barra inferior (Inicio, Mapa, Agenda, Bodegas, Perfil/Tienda,
+  según corresponda) llevan a la pantalla correcta y quedan marcados como
+  activos.
+- Desde cada pantalla, el botón de "volver" regresa a donde corresponde (no a
+  una pantalla distinta ni deja la app en un estado raro).
+- No hay ningún tab o botón que no haga nada al tocarlo.
+
+2) LISTADO Y FICHA DE BODEGAS
+- Las 35 bodegas se listan y cada tarjeta abre la ficha correcta (nombre, foto,
+  datos coinciden con lo que se clickeó).
+- El filtro por zona (Alto Valle, Valle Medio, Cordillera, Línea Sur, Mar)
+  muestra solo las bodegas de esa zona, y "todas" muestra las 35.
+- Dentro de la ficha, el bloque de contacto (contactInfo): revisión SOLO VISUAL,
+  sin clickear ni abrir ningún link (no abrir WhatsApp, no abrir el sitio web, no
+  abrir redes sociales). Verificar únicamente que el texto/dato mostrado sea
+  correcto (label + valor coinciden con lo cargado) y que los campos sin dato
+  confirmado no aparezcan vacíos ni rotos (deben ocultarse solos, sin dejar un
+  label sin valor o un espacio en blanco raro).
+- La grilla "Vinos de esta bodega" — cada tarjeta de vino abre la ficha de vino
+  correcta.
+- Prestar atención especial a bodegas con nombres largos (ej. "Bodega y Viñedos
+  San Sebastián", "Bodega Pujante Viñedos Patagónicos", "Bodega Dominio de
+  Fereneza") y bodegas con datos "sin confirmar" (Weinglas, Bonomi y Bernal,
+  Chacra, Noemía, Chacras de Fígaro, Bodega Costa) — que no se vean cortadas,
+  desalineadas o con huecos vacíos.
+
+3) FICHA DE VINO
+- Foto, nombre, varietal, descripción y bodega de origen coinciden con el vino
+  clickeado.
+- El link/botón para volver a la bodega de origen lleva a la bodega correcta.
+- La sección "También te pueden gustar" muestra vinos y cada tarjeta abre la
+  ficha correcta (sin vinos repetidos del mismo que se está viendo).
+
+4) BUSCADOR
+- Buscar por nombre de bodega y por nombre de vino trae resultados correctos.
+- Probar con una búsqueda sin resultados (que no rompa la pantalla).
+- Los resultados abren la ficha correcta al tocarlos.
+
+5) MAPA
+- Si hay marcadores/pines de bodegas, que abran la ficha correcta al tocarlos.
+
+6) AGENDA
+- Los eventos listados abren su detalle (si lo tienen) sin errores.
+
+7) TIENDA — FUERA DE ALCANCE
+- La pantalla que se abre con el botón "Tienda" está en construcción. NO la
+  audites: no entres a esa pantalla, no pruebes las vinotecas, la grilla de
+  "Vinos disponibles", el carrito ni favoritos. Si el tab de navegación
+  principal incluye el botón "Tienda", solo confirmá que el botón existe y no
+  tira un error al tocarlo — nada más.
+
+8) INTEGRIDAD DE DATOS (además del script cruzado que ya usamos)
+- Ningún id de bodega o vino repetido.
+- Ninguna imagen rota (ya lo veníamos chequeando por prompt, pero confirmalo de
+  nuevo en conjunto ahora que están las 3 tandas juntas).
+- Ninguna referencia de wines[] apuntando a un vino que no existe en WINES, y
+  viceversa.
+
+9) CONSOLA / ERRORES SILENCIOSOS
+- Recorrer todas las pantallas con la consola del navegador abierta y anotar
+  cualquier warning o error de React/JS, aunque no se note nada raro a simple
+  vista.
+
+============================================
+CÓMO REPORTAR
+============================================
+Armá una lista clara dividida en:
+- Roto (bloquea o rompe la funcionalidad)
+- Inconsistente (funciona pero se ve mal o no sigue el mismo patrón que el
+  resto)
+- Todo OK (secciones que probaste y no encontraste nada)
+
+Para cada hallazgo "Roto" o "Inconsistente", indicá: pantalla, qué hiciste para
+reproducirlo, y qué esperabas que pasara vs. qué pasó.
+
+No corrijas nada todavía — priorizamos juntos qué arreglar primero después de
+ver el reporte completo.
