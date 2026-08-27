@@ -1,5 +1,11 @@
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import logoIcon from "./assets/logo-icon.png";
 import rioNegroRiverPhoto from "./assets/rio-negro-river.jpg";
 import mapaProvinciaPhoto from "./assets/mapa-provincia.jpg";
@@ -3814,6 +3820,10 @@ export default function App() {
   const [showMenu, setShowMenu] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollPositions = useRef<number[]>([]);
+  const prevStackLen = useRef(0);
+
   useEffect(() => {
     const fadeTimer = setTimeout(() => setSplashFading(true), 3400);
     const hideTimer = setTimeout(() => setShowSplash(false), 3800);
@@ -3823,8 +3833,22 @@ export default function App() {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const len = detailStack.length;
+    const wentBack = len < prevStackLen.current;
+    prevStackLen.current = len;
+    el.scrollTop = wentBack ? scrollPositions.current[len] ?? 0 : 0;
+  }, [detailStack, tab]);
+
   const pushDetail = (entry: DetailEntry) =>
-    setDetailStack((stack) => [...stack, entry]);
+    setDetailStack((stack) => {
+      if (scrollRef.current) {
+        scrollPositions.current[stack.length] = scrollRef.current.scrollTop;
+      }
+      return [...stack, entry];
+    });
   const openWine = (id: string, fromShop?: boolean) =>
     pushDetail({ kind: "wine", id, fromShop });
   const openWinery = (id: string) => pushDetail({ kind: "winery", id });
@@ -4020,6 +4044,7 @@ export default function App() {
        />
      ) : (
      <div
+  ref={scrollRef}
   style={
     (!detail && tab in PHOTO_HEADER_CONFIG) || detail?.kind === "winery"
       ? styles.sheetSurface
@@ -5752,6 +5777,15 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
   const shownEvents = EVENTS.filter((e) => e.timeframe === filter);
   const nextEvent = shownEvents[0];
 
+  const agendaScrollRef = useRef<HTMLDivElement>(null);
+  const listScrollPos = useRef(0);
+
+  useLayoutEffect(() => {
+    const el = agendaScrollRef.current;
+    if (!el) return;
+    el.scrollTop = openEvent ? 0 : listScrollPos.current;
+  }, [openEvent]);
+
   if (openEvent) {
     return (
       <>
@@ -5761,7 +5795,7 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
           subtitle={`${openEvent.place} · ${openEvent.city}`}
           onMenuClick={onMenuClick}
         />
-        <div style={styles.sheetSurface}>
+        <div ref={agendaScrollRef} style={styles.sheetSurface}>
           <EventDetailScreen
             event={openEvent}
             onBack={() => setOpenEvent(null)}
@@ -5779,7 +5813,7 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
         subtitle="Eventos y degustaciones para vivir el vino en tu ciudad."
         onMenuClick={onMenuClick}
       />
-      <div style={styles.sheetSurface}>
+      <div ref={agendaScrollRef} style={styles.sheetSurface}>
         <div style={styles.stack22}>
           <div style={styles.gradientCard}>
             <div style={styles.locationStatusRow}>
@@ -5838,7 +5872,11 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
 
                 <button
                   style={styles.primaryButton}
-                  onClick={() => setOpenEvent(e)}
+                  onClick={() => {
+                    listScrollPos.current =
+                      agendaScrollRef.current?.scrollTop ?? 0;
+                    setOpenEvent(e);
+                  }}
                 >
                   Ver actividad
                 </button>

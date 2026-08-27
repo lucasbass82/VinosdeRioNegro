@@ -1,0 +1,81 @@
+INSTRUCCIONES PARA CLAUDE CODE - FIX DE SCROLL EN NAVEGACIÓN
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo (qué archivo/función
+cambia y cómo) y esperá mi aprobación.
+
+============================================
+CONTEXTO
+============================================
+Hoy se agregó detailStack (pila de navegación) para que "Volver" retroceda un
+nivel en vez de saltar siempre a la raíz (fix de R1+R2 de la auditoría). Al
+probarlo en producción aparecieron dos problemas de scroll relacionados con esa
+misma navegación.
+
+============================================
+PROBLEMA 1 — Falta reset de scroll al ir hacia adelante
+============================================
+Repro: estando scrolleado hacia abajo en cualquier lista (Ruta del Vino, ficha
+de bodega, resultados de buscador, etc.), tocar una tarjeta para abrir un
+detalle nuevo (ficha de bodega, ficha de vino, detalle de evento).
+
+Actual: la pantalla nueva se renderiza pero mantiene la posición de scroll de
+la pantalla anterior — el título queda fuera de vista arriba, hay que scrollear
+manualmente para verlo.
+
+Esperado: cada vez que se abre un detalle nuevo (bodega, vino, evento) o se
+cambia de tab, el scroll debe quedar arriba del todo (posición 0) para que el
+título sea lo primero que se ve.
+
+============================================
+PROBLEMA 2 — Falta restaurar scroll al volver
+============================================
+Repro: en Ruta del Vino, tocar "Ver todas", scrollear hacia abajo en la lista
+larga de bodegas, entrar a una bodega, tocar "Volver".
+
+Actual: vuelve a la lista de bodegas en la posición de scroll 0 (arriba del
+todo), en vez de donde estaba antes de entrar.
+
+Esperado: "Volver" debe restaurar la posición de scroll exacta en la que
+estaba esa lista antes de navegar hacia el detalle, para poder seguir bajando
+desde donde se había quedado.
+
+Esto aplica a cualquier lista con scroll desde la que se entra a un detalle:
+Ruta del Vino (bodegas), grilla de vinos dentro de una ficha de bodega,
+resultados del buscador, "También te pueden gustar", etc.
+
+============================================
+ENFOQUE SUGERIDO (a validar por vos)
+============================================
+Aprovechar el mecanismo de detailStack ya agregado hoy: al navegar hacia
+adelante (push a la pila), guardar la posición de scroll actual de la pantalla
+de origen antes de salir de ella. Al volver (pop de la pila), restaurar esa
+posición guardada en vez de dejar el scroll en 0. Al navegar hacia adelante
+(no al volver), resetear el scroll de la pantalla nueva a 0.
+
+Si el enfoque real de la pila es distinto a como lo estoy describiendo, ajustalo
+vos a la implementación real — esto es solo la intención, no una instrucción
+literal de código.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WINERIES_DATA ni WINES.
+- No tocar el bloque de contactInfo ni el alcance ya definido (Nombre/Ciudad/
+  Dirección/Horario).
+- No mezclar este fix con ningún otro pendiente de la auditoría (I1, I4, I5,
+  I7/I8, I9/I10, I11) — eso queda para prompts aparte.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npx tsc --noEmit y npm run build sin errores.
+2. Probar en el navegador (no solo leer código): abrir una lista larga,
+   scrollear, entrar a un detalle, confirmar que abre arriba del todo, volver,
+   confirmar que la lista queda en la posición donde estaba.
+3. Confirmar que el cambio de tab (barra inferior) también resetea el scroll
+   de la nueva pantalla a 0.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo, o avisame si hace falta levantar uno.
