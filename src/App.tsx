@@ -349,13 +349,6 @@ type Winery = {
   distance: string;
   image: string;
   address?: string;
-  whatsapp?: string;
-  phone?: string;
-  email?: string;
-  instagram?: string;
-  facebook?: string;
-  website?: string;
-  visitNotes?: string;
 };
 
 type Shop = {
@@ -385,6 +378,8 @@ type Wine = {
   image: string;
 };
 
+type EventTimeframe = "ahora" | "hoy" | "finde";
+
 type EventItem = {
   id: string;
   title: string;
@@ -393,6 +388,7 @@ type EventItem = {
   city: string;
   benefit: string;
   organizer?: string;
+  timeframe: EventTimeframe;
 };
 
 type FavoriteItem = {
@@ -417,11 +413,12 @@ type TabKey =
   | "shop"
   | "winelist";
 
-type DetailState =
+type DetailEntry =
   | { kind: "wine"; id: string; fromShop?: boolean }
   | { kind: "winery"; id: string }
-  | { kind: "shop"; id: string }
-  | null;
+  | { kind: "shop"; id: string };
+
+type DetailState = DetailEntry | null;
 
 const theme = {
   bgTop: "#FBF8F3",
@@ -511,7 +508,7 @@ const WINERIES_DATA: Winery[] = [
       "Miras Joven Pinot Noir",
       "Miras Joven Rosé",
       "Miras Joven Semillón",
-      "Miras Trosseau Curioso",
+      "Miras Trousseau Curioso",
       "Miras Liviano Malbec",
     ],
     shops: ALL_SHOP_NAMES,
@@ -553,7 +550,7 @@ const WINERIES_DATA: Winery[] = [
  {
   id: "w2a",
   name: "Antigua Bodega Patagónica",
-  city: "General Roca",
+  city: "Cervantes",
   region: "alto-valle",
   description:
     "Proyecto del Alto Valle con una amplia línea de vinos que combina tradición e innovación, desde la línea UN hasta Bellaco Malcriado.",
@@ -709,7 +706,6 @@ const WINERIES_DATA: Winery[] = [
   shortDescription:
     "Emprendimiento familiar de San Javier, sobre la costa, bajo la marca Savu.",
   hours: "Horario a confirmar",
-  visitNotes: "Sin horario publicado. Aparece en el circuito municipal de agroturismo (chacras).",
   openNow: false,
   wines: ["Savu Malbec", "Savu Malbec Rosado", "Savu Syrah", "Savu Cabernet Sauvignon"],
   shops: [],
@@ -729,7 +725,6 @@ const WINERIES_DATA: Winery[] = [
   shortDescription:
     "Mini bodega familiar de Guardia Mitre, sobre la costa del Río Negro.",
   hours: "Sin visitas públicas confirmadas",
-  visitNotes: "Sin horarios públicos. Mini emprendimiento familiar, sin visitas públicas confirmadas.",
   openNow: false,
   wines: ["Tinto (Malbec y Cabernet Sauvignon)", "Blanco (Chenin)"],
   shops: [],
@@ -737,7 +732,6 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaFamiliaHerreroPhoto,
-  instagram: "Facebook: Familia Herrero (Guardia Mitre)",
 },
 {
   id: "w9",
@@ -749,7 +743,6 @@ const WINERIES_DATA: Winery[] = [
   shortDescription:
     "Bodega y olivar de San Antonio Oeste, con recorrido por viñedos y degustación.",
   hours: "08:00 a 20:00, todos los días",
-  visitNotes: "Abre todos los días de 8:00 a 20:00. Recorrido por viñedos, olivares y bodega + degustación de Malbec y aceite de oliva.",
   openNow: true,
   wines: ["Don Amaro Malbec"],
   shops: [],
@@ -758,7 +751,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaDonAmaroPhoto,
   address: "Cruce de Ruta 3 y Ruta 251, cerca de San Antonio Oeste (~10 km de Las Grutas)",
-  website: "Turismo provincial / Oleosan",
 },
 {
   id: "w10",
@@ -770,7 +762,6 @@ const WINERIES_DATA: Winery[] = [
   shortDescription:
     "Bodega del Valle Medio, con vinos artesanales de Choele Choel.",
   hours: "Solo entrega a domicilio en Choele Choel",
-  visitNotes: "Sin evidencia de visitas turísticas públicas. Entrega a domicilio en Choele Choel.",
   openNow: false,
   wines: [
     "Enclave Sur Pinot Noir",
@@ -789,7 +780,6 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaEnclaveSurPhoto,
-  instagram: "Facebook: Enclave Sur | Choele Choel",
 },
 {
   id: "w11",
@@ -801,7 +791,6 @@ const WINERIES_DATA: Winery[] = [
   shortDescription:
     "Bodega de Río Colorado, con restaurante propio y alojamiento boutique junto al río.",
   hours: "Todos los días excepto sábados (reservar)",
-  visitNotes: "Visitas guiadas, degustaciones, restaurante propio y alojamiento boutique. Restaurante abre todos los días excepto sábados. Se recomienda reservar. Fundada en 2020, orgánica/biodinámica.",
   openNow: true,
   wines: ["Trina Blend de Malbec", "Trina Naranjo de Criollas", "Trina Reserva de Malbec"],
   shops: [],
@@ -810,10 +799,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaTrinaPhoto,
   address: "Arturo Benini 1471, Colonia Reig, Río Colorado, Río Negro",
-  whatsapp: "+54 9 2931 41-1915",
-  email: "bodegatrina@gmail.com",
-  instagram: "@bodegatrina",
-  website: "bodegatrina.com.ar",
 },
 {
   id: "w12",
@@ -825,7 +810,6 @@ const WINERIES_DATA: Winery[] = [
   shortDescription:
     "La bodega más austral de Río Negro, en El Bolsón, con Pinot Noir premiado.",
   hours: "Con reserva previa (sin horario fijo)",
-  visitNotes: "Visitas guiadas y degustaciones con reserva previa, maridaje con quesos y fiambres. Sin horario fijo. Ofrece alojamiento en la cabaña \"Las Viñas del Piltri\".",
   openNow: false,
   wines: [
     "De Bernardi Pinot Noir",
@@ -839,9 +823,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaFamiliaDeBernardiPhoto,
   address: "Al pie del Cerro Piltriquitrón, \"Villa Turismo\", El Bolsón",
-  whatsapp: "+54 9 2945 46-8170",
-  email: "bodega@debernardi.com.ar",
-  instagram: "@bodegadebernardi",
 },
 {
   id: "w13",
@@ -853,7 +834,6 @@ const WINERIES_DATA: Winery[] = [
   shortDescription:
     "Bodega boutique de Línea Sur, orientada a exportación, en la barda de Valle Azul.",
   hours: "Horario a confirmar",
-  visitNotes: "Sin horario publicado.",
   openNow: false,
   wines: [
     "Araucana Río de los Ciervos Malbec Rosé",
@@ -881,7 +861,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Vinos de autor. Viticultura de precisión, producción limitada y biológica.",
   shortDescription: "Bodega de autor de Mainqué, con producción limitada y viticultura biológica.",
   hours: "Horario a confirmar",
-  visitNotes: "Sin datos de contacto ni visitas confirmados.",
   openNow: false,
   wines: [
     "Bodega Costa Chardonnay Patagónico",
@@ -904,7 +883,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega boutique de Allen, Alto Valle de Río Negro.",
   shortDescription: "Bodega boutique de Allen, Alto Valle de Río Negro.",
   hours: "Horario a confirmar",
-  visitNotes: "Sin datos de contacto ni horario de visitas confirmados.",
   openNow: false,
   wines: ["Primo Bacio Malbec", "Fígaro 9"],
   shops: [],
@@ -921,7 +899,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega familiar del Alto Valle, con producción en tres chacras propias y venta directa de sus vinos.",
   shortDescription: "Bodega familiar de Barda del Medio, con venta directa de sus vinos.",
   hours: "Horario a confirmar",
-  visitNotes: "Venta directa en bodega, sin horario publicado.",
   openNow: false,
   wines: [
     "Punta de Riel Blend Estiba Única",
@@ -935,7 +912,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaFamiliaDellanzoPhoto,
   address: "Sección Chacras, Lote 69, Calle Rural 11, Campo Grande/Colonia El Manzano. CP 8305.",
-  instagram: "@familiadellanzo",
 },
 {
   id: "w17",
@@ -945,7 +921,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega familiar boutique de Cervantes, en el circuito Caminos del Vino, con las líneas Lechuza y Fenómeno.",
   shortDescription: "Bodega boutique de Cervantes, con las líneas Lechuza y Fenómeno.",
   hours: "Con reserva previa (sin horario fijo)",
-  visitNotes: "Visita guiada (~1h) + degustación con reserva previa. En el circuito Caminos del Vino.",
   openNow: false,
   wines: [
     "Lechuza Reserva Malbec",
@@ -966,10 +941,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaYVinedosSanSebastianPhoto,
   address: "Chacra N° 297, Cervantes, Río Negro.",
-  whatsapp: "+54 9 298 440-6555",
-  email: "enologia.tello@gmail.com",
-  instagram: "@vsspatagonia",
-  website: "vsspatagonia.wixsite.com/vsspatagonia",
 },
 {
   id: "w18",
@@ -979,7 +950,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Negocio familiar de Fernández Oro fundado en 1957, dedicado a la elaboración de vinos y frutos secos.",
   shortDescription: "Negocio familiar de Fernández Oro desde 1957, vinos y frutos secos.",
   hours: "Horario a confirmar",
-  visitNotes: "Funciona principalmente como local de venta (vinos + frutos secos). Confirmar por teléfono si ofrecen recorrido guiado.",
   openNow: false,
   wines: ["Gennari Malbec", "Gennari Rosé", "Gennari Single Vineyard"],
   shops: [],
@@ -988,9 +958,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaGennariPhoto,
   address: "Ruta Provincial N° 65, Km 1181, General Fernández Oro.",
-  phone: "0299 4996013 / 4996343",
-  email: "ventas@gennarisa.com",
-  facebook: "Gennari S.A.",
 },
 {
   id: "w19",
@@ -1000,7 +967,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega familiar de Fernández Oro (familia Rastrilla), con su línea Pincén, en el circuito Caminos del Vino.",
   shortDescription: "Bodega familiar de Fernández Oro, con su línea Pincén.",
   hours: "Mié a vie ~11:00, fines de semana ~12:00",
-  visitNotes: "Visitas guiadas con o sin degustación, con reserva previa.",
   openNow: true,
   wines: ["Pincén Merlot", "Pincén Cabernet Sauvignon", "Pincén Rosado"],
   shops: [],
@@ -1009,10 +975,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaAonikenkPhoto,
   address: "Chacra 129, Ruta Provincial 65, General Fernández Oro (Barrio Los Frutales).",
-  whatsapp: "+54 9 299 456-2516",
-  email: "bodegaaonikenk@gmail.com",
-  instagram: "@bodegaaonikenk",
-  website: "bodegaaonikenk.com",
 },
 {
   id: "w20",
@@ -1022,7 +984,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega de General Roca especializada en espumante (método champenoise) y Pinot Noir, con visitas y almuerzos con reserva previa.",
   shortDescription: "Bodega de General Roca especializada en espumante y Pinot Noir.",
   hours: "Con reserva previa",
-  visitNotes: "Visita guiada + degustación + almuerzos (asado), con reserva previa. Grupos hasta 35 personas.",
   openNow: false,
   wines: ["Agrestis Malbec", "Agrestis Cabernet Sauvignon", "Tenuis Pinot Noir"],
   shops: [],
@@ -1031,9 +992,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaAgrestisPhoto,
   address: "Gobernador Castello 1539, General Roca. CP 8334.",
-  phone: "0299-154293284 / 0298-154641269",
-  email: "turismo@bodegaagrestis.com.ar",
-  website: "bodegaagrestis.com.ar",
 },
 {
   id: "w21",
@@ -1043,7 +1001,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega familiar de General Roca, con casi 100 años de historia.",
   shortDescription: "Bodega familiar de General Roca, con casi 100 años de historia.",
   hours: "Horario a confirmar",
-  visitNotes: "Sin horarios publicados, contactar por Instagram o teléfono.",
   openNow: false,
   wines: [
     "Tronelli Gran Reserva Cabernet Franc",
@@ -1062,8 +1019,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaHumbertoTronelliPhoto,
   address: "Martín Miguel de Güemes 1614, General Roca (zona Stefenelli).",
-  instagram: "@bodegatronelli",
-  facebook: "Bodega de Vinos Humberto Tronelli",
 },
 {
   id: "w22",
@@ -1073,7 +1028,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega de General Roca, Alto Valle de Río Negro.",
   shortDescription: "Bodega de General Roca, Alto Valle de Río Negro.",
   hours: "Horario a confirmar",
-  visitNotes: "Sin datos de contacto ni horario confirmados.",
   openNow: false,
   wines: [
     "Quinta 12 Merlot",
@@ -1095,8 +1049,7 @@ const WINERIES_DATA: Winery[] = [
   region: "alto-valle",
   description: "Bodega con sede en General Roca y viñedos en Allen, parte del grupo Fabre Montmayou (marca Infinitus).",
   shortDescription: "Bodega con sede en General Roca y viñedos en Allen, marca Infinitus.",
-  hours: "Horario a confirmar con la bodega",
-  visitNotes: "Contacto a través de fabremontmayou.com/contacto. En el circuito Caminos del Vino (a confirmar en esta sede).",
+  hours: "Horario a confirmar",
   openNow: false,
   wines: [
     "Fabre Montmayou Patagonia Gran Reserva Merlot",
@@ -1108,7 +1061,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaFabreMontmayouPhoto,
   address: "Ruta 22 y Rajneri, General Roca, Río Negro. CP 8332. También tiene viñedos en Allen (~60 ha).",
-  website: "fabremontmayou.com",
 },
 {
   id: "w24",
@@ -1118,7 +1070,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Viñedo junto al Lago Pellegrini, con visitas guiadas, degustaciones y alojamiento tipo hostel.",
   shortDescription: "Viñedo junto al Lago Pellegrini, con visitas guiadas y alojamiento tipo hostel.",
   hours: "Con reserva",
-  visitNotes: "Visitas guiadas, degustaciones, caminatas, observación de flora y fauna. Alojamiento tipo hostel. En el circuito Caminos del Vino.",
   openNow: false,
   wines: [
     "Viñas del Lago Pellegrini Cabernet Sauvignon",
@@ -1131,10 +1082,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: vinasDelLagoPhoto,
   address: "A metros del Lago Pellegrini.",
-  whatsapp: "+54 9 299-3269738 / 299-6309971",
-  email: "valeriapinto75@yahoo.com.ar",
-  instagram: "@vinedosdellagopellegrini",
-  website: "vinasdellagopellegrini.com",
 },
 {
   id: "w25",
@@ -1144,7 +1091,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Proyecto artesanal de venta directa cerca del Lago Pellegrini, a cargo del enólogo Nicolás Ginóbili.",
   shortDescription: "Proyecto artesanal de venta directa cerca del Lago Pellegrini.",
   hours: "Horario a confirmar",
-  visitNotes: "Venta directa, sin horarios de recorrido publicados.",
   openNow: false,
   wines: [
     "Tierra del Viento Reserva Malbec",
@@ -1157,7 +1103,6 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaTierraDelVientoPhoto,
-  facebook: "Tierra Del Viento Bodega (@tierradelvientobodega.ginobili)",
 },
 {
   id: "w26",
@@ -1167,7 +1112,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega familiar de Ingeniero Huergo, con impronta italiana, recorridos con almuerzo y su tradicional Fiesta del Vino Patero.",
   shortDescription: "Bodega familiar de Ingeniero Huergo, con impronta italiana.",
   hours: "Con reserva previa",
-  visitNotes: "Visita guiada + degustación + almuerzo (cocina italiana). Fiesta del Vino Patero anual. En el circuito Caminos del Vino.",
   openNow: false,
   wines: [
     "Moschini Km1120 Malbec Reserva",
@@ -1183,10 +1127,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaYVinedosMoschiniPhoto,
   address: "Chacra 433, Lote 6, Ingeniero Huergo.",
-  whatsapp: "+54 9 298 437-8910",
-  email: "chacramoschini@gmail.com",
-  instagram: "@bodegamoschini",
-  website: "bodegamoschini.com.ar",
 },
 {
   id: "w27",
@@ -1196,7 +1136,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Productora de renombre mundial de Pinot Noir y Chardonnay biodinámicos, fundada en 2004 por Piero Incisa della Rocchetta (nieto del creador del Sassicaia). Sin sala de degustación pública.",
   shortDescription: "Productora de renombre mundial de Pinot Noir y Chardonnay biodinámicos.",
   hours: "Sin sala de degustación pública",
-  visitNotes: "Visitas (si las hay) estrictamente con cita privada — no es una bodega visitable de forma general.",
   openNow: false,
   wines: [
     "Roka Malbec",
@@ -1215,7 +1154,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaChacraPhoto,
   address: "Distrito Mainqué (zona Chacra 357). Sin dirección pública para visitas.",
-  website: "bodegachacra.com",
 },
 {
   id: "w28",
@@ -1225,7 +1163,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Productora premium biodinámica fundada en 2001 por la condesa Noemi Marone Cinzano y el enólogo Hans Vinding-Diers, en Mainqué.",
   shortDescription: "Productora premium biodinámica fundada en 2001 en Mainqué.",
   hours: "Sin horario fijo",
-  visitNotes: "Solo con cita previa. Sin sala de degustación pública.",
   openNow: false,
   wines: ["A Lisa Malbec", "J Alberto Malbec", "Noemía Malbec"],
   shops: [],
@@ -1234,7 +1171,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaNoemiaPhoto,
   address: "Chacra 357, Mainqué (junto a Bodega Chacra).",
-  website: "bodeganoemia.com",
 },
 {
   id: "w29",
@@ -1244,7 +1180,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega familiar de Villa Regina desde 1948, con horario de atención fijo y recorrido con degustación de 3 vinos.",
   shortDescription: "Bodega familiar de Villa Regina desde 1948.",
   hours: "Lunes a viernes 8:00-12:00 y 15:00-19:00 · Sábado 8:00-12:00 · Domingo cerrado",
-  visitNotes: "Recorrido + degustación de 3 vinos. En el circuito Caminos del Vino.",
   openNow: false,
   wines: [
     "Ferruccio Favretto 70 Años (Malbec y Cabernet Sauvignon)",
@@ -1261,11 +1196,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaFavrettoPhoto,
   address: "Chacra 104, Lote 4, Villa Regina (segunda chacra en General Godoy).",
-  whatsapp: "+54 9 11 6618-5997",
-  phone: "+54 9 0298 446-1090",
-  email: "consultas@bodegafavretto.com",
-  instagram: "@bodegafavretto",
-  website: "bodegafavretto.com",
 },
 {
   id: "w30",
@@ -1275,7 +1205,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Marca histórica cipoleña recuperada, con producción en Chacra El Puente, Cipolletti.",
   shortDescription: "Marca histórica cipoleña recuperada, en Chacra El Puente.",
   hours: "Sin horario público fijo",
-  visitNotes: "Contactar por Instagram o sitio web para coordinar visita.",
   openNow: false,
   wines: [
     "Flor del Prado Pinot Noir",
@@ -1291,10 +1220,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaFlorDelPradoPhoto,
   address: "Chacra El Puente, Ruta Nacional 22 Km 1215 y Calle 225, CP 8324, Cipolletti.",
-  phone: "(0299) 15 574 0166",
-  email: "info@flordelprado.com.ar",
-  instagram: "@fdp.patagonia",
-  website: "flordelprado.com",
 },
 {
   id: "w31",
@@ -1304,7 +1229,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Bodega de Cipolletti, se presenta como \"premium luxury winery\".",
   shortDescription: "Bodega de Cipolletti, se presenta como \"premium luxury winery\".",
   hours: "Horario a confirmar",
-  visitNotes: "Sin datos de contacto ni visitas confirmados.",
   openNow: false,
   wines: ["Tormini Blanc de Blancs", "Verziere Malbec", "Selvapiana Blend de Guarda"],
   shops: [],
@@ -1321,7 +1245,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Proyecto joven entre Allen y Guerrico, marca Arrayán, aún sin bodega propia construida.",
   shortDescription: "Proyecto joven entre Allen y Guerrico, marca Arrayán.",
   hours: "Sin visitas públicas por ahora",
-  visitNotes: "Sin edificio de bodega propio todavía, sin visitas públicas disponibles por ahora.",
   openNow: false,
   wines: [
     "Arrayán Gran Pinot",
@@ -1335,8 +1258,6 @@ const WINERIES_DATA: Winery[] = [
   distance: "",
   image: bodegaPujanteVinedosPatagonicosPhoto,
   address: "Entre Allen y Guerrico, ~10 ha.",
-  instagram: "@bodegapujante",
-  website: "bodegapujante.com",
 },
 {
   id: "w33",
@@ -1346,7 +1267,6 @@ const WINERIES_DATA: Winery[] = [
   description: "Proyecto boutique a cargo del enólogo Agustín Lombroni, con viñedos en Mainqué y San Patricio del Chañar, vinificado en Bodega Gennari.",
   shortDescription: "Proyecto boutique con viñedos en Mainqué y San Patricio del Chañar.",
   hours: "Sin horarios públicos",
-  visitNotes: "Sin horarios públicos, producción de tipo boutique.",
   openNow: false,
   wines: [
     "La Voja Pinot Noir",
@@ -1368,8 +1288,7 @@ const WINERIES_DATA: Winery[] = [
   region: "alto-valle",
   description: "Bodega con orígenes en Fernández Oro, hoy con producción en General Roca y Allen, y el histórico espacio recuperado \"La Falda\" en Cipolletti.",
   shortDescription: "Bodega con orígenes en Fernández Oro, producción en General Roca y Allen.",
-  hours: "Horario a confirmar por teléfono",
-  visitNotes: "Espacio visitable \"Gérôme Marteau - La Falda\" (restaurante/museo, Cipolletti). Horario exacto sin confirmar.",
+  hours: "Horario a confirmar",
   openNow: false,
   wines: [
     "Gérôme Marteau Joven Malbec",
@@ -1387,11 +1306,6 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaGeromeMarteauPhoto,
-  whatsapp: "+54 9 299 411-3947",
-  phone: "+54 9 299 411-3947",
-  email: "bodega.geromemarteau@gmail.com",
-  facebook: "BodegaGeromeMarteau",
-  website: "geromemarteau.com.ar",
 },
 ];
 
@@ -2209,7 +2123,7 @@ const WINES: Wine[] = [
 },
 {
   id: "v73",
-  name: "Miras Trosseau Curioso",
+  name: "Miras Trousseau Curioso",
   varietal: "Trousseau",
   winery: "Bodega Miras",
   style: "Experimental y curioso",
@@ -3816,6 +3730,7 @@ const EVENTS: EventItem[] = [
     when: "Hoy · 19:00",
     city: "Viedma",
     benefit: "1 copa de regalo",
+    timeframe: "hoy",
   },
   {
     id: "e2",
@@ -3825,6 +3740,7 @@ const EVENTS: EventItem[] = [
     when: "Sábado · 20:30",
     city: "Viedma",
     benefit: "10% OFF socios",
+    timeframe: "finde",
   },
   {
     id: "e3",
@@ -3834,6 +3750,7 @@ const EVENTS: EventItem[] = [
     when: "Este finde · 18:00",
     city: "Viedma",
     benefit: "Entrada libre",
+    timeframe: "finde",
   },
 ];
 
@@ -3886,7 +3803,8 @@ function GlobalStyles() {
 
 export default function App() {
   const [tab, setTab] = useState<TabKey>("home");
-  const [detail, setDetail] = useState<DetailState>(null);
+  const [detailStack, setDetailStack] = useState<DetailEntry[]>([]);
+  const detail: DetailState = detailStack[detailStack.length - 1] ?? null;
   const [favorites, setFavorites] = useState<FavoriteItem[]>([
     { id: "v1", name: "Miras Pinot Noir Salvaje Curioso", kind: "wine" },
   ]);
@@ -3905,12 +3823,19 @@ export default function App() {
     };
   }, []);
 
+  const pushDetail = (entry: DetailEntry) =>
+    setDetailStack((stack) => [...stack, entry]);
   const openWine = (id: string, fromShop?: boolean) =>
-    setDetail({ kind: "wine", id, fromShop });
-  const openWinery = (id: string) => setDetail({ kind: "winery", id });
-  const openShop = (id: string) => setDetail({ kind: "shop", id });
-  const closeDetail = () => setDetail(null);
+    pushDetail({ kind: "wine", id, fromShop });
+  const openWinery = (id: string) => pushDetail({ kind: "winery", id });
+  const openShop = (id: string) => pushDetail({ kind: "shop", id });
+  const closeDetail = () => setDetailStack((stack) => stack.slice(0, -1));
   const toggleMenu = () => setShowMenu((prev) => !prev);
+
+  const goToTab = (nextTab: TabKey) => {
+    setDetailStack([]);
+    setTab(nextTab);
+  };
 
   const isFavorite = (id: string) => favorites.some((f) => f.id === id);
 
@@ -3953,11 +3878,13 @@ export default function App() {
   const clearCart = () => setCart([]);
 
   const detailView = useMemo(() => {
-    if (!detail) return null;
-    if (detail.kind === "wine") return WINES.find((x) => x.id === detail.id);
-    if (detail.kind === "winery") return WINERIES.find((x) => x.id === detail.id);
-    return SHOPS.find((x) => x.id === detail.id);
-  }, [detail]);
+    const current = detailStack[detailStack.length - 1];
+    if (!current) return null;
+    if (current.kind === "wine") return WINES.find((x) => x.id === current.id);
+    if (current.kind === "winery")
+      return WINERIES.find((x) => x.id === current.id);
+    return SHOPS.find((x) => x.id === current.id);
+  }, [detailStack]);
 
   const results = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -4041,7 +3968,7 @@ export default function App() {
               <button
                 style={styles.menuItem}
                 onClick={() => {
-                  setTab("profile");
+                  goToTab("profile");
                   setShowMenu(false);
                 }}
               >
@@ -4050,7 +3977,7 @@ export default function App() {
               <button
                 style={styles.menuItem}
                 onClick={() => {
-                  setTab("home");
+                  goToTab("home");
                   setShowMenu(false);
                 }}
               >
@@ -4105,6 +4032,10 @@ export default function App() {
                   wine={detailView as Wine}
                   onBack={closeDetail}
                   onOpenShop={openShop}
+                  onOpenWinery={(name) => {
+                    const found = WINERIES.find((w) => w.name === name);
+                    if (found) openWinery(found.id);
+                  }}
                   onOpenWine={(name) => {
                     const found = WINES.find((w) => w.name === name);
                     if (found) openWine(found.id);
@@ -4145,12 +4076,12 @@ export default function App() {
                 onOpenWine={openWine}
                 onOpenWinery={openWinery}
                 onOpenShop={openShop}
-                onSetTab={setTab}
+                onSetTab={goToTab}
                 favorites={favorites}
                 toggleFavorite={toggleFavorite}
               />
             ) : tab === "map" ? (
-              <MapScreen onOpenWine={openWine} onSetTab={setTab} />
+              <MapScreen onOpenWine={openWine} onSetTab={goToTab} />
             ) : tab === "search" ? (
               <SearchScreen
                 search={search}
@@ -4163,14 +4094,14 @@ export default function App() {
             ) : tab === "bodegas" ? (
               <RegionsScreen onOpenWinery={openWinery} />
             ) : tab === "winelist" ? (
-              <WineListScreen onOpenWine={openWine} onSetTab={setTab} />
+              <WineListScreen onOpenWine={openWine} onSetTab={goToTab} />
             ) : (
               <ProfileScreen favorites={favorites} />
             )}
           </div>
      )}
 
-          {!detail && <BottomNav tab={tab} setTab={setTab} />}
+          {!detail && <BottomNav tab={tab} setTab={goToTab} />}
         </div>
       </div>
     </>
@@ -5202,7 +5133,7 @@ function HomeScreen({
           <div key={w.id} style={styles.horizontalImageCard}>
             <ImageCard
               title={w.name}
-              subtitle={`${w.city} · ${w.distance}`}
+              subtitle={w.distance ? `${w.city} · ${w.distance}` : w.city}
               description={w.description}
               feature={w.activity}
               image={w.image}
@@ -5806,10 +5737,20 @@ function shopHeaderImage(name: string): string {
   return SHOP_HEADER_IMAGES[name] || GENERIC_VINOTECA_PHOTO;
 }
 
+const AGENDA_FILTERS: Array<{ key: EventTimeframe; label: string }> = [
+  { key: "ahora", label: "Ahora" },
+  { key: "hoy", label: "Hoy" },
+  { key: "finde", label: "Este finde" },
+];
+
+const timeframeLabel = (tf: EventTimeframe) =>
+  AGENDA_FILTERS.find((f) => f.key === tf)?.label ?? "";
+
 function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
-  const [filter, setFilter] = useState("Hoy");
+  const [filter, setFilter] = useState<EventTimeframe>("hoy");
   const [openEvent, setOpenEvent] = useState<EventItem | null>(null);
-  const nextEvent = EVENTS[0];
+  const shownEvents = EVENTS.filter((e) => e.timeframe === filter);
+  const nextEvent = shownEvents[0];
 
   if (openEvent) {
     return (
@@ -5846,7 +5787,9 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
               <span style={styles.locationEyebrow}>Hoy en Río Negro</span>
             </div>
             <div style={styles.locationGreeting}>
-              {EVENTS.length} eventos cerca tuyo
+              {shownEvents.length === 1
+                ? "1 evento cerca tuyo"
+                : `${shownEvents.length} eventos cerca tuyo`}
             </div>
             {nextEvent && (
               <div style={styles.locationBody}>
@@ -5856,43 +5799,52 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
           </div>
 
           <div style={styles.rowGap10Wrap}>
-            {["Ahora", "Hoy", "Este finde"].map((x) => (
+            {AGENDA_FILTERS.map((f) => (
               <button
-                key={x}
-                style={filter === x ? styles.chipActive : styles.chip}
-                onClick={() => setFilter(x)}
+                key={f.key}
+                style={filter === f.key ? styles.chipActive : styles.chip}
+                onClick={() => setFilter(f.key)}
               >
-                {x}
+                {f.label}
               </button>
             ))}
           </div>
 
-          {EVENTS.map((e) => (
-            <div key={e.id} style={styles.card}>
-              <div style={styles.rowBetweenTop}>
-                <div>
-                  <div style={styles.itemTitle}>{e.title}</div>
-                  <div style={styles.itemSub}>
-                    {e.organizer ? `${e.organizer} · ` : ""}
-                    {e.place} · {e.city}
-                  </div>
-                </div>
-                <Badge kind="neutral">{filter}</Badge>
+          {shownEvents.length === 0 ? (
+            <div style={styles.card}>
+              <div style={styles.itemTitle}>Sin actividades</div>
+              <div style={styles.placeText}>
+                No hay actividades para este momento. Probá con otro filtro.
               </div>
-
-              <div style={styles.grid2}>
-                <InfoBox label="Horario" value={e.when} />
-                <InfoBox label="Beneficio" value={e.benefit} />
-              </div>
-
-              <button
-                style={styles.primaryButton}
-                onClick={() => setOpenEvent(e)}
-              >
-                Ver actividad
-              </button>
             </div>
-          ))}
+          ) : (
+            shownEvents.map((e) => (
+              <div key={e.id} style={styles.card}>
+                <div style={styles.rowBetweenTop}>
+                  <div>
+                    <div style={styles.itemTitle}>{e.title}</div>
+                    <div style={styles.itemSub}>
+                      {e.organizer ? `${e.organizer} · ` : ""}
+                      {e.place} · {e.city}
+                    </div>
+                  </div>
+                  <Badge kind="neutral">{timeframeLabel(e.timeframe)}</Badge>
+                </div>
+
+                <div style={styles.grid2}>
+                  <InfoBox label="Horario" value={e.when} />
+                  <InfoBox label="Beneficio" value={e.benefit} />
+                </div>
+
+                <button
+                  style={styles.primaryButton}
+                  onClick={() => setOpenEvent(e)}
+                >
+                  Ver actividad
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </>
@@ -6006,6 +5958,7 @@ function WineDetail({
   wine,
   onBack,
   onOpenShop,
+  onOpenWinery,
   onOpenWine,
   toggleFavorite,
   isFavorite,
@@ -6015,6 +5968,7 @@ function WineDetail({
   wine: Wine;
   onBack: () => void;
   onOpenShop: (id: string) => void;
+  onOpenWinery: (name: string) => void;
   onOpenWine: (name: string) => void;
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
@@ -6022,6 +5976,8 @@ function WineDetail({
   onAddToCart: (wine: Wine) => void;
 }) {
   const [justAdded, setJustAdded] = useState(false);
+
+  const originWinery = WINERIES.find((w) => w.name === wine.winery);
 
   const handleAddToCart = () => {
     onAddToCart(wine);
@@ -6067,7 +6023,17 @@ function WineDetail({
           <Badge kind="neutral">{wine.tag}</Badge>
           <div style={styles.detailTitle}>{wine.name}</div>
           <div style={styles.itemSub}>
-            {wine.winery} · {wine.varietal}
+            {originWinery ? (
+              <button
+                style={styles.wineryLinkButton}
+                onClick={() => onOpenWinery(wine.winery)}
+              >
+                {wine.winery}
+              </button>
+            ) : (
+              wine.winery
+            )}{" "}
+            · {wine.varietal}
           </div>
 
           <div style={styles.grid3}>
@@ -6079,6 +6045,18 @@ function WineDetail({
           <div style={styles.placeText}>{wine.description || wine.note}</div>
         </div>
       </div>
+
+      {originWinery && (
+        <Block title="Bodega de origen">
+          <ResultRow
+            title={originWinery.name}
+            subtitle={`${originWinery.city} · ${
+              REGION_META[originWinery.region].title
+            }`}
+            onClick={() => onOpenWinery(originWinery.name)}
+          />
+        </Block>
+      )}
 
       {fromShop ? (
         <div style={styles.wineCartCard}>
@@ -6148,13 +6126,7 @@ function WineryDetail({
   const contactInfo = (
     [
       { label: "Dirección", value: winery.address },
-      { label: "Horario / visitas", value: winery.visitNotes || winery.hours },
-      { label: "Teléfono", value: winery.phone },
-      { label: "WhatsApp", value: winery.whatsapp },
-      { label: "Email", value: winery.email },
-      { label: "Instagram", value: winery.instagram },
-      { label: "Facebook", value: winery.facebook },
-      { label: "Sitio web", value: winery.website },
+      { label: "Horario de atención", value: winery.hours },
     ] as Array<{ label: string; value?: string }>
   ).filter((item): item is { label: string; value: string } => Boolean(item.value));
 
@@ -6203,8 +6175,8 @@ function WineryDetail({
       </div>
 
       {contactInfo.length > 0 && (
-        <Block title="Contacto y visitas">
-          <div style={styles.grid2}>
+        <Block title="Dirección y horario">
+          <div style={styles.stack12}>
             {contactInfo.map((item) => (
               <InfoBox key={item.label} label={item.label} value={item.value} />
             ))}
@@ -6307,7 +6279,7 @@ function ShopDetail({
         <div style={styles.imageCardBody}>
           <div style={styles.sectionTitle}>{shop.name}</div>
           <div style={styles.itemSub}>
-            {shop.city} · {shop.distance}
+            {shop.distance ? `${shop.city} · ${shop.distance}` : shop.city}
           </div>
 
           <div style={{ ...styles.rowGap8, marginTop: 10 }}>
@@ -7405,6 +7377,17 @@ const styles: Record<string, React.CSSProperties> = {
     background: "transparent",
     color: theme.river,
     fontWeight: 700,
+    cursor: "pointer",
+  },
+  wineryLinkButton: {
+    border: 0,
+    background: "transparent",
+    padding: 0,
+    margin: 0,
+    color: theme.river,
+    font: "inherit",
+    fontWeight: 700,
+    textDecoration: "underline",
     cursor: "pointer",
   },
   itemTitle: {
