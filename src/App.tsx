@@ -4132,7 +4132,7 @@ export default function App() {
     </>
   );
 }
-const SHOP_TABS = ["Vinos", "Cajas Experiencia", "Cursos"] as const;
+const SHOP_TABS = ["Cajas Experiencia", "Vinos", "Cursos"] as const;
 
 const SHOP_VARIETAL_BANNERS: Array<{
   label: string;
@@ -4219,7 +4219,7 @@ function ShopScreen({
   isFavorite: (id: string) => boolean;
 }) {
   const [activeShopTab, setActiveShopTab] =
-    useState<(typeof SHOP_TABS)[number]>("Vinos");
+    useState<(typeof SHOP_TABS)[number]>("Cajas Experiencia");
   const [activeVarietal, setActiveVarietal] = useState<string | null>(null);
   const [openProduct, setOpenProduct] = useState<{
     name: string;
@@ -4378,18 +4378,15 @@ function ShopMainView({
   const headerConfig =
     activeShopTab === "Cajas Experiencia"
       ? {
-          imageUrl: experienciaPinotPhoto,
           title: "Cajas Experiencia",
           subtitle: "La provincia entera, en una caja.",
         }
       : activeShopTab === "Cursos"
       ? {
-          imageUrl: cursosPhoto,
           title: "Cursos de Vino",
           subtitle: "Aprendé, descubrí y viví el vino Rionegrino.",
         }
       : {
-          imageUrl: tiendaHeaderPhoto,
           title: "Tienda",
           subtitle: "Nuestros vinos, para vos — con envío a todo el país.",
         };
@@ -4402,7 +4399,11 @@ function ShopMainView({
 
   return (
     <>
-      <PhotoHeader {...headerConfig} onMenuClick={onMenuClick} />
+      <PhotoHeader
+        {...headerConfig}
+        imageUrl={tiendaHeaderPhoto}
+        onMenuClick={onMenuClick}
+      />
       <div style={styles.sheetSurface}>
         <div style={styles.stack22}>
           <div style={styles.chipsRow}>

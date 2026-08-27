@@ -1,0 +1,58 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTES PANTALLA TIENDA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Son dos cambios chicos y acotados a la pantalla Tienda (ShopScreen)
+— no toques nada de Ruta del Vino, fichas de bodega/vino, Agenda, Mapa ni el
+fix de scroll ya aplicado.
+
+============================================
+CAMBIO 1 — Orden de los chips y tab por defecto
+============================================
+Actualmente SHOP_TABS = ["Vinos", "Cajas Experiencia", "Cursos"], y el tab que
+se abre por defecto al entrar a Tienda es "Vinos".
+
+Quiero:
+- Orden de los chips: Cajas Experiencia, Vinos, Cursos (en ese orden, de
+  izquierda a derecha).
+- El tab activo por defecto al entrar a Tienda debe ser "Cajas Experiencia" —
+  o sea, apenas se abre la pantalla Tienda, lo primero que se ve es el
+  contenido de Cajas Experiencia, no Vinos.
+
+============================================
+CAMBIO 2 — La imagen del header no debe cambiar entre tabs
+============================================
+Actualmente el header de la pantalla Tienda (PhotoHeader) usa una imagen
+distinta según el tab activo:
+- Vinos → tiendaHeaderPhoto (el carrito de compras con botellas)
+- Cajas Experiencia → experienciaPinotPhoto
+- Cursos → cursosPhoto
+
+Quiero que la imagen del header sea siempre la misma en los tres tabs:
+tiendaHeaderPhoto (el carrito de compras con botellas). El título y el
+subtítulo de cada tab pueden seguir cambiando como hasta ahora — solo la
+imagen de fondo del header queda fija.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WINERIES_DATA, WINES, contactInfo, ni ninguna otra pantalla.
+- No tocar el mecanismo de scroll (useLayoutEffect / detailStack) agregado en
+  el prompt anterior.
+- No borrar los imports de experienciaPinotPhoto ni cursosPhoto si se siguen
+  usando en otro lado del archivo (por ejemplo, en Cajas Experiencia dentro del
+  listado o en PhotoHeader del carrito/checkout) — solo dejan de usarse como
+  imagen del header de ShopScreen.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores (fork-ts-checker en 0 issues).
+2. Probar en el navegador: entrar a Tienda y confirmar que se ve primero
+   "Cajas Experiencia", con los chips en el orden Cajas Experiencia / Vinos /
+   Cursos. Tocar cada chip y confirmar que la imagen del header no cambia
+   (siempre el carrito con botellas), aunque el título/subtítulo sí cambien.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
