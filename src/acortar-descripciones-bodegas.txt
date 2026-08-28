@@ -1,0 +1,80 @@
+INSTRUCCIONES PARA CLAUDE CODE - ACORTAR DESCRIPCIONES LARGAS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio de contenido puntual y acotado: reemplazar el campo
+"description" de 8 bodegas en WINERIES_DATA por el texto nuevo que doy abajo,
+tal cual está escrito. No reformules, no ajustes el texto ni agregues nada —
+son textos ya aprobados, copiar y pegar exacto.
+
+============================================
+CONTEXTO
+============================================
+El campo "description" de estas 8 bodegas es mucho más largo que el del resto
+del catálogo (que ronda 90-170 caracteres, con Antigua Bodega Patagónica en
+132 como referencia). Esto hace que sus tarjetas en Home ("Bodegas
+recomendadas") y otras pantallas se vean desproporcionadas frente al resto.
+No se toca "shortDescription" (campo distinto, no relacionado). No se toca
+ningún otro campo de estas bodegas (city, region, hours, wines, etc.).
+
+============================================
+CAMBIOS — reemplazar el texto de "description" tal cual
+============================================
+
+1) Bodega Trina
+NUEVO: "Proyecto familiar que revitalizó viñedos antiguos del Valle de Río
+Colorado desde 2021, con un blend de Malbec insignia de tres suelos
+distintos."
+
+2) Viñas de Lucía
+NUEVO: "Emprendimiento familiar desde 2004, marca Savu, uno de los pocos
+proyectos del Valle Inferior de Río Negro, con influencia marítima
+atlántica."
+
+3) Bodega Don Amaro
+NUEVO: "Bodega y olivar de la familia Mañana en San Antonio Oeste, primer
+vino elaborado en la región, parte del circuito Caminos del Vino."
+
+4) Ribera del Cuarzo
+NUEVO: "Viñedo único en Valle Azul, con suelos de ceniza y cuarzo de origen
+volcánico. Marca Araucana, boutique orientada a exportación, liderada por
+Felipe Menéndez desde 2018."
+
+5) Familia De Bernardi
+NUEVO: "La bodega más austral de Río Negro (2011), con prácticas orgánicas
+y biodinámicas. Su Pinot Noir 2020 obtuvo 95 puntos del crítico Tim Atkin."
+
+6) Enclave Sur
+NUEVO: "Proyecto del Grupo Trafen, con chacras en Choele Choel, Darwin, Luis
+Beltrán y Paso Piedra, en el Valle Medio. Venta directa y entrega a
+domicilio."
+
+7) Bodega Chacra
+NUEVO: "Productora de renombre mundial de Pinot Noir y Chardonnay
+biodinámicos, fundada en 2004 por Piero Incisa della Rocchetta. Sin sala de
+degustación pública."
+
+8) Familia Herrero
+NUEVO: "Mini emprendimiento familiar en Guardia Mitre, sobre la costa del
+Río Negro. Producción a pequeña escala, sin visitas turísticas confirmadas."
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar shortDescription, city, region, hours, wines, address ni ningún
+  otro campo de estas 8 bodegas.
+- No tocar ninguna otra bodega del catálogo.
+- No tocar WINES, Tienda, ni ninguna pantalla o mecanismo de código.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Confirmar que los 8 textos nuevos quedaron exactos (sin reformular) en
+   WINERIES_DATA.
+3. Ver en el navegador que las tarjetas de estas 8 bodegas (donde aparezcan:
+   Home, Ruta del Vino) se vean parejas con el resto del catálogo.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

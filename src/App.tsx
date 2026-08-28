@@ -708,7 +708,7 @@ const WINERIES_DATA: Winery[] = [
   city: "San Javier",
   region: "mar",
   description:
-    "Emprendimiento familiar que arrancó en 2004 con la plantación de sus primeros viñedos, a cargo del enólogo Juan Alberto Millamán. Elabora unas 30.000 botellas anuales bajo la marca Savu. Es de los pocos proyectos vitivinícolas del Valle Inferior de Río Negro, marcado por el viento y la influencia marítima de la Patagonia atlántica.",
+    "Emprendimiento familiar desde 2004, marca Savu, uno de los pocos proyectos del Valle Inferior de Río Negro, con influencia marítima atlántica.",
   shortDescription:
     "Emprendimiento familiar de San Javier, sobre la costa, bajo la marca Savu.",
   hours: "Horario a confirmar",
@@ -727,7 +727,7 @@ const WINERIES_DATA: Winery[] = [
   city: "Guardia Mitre",
   region: "mar",
   description:
-    "Mini emprendimiento familiar en Guardia Mitre, sobre la costa del Río Negro. Producción a pequeña escala, sin visitas turísticas públicas confirmadas por el momento.",
+    "Mini emprendimiento familiar en Guardia Mitre, sobre la costa del Río Negro. Producción a pequeña escala, sin visitas turísticas confirmadas.",
   shortDescription:
     "Mini bodega familiar de Guardia Mitre, sobre la costa del Río Negro.",
   hours: "Sin visitas públicas confirmadas",
@@ -745,7 +745,7 @@ const WINERIES_DATA: Winery[] = [
   city: "San Antonio Oeste",
   region: "mar",
   description:
-    "Bodega y olivar de la familia Mañana, pionera en la olivicultura de San Antonio Oeste (marca Oleosan), en el cruce de Ruta 3 y Ruta 251. Es el primer vino elaborado en la región, hoy también bajo la marca Don Maro. Forma parte del circuito oficial Caminos del Vino (establecimiento N° 14, sumado en marzo 2025).",
+    "Bodega y olivar de la familia Mañana en San Antonio Oeste, primer vino elaborado en la región, parte del circuito Caminos del Vino.",
   shortDescription:
     "Bodega y olivar de San Antonio Oeste, con recorrido por viñedos y degustación.",
   hours: "08:00 a 20:00, todos los días",
@@ -764,7 +764,7 @@ const WINERIES_DATA: Winery[] = [
   city: "Choele Choel",
   region: "valle-medio",
   description:
-    "Proyecto del Grupo Trafen, con chacras en la isla de Choele Choel, Darwin, Luis Beltrán y Paso Piedra, en pleno Valle Medio. Producción orientada a la venta directa y entrega a domicilio en Choele Choel.",
+    "Proyecto del Grupo Trafen, con chacras en Choele Choel, Darwin, Luis Beltrán y Paso Piedra, en el Valle Medio. Venta directa y entrega a domicilio.",
   shortDescription:
     "Bodega del Valle Medio, con vinos artesanales de Choele Choel.",
   hours: "Solo entrega a domicilio en Choele Choel",
@@ -793,7 +793,7 @@ const WINERIES_DATA: Winery[] = [
   city: "Río Colorado",
   region: "valle-medio",
   description:
-    "Proyecto familiar que revitalizó viñedos antiguos del Valle de Río Colorado desde 2021. La chacra tiene tres tipos de suelo distintos (arcilloso con clones de Tupungato, calcáreo y rocoso con clones del Alto Valle, y arenoso característico de la costa de Río Colorado), y de esa combinación surge su blend de Malbec insignia. También suman Pinot Noir y Merlot para sumar acento patagónico a los cortes.",
+    "Proyecto familiar que revitalizó viñedos antiguos del Valle de Río Colorado desde 2021, con un blend de Malbec insignia de tres suelos distintos.",
   shortDescription:
     "Bodega de Río Colorado, con restaurante propio y alojamiento boutique junto al río.",
   hours: "Todos los días excepto sábados (reservar)",
@@ -812,7 +812,7 @@ const WINERIES_DATA: Winery[] = [
   city: "El Bolsón",
   region: "cordillera",
   description:
-    "Trabajan con prácticas orgánicas y biodinámicas, sin filtrar ni clarificar, con levaduras nativas y muy pocos sulfitos. La bodega más austral de Río Negro, fundada en 2011. El Pinot Noir 2020 fue reconocido con 95 puntos por el crítico internacional Tim Atkin, entre los 4 mejores Pinot Noir del país.",
+    "La bodega más austral de Río Negro (2011), con prácticas orgánicas y biodinámicas. Su Pinot Noir 2020 obtuvo 95 puntos del crítico Tim Atkin.",
   shortDescription:
     "La bodega más austral de Río Negro, en El Bolsón, con Pinot Noir premiado.",
   hours: "Con reserva previa (sin horario fijo)",
@@ -836,7 +836,7 @@ const WINERIES_DATA: Winery[] = [
   city: "El Cuy (Valle Azul)",
   region: "linea-sur",
   description:
-    "Viñedo único en Valle Azul, sobre la barda del antiguo lecho del Río Negro, con suelos de ceniza, cuarzo y carbonato de calcio de origen eólico y volcánico. Filosofía de \"vigneron\" francés, con mínima intervención. Marca Araucana, boutique orientada a exportación (~180.000 botellas/año, 23 mercados), liderada por Felipe Menéndez desde 2018.",
+    "Viñedo único en Valle Azul, con suelos de ceniza y cuarzo de origen volcánico. Marca Araucana, boutique orientada a exportación, liderada por Felipe Menéndez desde 2018.",
   shortDescription:
     "Bodega boutique de Línea Sur, orientada a exportación, en la barda de Valle Azul.",
   hours: "Horario a confirmar",
@@ -1139,7 +1139,7 @@ const WINERIES_DATA: Winery[] = [
   name: "Bodega Chacra",
   city: "Mainqué",
   region: "alto-valle",
-  description: "Productora de renombre mundial de Pinot Noir y Chardonnay biodinámicos, fundada en 2004 por Piero Incisa della Rocchetta (nieto del creador del Sassicaia). Sin sala de degustación pública.",
+  description: "Productora de renombre mundial de Pinot Noir y Chardonnay biodinámicos, fundada en 2004 por Piero Incisa della Rocchetta. Sin sala de degustación pública.",
   shortDescription: "Productora de renombre mundial de Pinot Noir y Chardonnay biodinámicos.",
   hours: "Sin sala de degustación pública",
   openNow: false,
