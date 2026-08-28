@@ -1,0 +1,165 @@
+INSTRUCCIONES PARA CLAUDE CODE - PENDIENTES DE AUDITORÍA (I4, I5, I7/I8, I9/I10, I11)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo (qué archivo/función
+cambia y cómo) y esperá mi aprobación. Es un cambio grande en cantidad de items
+chicos — si te resulta más manejable, aplicalo en bloques internos, pero el
+resultado final debe ser revisable como un solo conjunto antes de commitear.
+
+============================================
+CONTEXTO
+============================================
+Esto retoma la auditoría general ya hecha (R1/R2/R3 y D4/D5/D6 ya resueltos).
+Quedan los items cosméticos/de comportamiento: I4, I5, I7, I8, I9, I10, I11.
+Ya se tomaron las decisiones de producto necesarias, están detalladas abajo por
+item. No toques Tienda (ShopScreen), WINERIES_DATA/WINES (salvo lectura), ni el
+mecanismo de scroll ya implementado.
+
+============================================
+I4 — Secciones vacías con solo el título
+============================================
+"Dónde conseguir sus vinos" (ficha de bodega, cuando shops: []) y "Disponible
+en" (ficha de vino, cuando availableAt: []): en vez de mostrar el título solo
+o dejar la sección vacía, mostrar un texto genérico tipo "Sin distribución
+confirmada" en lugar del listado. No inventar ninguna vinoteca ni dato.
+
+============================================
+I5 — Botones sin acción
+============================================
+Resolver cada uno así:
+
+- "Cómo llegar" (ficha de bodega): que abra Google Maps con la dirección de la
+  bodega, en una pestaña nueva. Usar el campo address ya existente para armar
+  la URL de búsqueda de Google Maps (formato tipo
+  https://www.google.com/maps/search/?api=1&query=<address codificado>).
+  Si una bodega no tiene address cargado, ocultar el botón para esa bodega en
+  vez de mostrarlo roto.
+
+- "Quiero ir →" (detalle de evento): mismo criterio — abrir Google Maps con la
+  dirección de la bodega/vinoteca asociada al evento (event.place). Si no se
+  puede resolver una dirección para ese place, ocultar el botón.
+
+- "Ver vinos →" (ficha de bodega): que haga scroll suave dentro de la misma
+  pantalla hasta la sección "Vinos de esta bodega" (grilla de vinos), sin
+  navegar a otra pantalla.
+
+- "Ver todos" de "Vinos destacados" dentro de la ficha de UNA bodega
+  específica: revisá si esa sección ya muestra todos los vinos de esa bodega
+  (sin límite). Si los muestra todos, ocultá el botón para esa bodega (no
+  aplica lo mismo a todas si alguna tiene un límite real). Si encontrás que
+  ninguna bodega tiene límite ahí, ocultalo en todos los casos.
+
+- "Cambiar ciudad" (Home) y "Cambiar" / "Cambiar ciudad" (Mapa): ocultar estos
+  botones por ahora. Son placeholders de una funcionalidad de geolocalización
+  que todavía no existe — no las implementes, y no inventes ningún selector de
+  ciudad. Se van a resolver en un proyecto aparte más adelante.
+
+Si alguno de estos botones no es el que estás viendo en el código (nombre de
+función distinto, ubicación distinta), aplicá el mismo criterio de intención
+y avisame la diferencia en el plan.
+
+============================================
+I7 — El buscador matchea texto de la descripción
+============================================
+Ajustar el buscador para que compare la búsqueda solo contra: nombre de vino,
+nombre de bodega, varietal y nombre de vinoteca — NO contra el texto de
+descripciones largas. Esto debería eliminar el falso positivo de "Chacra"
+trayendo bodegas que solo mencionan la palabra en su descripción.
+
+Además: la búsqueda de vinotecas hoy siempre devuelve las 4 (porque su lista
+de vinos es "todo el catálogo"). Ajustar para que en la sección "Dónde
+comprar" del buscador solo aparezcan vinotecas si la búsqueda realmente
+matchea su nombre (no listar las 4 automáticamente para cualquier término).
+
+============================================
+I8 — Búsqueda sin resultados: sin mensaje de estado vacío
+============================================
+Cuando una búsqueda no devuelve nada en ninguna de las secciones (Vinos,
+Bodegas, Dónde comprar), mostrar un mensaje único de estado vacío tipo "No
+encontramos resultados para tu búsqueda" en vez de dejar los encabezados
+sueltos sin contenido.
+
+============================================
+I9 — Vinotecas con "Beneficio a confirmar"
+============================================
+En la ficha de vino, bloque "Disponible en": si el campo de beneficio de una
+vinoteca es un placeholder tipo "a confirmar" (dato no real), ocultar esa
+línea en vez de mostrarla — mismo criterio que ya usamos con contactInfo
+(no mostrar campos sin dato real confirmado).
+
+============================================
+I10 — Varietal "No especificado"
+============================================
+Donde el varietal de un vino se muestra como "No especificado" (por venir
+vacío o nulo), ocultar ese chip/etiqueta en vez de mostrar el placeholder.
+
+============================================
+I11 — Acceso a Perfil
+============================================
+Perfil no va en la barra de navegación inferior (ya tiene 5 tabs, no hay que
+agregar un sexto). En su lugar, agregar un ícono de perfil (silueta de
+persona) fijo en el header, visible en las pantallas principales (Home, Mapa,
+Agenda, Bodegas, Tienda), que al tocarlo lleve directo a Perfil. Reutilizar el
+ícono/menú que ya exista en el proyecto si hay algo similar; si no, usar un
+ícono simple ya disponible en las librerías del proyecto (no agregar una
+librería nueva solo para esto).
+
+============================================
+CAMBIO ADICIONAL — Home: "Vinos recomendados" y "Bodegas recomendadas"
+============================================
+Actualmente ambas secciones muestran el catálogo completo (212 vinos / 35
+bodegas) en un scroller horizontal, lo cual no tiene sentido como
+"recomendados" y hace que el botón "Ver todos" no cumpla ninguna función.
+
+"Vinos recomendados":
+- Mostrar 10 vinos en total.
+- Los primeros 3 deben ser de Antigua Bodega Patagónica (ya es la bodega que
+  el sistema prioriza en todos los listados).
+- Los 7 restantes deben repartirse entre las otras 4 zonas (las que use
+  RUTA_ZONES / region, excluyendo la zona de Antigua Bodega Patagónica),
+  intentando una distribución pareja entre esas 4 zonas.
+- El botón "Ver todos" debe llevar a la pantalla que ya muestra el catálogo
+  completo de vinos (la actual, con los 212).
+
+"Bodegas recomendadas":
+- Mostrar 5 bodegas en total.
+- La primera debe ser Antigua Bodega Patagónica.
+- Las 4 restantes deben repartirse entre las otras 4 zonas (una de cada una,
+  si es posible).
+- El botón "Ver todos" debe llevar a la pantalla que ya muestra las 35
+  bodegas completas (Ruta del Vino).
+
+Mostrame en el plan qué criterio de selección vas a usar dentro de cada zona
+(por ejemplo: las primeras del array por zona, u otro criterio determinístico)
+— no hace falta que sea aleatorio, pero sí consistente entre recargas.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ShopScreen / Tienda.
+- No tocar WINERIES_DATA ni WINES (excepto lectura).
+- No tocar el mecanismo de scroll (useLayoutEffect / detailStack / scrollRef).
+- No implementar nada de geolocalización real todavía — los links de Google
+  Maps de este prompt usan la dirección ya cargada en texto, no GPS.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores (fork-ts-checker en 0 issues).
+2. Probar en el navegador (dev server ya corriendo):
+   - Home: confirmar 10 vinos (3 Antigua primero) y 5 bodegas (Antigua
+     primera) recomendados, y que "Ver todos" lleve al catálogo completo.
+   - Ficha de bodega sin shops: mensaje "Sin distribución confirmada", no
+     sección vacía.
+   - "Cómo llegar" abre Google Maps en pestaña nueva con la dirección
+     correcta.
+   - "Ver vinos →" hace scroll a la grilla de vinos, sin cambiar de pantalla.
+   - Buscador: "Chacra" ya no trae bodegas por coincidencia en la
+     descripción; una búsqueda sin resultados muestra el mensaje de estado
+     vacío.
+   - Ficha de vino: sin "Beneficio a confirmar" ni "No especificado" visibles.
+   - Ícono de Perfil en el header lleva a la pantalla de Perfil.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

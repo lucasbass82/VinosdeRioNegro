@@ -3760,6 +3760,103 @@ const EVENTS: EventItem[] = [
   },
 ];
 
+// ---- Helpers de auditoría (I4–I11) ----
+
+const mapsUrl = (query: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+const openInMaps = (query: string) => {
+  window.open(mapsUrl(query), "_blank", "noopener");
+};
+
+// Dirección para el "place" de un evento: primero vinoteca, luego bodega.
+const addressForPlace = (place: string): string | null => {
+  const shop = SHOPS.find((s) => s.name === place);
+  if (shop) return `${shop.address}, ${shop.city}`;
+  const winery = WINERIES.find((w) => w.name === place);
+  if (winery && winery.address) return `${winery.address}, ${winery.city}`;
+  return null;
+};
+
+// Campos con valor placeholder (dato no confirmado) que no deben mostrarse.
+const isPlaceholderText = (value?: string) =>
+  !value || /a confirmar|pendiente|no especificado/i.test(value);
+
+const hasRealVarietal = (varietal?: string) =>
+  !!varietal && varietal !== "No especificado";
+
+// Subtítulo "Bodega · Varietal", sin el varietal cuando es placeholder.
+const wineSubtitle = (wine: Wine) =>
+  hasRealVarietal(wine.varietal)
+    ? `${wine.winery} · ${wine.varietal}`
+    : wine.winery;
+
+const varietalOrDefault = (varietal: string | undefined, fallback: string) =>
+  hasRealVarietal(varietal) ? (varietal as string) : fallback;
+
+// ---- Recomendados de Home ----
+
+const REGION_OF_WINERY: Record<string, RegionKey> = WINERIES.reduce(
+  (acc, w) => {
+    acc[w.name] = w.region;
+    return acc;
+  },
+  {} as Record<string, RegionKey>
+);
+
+const ANTIGUA_NAME = "Antigua Bodega Patagónica";
+// Las 4 zonas de RUTA_ZONES distintas de la de Antigua Bodega Patagónica (alto-valle).
+const OTHER_ZONES: RegionKey[] = [
+  "cordillera",
+  "valle-medio",
+  "mar",
+  "linea-sur",
+];
+
+// 10 vinos: los primeros 3 de Antigua, luego 7 repartidos parejo entre las otras
+// 4 zonas por round-robin. Criterio dentro de cada zona: orden del array WINES
+// (determinístico, estable entre recargas).
+const HOME_RECOMMENDED_WINES: Wine[] = (() => {
+  const antiguaWines = WINES.filter((w) => w.winery === ANTIGUA_NAME).slice(0, 3);
+
+  const byZone: Record<string, Wine[]> = {};
+  OTHER_ZONES.forEach((zone) => {
+    byZone[zone] = WINES.filter((w) => REGION_OF_WINERY[w.winery] === zone);
+  });
+
+  const picked: Wine[] = [];
+  const cursor: Record<string, number> = {};
+  OTHER_ZONES.forEach((zone) => {
+    cursor[zone] = 0;
+  });
+
+  while (picked.length < 7) {
+    let progressed = false;
+    for (const zone of OTHER_ZONES) {
+      if (picked.length >= 7) break;
+      const next = byZone[zone][cursor[zone]];
+      if (next) {
+        picked.push(next);
+        cursor[zone] += 1;
+        progressed = true;
+      }
+    }
+    if (!progressed) break;
+  }
+
+  return [...antiguaWines, ...picked];
+})();
+
+// 5 bodegas: Antigua primera, luego la primera bodega (orden del array WINERIES)
+// de cada una de las otras 4 zonas.
+const HOME_RECOMMENDED_WINERIES: Winery[] = (() => {
+  const antigua = WINERIES.find((w) => w.name === ANTIGUA_NAME);
+  const rest = OTHER_ZONES.map((zone) =>
+    WINERIES.find((w) => w.region === zone)
+  ).filter((w): w is Winery => Boolean(w));
+  return [...(antigua ? [antigua] : []), ...rest];
+})();
+
 function GlobalStyles() {
   return (
     <style>{`
@@ -3913,26 +4010,18 @@ export default function App() {
   const results = useMemo(() => {
     const q = search.toLowerCase().trim();
 
+    // Solo se compara contra: nombre de vino, bodega, varietal y nombre de
+    // vinoteca. NO contra descripciones largas ni el catálogo completo de la
+    // vinoteca (evita falsos positivos tipo "Chacra" por texto de descripción).
     const wines = WINES.filter((w) =>
-      [w.name, w.varietal, w.winery, w.style, w.tag]
-        .join(" ")
-        .toLowerCase()
-        .includes(q)
+      [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q)
     );
 
     const wineries = WINERIES.filter((w) =>
-      [w.name, w.city, w.region, w.description, ...w.wines]
-        .join(" ")
-        .toLowerCase()
-        .includes(q)
+      [w.name, ...w.wines].join(" ").toLowerCase().includes(q)
     );
 
-    const shops = SHOPS.filter((s) =>
-      [s.name, s.city, s.description, ...s.wines]
-        .join(" ")
-        .toLowerCase()
-        .includes(q)
-    );
+    const shops = SHOPS.filter((s) => s.name.toLowerCase().includes(q));
 
     return {
       wines: q ? wines : WINES,
@@ -3977,6 +4066,7 @@ export default function App() {
   <PhotoHeader
     {...PHOTO_HEADER_CONFIG[tab as keyof typeof PHOTO_HEADER_CONFIG]}
     onMenuClick={toggleMenu}
+    onProfile={() => goToTab("profile")}
   />
 )}
 
@@ -3984,6 +4074,7 @@ export default function App() {
   <Header
     currentTab={tab}
     onMenuClick={toggleMenu}
+    onProfile={() => goToTab("profile")}
   />
 )}
 
@@ -4029,11 +4120,15 @@ export default function App() {
          )}
 
      {tab === "agenda" && !detail ? (
-       <AgendaScreen onMenuClick={toggleMenu} />
+       <AgendaScreen
+         onMenuClick={toggleMenu}
+         onProfile={() => goToTab("profile")}
+       />
      ) : tab === "shop" && !detail ? (
        <ShopScreen
          onOpenWine={(id) => openWine(id, true)}
          onMenuClick={toggleMenu}
+         onProfile={() => goToTab("profile")}
          cart={cart}
          addToCart={addToCart}
          removeFromCart={removeFromCart}
@@ -4200,6 +4295,7 @@ const WINE_COURSES: Array<{ name: string; description: string }> = [
 function ShopScreen({
   onOpenWine,
   onMenuClick,
+  onProfile,
   cart,
   addToCart,
   removeFromCart,
@@ -4210,6 +4306,7 @@ function ShopScreen({
 }: {
   onOpenWine: (id: string) => void;
   onMenuClick: () => void;
+  onProfile?: () => void;
   cart: CartItem[];
   addToCart: (wine: Wine) => void;
   removeFromCart: (wineId: string) => void;
@@ -4265,6 +4362,7 @@ function ShopScreen({
           title="Tu carrito"
           subtitle="Revisá los vinos que elegiste antes de confirmar."
           onMenuClick={onMenuClick}
+          onProfile={onProfile}
         />
         <div style={styles.sheetSurface}>
           <CartScreen
@@ -4285,6 +4383,7 @@ function ShopScreen({
           title="Finalizar compra"
           subtitle="Últimos pasos para completar tu pedido."
           onMenuClick={onMenuClick}
+          onProfile={onProfile}
         />
         <div style={styles.sheetSurface}>
           <CheckoutScreen
@@ -4303,6 +4402,7 @@ function ShopScreen({
           title={openProduct.name}
           subtitle="La Patagonia en una caja"
           onMenuClick={onMenuClick}
+          onProfile={onProfile}
         />
         <div style={styles.sheetSurface}>
           <ProductDetailScreen
@@ -4318,6 +4418,7 @@ function ShopScreen({
       <ShopMainView
         onOpenWine={onOpenWine}
         onMenuClick={onMenuClick}
+        onProfile={onProfile}
         addToCart={addToCart}
         toggleFavorite={toggleFavorite}
         isFavorite={isFavorite}
@@ -4349,6 +4450,7 @@ function ShopScreen({
 function ShopMainView({
   onOpenWine,
   onMenuClick,
+  onProfile,
   addToCart,
   toggleFavorite,
   isFavorite,
@@ -4363,6 +4465,7 @@ function ShopMainView({
 }: {
   onOpenWine: (id: string) => void;
   onMenuClick: () => void;
+  onProfile?: () => void;
   addToCart: (wine: Wine) => void;
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
@@ -4403,6 +4506,7 @@ function ShopMainView({
         {...headerConfig}
         imageUrl={tiendaHeaderPhoto}
         onMenuClick={onMenuClick}
+        onProfile={onProfile}
       />
       <div style={styles.sheetSurface}>
         <div style={styles.stack22}>
@@ -4894,18 +4998,29 @@ function OrderConfirmScreen({ onBackToShop }: { onBackToShop: () => void }) {
 function Header({
   currentTab,
   onMenuClick,
+  onProfile,
 }: {
   currentTab: TabKey;
   onMenuClick: () => void;
+  onProfile?: () => void;
 }) {
  const title = currentTab === "profile" ? "Perfil" : "Buscar vinos";
 
   return (
     <div style={styles.header}>
-      <div style={styles.headerTopRow}>
+      <div style={{ ...styles.headerTopRow, justifyContent: "space-between" }}>
         <button style={styles.menuButton} onClick={onMenuClick}>
           <MenuIcon />
         </button>
+        {onProfile && (
+          <button
+            style={styles.menuButton}
+            onClick={onProfile}
+            aria-label="Perfil"
+          >
+            <PersonIcon />
+          </button>
+        )}
       </div>
 
       <div
@@ -4956,6 +5071,7 @@ function PhotoHeader({
   title,
   subtitle,
   onMenuClick,
+  onProfile,
   gradient,
   height = 230,
   backgroundSize = "cover",
@@ -4964,6 +5080,7 @@ function PhotoHeader({
   title: string;
   subtitle: string;
   onMenuClick: () => void;
+  onProfile?: () => void;
   gradient?: string;
   height?: number;
   backgroundSize?: string;
@@ -4981,12 +5098,23 @@ function PhotoHeader({
         <button style={styles.glassButton} onClick={onMenuClick}>
           <MenuIcon />
         </button>
-        <div style={styles.glassLogoBadge}>
-          <img
-            src={logoIcon}
-            alt="Vinos de Río Negro"
-            style={{ width: 28, height: 28, objectFit: "contain" }}
-          />
+        <div style={styles.rowGap8}>
+          {onProfile && (
+            <button
+              style={styles.glassButton}
+              onClick={onProfile}
+              aria-label="Perfil"
+            >
+              <PersonIcon />
+            </button>
+          )}
+          <div style={styles.glassLogoBadge}>
+            <img
+              src={logoIcon}
+              alt="Vinos de Río Negro"
+              style={{ width: 28, height: 28, objectFit: "contain" }}
+            />
+          </div>
         </div>
       </div>
 
@@ -5094,7 +5222,6 @@ function HomeScreen({
           >
             Ver disponibles cerca →
           </button>
-          <button style={styles.secondarySoftButton}>Cambiar ciudad</button>
         </div>
       </div>
 
@@ -5141,7 +5268,7 @@ function HomeScreen({
       />
 
       <div style={styles.horizontalScroller}>
-        {WINES.map((wine) => (
+        {HOME_RECOMMENDED_WINES.map((wine) => (
           <div key={wine.id} style={styles.horizontalImageCard}>
             <WineVisualRow wine={wine} onClick={() => onOpenWine(wine.id)} />
           </div>
@@ -5155,7 +5282,7 @@ function HomeScreen({
       />
 
       <div style={styles.horizontalScroller}>
-        {WINERIES.map((w) => (
+        {HOME_RECOMMENDED_WINERIES.map((w) => (
           <div key={w.id} style={styles.horizontalImageCard}>
             <ImageCard
               title={w.name}
@@ -5194,7 +5321,9 @@ function WineListScreen({
   onOpenWine: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
 }) {
-  const varietals = Array.from(new Set(WINES.map((w) => w.varietal)));
+  const varietals = Array.from(
+    new Set(WINES.map((w) => w.varietal).filter(hasRealVarietal))
+  );
   const [activeVarietal, setActiveVarietal] = useState("Todos");
 
   const shownWines =
@@ -5264,6 +5393,13 @@ function SearchScreen({
   onOpenWinery: (id: string) => void;
   onOpenShop: (id: string) => void;
 }) {
+  const hasQuery = search.trim().length > 0;
+  const noResults =
+    hasQuery &&
+    !results.wines.length &&
+    !results.wineries.length &&
+    !results.shops.length;
+
   return (
     <div style={styles.stack22}>
       <div style={styles.searchHeroCard}>
@@ -5280,50 +5416,74 @@ function SearchScreen({
       </div>
 
       <div style={styles.chipsRow}>
-        {["Pinot Noir", "Regalo", "Atlántico", "Bodega Miras"].map((chip) => (
+        {["Pinot Noir", "Malbec", "Miras", "Chacra"].map((chip) => (
           <button key={chip} style={styles.chip} onClick={() => setSearch(chip)}>
             {chip}
           </button>
         ))}
       </div>
 
-      <Block title="Vinos">
-        <div style={styles.stack12}>
-          {results.wines.map((wine) => (
-            <WineVisualRow
-              key={wine.id}
-              wine={wine}
-              onClick={() => onOpenWine(wine.id)}
-            />
-          ))}
+      {noResults ? (
+        <div style={styles.card}>
+          <div style={styles.itemTitle}>
+            No encontramos resultados para tu búsqueda
+          </div>
+          <div style={styles.placeText}>
+            Probá con el nombre de un vino, una bodega, un varietal o una
+            vinoteca.
+          </div>
         </div>
-      </Block>
+      ) : (
+        <>
+          {(!hasQuery || results.wines.length > 0) && (
+            <Block title="Vinos">
+              <div style={styles.stack12}>
+                {results.wines.map((wine) => (
+                  <WineVisualRow
+                    key={wine.id}
+                    wine={wine}
+                    onClick={() => onOpenWine(wine.id)}
+                  />
+                ))}
+              </div>
+            </Block>
+          )}
 
-      <Block title="Bodegas">
-        <div style={styles.stack12}>
-          {results.wineries.map((item) => (
-            <ResultRow
-              key={item.id}
-              title={item.name}
-              subtitle={`${item.city} · ${REGION_META[item.region].title}`}
-              onClick={() => onOpenWinery(item.id)}
-            />
-          ))}
-        </div>
-      </Block>
+          {(!hasQuery || results.wineries.length > 0) && (
+            <Block title="Bodegas">
+              <div style={styles.stack12}>
+                {results.wineries.map((item) => (
+                  <ResultRow
+                    key={item.id}
+                    title={item.name}
+                    subtitle={`${item.city} · ${REGION_META[item.region].title}`}
+                    onClick={() => onOpenWinery(item.id)}
+                  />
+                ))}
+              </div>
+            </Block>
+          )}
 
-      <Block title="Dónde comprar">
-        <div style={styles.stack12}>
-          {results.shops.map((item) => (
-            <ResultRow
-              key={item.id}
-              title={item.name}
-              subtitle={`${item.city} · ${item.benefit}`}
-              onClick={() => onOpenShop(item.id)}
-            />
-          ))}
-        </div>
-      </Block>
+          {(!hasQuery || results.shops.length > 0) && (
+            <Block title="Dónde comprar">
+              <div style={styles.stack12}>
+                {results.shops.map((item) => (
+                  <ResultRow
+                    key={item.id}
+                    title={item.name}
+                    subtitle={
+                      isPlaceholderText(item.benefit)
+                        ? item.city
+                        : `${item.city} · ${item.benefit}`
+                    }
+                    onClick={() => onOpenShop(item.id)}
+                  />
+                ))}
+              </div>
+            </Block>
+          )}
+        </>
+      )}
     </div>
   );
 }
@@ -5347,9 +5507,7 @@ function WineVisualRow({
       <div style={styles.wineVisualBody}>
         <div>
           <div style={styles.wineVisualTitle}>{wine.name}</div>
-          <div style={styles.wineVisualSub}>
-            {wine.winery} · {wine.varietal}
-          </div>
+          <div style={styles.wineVisualSub}>{wineSubtitle(wine)}</div>
         </div>
 
         <div style={styles.rowBetweenCenter}>
@@ -5597,7 +5755,6 @@ function MapScreen({
 
       <div style={styles.compactLocationBar}>
         <span style={styles.itemTitle}>📍 Estás en Viedma</span>
-        <button style={styles.sectionAction}>Cambiar</button>
       </div>
 
       <div style={styles.gradientCard}>
@@ -5617,7 +5774,6 @@ function MapScreen({
           >
             Ver disponibles →
           </button>
-          <button style={styles.secondarySoftButton}>Cambiar ciudad</button>
         </div>
       </div>
 
@@ -5633,7 +5789,11 @@ function MapScreen({
         ))}
       </div>
 
-      <SectionTitle title="Vinos cerca tuyo" action="Ver todos" />
+      <SectionTitle
+        title="Vinos cerca tuyo"
+        action="Ver todos"
+        onAction={() => onSetTab("winelist")}
+      />
 
       {filteredWines.length ? (
         <div style={styles.stack12}>
@@ -5730,7 +5890,7 @@ function MapWineRow({ wine, onClick }: { wine: Wine; onClick: () => void }) {
     <WineThumbRow
       image={wine.image}
       title={wine.name}
-      subtitle={`${wine.winery} · ${wine.varietal}`}
+      subtitle={wineSubtitle(wine)}
       onClick={onClick}
       extra={
         <div style={styles.mapPinRow}>
@@ -5772,7 +5932,13 @@ const AGENDA_FILTERS: Array<{ key: EventTimeframe; label: string }> = [
 const timeframeLabel = (tf: EventTimeframe) =>
   AGENDA_FILTERS.find((f) => f.key === tf)?.label ?? "";
 
-function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
+function AgendaScreen({
+  onMenuClick,
+  onProfile,
+}: {
+  onMenuClick: () => void;
+  onProfile?: () => void;
+}) {
   const [filter, setFilter] = useState<EventTimeframe>("hoy");
   const [openEvent, setOpenEvent] = useState<EventItem | null>(null);
   const shownEvents = EVENTS.filter((e) => e.timeframe === filter);
@@ -5795,6 +5961,7 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
           title={openEvent.title}
           subtitle={`${openEvent.place} · ${openEvent.city}`}
           onMenuClick={onMenuClick}
+          onProfile={onProfile}
         />
         <div ref={agendaScrollRef} style={styles.sheetSurface}>
           <EventDetailScreen
@@ -5813,6 +5980,7 @@ function AgendaScreen({ onMenuClick }: { onMenuClick: () => void }) {
         title="Agenda"
         subtitle="Eventos y degustaciones para vivir el vino en tu ciudad."
         onMenuClick={onMenuClick}
+        onProfile={onProfile}
       />
       <div ref={agendaScrollRef} style={styles.sheetSurface}>
         <div style={styles.stack22}>
@@ -5897,6 +6065,8 @@ function EventDetailScreen({
   event: EventItem;
   onBack: () => void;
 }) {
+  const eventAddress = addressForPlace(event.place);
+
   return (
     <div style={styles.stack22}>
       <button style={styles.backButton} onClick={onBack}>
@@ -5923,9 +6093,14 @@ function EventDetailScreen({
           Una experiencia única para descubrir los mejores vinos de Río Negro.
         </div>
 
-        <button style={{ ...styles.primaryButton, width: "100%" }}>
-          Quiero ir →
-        </button>
+        {eventAddress && (
+          <button
+            style={{ ...styles.primaryButton, width: "100%" }}
+            onClick={() => openInMaps(eventAddress)}
+          >
+            Quiero ir →
+          </button>
+        )}
       </div>
     </div>
   );
@@ -6030,6 +6205,10 @@ function WineDetail({
       (w.varietal === wine.varietal || w.winery === wine.winery)
   ).slice(0, 2);
 
+  const availableShops = wine.availableAt
+    .map((name) => SHOPS.find((s) => s.name === name))
+    .filter((s): s is Shop => Boolean(s));
+
   return (
     <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
@@ -6071,12 +6250,14 @@ function WineDetail({
               </button>
             ) : (
               wine.winery
-            )}{" "}
-            · {wine.varietal}
+            )}
+            {hasRealVarietal(wine.varietal) ? ` · ${wine.varietal}` : ""}
           </div>
 
           <div style={styles.grid3}>
-            <InfoBox label="Varietal" value={wine.varietal} />
+            {hasRealVarietal(wine.varietal) && (
+              <InfoBox label="Varietal" value={wine.varietal} />
+            )}
             <InfoBox label="Estilo" value={wine.style} />
             <InfoBox label="Origen" value="Río Negro" />
           </div>
@@ -6106,20 +6287,24 @@ function WineDetail({
         </div>
       ) : (
         <Block title="Disponible en">
-          <div style={styles.stack12}>
-            {wine.availableAt.map((name) => {
-              const found = SHOPS.find((s) => s.name === name);
-              if (!found) return null;
-              return (
+          {availableShops.length > 0 ? (
+            <div style={styles.stack12}>
+              {availableShops.map((found) => (
                 <ResultRow
-                  key={name}
-                  title={name}
-                  subtitle={`${found.city} · ${found.benefit}`}
+                  key={found.id}
+                  title={found.name}
+                  subtitle={
+                    isPlaceholderText(found.benefit)
+                      ? found.city
+                      : `${found.city} · ${found.benefit}`
+                  }
                   onClick={() => onOpenShop(found.id)}
                 />
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div style={styles.placeText}>Sin distribución confirmada</div>
+          )}
         </Block>
       )}
 
@@ -6130,7 +6315,7 @@ function WineDetail({
               key={w.id}
               image={w.image}
               title={w.name}
-              subtitle={w.varietal}
+              subtitle={varietalOrDefault(w.varietal, "Vino")}
               tag={w.tag}
               onClick={() => onOpenWine(w.name)}
             />
@@ -6154,13 +6339,19 @@ function WineryDetail({
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
 }) {
+  const winesRef = useRef<HTMLDivElement>(null);
+
   const varietals = Array.from(
     new Set(
       winery.wines
         .map((w) => WINES.find((x) => x.name === w)?.varietal)
-        .filter((v): v is string => Boolean(v))
+        .filter((v): v is string => hasRealVarietal(v))
     )
   );
+
+  const directionsQuery = winery.address
+    ? `${winery.address}, ${winery.city}`
+    : null;
 
   const contactInfo = (
     [
@@ -6204,10 +6395,23 @@ function WineryDetail({
         )}
 
         <div style={styles.rowGap10Wrap}>
-          <button style={{ ...styles.secondarySoftButton, flex: 1 }}>
-            Cómo llegar
-          </button>
-          <button style={{ ...styles.primaryButton, flex: 2 }}>
+          {directionsQuery && (
+            <button
+              style={{ ...styles.secondarySoftButton, flex: 1 }}
+              onClick={() => openInMaps(directionsQuery)}
+            >
+              Cómo llegar
+            </button>
+          )}
+          <button
+            style={{ ...styles.primaryButton, flex: 2 }}
+            onClick={() =>
+              winesRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              })
+            }
+          >
             Ver vinos →
           </button>
         </div>
@@ -6235,38 +6439,46 @@ function WineryDetail({
         </Block>
       )}
 
-      <SectionTitle title="Vinos destacados" action="Ver todos" />
-      <div style={styles.wineCardGrid}>
-        {winery.wines.map((w) => {
-          const wineData = WINES.find((x) => x.name === w);
-          return (
-            <WineGridCard
-              key={w}
-              image={wineData?.image || ""}
-              title={w}
-              subtitle={wineData?.varietal || "Vino"}
-              onClick={() => onOpenWine(w)}
-            />
-          );
-        })}
-      </div>
-
-      <Block title="Dónde conseguir sus vinos">
-        <div style={styles.stack12}>
-          {winery.shops.map((s) => {
-            const shop = SHOPS.find((x) => x.name === s);
+      <div ref={winesRef}>
+        <SectionTitle title="Vinos destacados" />
+        <div style={styles.wineCardGrid}>
+          {winery.wines.map((w) => {
+            const wineData = WINES.find((x) => x.name === w);
             return (
-              <ResultRow
-                key={s}
-                title={s}
-                subtitle={
-                  shop ? `${shop.address}, ${shop.city}` : "Dirección a confirmar"
-                }
-                onClick={() => onOpenShop(s)}
+              <WineGridCard
+                key={w}
+                image={wineData?.image || ""}
+                title={w}
+                subtitle={varietalOrDefault(wineData?.varietal, "Vino")}
+                onClick={() => onOpenWine(w)}
               />
             );
           })}
         </div>
+      </div>
+
+      <Block title="Dónde conseguir sus vinos">
+        {winery.shops.length > 0 ? (
+          <div style={styles.stack12}>
+            {winery.shops.map((s) => {
+              const shop = SHOPS.find((x) => x.name === s);
+              return (
+                <ResultRow
+                  key={s}
+                  title={s}
+                  subtitle={
+                    shop
+                      ? `${shop.address}, ${shop.city}`
+                      : "Dirección a confirmar"
+                  }
+                  onClick={() => onOpenShop(s)}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div style={styles.placeText}>Sin distribución confirmada</div>
+        )}
       </Block>
     </div>
   );
@@ -6336,7 +6548,10 @@ function ShopDetail({
           </div> 
 
           <div style={styles.rowGap10Wrap}>
-            <button style={{ ...styles.primaryButton, flex: 1 }}>
+            <button
+              style={{ ...styles.primaryButton, flex: 1 }}
+              onClick={() => openInMaps(`${shop.address}, ${shop.city}`)}
+            >
               Cómo llegar
             </button>
             <button style={{ ...styles.secondaryButton, flex: 1 }}>
@@ -6528,6 +6743,15 @@ function MenuIcon() {
       <path d="M4 7h16" />
       <path d="M4 12h16" />
       <path d="M4 17h16" />
+    </>
+  );
+}
+
+function PersonIcon() {
+  return svgBase(
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
     </>
   );
 }
