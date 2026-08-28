@@ -4109,7 +4109,7 @@ export default function App() {
              style={{
                ...styles.homePhoto,
                height: 210,
-               backgroundImage: `linear-gradient(180deg, rgba(20,20,16,0.15) 0%, rgba(20,20,16,0.55) 100%), url('${
+               backgroundImage: `${DEFAULT_HEADER_GRADIENT}, url('${
                  (detailView as Winery).image
                }')`,
              }}
@@ -4421,6 +4421,12 @@ function ShopScreen({
           subtitle="La Patagonia en una caja"
           onMenuClick={onMenuClick}
           onProfile={onProfile}
+          hideText={Boolean(openProduct.featured)}
+          gradient={
+            openProduct.featured
+              ? "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0))"
+              : undefined
+          }
         />
         <div style={styles.sheetSurface}>
           <ProductDetailScreen
@@ -4848,7 +4854,8 @@ function ProductDetailScreen({
 
       {detailImage ? (
         <>
-          <div style={styles.detailImageCard}>
+          {/* A sangre: -16 a cada lado cancela el padding de sheetSurface */}
+          <div style={{ marginLeft: -16, marginRight: -16 }}>
             <img
               src={detailImage}
               alt={name}
@@ -5107,8 +5114,10 @@ function Header({
 const HOME_PHOTO_URL =
   "https://images.unsplash.com/photo-1763786470689-5ff88c985885?fm=jpg&q=70&w=1400&auto=format&fit=crop";
 
+// Perfil tipo "Ruta del Vino": la foto se ve con sus colores reales en la mitad
+// superior y solo oscurece hacia abajo, donde va el título/subtítulo.
 const DEFAULT_HEADER_GRADIENT =
-  "linear-gradient(135deg, rgba(20,20,16,0.55) 0%, rgba(23,48,63,0.5) 55%, rgba(10,58,92,0.72) 100%)";
+  "linear-gradient(to bottom, rgba(10,10,8,0) 0%, rgba(10,10,8,0.06) 45%, rgba(10,10,8,0.55) 82%, rgba(10,10,8,0.85) 100%)";
 
 function PhotoHeader({
   imageUrl,
@@ -5119,6 +5128,7 @@ function PhotoHeader({
   gradient,
   height = 230,
   backgroundSize = "cover",
+  hideText = false,
 }: {
   imageUrl: string;
   title: string;
@@ -5128,6 +5138,7 @@ function PhotoHeader({
   gradient?: string;
   height?: number;
   backgroundSize?: string;
+  hideText?: boolean;
 }) {
   return (
     <div
@@ -5162,12 +5173,14 @@ function PhotoHeader({
         </div>
       </div>
 
-      <div style={styles.homePhotoTextWrap}>
-        <div style={styles.homePhotoTitle} translate="no">
-          {title}
+      {!hideText && (
+        <div style={styles.homePhotoTextWrap}>
+          <div style={styles.homePhotoTitle} translate="no">
+            {title}
+          </div>
+          <div style={styles.homePhotoSubtitle}>{subtitle}</div>
         </div>
-        <div style={styles.homePhotoSubtitle}>{subtitle}</div>
-      </div>
+      )}
     </div>
   );
 }

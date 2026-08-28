@@ -1,0 +1,87 @@
+INSTRUCCIONES PARA CLAUDE CODE - GRADIENTE DE HEADERS + AJUSTES TIENDA PINOT NOIR
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CAMBIO 1 — Todos los headers deben verse como el de "Ruta del Vino"
+============================================
+Hoy todos los headers de foto (Inicio, Mapa, Buscá tu Vino, Agenda, Tienda,
+fichas de bodega/vino/vinoteca, detalle de evento, etc.) se ven más oscuros
+que la foto original, por un degradado oscuro por defecto. El único que se ve
+"limpio" (fiel al color real de la imagen) es el de "Ruta del Vino", que usa
+un degradado propio mucho más suave.
+
+Quiero que TODOS los headers de foto se vean como el de "Ruta del Vino": la
+imagen debe verse con sus colores reales (sin ese velo oscuro encima),
+manteniendo únicamente el degradado necesario en la parte de abajo para que
+el título y subtítulo sigan siendo legibles sobre la foto.
+
+Enfoque sugerido: ajustar el degradado por defecto que usan los headers para
+que tenga el mismo perfil que el de "Ruta del Vino" (prácticamente
+transparente arriba, oscureciendo solo hacia abajo donde está el texto), en
+vez de aplicar un degradado oscuro parejo en toda la imagen. Si el degradado
+por defecto es compartido por todos los headers que no especifican uno
+propio, ajustarlo ahí resuelve todos los casos de una vez — no hace falta
+tocar pantalla por pantalla.
+
+No toques el height ni el backgroundSize (contain/cover) que ya tiene cada
+pantalla — eso queda como está, el cambio es solo sobre el oscurecimiento.
+
+Si encontrás algún header con un degradado oscuro escrito directamente ahí
+(no a través del default), decime cuáles son antes de decidir si también hay
+que aclararlos — no los toques sin avisarme primero, porque podrían ser
+casos con un motivo de diseño distinto (por ejemplo, un banner decorativo
+dentro de una pantalla, no el header principal).
+
+============================================
+CAMBIO 2 — Sacar el título del header de Experiencia Ruta del Vino Pinot Noir
+============================================
+En la pantalla de detalle de "Experiencia Ruta del Vino Pinot Noir" (la que
+tiene el header con head-experiencia-ruta-del-vino-pinot-noir.png), sacar el
+título y el subtítulo ("La Patagonia en una caja") que se muestran arriba de
+la imagen — esa imagen ya tiene su propio texto incorporado, no hace falta
+superponer nada.
+
+Esto debe aplicar SOLO a este producto (usando el mismo campo "featured" que
+ya se agregó en el prompt anterior para diferenciarlo). Malbec, Merlot y
+Cursos deben seguir mostrando su título y subtítulo en el header, sin cambios.
+
+============================================
+CAMBIO 3 — Agrandar el ancho de la tarjeta de imagen en el detalle
+============================================
+En esa misma pantalla de detalle, la tarjeta que muestra
+tarjeta-descripcion-ruta-del-vino-pinot-noir.png (la que reemplazó a la
+tarjeta de texto) debe ocupar el ancho máximo posible de la pantalla —
+prácticamente de borde a borde, no limitada por el padding/margen que tienen
+el resto de las tarjetas de la app.
+
+Esto también debe aplicar SOLO a esta tarjeta específica — no cambies el
+ancho de las tarjetas de Malbec, Merlot, Cursos ni ninguna otra de la app.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WINERIES_DATA, WINES, ni ninguna otra pantalla fuera de lo
+  descripto.
+- No tocar Malbec, Merlot ni Cursos en el detalle de producto.
+- No tocar el carrito, checkout, ni lógica de compra.
+- No tocar height/backgroundSize de ningún header (solo el oscurecimiento).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: recorrer Inicio, Mapa, Buscá tu Vino, Agenda, alguna ficha de
+   bodega y de vino — confirmar que todos los headers se ven tan claros como
+   el de "Ruta del Vino" (colores reales de la foto, sin velo oscuro parejo),
+   con el texto igual de legible que antes.
+3. Detalle de Experiencia Ruta del Vino Pinot Noir: sin título/subtítulo
+   sobre el header, y la tarjeta de imagen ocupando el ancho máximo. Detalle
+   de Malbec/Merlot/Cursos: sin cambios (título visible, tarjeta de texto con
+   el ancho de siempre).
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
