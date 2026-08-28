@@ -1,0 +1,118 @@
+INSTRUCCIONES PARA CLAUDE CODE - TARJETA "EXPERIENCIA RUTA DEL VINO PINOT NOIR"
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO IMPORTANTE — LEER ANTES DE PLANIFICAR
+============================================
+Todos los cambios de este prompt son SOLO para el producto "Experiencia Pinot
+Noir" (que se va a renombrar a "Experiencia Ruta del Vino Pinot Noir"), dentro
+del tab "Cajas Experiencia" de Tienda.
+
+Los componentes que hay que tocar son compartidos con otros productos:
+- La tarjeta de la lista (ShopListCard) también la usan "Experiencia Malbec",
+  "Experiencia Merlot" y los Cursos.
+- El header de la pantalla de detalle (PhotoHeader dentro de openProduct)
+  también se usa al abrir cualquier otro producto.
+- La tarjeta de info del detalle (ProductDetailScreen) también la usan los
+  otros dos boxes y los cursos.
+
+Ningún cambio de este prompt debe alterar la apariencia ni el comportamiento
+de Experiencia Malbec, Experiencia Merlot ni los Cursos. Si lograr esto
+requiere agregar una condición por nombre de producto, o agregar campos nuevos
+a EXPERIENCE_BOXES (por ejemplo, un campo opcional de imagen o de "layout
+especial" por producto), hacelo así. Mostrame en el plan cómo vas a resolver
+esto antes de tocar código.
+
+Verificá primero que estos 3 archivos existen en src/assets/ con el nombre
+exacto (y la extensión real, no asumida) antes de escribir cualquier import:
+- tarjeta-experiencia-ruta-del-vino-pinot-noir.png
+- head-experiencia-ruta-del-vino-pinot-noir.png
+- tarjeta-descripcion-ruta-del-vino-pinot-noir.png
+Si alguno no existe o tiene otra extensión, avisame antes de seguir (no
+asumas ni inventes un nombre parecido).
+
+============================================
+CAMBIO 1 — Imagen y nombre de la tarjeta en la lista de Cajas Experiencia
+============================================
+En la tarjeta de "Experiencia Pinot Noir" dentro del listado de Cajas
+Experiencia:
+- Cambiar su imagen (hoy experienciaPinotPhoto) por
+  tarjeta-experiencia-ruta-del-vino-pinot-noir.png — SOLO en esta tarjeta,
+  las de Malbec y Merlot siguen con experienciaPinotPhoto como hasta ahora.
+- Cambiar el nombre del producto de "Experiencia Pinot Noir" a "Experiencia
+  Ruta del Vino Pinot Noir" (esto es el campo "name" en EXPERIENCE_BOXES).
+- El subtítulo/descripción debajo del nombre ("6 Pinot Noir de toda la
+  provincia, de la cordillera al mar.") queda exactamente igual, sin tocar.
+
+============================================
+CAMBIO 2 — Toda la tarjeta es el botón de ingreso
+============================================
+Hoy para entrar hay que tocar el botón "Ver →" al final de la tarjeta.
+Quiero que tocar CUALQUIER parte de la tarjeta abra el detalle (mismo destino
+que hoy da el botón "Ver →").
+
+Esto también debe aplicar SOLO a la tarjeta de "Experiencia Ruta del Vino
+Pinot Noir" — las tarjetas de Malbec, Merlot y Cursos siguen funcionando
+como hasta ahora (solo el botón "Ver →"/"Ver curso →" abre el detalle).
+
+============================================
+CAMBIO 3 — Imagen del header en la pantalla de detalle
+============================================
+Al entrar al detalle de "Experiencia Ruta del Vino Pinot Noir", la imagen de
+fondo del header (hoy experienciaPinotPhoto para cualquier producto) debe ser
+head-experiencia-ruta-del-vino-pinot-noir.png — SOLO cuando el producto
+abierto es este. Los demás productos (Malbec, Merlot, Cursos) siguen
+mostrando su imagen actual sin cambios.
+
+El título y subtítulo del header ("La Patagonia en una caja") quedan igual,
+sin tocar.
+
+============================================
+CAMBIO 4 — Reemplazar la tarjeta de info por una imagen + botón Comprar
+============================================
+Hoy, debajo del botón "← Volver", hay una tarjeta con:
+- Título del producto
+- Descripción
+- La línea "6 botellas · Envío a todo el país · Selección curada"
+- El botón "Comprar — $"
+
+Para "Experiencia Ruta del Vino Pinot Noir" específicamente, sacar esa
+tarjeta de texto y reemplazarla por una tarjeta que muestre la imagen
+tarjeta-descripcion-ruta-del-vino-pinot-noir.png, y debajo de esa tarjeta (no
+dentro, debajo) el botón rojo de "Comprar — $" que ya existe (mismo estilo,
+misma función, sin cambios de lógica de compra).
+
+Para Malbec, Merlot y Cursos, esta pantalla de detalle debe seguir mostrando
+la tarjeta de texto de siempre (título, descripción, línea de "botellas...",
+botón Comprar) tal cual está hoy — no se les quita nada.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar Malbec, Merlot ni Cursos en ningún aspecto (imagen, tarjeta,
+  comportamiento de click, header de detalle).
+- No tocar WINERIES_DATA, WINES, ni ninguna otra pantalla fuera de Tienda.
+- No tocar el carrito, el checkout, ni la lógica de precios/compra.
+- No inventar nombres de archivo de imagen ni asumir extensiones — confirmar
+  contra disco primero (ver arriba).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a Tienda (abre en Cajas Experiencia) →
+   - La tarjeta de Pinot Noir muestra la imagen y el nombre nuevos.
+   - Tocar en cualquier parte de esa tarjeta (no solo el botón) abre el
+     detalle.
+   - Malbec y Merlot: imagen sin cambios, siguen abriendo solo con "Ver →".
+   - Dentro del detalle de Pinot Noir: header con la imagen nueva, y la
+     tarjeta de info reemplazada por la imagen + botón Comprar debajo.
+   - Abrir el detalle de Malbec o de un Curso: siguen mostrando la tarjeta de
+     texto de siempre, sin cambios.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

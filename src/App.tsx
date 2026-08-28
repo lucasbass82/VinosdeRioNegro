@@ -19,6 +19,9 @@ import bodegaWapisaPhoto from "./assets/bodega-wapisa.png";
 import fincaFraschettiPhoto from "./assets/finca-fraschetti.png";
 import marEspiPhoto from "./assets/mar-espi.png";
 import experienciaPinotPhoto from "./assets/experiencia-pinot.png";
+import tarjetaExperienciaRvPinotPhoto from "./assets/tarjeta-experiencia-ruta-del-vino-pinot-noir.png";
+import headExperienciaRvPinotPhoto from "./assets/head-experiencia-ruta-del-vino-pinot-noir.png";
+import tarjetaDescripcionRvPinotPhoto from "./assets/tarjeta-descripcion-ruta-del-vino-pinot-noir.png";
 import cursosPhoto from "./assets/cursos.png";
 import oliviasYSaboresPhoto from "./assets/olivas-y-sabores.png";
 import vinopolitanPhoto from "./assets/vinopolitan.png";
@@ -4256,11 +4259,29 @@ const SHOP_VARIETAL_BANNERS: Array<{
   },
 ];
 
-const EXPERIENCE_BOXES: Array<{ name: string; description: string }> = [
+type ExperienceBox = {
+  name: string;
+  description: string;
+  // Solo el producto destacado lleva este campo; su presencia activa la imagen
+  // de tarjeta, el tap en toda la tarjeta, el header custom y el detalle con
+  // imagen. Los demás boxes caen en el comportamiento por defecto de siempre.
+  featured?: {
+    cardImage: string;
+    headerImage: string;
+    detailImage: string;
+  };
+};
+
+const EXPERIENCE_BOXES: ExperienceBox[] = [
   {
-    name: "Experiencia Pinot Noir",
+    name: "Experiencia Ruta del Vino Pinot Noir",
     description:
       "6 Pinot Noir de toda la provincia, de la cordillera al mar.",
+    featured: {
+      cardImage: tarjetaExperienciaRvPinotPhoto,
+      headerImage: headExperienciaRvPinotPhoto,
+      detailImage: tarjetaDescripcionRvPinotPhoto,
+    },
   },
   {
     name: "Experiencia Malbec",
@@ -4318,10 +4339,7 @@ function ShopScreen({
   const [activeShopTab, setActiveShopTab] =
     useState<(typeof SHOP_TABS)[number]>("Cajas Experiencia");
   const [activeVarietal, setActiveVarietal] = useState<string | null>(null);
-  const [openProduct, setOpenProduct] = useState<{
-    name: string;
-    description: string;
-  } | null>(null);
+  const [openProduct, setOpenProduct] = useState<ExperienceBox | null>(null);
   const [search, setSearch] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
   const [cartView, setCartView] = useState<
@@ -4398,7 +4416,7 @@ function ShopScreen({
     body = (
       <>
         <PhotoHeader
-          imageUrl={experienciaPinotPhoto}
+          imageUrl={openProduct.featured?.headerImage ?? experienciaPinotPhoto}
           title={openProduct.name}
           subtitle="La Patagonia en una caja"
           onMenuClick={onMenuClick}
@@ -4408,6 +4426,7 @@ function ShopScreen({
           <ProductDetailScreen
             name={openProduct.name}
             description={openProduct.description}
+            detailImage={openProduct.featured?.detailImage}
             onBack={() => setOpenProduct(null)}
           />
         </div>
@@ -4472,7 +4491,7 @@ function ShopMainView({
   activeShopTab: (typeof SHOP_TABS)[number];
   setActiveShopTab: (tab: (typeof SHOP_TABS)[number]) => void;
   setActiveVarietal: (varietal: string) => void;
-  setOpenProduct: (product: { name: string; description: string }) => void;
+  setOpenProduct: (product: ExperienceBox) => void;
   search: string;
   setSearch: (value: string) => void;
   filterOpen: boolean;
@@ -4610,11 +4629,14 @@ function ShopMainView({
               {EXPERIENCE_BOXES.map((box) => (
                 <ShopListCard
                   key={box.name}
-                  image={experienciaPinotPhoto}
+                  image={box.featured?.cardImage ?? experienciaPinotPhoto}
                   name={box.name}
                   description={box.description}
                   actionLabel="Ver →"
                   onAction={() => setOpenProduct(box)}
+                  onCardClick={
+                    box.featured ? () => setOpenProduct(box) : undefined
+                  }
                 />
               ))}
             </div>
@@ -4778,15 +4800,20 @@ function ShopListCard({
   description,
   actionLabel,
   onAction,
+  onCardClick,
 }: {
   image: string;
   name: string;
   description: string;
   actionLabel: string;
   onAction?: () => void;
+  onCardClick?: () => void;
 }) {
   return (
-    <div style={styles.card}>
+    <div
+      style={onCardClick ? { ...styles.card, cursor: "pointer" } : styles.card}
+      onClick={onCardClick}
+    >
       <div
         style={{
           ...styles.shopListCardImage,
@@ -4805,10 +4832,12 @@ function ShopListCard({
 function ProductDetailScreen({
   name,
   description,
+  detailImage,
   onBack,
 }: {
   name: string;
   description: string;
+  detailImage?: string;
   onBack: () => void;
 }) {
   return (
@@ -4817,16 +4846,31 @@ function ProductDetailScreen({
         <ArrowLeftIcon /> Volver
       </button>
 
-      <div style={styles.card}>
-        <div style={styles.detailTitle}>{name}</div>
-        <div style={styles.placeText}>{description}</div>
-        <div style={{ ...styles.itemSub, marginTop: 12 }}>
-          6 botellas · Envío a todo el país · Selección curada
+      {detailImage ? (
+        <>
+          <div style={styles.detailImageCard}>
+            <img
+              src={detailImage}
+              alt={name}
+              style={{ width: "100%", display: "block" }}
+            />
+          </div>
+          <button style={{ ...styles.primaryButton, width: "100%" }}>
+            Comprar — $
+          </button>
+        </>
+      ) : (
+        <div style={styles.card}>
+          <div style={styles.detailTitle}>{name}</div>
+          <div style={styles.placeText}>{description}</div>
+          <div style={{ ...styles.itemSub, marginTop: 12 }}>
+            6 botellas · Envío a todo el país · Selección curada
+          </div>
+          <button style={{ ...styles.primaryButton, width: "100%" }}>
+            Comprar — $
+          </button>
         </div>
-        <button style={{ ...styles.primaryButton, width: "100%" }}>
-          Comprar — $
-        </button>
-      </div>
+      )}
     </div>
   );
 }
