@@ -22,6 +22,19 @@ import experienciaPinotPhoto from "./assets/experiencia-pinot.png";
 import tarjetaExperienciaRvPinotPhoto from "./assets/tarjeta-experiencia-ruta-del-vino-pinot-noir.png";
 import headExperienciaRvPinotPhoto from "./assets/head-experiencia-ruta-del-vino-pinot-noir.png";
 import tarjetaDescripcionRvPinotPhoto from "./assets/tarjeta-descripcion-ruta-del-vino-pinot-noir.png";
+import experienciaPinotCordilleraDebernardiPhoto from "./assets/experiencia-pinot-cordillera-debernardi.png";
+import experienciaPinotMarWapisaPhoto from "./assets/experiencia-pinot-mar-wapisa.png";
+import experienciaPinotAltovalleChacrabardaPhoto from "./assets/experiencia-pinot-altovalle-chacrabarda.png";
+import experienciaPinotAltovalleBellacomalcriadoPhoto from "./assets/experiencia-pinot-altovalle-bellacomalcriado.png";
+import experienciaPinotVallemedioCalfulenPhoto from "./assets/experiencia-pinot-vallemedio-calfulen.png";
+import experienciaPinotEstepaAraucanaPhoto from "./assets/experiencia-pinot-estepa-araucana.png";
+import experienciaPinotCordilleraDebernardiFichaPhoto from "./assets/experiencia-pinot-cordillera-debernardi-ficha.png";
+import experienciaPinotMarWapisaFichaPhoto from "./assets/experiencia-pinot-mar-wapisa-ficha.png";
+import experienciaPinotAltovalleChacrabardaFichaPhoto from "./assets/experiencia-pinot-altovalle-chacrabarda-ficha.png";
+import experienciaPinotAltovalleBellacomalcriadoFichaPhoto from "./assets/experiencia-pinot-altovalle-bellacomalcriado-ficha.png";
+import experienciaPinotVallemedioCalfulenFichaPhoto from "./assets/experiencia-pinot-vallemedio-calfulen-ficha.png";
+import experienciaPinotEstepaAraucanaFichaPhoto from "./assets/experiencia-pinot-estepa-araucana-ficha.png";
+import experienciaPinotIntroPhoto from "./assets/experiencia-pinot-intro.png";
 import cursosPhoto from "./assets/cursos.png";
 import oliviasYSaboresPhoto from "./assets/olivas-y-sabores.png";
 import vinopolitanPhoto from "./assets/vinopolitan.png";
@@ -4259,6 +4272,52 @@ const SHOP_VARIETAL_BANNERS: Array<{
   },
 ];
 
+type PinotExperienceWine = {
+  id: string;
+  name: string;
+  cardImage: string;
+  fichaImage: string;
+};
+
+const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
+  {
+    id: "cordillera-debernardi",
+    name: "Familia De Bernardi",
+    cardImage: experienciaPinotCordilleraDebernardiPhoto,
+    fichaImage: experienciaPinotCordilleraDebernardiFichaPhoto,
+  },
+  {
+    id: "mar-wapisa",
+    name: "Wapisa",
+    cardImage: experienciaPinotMarWapisaPhoto,
+    fichaImage: experienciaPinotMarWapisaFichaPhoto,
+  },
+  {
+    id: "altovalle-chacrabarda",
+    name: "Chacra Barda",
+    cardImage: experienciaPinotAltovalleChacrabardaPhoto,
+    fichaImage: experienciaPinotAltovalleChacrabardaFichaPhoto,
+  },
+  {
+    id: "altovalle-bellacomalcriado",
+    name: "Bellaco Malcriado",
+    cardImage: experienciaPinotAltovalleBellacomalcriadoPhoto,
+    fichaImage: experienciaPinotAltovalleBellacomalcriadoFichaPhoto,
+  },
+  {
+    id: "vallemedio-calfulen",
+    name: "Calfulen",
+    cardImage: experienciaPinotVallemedioCalfulenPhoto,
+    fichaImage: experienciaPinotVallemedioCalfulenFichaPhoto,
+  },
+  {
+    id: "estepa-araucana",
+    name: "Araucana",
+    cardImage: experienciaPinotEstepaAraucanaPhoto,
+    fichaImage: experienciaPinotEstepaAraucanaFichaPhoto,
+  },
+];
+
 type ExperienceBox = {
   name: string;
   description: string;
@@ -4268,7 +4327,10 @@ type ExperienceBox = {
   featured?: {
     cardImage: string;
     headerImage: string;
+    // Ya no se renderiza (reemplazada por wineCards); se deja asignada para
+    // no perder el import del asset original.
     detailImage: string;
+    wineCards?: PinotExperienceWine[];
   };
 };
 
@@ -4281,6 +4343,7 @@ const EXPERIENCE_BOXES: ExperienceBox[] = [
       cardImage: tarjetaExperienciaRvPinotPhoto,
       headerImage: headExperienciaRvPinotPhoto,
       detailImage: tarjetaDescripcionRvPinotPhoto,
+      wineCards: PINOT_EXPERIENCE_WINES,
     },
   },
   {
@@ -4340,6 +4403,8 @@ function ShopScreen({
     useState<(typeof SHOP_TABS)[number]>("Cajas Experiencia");
   const [activeVarietal, setActiveVarietal] = useState<string | null>(null);
   const [openProduct, setOpenProduct] = useState<ExperienceBox | null>(null);
+  const [openPinotWine, setOpenPinotWine] =
+    useState<PinotExperienceWine | null>(null);
   const [search, setSearch] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
   const [cartView, setCartView] = useState<
@@ -4429,12 +4494,30 @@ function ShopScreen({
           }
         />
         <div style={styles.sheetSurface}>
-          <ProductDetailScreen
-            name={openProduct.name}
-            description={openProduct.description}
-            detailImage={openProduct.featured?.detailImage}
-            onBack={() => setOpenProduct(null)}
-          />
+          {openProduct.featured?.wineCards ? (
+            openPinotWine ? (
+              <PinotWineFichaScreen
+                wine={openPinotWine}
+                onBack={() => setOpenPinotWine(null)}
+              />
+            ) : (
+              <PinotExperienceListScreen
+                wines={openProduct.featured.wineCards}
+                onSelectWine={setOpenPinotWine}
+                onBack={() => {
+                  setOpenProduct(null);
+                  setOpenPinotWine(null);
+                }}
+              />
+            )
+          ) : (
+            <ProductDetailScreen
+              name={openProduct.name}
+              description={openProduct.description}
+              detailImage={openProduct.featured?.detailImage}
+              onBack={() => setOpenProduct(null)}
+            />
+          )}
         </div>
       </>
     );
@@ -4530,6 +4613,8 @@ function ShopMainView({
       <PhotoHeader
         {...headerConfig}
         imageUrl={tiendaHeaderPhoto}
+        backgroundSize="contain"
+        height={160}
         onMenuClick={onMenuClick}
         onProfile={onProfile}
       />
@@ -4831,6 +4916,76 @@ function ShopListCard({
       <button style={styles.sectionAction} onClick={onAction}>
         {actionLabel}
       </button>
+    </div>
+  );
+}
+
+function PinotExperienceListScreen({
+  wines,
+  onSelectWine,
+  onBack,
+}: {
+  wines: PinotExperienceWine[];
+  onSelectWine: (wine: PinotExperienceWine) => void;
+  onBack: () => void;
+}) {
+  return (
+    <div style={styles.stack22}>
+      <button style={styles.backButton} onClick={onBack}>
+        <ArrowLeftIcon /> Volver
+      </button>
+      {/* A sangre: -16 a cada lado cancela el padding de sheetSurface */}
+      <div style={{ marginLeft: -16, marginRight: -16, ...styles.stack12 }}>
+        <img
+          src={experienciaPinotIntroPhoto}
+          alt="Experiencia Ruta del Vino Pinot Noir"
+          style={{ width: "100%", display: "block" }}
+        />
+        {wines.map((wine) => (
+          <button
+            key={wine.id}
+            onClick={() => onSelectWine(wine)}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: 0,
+              border: "none",
+              background: "none",
+              cursor: "pointer",
+            }}
+          >
+            <img
+              src={wine.cardImage}
+              alt={wine.name}
+              style={{ width: "100%", display: "block" }}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PinotWineFichaScreen({
+  wine,
+  onBack,
+}: {
+  wine: PinotExperienceWine;
+  onBack: () => void;
+}) {
+  return (
+    <div style={styles.stack22}>
+      <button style={styles.backButton} onClick={onBack}>
+        <ArrowLeftIcon /> Volver
+      </button>
+      {/* A sangre: -16 a cada lado cancela el padding de sheetSurface */}
+      <div style={{ marginLeft: -16, marginRight: -16 }}>
+        <img
+          src={wine.fichaImage}
+          alt={`Ficha de ${wine.name}`}
+          style={{ width: "100%", display: "block" }}
+        />
+      </div>
     </div>
   );
 }
@@ -5163,13 +5318,6 @@ function PhotoHeader({
               <PersonIcon />
             </button>
           )}
-          <div style={styles.glassLogoBadge}>
-            <img
-              src={logoIcon}
-              alt="Vinos de Río Negro"
-              style={{ width: 28, height: 28, objectFit: "contain" }}
-            />
-          </div>
         </div>
       </div>
 

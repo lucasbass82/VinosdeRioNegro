@@ -1,0 +1,111 @@
+INSTRUCCIONES PARA CLAUDE CODE - 6 TARJETAS DE VINO EN EXPERIENCIA PINOT NOIR
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Dentro de Tienda → Cajas Experiencia → "Experiencia Ruta del Vino Pinot Noir",
+hoy hay una sola tarjeta de imagen (tarjeta-descripcion-ruta-del-vino-pinot-
+noir.png) que muestra los 6 vinos en un solo diseño con texto chico. Se
+reemplaza por 6 tarjetas de imagen individuales ("tarjeta botón"), apiladas
+verticalmente, cada una a ancho completo (mismo criterio "sangre completa"
+que ya tiene la tarjeta actual), y cada una clickeable.
+
+Al tocar una tarjeta, se abre una pantalla simple que muestra otra imagen (la
+"ficha" de ese vino, con toda su info ya incorporada en el diseño: nombre,
+varietal, notas de cata, origen, etc.) + un botón "← Volver". NO hay que leer
+ni mostrar ningún dato de WINES en esta funcionalidad — todo el contenido ya
+viene dentro de las imágenes. Esto es más simple que la versión anterior de
+este prompt: no hace falta buscar ni matchear nombres de vino en el código.
+
+No se borra tarjeta-descripcion-ruta-del-vino-pinot-noir.png del disco ni del
+import si ya existe (dejala sin usar, no la elimines).
+
+Verificá primero que estos 12 archivos existen en src/assets/ con el nombre
+exacto antes de escribir cualquier import — si alguno no existe o tiene otra
+extensión, avisame antes de seguir:
+
+Tarjetas (lista, se ven en Experiencia Pinot Noir):
+- experiencia-pinot-cordillera-debernardi.png
+- experiencia-pinot-mar-wapisa.png
+- experiencia-pinot-altovalle-chacrabarda.png
+- experiencia-pinot-altovalle-bellacomalcriado.png
+- experiencia-pinot-vallemedio-calfulen.png
+- experiencia-pinot-estepa-araucana.png
+
+Fichas (se abren al tocar cada tarjeta):
+- experiencia-pinot-cordillera-debernardi-ficha.png
+- experiencia-pinot-mar-wapisa-ficha.png
+- experiencia-pinot-altovalle-chacrabarda-ficha.png
+- experiencia-pinot-altovalle-bellacomalcriado-ficha.png
+- experiencia-pinot-vallemedio-calfulen-ficha.png
+- experiencia-pinot-estepa-araucana-ficha.png
+
+============================================
+CAMBIO 1 — Las 6 tarjetas y qué ficha abre cada una
+============================================
+Cada tarjeta de la lista, al tocarla, abre su ficha correspondiente (mismo
+nombre base + "-ficha"):
+- experiencia-pinot-cordillera-debernardi.png → abre
+  experiencia-pinot-cordillera-debernardi-ficha.png
+- experiencia-pinot-mar-wapisa.png → abre
+  experiencia-pinot-mar-wapisa-ficha.png
+- experiencia-pinot-altovalle-chacrabarda.png → abre
+  experiencia-pinot-altovalle-chacrabarda-ficha.png
+- experiencia-pinot-altovalle-bellacomalcriado.png → abre
+  experiencia-pinot-altovalle-bellacomalcriado-ficha.png
+- experiencia-pinot-vallemedio-calfulen.png → abre
+  experiencia-pinot-vallemedio-calfulen-ficha.png
+- experiencia-pinot-estepa-araucana.png → abre
+  experiencia-pinot-estepa-araucana-ficha.png
+
+============================================
+CAMBIO 2 — Pantalla de ficha (nueva, simple)
+============================================
+Al tocar cualquiera de las 6 tarjetas, abrir una pantalla nueva que muestre
+SOLO:
+- La imagen de ficha correspondiente, a ancho completo (la imagen ya trae
+  todo el contenido: nombre, varietal, notas de cata, etc. — no hay texto
+  adicional para agregar)
+- Botón "← Volver"
+
+Esta pantalla NO debe mostrar: precio, nombre o link a la bodega, el bloque
+"Disponible en", ni ningún botón de compra.
+
+"← Volver" debe regresar a la lista de las 6 tarjetas dentro de la
+experiencia (no saltar a Tienda ni a ninguna otra pantalla). Si el mecanismo
+de scroll/navegación (detailStack) ya resuelve esto automáticamente, usalo;
+si esta pantalla nueva queda fuera de ese mecanismo, decime cómo lo vas a
+resolver en el plan.
+
+Esta pantalla es un componente nuevo (no reutilices ni modifiques WineDetail,
+la ficha de vino normal, para no afectar su comportamiento en el resto de la
+app). No hace falta leer WINES ni WINERIES_DATA para nada de este prompt.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WineDetail (la ficha de vino normal usada en el resto de la app).
+- No tocar WINERIES_DATA ni WINES.
+- No tocar Malbec, Merlot ni Cursos.
+- No tocar el carrito, checkout, ni lógica de compra.
+- No borrar ningún asset existente.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a Experiencia Ruta del Vino Pinot Noir → ver las 6
+   tarjetas apiladas a ancho completo, todas del mismo tamaño. Tocar cada
+   una → confirmar que abre la ficha-imagen correcta a ancho completo, sin
+   precio/bodega/Disponible en/botón de compra. "← Volver" desde ahí regresa
+   a las 6 tarjetas, no a Tienda.
+3. Confirmar que la ficha normal de vino (WineDetail), en cualquier otra
+   parte de la app, sigue funcionando exactamente igual que antes.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

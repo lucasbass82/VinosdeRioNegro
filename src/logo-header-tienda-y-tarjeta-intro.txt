@@ -1,0 +1,84 @@
+INSTRUCCIONES PARA CLAUDE CODE - LOGO DE HEADER, TAMAÑO IMAGEN TIENDA, TARJETA INTRO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+Verificá primero que este archivo existe en src/assets/ con el nombre exacto
+antes de escribir cualquier import — si no existe o tiene otra extensión,
+avisame antes de seguir:
+- experiencia-pinot-intro.png
+
+============================================
+CAMBIO 1 — Sacar el logo chico del margen superior derecho de los headers
+============================================
+En PhotoHeader (el componente compartido que arma el header de foto con
+título/subtítulo), hay un badge con el logo de Vinos de Río Negro en la
+esquina superior derecha (styles.glassLogoBadge, dentro de
+homePhotoTopRow). Sacar ese badge completo — el header debe quedar solo con
+el botón de menú (☰) a la izquierda, sin nada a la derecha.
+
+Como PhotoHeader es un componente compartido, este cambio debería afectar
+automáticamente a Inicio, Mapa, Agenda, Ruta del Vino y Tienda (que son las
+pantallas que lo usan) sin tocar cada una por separado. Confirmá en el plan
+que efectivamente son esas 5 las que usan este componente, y que las fichas
+de detalle (bodega, vino, vinoteca, evento) NO lo usan y por lo tanto no se
+ven afectadas — si alguna ficha sí lo usa, avisame antes de sacarlo de ahí
+también.
+
+============================================
+CAMBIO 2 — Reducir la imagen del head de Tienda para que se vea completa
+============================================
+Hoy la imagen del header de Tienda no se ve completa (se corta/recorta,
+probablemente por el ajuste de tamaño "cover" que usa por defecto). Quiero
+que se pueda ver la imagen entera, reducida aproximadamente un 30% respecto
+a como se ve ahora.
+
+Esto es SOLO para el header de Tienda — no toques el header de Inicio, Mapa,
+Agenda ni Ruta del Vino (que deben seguir viéndose como están, incluido el
+cambio de gradiente que ya hicimos antes).
+
+Mostrame en el plan cómo lo vas a lograr (por ejemplo, cambiar el ajuste de
+tamaño de la imagen a "contain" en vez de "cover", como ya hace el header de
+Ruta del Vino, y/o ajustar la altura del header de Tienda específicamente)
+antes de aplicarlo.
+
+============================================
+CAMBIO 3 — Tarjeta fija de introducción en Experiencia Pinot Noir
+============================================
+Dentro de Experiencia Ruta del Vino Pinot Noir (PinotExperienceListScreen),
+agregar la imagen experiencia-pinot-intro.png como una tarjeta fija, ubicada
+ENTRE el botón "← Volver" y la primera tarjeta de vino (Familia De Bernardi).
+
+Esta tarjeta es solo informativa (no es clickeable, no abre ninguna ficha).
+Debe verse a ancho completo, con el mismo criterio "sangre completa" que ya
+usan las 6 tarjetas de vino de esa misma pantalla, para que quede visualmente
+consistente con ellas.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WineDetail, WINERIES_DATA, WINES, Malbec, Merlot, Cursos.
+- No tocar el carrito, checkout, ni lógica de compra.
+- No tocar el gradiente de los headers (ya resuelto en un prompt anterior).
+- No borrar ningún asset existente.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador:
+   - Recorrer Inicio, Mapa, Agenda, Ruta del Vino, Tienda → confirmar que
+     ninguna tiene ya el logo chico en la esquina superior derecha del
+     header.
+   - Confirmar que alguna ficha de detalle (bodega o vino) sigue con su
+     header normal, sin cambios.
+   - Tienda: la imagen del header ahora se ve completa, sin recortarse.
+   - Experiencia Ruta del Vino Pinot Noir: la tarjeta de introducción
+     aparece entre "← Volver" y la tarjeta de Familia De Bernardi, a ancho
+     completo, no es clickeable. Las 6 tarjetas de vino siguen funcionando
+     igual que antes.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
