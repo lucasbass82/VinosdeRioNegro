@@ -1,0 +1,139 @@
+INSTRUCCIONES PARA CLAUDE CODE - REDISEÑO DE INICIO: MAPA DECORATIVO + VINOS CERCA TUYO + TAB PERFIL
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande (toca Inicio, la barra inferior, y agrega
+una pantalla nueva), pero cada pieza es simple — si te resulta más manejable
+aplicalo en bloques internos, el resultado final debe ser revisable como un
+solo conjunto antes de commitear.
+
+Verificá primero que este archivo existe en src/assets/ con el nombre exacto
+antes de escribir cualquier import — si no existe o tiene otra extensión,
+avisame antes de seguir:
+- mapa-decorativo-viedma.jpg
+
+============================================
+CONTEXTO
+============================================
+Hoy HomeScreen tiene, en este orden: buscador → tarjeta azul con "¡Hola,
+Viedma!" + "Más de {WINES.length} etiquetas..." + botón "Ver disponibles
+cerca →" → "Actividades destacadas" → "Vinos recomendados" → "Bodegas
+recomendadas".
+
+MapScreen (tab "Mapa" de la barra inferior) tiene su propia tarjeta azul
+parecida ("Estás en Viedma"), chips de varietal (["Cerca mío", "Pinot Noir",
+"Merlot", "Malbec", "Blend", "Rosé", "Chardonnay"]) y una lista completa de
+vinos filtrados por esos chips.
+
+IMPORTANTE — esto no es geolocalización real: hoy no hay ningún
+navigator.geolocation en el código. "Viedma", "Ubicación detectada" y
+similares son texto fijo. Este prompt NO agrega geolocalización real —
+solo reorganiza la interfaz con datos de mentira aceptados a propósito,
+como paso previo a un proyecto de geolocalización real que se va a encarar
+más adelante, aparte.
+
+============================================
+CAMBIO 1 — Nuevo orden y contenido de HomeScreen
+============================================
+Sacar por completo la tarjeta azul actual (gradientCard con
+locationStatusRow + locationGreeting + locationBody + botón "Ver disponibles
+cerca →").
+
+En su lugar, el nuevo orden de HomeScreen debe quedar:
+
+1. Buscador (sin cambios, tal cual está hoy).
+2. Título nuevo (sin tarjeta azul, sin botón, sin "Ubicación detectada"):
+   - Línea 1: "¡Hola, Viedma!"
+   - Línea 2: "Más de 54 etiquetas Rionegrinas cerca tuyo"
+   (el "54" es un número de mentira a propósito, aceptado como placeholder
+   hasta que haya geolocalización real — no lo cuestiones ni lo cambies por
+   WINES.length ni ningún otro cálculo)
+3. Imagen decorativa mapa-decorativo-viedma.jpg, a ancho completo, con
+   bordes redondeados (mismo criterio visual que el resto de tarjetas
+   grandes de la app). No es clickeable, no tiene ninguna acción — es
+   puramente decorativa por ahora.
+4. Sección nueva "Vinos Cerca Tuyo" (Cambio 2, ver abajo).
+5. "Actividades destacadas" (sin cambios, se corre para abajo).
+6. "Vinos recomendados" (sin cambios).
+7. "Bodegas recomendadas" (sin cambios).
+
+============================================
+CAMBIO 2 — Sección "Vinos Cerca Tuyo"
+============================================
+Debajo del mapa decorativo:
+
+- Título "Vinos Cerca Tuyo" con acción "Ver todas" a la derecha (mismo
+  componente SectionTitle que ya usan "Vinos recomendados" y "Bodegas
+  recomendadas").
+- Debajo del título, los mismos chips de varietal que hoy tiene MapScreen:
+  ["Cerca mío", "Pinot Noir", "Merlot", "Malbec", "Blend", "Rosé",
+  "Chardonnay"]. "Cerca mío" es el filtro por defecto.
+- Debajo de los chips, un scroll HORIZONTAL (izquierda a derecha, mismo
+  componente/patrón que ya usan "Vinos recomendados": styles.horizontalScroller
+  + WineVisualRow), mostrando hasta 10 vinos.
+
+Los vinos que se muestran acá NO salen de WINES completo (212), sino de una
+lista curada nueva de aproximadamente 20 vinos, repartidos parejo entre
+varietales y regiones (mismo criterio determinístico ya usado para armar
+HOME_RECOMMENDED_WINES: no aleatorio, elegí por orden de array, mostralo en
+el plan). Armá esta lista como una const nueva, por ejemplo
+HOME_NEARBY_WINES.
+
+Comportamiento de los chips:
+- "Cerca mío" (default): muestra los primeros 10 de HOME_NEARBY_WINES.
+- Cualquier otro chip (varietal específico): filtra HOME_NEARBY_WINES por
+  ese varietal (puede devolver menos de 10, está bien).
+
+"Ver todas" (la acción del título) debe llevar a una pantalla que muestre
+los ~20 vinos completos de HOME_NEARBY_WINES (no los 212 de WINES). Si ya
+existe un componente de lista de vinos reutilizable al que le puedas pasar
+una lista custom, usalo; si no, mostrame en el plan cómo proponés resolver
+esta pantalla nueva antes de crearla, para mantenerla simple.
+
+============================================
+CAMBIO 3 — Barra inferior: sacar Mapa, agregar Perfil
+============================================
+En la barra de navegación inferior, reemplazar el tab "Mapa" por "Perfil",
+en la misma posición (2do lugar). El tab "Perfil" debe llevar directo a
+ProfileScreen (la misma pantalla a la que hoy se llega por el menú ☰ o el
+ícono de personita del header).
+
+MapScreen deja de ser accesible desde la barra inferior. No hace falta que
+borres el componente MapScreen del código — dejalo sin usar, no lo
+elimines. Confirmá en el plan si hay algún otro lugar del código que todavía
+intente navegar al tab "map" (yo no encontré ninguno, pero confirmalo vos
+antes de aplicar).
+
+============================================
+QUÉ NO HACER
+============================================
+- No agregar geolocalización real, ni navigator.geolocation, ni ninguna
+  librería de mapas — el mapa es una imagen decorativa, nada más.
+- No tocar el ícono de perfil (personita) del header — se queda como está
+  por ahora, aunque ahora sea algo redundante con el nuevo tab Perfil; eso
+  se resuelve en otro prompt aparte.
+- No tocar el menú ☰ ni los headers (altura, gradiente, logo) — eso quedó
+  pausado para más adelante, no lo toques en este prompt.
+- No tocar WINERIES_DATA, WINES, WineDetail, WineryDetail, ShopDetail,
+  Tienda, carrito, checkout.
+- No borrar MapScreen ni ningún asset existente.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador:
+   - Inicio muestra, en orden: buscador, título "¡Hola, Viedma! / Más de 54
+     etiquetas Rionegrinas cerca tuyo", mapa decorativo, "Vinos Cerca Tuyo"
+     con chips y 10 vinos en scroll horizontal, "Actividades destacadas",
+     "Vinos recomendados", "Bodegas recomendadas".
+   - Tocar cada chip de "Vinos Cerca Tuyo" filtra correctamente dentro de
+     los ~20 vinos curados (no busca en los 212).
+   - "Ver todas" de esa sección lleva a una pantalla con los ~20 vinos, no
+     los 212.
+   - La barra inferior ya no tiene "Mapa" — tiene "Perfil" en su lugar, y
+     lleva a la pantalla de Perfil correctamente.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

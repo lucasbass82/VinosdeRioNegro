@@ -1,0 +1,163 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTES INICIO, RUTA DEL VINO, TIENDA Y HEADERS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un prompt grande con varios cambios independientes — si te
+resulta más manejable, aplicalo en bloques internos, pero el resultado final
+debe ser revisable como un solo conjunto antes de commitear.
+
+============================================
+SECCIÓN A — INICIO: "Ver todas" en grilla + botón Volver
+============================================
+
+A1) "Ver todas" en grilla, no en lista
+Tanto "Vinos Cerca Tuyo" como "Vinos recomendados" tienen un botón "Ver
+todas"/"Ver todos" que hoy lleva a WineListScreen, la cual muestra los vinos
+en una lista vertical de filas (WineVisualRow). Quiero que en su lugar se
+muestren en GRILLA de 2 columnas, igual que la grilla "También te pueden
+gustar" que ya existe en la ficha de bodega (usa WineGridCard dentro de un
+contenedor con styles.wineCardGrid). Reutilizá exactamente ese mismo
+componente y contenedor — no crees un componente de grilla nuevo.
+
+Esto afecta a WineListScreen en su totalidad (la usan tanto el tab
+"winelist" como "nearby", según quedó armado en el prompt anterior), así que
+el cambio aplica a ambas automáticamente.
+
+A2) Agregar botón Volver a WineListScreen
+WineListScreen no tiene ningún botón de volver hoy. Agregale uno, con el
+mismo patrón que ya usa el resto de la app: <button style={styles.backButton}
+onClick={onBack}><ArrowLeftIcon /> Volver</button>, en el mismo lugar/orden
+en el que aparece en las demás pantallas (arriba de todo, antes del resto
+del contenido).
+
+Como "winelist" y "nearby" son tabs (no pantallas de detalle con stack), el
+onBack más simple es volver al tab "home" (onSetTab("home")), ya que las dos
+formas de llegar a esta pantalla parten de Inicio. Si encontrás una forma
+mejor de manejarlo dado cómo está armada la navegación hoy, proponela en el
+plan.
+
+A3) Revisar consistencia general de los botones Volver
+Ya reviso yo mismo que las pantallas de detalle (bodega, vino, vinoteca,
+evento, carrito, checkout, experiencia Pinot Noir) usan todas
+styles.backButton — así que deberían verse iguales entre sí. Confirmá esto
+en el plan (que no haya ninguna pantalla con un estilo de "Volver" distinto
+al compartido) y avisame si encontrás alguna excepción antes de tocarla.
+
+============================================
+SECCIÓN B — RUTA DEL VINO (RegionsScreen)
+============================================
+
+B1) Reordenar: título + subtítulo ANTES de las 5 tarjetas grandes
+Hoy el orden es: 5 tarjetas grandes (zoneGrid) → "Tocá una zona para filtrar
+sus bodegas" (zoneHint) → título "Explorá por región" (SectionTitle). Quiero
+que el título y el subtítulo queden ANTES de las 5 tarjetas grandes (entre
+el header de la pantalla y la primera tarjeta, Cordillera), en este orden:
+1. SectionTitle "Explorá por región"
+2. "Tocá una zona para filtrar sus bodegas" (el mismo texto/estilo de hoy)
+3. Las 5 tarjetas grandes (zoneGrid)
+
+B2) Sacar los chips de región (Cordillera / Alto Valle / Valle Medio / Mar /
+Línea Sur)
+Son redundantes con las 5 tarjetas grandes, que ya cumplen la misma función
+de filtro. Sacar por completo ese chipsRow (regionButtons) — las 5 tarjetas
+grandes siguen siendo las que filtran al tocarlas, sin cambios en esa lógica.
+
+B3) Renombrar la región "Línea Sur" → "Estepa"
+Cambiar el nombre en todos los lugares donde aparece como label visible
+(tarjeta grande, y cualquier otro lugar de la app que muestre el nombre de
+esta región — por ejemplo el subtítulo "Ciudad · Región" en las fichas de
+bodega). Mostrame en el plan TODOS los lugares donde encontraste el texto
+"Línea Sur" antes de cambiarlo, para confirmar que no se te escapa ninguno.
+
+B4) Título dinámico de la sección de bodegas, con artículo correcto
+Hoy el título se arma como `Bodegas del ${región}`, lo cual queda mal para
+dos de las cinco regiones. Dejalo así por región:
+- Cordillera → "Bodegas de la Cordillera" (hoy dice mal "Bodegas del
+  Cordillera")
+- Alto Valle → "Bodegas del Alto Valle" (sin cambios)
+- Valle Medio → "Bodegas del Valle Medio" (sin cambios)
+- Mar → "Bodegas del Mar" (sin cambios)
+- Estepa (ex Línea Sur) → "Bodegas de la Estepa"
+- Todas (sin filtro) → "Bodegas de Río Negro" (sin cambios)
+
+El botón "Ver todas" al lado de este título queda exactamente como está hoy
+(mismo comportamiento, sin tocar).
+
+============================================
+SECCIÓN C — TIENDA: tarjetas de Experiencia Ruta del Vino Pinot Noir
+============================================
+
+C1) Mismo tamaño para las 6 tarjetas, de forma robusta
+Hoy 3 de las 6 tarjetas (Familia De Bernardi, Wapisa, Chacra Barda) se ven
+de un tamaño distinto a las otras 3 (Bellaco Malcriado, Calfulén, Araucana).
+En vez de depender de que los 6 archivos de imagen tengan exactamente el
+mismo tamaño en píxeles (frágil: si el día de mañana se reemplaza una imagen
+con otras proporciones, se vuelve a romper), cambiá la forma en que se
+renderizan para que el tamaño visual sea siempre el mismo sin importar el
+archivo: usá una altura fija para el contenedor de cada tarjeta y
+objectFit: "cover" (o el equivalente con backgroundSize: "cover" si están
+implementadas como background-image) para que la imagen llene ese espacio
+de forma pareja, igual que ya se ve hoy en Bellaco/Calfulén/Araucana.
+
+Antes de aplicar, mostrame en el plan qué altura fija vas a usar (basate en
+cómo se ven hoy esas 3 tarjetas "buenas") y confirmame si hoy están
+implementadas como <img> o como background-image.
+
+C2) Nuevo orden de las 6 tarjetas
+1. Familia De Bernardi
+2. Chacra Barda
+3. Bellaco Malcriado
+4. Calfulén
+5. Araucana
+6. Wapisa
+
+============================================
+SECCIÓN D — HEADERS: sacar ícono de perfil Y menú ☰
+============================================
+Ahora que "Perfil" tiene su propio tab en la barra inferior (agregado en el
+prompt anterior), tanto el ícono de perfil (personita) como el botón de menú
+☰ de los headers quedan redundantes. Sacar los DOS de todos los headers
+donde aparecen.
+
+ANTES de sacar el menú ☰: revisá qué opciones tiene ese menú desplegable.
+Si tiene SOLO "Perfil y beneficios", sacalo sin problema (ya hay una forma
+mejor de llegar a Perfil, por el tab). Si tiene OTRAS opciones además de
+Perfil, NO lo saques todavía — mostrame en el plan cuáles son esas otras
+opciones y cómo proponés que se seleccionen accediendo, para decidirlo antes
+de tocar nada.
+
+El resultado final del header, si no hay otras opciones en el menú, debe
+quedar sin ningún botón ni ícono — solo el título/subtítulo sobre la imagen.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WINERIES_DATA ni WINES (excepto lectura).
+- No tocar el carrito, checkout, ni lógica de compra.
+- No tocar el gradiente de los headers (ya resuelto en un prompt anterior).
+- No tocar HOME_NEARBY_WINES, HOME_RECOMMENDED_WINES ni
+  HOME_RECOMMENDED_WINERIES (la selección de vinos/bodegas en sí, solo
+  cambia cómo se muestran al tocar "Ver todas").
+- No borrar ningún asset existente.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador:
+   - Inicio → "Ver todas" de Vinos Cerca Tuyo y de Vinos recomendados
+     muestran grilla de 2 columnas, con botón Volver arriba que regresa a
+     Inicio.
+   - Ruta del Vino → título y subtítulo antes de las 5 tarjetas grandes, sin
+     chips de región, tarjeta y título de "Estepa" en vez de "Línea Sur",
+     "Bodegas de la Cordillera" y "Bodegas de la Estepa" con el artículo
+     correcto.
+   - Tienda → Experiencia Pinot Noir → las 6 tarjetas del mismo tamaño, en
+     el orden De Bernardi / Chacra / Bellaco / Calfulén / Araucana / Wapisa.
+   - Ningún header de la app tiene ya ícono de perfil ni botón ☰ (salvo que
+     hayas pausado esto por tener otras opciones en el menú, en cuyo caso
+     avisame).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

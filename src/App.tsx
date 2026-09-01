@@ -9,6 +9,7 @@ import React, {
 import logoIcon from "./assets/logo-icon.png";
 import rioNegroRiverPhoto from "./assets/rio-negro-river.jpg";
 import mapaProvinciaPhoto from "./assets/mapa-provincia.jpg";
+import mapaDecorativoViedmaPhoto from "./assets/mapa-decorativo-viedma.jpg";
 import agendaBrindisPhoto from "./assets/agenda-brindis.jpg";
 import tiendaHeaderPhoto from "./assets/tienda-header.jpg";
 import bodegaMirasPhoto from "./assets/bodega-miras.png";
@@ -433,12 +434,14 @@ type TabKey =
   | "bodegas"
   | "profile"
   | "shop"
-  | "winelist";
+  | "winelist"
+  | "nearby";
 
 type DetailEntry =
   | { kind: "wine"; id: string; fromShop?: boolean }
   | { kind: "winery"; id: string }
-  | { kind: "shop"; id: string };
+  | { kind: "shop"; id: string }
+  | { kind: "event"; id: string };
 
 type DetailState = DetailEntry | null;
 
@@ -483,7 +486,7 @@ const REGION_META: Record<
     tint: "rgba(21,119,200,0.10)",
   },
   "linea-sur": {
-    title: "Línea Sur",
+    title: "Estepa",
     subtitle: "Territorio emergente para futuras experiencias.",
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
@@ -496,6 +499,15 @@ const REGION_META: Record<
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80",
     tint: "#efe7dc",
   },
+};
+
+// Artículo correcto para el título "Bodegas ___ {región}" (RegionsScreen).
+const REGION_ARTICLE: Record<RegionKey, string> = {
+  cordillera: "de la",
+  "alto-valle": "del",
+  "valle-medio": "del",
+  mar: "del",
+  "linea-sur": "de la",
 };
 
 const ALL_SHOP_NAMES = [
@@ -854,7 +866,7 @@ const WINERIES_DATA: Winery[] = [
   description:
     "Viñedo único en Valle Azul, con suelos de ceniza y cuarzo de origen volcánico. Marca Araucana, boutique orientada a exportación, liderada por Felipe Menéndez desde 2018.",
   shortDescription:
-    "Bodega boutique de Línea Sur, orientada a exportación, en la barda de Valle Azul.",
+    "Bodega boutique de Estepa, orientada a exportación, en la barda de Valle Azul.",
   hours: "Horario a confirmar",
   openNow: false,
   wines: [
@@ -1821,7 +1833,7 @@ const WINES: Wine[] = [
   style: "Fresco y frutado",
   description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: araucanaRioDeLosCiervosMalbecRosePhoto,
 },
 {
@@ -1832,7 +1844,7 @@ const WINES: Wine[] = [
   style: "Delicado y elegante",
   description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: araucanaRioDeLosCiervosPinotNoirPhoto,
 },
 {
@@ -1843,7 +1855,7 @@ const WINES: Wine[] = [
   style: "Complejo y mineral",
   description: "Viñedos de más de 40 años de antigüedad en los suelos clásicos del Alto Valle. Tintos redondos, complejos y equilibrados, con taninos elegantes. Aromas a frutos negros con sutiles notas ahumadas y mentoladas, carácter frutal combinado con notas minerales y final persistente. 95% Malbec, 5% Petit Verdot, crianza en roble francés.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: araucanaRioDeLosCiervosMalbecPhoto,
 },
 {
@@ -1854,7 +1866,7 @@ const WINES: Wine[] = [
   style: "Blend elegante",
   description: "Blend elegante y exclusivo de Malbec, Merlot y Petit Verdot.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: araucanaAzulPhoto,
 },
 {
@@ -1865,7 +1877,7 @@ const WINES: Wine[] = [
   style: "Fresco y cítrico",
   description: "Blanco fresco de la Patagonia, con acidez natural marcada por el clima frío y ventoso de la región. Notas cítricas y florales, ideal para acompañar mariscos y pescados.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: clasicoPatinasBlancasPhoto,
 },
 {
@@ -1876,7 +1888,7 @@ const WINES: Wine[] = [
   style: "Suave y liviano",
   description: "Rosado elaborado a partir de Merlot, de color salmón vivo, con aromas a frutos rojos frescos y un perfil suave y liviano en boca.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: clasicoMerlotRosePhoto,
 },
 {
@@ -1887,7 +1899,7 @@ const WINES: Wine[] = [
   style: "Estructurado y expresivo",
   description: "100% Merlot de viñedos en ambas márgenes del Río Negro. Perfil estructurado y expresivo, con notas a frutos negros maduros, cassis y sutiles toques especiados. Cuerpo medio, taninos suaves y final redondo.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: clasicoMerlotPhoto,
 },
 {
@@ -1898,7 +1910,7 @@ const WINES: Wine[] = [
   style: "Fresco y con sentido de lugar",
   description: "Uvas de 8 viñedos antiguos de ambas márgenes del Río Negro. Busca mostrar la diversidad de la zona clásica del valle: frescura, elegancia y sentido de lugar.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: clasicoMalbecPhoto,
 },
 {
@@ -1909,7 +1921,7 @@ const WINES: Wine[] = [
   style: "Composición única de suelo",
   description: "Blend de 48% Malbec, 40% Merlot, 12% Petit Verdot. Suelos de origen eólico, enriquecidos con ceniza volcánica y potasio, con alto contenido de carbonato de calcio — una composición química poco común incluso a nivel mundial.",
   availableAt: [],
-  tag: "Línea Sur",
+  tag: "Estepa",
   image: parcelaUnicaPhoto,
 },
 {
@@ -3873,6 +3885,64 @@ const HOME_RECOMMENDED_WINERIES: Winery[] = (() => {
   return [...(antigua ? [antigua] : []), ...rest];
 })();
 
+// Chips de varietal compartidos por MapScreen y la sección "Vinos Cerca Tuyo"
+// de HomeScreen. "Cerca mío" no es un varietal real: es el filtro por defecto.
+const VARIETAL_CHIPS = [
+  "Cerca mío",
+  "Pinot Noir",
+  "Merlot",
+  "Malbec",
+  "Blend",
+  "Rosé",
+  "Chardonnay",
+];
+
+// ~20 vinos: los que tienen alguno de los 6 varietales de VARIETAL_CHIPS
+// (sin contar "Cerca mío"). Primero los de Antigua (hasta 3, regla de negocio
+// "Antigua siempre primera"), luego round-robin por esos mismos 6 varietales
+// en orden del array WINES (determinístico, mismo criterio que
+// HOME_RECOMMENDED_WINES) hasta completar 20.
+const HOME_NEARBY_WINE_VARIETALS = VARIETAL_CHIPS.slice(1);
+
+const HOME_NEARBY_WINES: Wine[] = (() => {
+  const eligible = WINES.filter((w) =>
+    HOME_NEARBY_WINE_VARIETALS.includes(w.varietal)
+  );
+  const antiguaWines = eligible
+    .filter((w) => w.winery === ANTIGUA_NAME)
+    .slice(0, 3);
+
+  const restByVarietal: Record<string, Wine[]> = {};
+  HOME_NEARBY_WINE_VARIETALS.forEach((v) => {
+    restByVarietal[v] = eligible.filter(
+      (w) => w.varietal === v && w.winery !== ANTIGUA_NAME
+    );
+  });
+
+  const picked: Wine[] = [];
+  const cursor: Record<string, number> = {};
+  HOME_NEARBY_WINE_VARIETALS.forEach((v) => {
+    cursor[v] = 0;
+  });
+
+  const target = 20 - antiguaWines.length;
+  while (picked.length < target) {
+    let progressed = false;
+    for (const v of HOME_NEARBY_WINE_VARIETALS) {
+      if (picked.length >= target) break;
+      const next = restByVarietal[v][cursor[v]];
+      if (next) {
+        picked.push(next);
+        cursor[v] += 1;
+        progressed = true;
+      }
+    }
+    if (!progressed) break;
+  }
+
+  return [...antiguaWines, ...picked];
+})();
+
 function GlobalStyles() {
   return (
     <style>{`
@@ -3930,12 +4000,16 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [showSplash, setShowSplash] = useState(true);
   const [splashFading, setSplashFading] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollPositions = useRef<number[]>([]);
   const prevStackLen = useRef(0);
+  // Scroll de Home guardado al salir por un acceso directo (actividad,
+  // "Ver todo"/"Ver todas") para restaurarlo al volver con "Volver".
+  const homeScrollPosition = useRef(0);
+  const restoringHomeScroll = useRef(false);
+  const [cameFromHomeShortcut, setCameFromHomeShortcut] = useState(false);
 
   useEffect(() => {
     const fadeTimer = setTimeout(() => setSplashFading(true), 3400);
@@ -3952,7 +4026,12 @@ export default function App() {
     const len = detailStack.length;
     const wentBack = len < prevStackLen.current;
     prevStackLen.current = len;
-    el.scrollTop = wentBack ? scrollPositions.current[len] ?? 0 : 0;
+    if (restoringHomeScroll.current) {
+      el.scrollTop = homeScrollPosition.current;
+      restoringHomeScroll.current = false;
+    } else {
+      el.scrollTop = wentBack ? scrollPositions.current[len] ?? 0 : 0;
+    }
   }, [detailStack, tab]);
 
   const pushDetail = (entry: DetailEntry) =>
@@ -3966,12 +4045,33 @@ export default function App() {
     pushDetail({ kind: "wine", id, fromShop });
   const openWinery = (id: string) => pushDetail({ kind: "winery", id });
   const openShop = (id: string) => pushDetail({ kind: "shop", id });
+  const openEvent = (id: string) => pushDetail({ kind: "event", id });
   const closeDetail = () => setDetailStack((stack) => stack.slice(0, -1));
-  const toggleMenu = () => setShowMenu((prev) => !prev);
+  // El botón ☰ ya no se renderiza (headers sin menú ni ícono de perfil);
+  // se deja este no-op para no tocar las firmas de onMenuClick que todavía
+  // se pasan por Header/PhotoHeader y las pantallas intermedias.
+  const toggleMenu = () => {};
 
   const goToTab = (nextTab: TabKey) => {
     setDetailStack([]);
+    setCameFromHomeShortcut(false);
     setTab(nextTab);
+  };
+
+  // Accesos directos desde Home (actividad puntual vía openEvent aparte, y
+  // "Ver todo"/"Ver todas" de Agenda/Bodegas/Vinos Cerca Tuyo/Vinos
+  // recomendados) que van a un tab entero, no a un detalle: guardan el
+  // scroll de Home para poder restaurarlo con backToHome().
+  const goHomeShortcut = (nextTab: TabKey) => {
+    homeScrollPosition.current = scrollRef.current?.scrollTop ?? 0;
+    setCameFromHomeShortcut(true);
+    setDetailStack([]);
+    setTab(nextTab);
+  };
+
+  const backToHome = () => {
+    restoringHomeScroll.current = true;
+    goToTab("home");
   };
 
   const isFavorite = (id: string) => favorites.some((f) => f.id === id);
@@ -4020,6 +4120,8 @@ export default function App() {
     if (current.kind === "wine") return WINES.find((x) => x.id === current.id);
     if (current.kind === "winery")
       return WINERIES.find((x) => x.id === current.id);
+    if (current.kind === "event")
+      return EVENTS.find((x) => x.id === current.id);
     return SHOPS.find((x) => x.id === current.id);
   }, [detailStack]);
 
@@ -4094,29 +4196,6 @@ export default function App() {
   />
 )}
 
-          {showMenu && !detail && (
-            <div style={styles.menuDropdown}>
-              <button
-                style={styles.menuItem}
-                onClick={() => {
-                  goToTab("profile");
-                  setShowMenu(false);
-                }}
-              >
-                Perfil y beneficios
-              </button>
-              <button
-                style={styles.menuItem}
-                onClick={() => {
-                  goToTab("home");
-                  setShowMenu(false);
-                }}
-              >
-                Volver al inicio
-              </button>
-            </div>
-          )}
-
          {detail?.kind === "winery" && detailView && (
            <div
              style={{
@@ -4135,10 +4214,24 @@ export default function App() {
            </div>
          )}
 
+         {detail?.kind === "event" && detailView && (
+           <PhotoHeader
+             imageUrl={eventHeaderImage((detailView as EventItem).place)}
+             title={(detailView as EventItem).title}
+             subtitle={`${(detailView as EventItem).place} · ${
+               (detailView as EventItem).city
+             }`}
+             onMenuClick={toggleMenu}
+             onProfile={() => goToTab("profile")}
+           />
+         )}
+
      {tab === "agenda" && !detail ? (
        <AgendaScreen
          onMenuClick={toggleMenu}
          onProfile={() => goToTab("profile")}
+         showBackToHome={cameFromHomeShortcut}
+         onBackToHome={backToHome}
        />
      ) : tab === "shop" && !detail ? (
        <ShopScreen
@@ -4195,6 +4288,11 @@ export default function App() {
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
                 />
+              ) : detail.kind === "event" ? (
+                <EventDetailScreen
+                  event={detailView as EventItem}
+                  onBack={closeDetail}
+                />
               ) : (
                 <ShopDetail
                   shop={detailView as Shop}
@@ -4211,8 +4309,9 @@ export default function App() {
               <HomeScreen
                 onOpenWine={openWine}
                 onOpenWinery={openWinery}
-                onOpenShop={openShop}
+                onOpenEvent={openEvent}
                 onSetTab={goToTab}
+                onSetTabFromHome={goHomeShortcut}
                 favorites={favorites}
                 toggleFavorite={toggleFavorite}
               />
@@ -4228,9 +4327,24 @@ export default function App() {
                 onOpenShop={openShop}
               />
             ) : tab === "bodegas" ? (
-              <RegionsScreen onOpenWinery={openWinery} />
+              <RegionsScreen
+                onOpenWinery={openWinery}
+                showBackToHome={cameFromHomeShortcut}
+                onBackToHome={backToHome}
+              />
             ) : tab === "winelist" ? (
-              <WineListScreen onOpenWine={openWine} onSetTab={goToTab} />
+              <WineListScreen
+                onOpenWine={openWine}
+                onSetTab={goToTab}
+                onBack={backToHome}
+              />
+            ) : tab === "nearby" ? (
+              <WineListScreen
+                onOpenWine={openWine}
+                onSetTab={goToTab}
+                onBack={backToHome}
+                wines={HOME_NEARBY_WINES}
+              />
             ) : (
               <ProfileScreen favorites={favorites} />
             )}
@@ -4287,12 +4401,6 @@ const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
     fichaImage: experienciaPinotCordilleraDebernardiFichaPhoto,
   },
   {
-    id: "mar-wapisa",
-    name: "Wapisa",
-    cardImage: experienciaPinotMarWapisaPhoto,
-    fichaImage: experienciaPinotMarWapisaFichaPhoto,
-  },
-  {
     id: "altovalle-chacrabarda",
     name: "Chacra Barda",
     cardImage: experienciaPinotAltovalleChacrabardaPhoto,
@@ -4315,6 +4423,12 @@ const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
     name: "Araucana",
     cardImage: experienciaPinotEstepaAraucanaPhoto,
     fichaImage: experienciaPinotEstepaAraucanaFichaPhoto,
+  },
+  {
+    id: "mar-wapisa",
+    name: "Wapisa",
+    cardImage: experienciaPinotMarWapisaPhoto,
+    fichaImage: experienciaPinotMarWapisaFichaPhoto,
   },
 ];
 
@@ -4492,6 +4606,8 @@ function ShopScreen({
               ? "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0))"
               : undefined
           }
+          backgroundSize={openProduct.featured ? "contain" : undefined}
+          height={openProduct.featured ? 161 : undefined}
         />
         <div style={styles.sheetSurface}>
           {openProduct.featured?.wineCards ? (
@@ -4957,7 +5073,12 @@ function PinotExperienceListScreen({
             <img
               src={wine.cardImage}
               alt={wine.name}
-              style={{ width: "100%", display: "block" }}
+              style={{
+                width: "100%",
+                height: 170,
+                objectFit: "cover",
+                display: "block",
+              }}
             />
           </button>
         ))}
@@ -5214,21 +5335,6 @@ function Header({
 
   return (
     <div style={styles.header}>
-      <div style={{ ...styles.headerTopRow, justifyContent: "space-between" }}>
-        <button style={styles.menuButton} onClick={onMenuClick}>
-          <MenuIcon />
-        </button>
-        {onProfile && (
-          <button
-            style={styles.menuButton}
-            onClick={onProfile}
-            aria-label="Perfil"
-          >
-            <PersonIcon />
-          </button>
-        )}
-      </div>
-
       <div
         style={{
           ...styles.headerTitleWrap,
@@ -5304,23 +5410,6 @@ function PhotoHeader({
         backgroundImage: `${gradient || DEFAULT_HEADER_GRADIENT}, url('${imageUrl}')`,
       }}
     >
-      <div style={styles.homePhotoTopRow}>
-        <button style={styles.glassButton} onClick={onMenuClick}>
-          <MenuIcon />
-        </button>
-        <div style={styles.rowGap8}>
-          {onProfile && (
-            <button
-              style={styles.glassButton}
-              onClick={onProfile}
-              aria-label="Perfil"
-            >
-              <PersonIcon />
-            </button>
-          )}
-        </div>
-      </div>
-
       {!hideText && (
         <div style={styles.homePhotoTextWrap}>
           <div style={styles.homePhotoTitle} translate="no">
@@ -5341,7 +5430,7 @@ const RUTA_DEL_VINO_GRADIENT =
 // PhotoHeader distinto según su estado interno, así que cada una renderiza
 // el suyo (ver AgendaScreen y ShopScreen).
 const PHOTO_HEADER_CONFIG: Record<
-  "home" | "map" | "bodegas" | "winelist",
+  "home" | "map" | "bodegas" | "winelist" | "nearby",
   {
     imageUrl: string;
     title: string;
@@ -5374,29 +5463,36 @@ const PHOTO_HEADER_CONFIG: Record<
     title: "Buscá tu Vino",
     subtitle: "Todos los vinos Rionegrinos, en un solo lugar.",
   },
+  nearby: {
+    imageUrl: rioNegroRiverPhoto,
+    title: "Vinos Cerca Tuyo",
+    subtitle: "Los vinos que tenemos cerca tuyo, en un solo lugar.",
+  },
 };
 
 function HomeScreen({
   onOpenWine,
   onOpenWinery,
-  onOpenShop,
+  onOpenEvent,
   onSetTab,
+  onSetTabFromHome,
   favorites,
   toggleFavorite,
 }: {
   onOpenWine: (id: string) => void;
   onOpenWinery: (id: string) => void;
-  onOpenShop: (id: string) => void;
+  onOpenEvent: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
+  onSetTabFromHome: (tab: TabKey) => void;
   favorites: FavoriteItem[];
   toggleFavorite: (item: FavoriteItem) => void;
 }) {
-  const handleEventClick = (place: string) => {
-    if (place === "Bodega Miras") return onOpenWinery("w1");
-    if (place === "Bodega Finca Aniello") return onOpenWinery("w2");
-    if (place === "Vinoteca Vinopolitan") return onOpenShop("s1");
-    onSetTab("agenda");
-  };
+  const [nearbyVarietalFilter, setNearbyVarietalFilter] = useState("Cerca mío");
+
+  const nearbyWines =
+    nearbyVarietalFilter === "Cerca mío"
+      ? HOME_NEARBY_WINES.slice(0, 10)
+      : HOME_NEARBY_WINES.filter((w) => w.varietal === nearbyVarietalFilter);
 
   return (
     <div style={styles.stack22}>
@@ -5410,30 +5506,51 @@ function HomeScreen({
         </span>
       </button>
 
-      <div style={styles.gradientCard}>
-        <div style={styles.locationStatusRow}>
-          <span style={styles.locationDot} />
-          <span style={styles.locationEyebrow}>Ubicación detectada</span>
+      <div>
+        <div style={styles.sectionTitle}>¡Hola, Viedma!</div>
+        <div style={styles.homeGreetingSubtitle}>
+          Más de 54 etiquetas Rionegrinas cerca tuyo
         </div>
-        <div style={styles.locationGreeting}>¡Hola, Viedma!</div>
-        <div style={styles.locationBody}>
-          Más de {WINES.length} etiquetas de los mejores vinos Rionegrinos
-          disponibles ahora mismo
-        </div>
-        <div style={styles.rowGap10Wrap}>
+      </div>
+
+      <img
+        src={mapaDecorativoViedmaPhoto}
+        alt=""
+        style={styles.decorativeMapImage}
+      />
+
+      <SectionTitle
+        title="Vinos Cerca Tuyo"
+        action="Ver todas"
+        onAction={() => onSetTabFromHome("nearby")}
+      />
+
+      <div style={styles.chipsRow}>
+        {VARIETAL_CHIPS.map((chip) => (
           <button
-            style={styles.primaryButton}
-            onClick={() => onSetTab("winelist")}
+            key={chip}
+            style={
+              nearbyVarietalFilter === chip ? styles.chipActive : styles.chip
+            }
+            onClick={() => setNearbyVarietalFilter(chip)}
           >
-            Ver disponibles cerca →
+            {chip}
           </button>
-        </div>
+        ))}
+      </div>
+
+      <div style={styles.horizontalScroller}>
+        {nearbyWines.map((wine) => (
+          <div key={wine.id} style={styles.horizontalImageCard}>
+            <WineVisualRow wine={wine} onClick={() => onOpenWine(wine.id)} />
+          </div>
+        ))}
       </div>
 
       <SectionTitle
         title="Actividades destacadas"
         action="Ver todo"
-        onAction={() => onSetTab("agenda")}
+        onAction={() => onSetTabFromHome("agenda")}
       />
 
       <div style={styles.horizontalScroller}>
@@ -5445,7 +5562,7 @@ function HomeScreen({
               ...styles.horizontalCard,
               cursor: "pointer",
             }}
-            onClick={() => handleEventClick(e.place)}
+            onClick={() => onOpenEvent(e.id)}
           >
             <div style={styles.rowGap12}>
               <div style={styles.iconBadgeWine}>
@@ -5469,7 +5586,7 @@ function HomeScreen({
       <SectionTitle
         title="Vinos recomendados"
         action="Ver todos"
-        onAction={() => onSetTab("winelist")}
+        onAction={() => onSetTabFromHome("winelist")}
       />
 
       <div style={styles.horizontalScroller}>
@@ -5483,7 +5600,7 @@ function HomeScreen({
       <SectionTitle
         title="Bodegas recomendadas"
         action="Ver todas"
-        onAction={() => onSetTab("bodegas")}
+        onAction={() => onSetTabFromHome("bodegas")}
       />
 
       <div style={styles.horizontalScroller}>
@@ -5522,22 +5639,30 @@ function HomeScreen({
 function WineListScreen({
   onOpenWine,
   onSetTab,
+  onBack,
+  wines = WINES,
 }: {
   onOpenWine: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
+  onBack: () => void;
+  wines?: Wine[];
 }) {
   const varietals = Array.from(
-    new Set(WINES.map((w) => w.varietal).filter(hasRealVarietal))
+    new Set(wines.map((w) => w.varietal).filter(hasRealVarietal))
   );
   const [activeVarietal, setActiveVarietal] = useState("Todos");
 
   const shownWines =
     activeVarietal === "Todos"
-      ? WINES
-      : WINES.filter((w) => w.varietal === activeVarietal);
+      ? wines
+      : wines.filter((w) => w.varietal === activeVarietal);
 
   return (
     <div style={styles.stack22}>
+      <button style={styles.backButton} onClick={onBack}>
+        <ArrowLeftIcon /> Volver
+      </button>
+
       <button
         style={{ ...styles.searchBar, marginTop: 0 }}
         onClick={() => onSetTab("search")}
@@ -5566,11 +5691,14 @@ function WineListScreen({
         ))}
       </div>
 
-      <div style={styles.stack12}>
+      <div style={styles.wineCardGrid}>
         {shownWines.map((wine) => (
-          <WineVisualRow
+          <WineGridCard
             key={wine.id}
-            wine={wine}
+            image={wine.image}
+            title={wine.name}
+            subtitle={varietalOrDefault(wine.varietal, "Vino")}
+            tag={wine.tag}
             onClick={() => onOpenWine(wine.id)}
           />
         ))}
@@ -5806,7 +5934,7 @@ const RUTA_ZONES: Array<{
     aspectRatio: "6.47 / 1",
   },
   {
-    label: "Línea Sur",
+    label: "Estepa",
     region: "linea-sur",
     image: zonaLineaSurPhoto,
     aspectRatio: "6.61 / 1",
@@ -5815,18 +5943,14 @@ const RUTA_ZONES: Array<{
 
 function RegionsScreen({
   onOpenWinery,
+  showBackToHome,
+  onBackToHome,
 }: {
   onOpenWinery: (id: string) => void;
+  showBackToHome?: boolean;
+  onBackToHome?: () => void;
 }) {
   const [activeRegion, setActiveRegion] = useState<RegionKey | "todas">("todas");
-
-  const regionButtons: Array<{ key: RegionKey; label: string }> = [
-    { key: "cordillera", label: "Cordillera" },
-    { key: "alto-valle", label: "Alto Valle" },
-    { key: "valle-medio", label: "Valle Medio" },
-    { key: "mar", label: "Mar" },
-    { key: "linea-sur", label: "Línea Sur" },
-  ];
 
   const wineries =
     activeRegion === "todas"
@@ -5836,10 +5960,19 @@ function RegionsScreen({
   const title =
     activeRegion === "todas"
       ? "Bodegas de Río Negro"
-      : `Bodegas del ${REGION_META[activeRegion].title}`;
+      : `Bodegas ${REGION_ARTICLE[activeRegion]} ${REGION_META[activeRegion].title}`;
 
   return (
     <div style={styles.stack22}>
+      {showBackToHome && (
+        <button style={styles.backButton} onClick={onBackToHome}>
+          <ArrowLeftIcon /> Volver
+        </button>
+      )}
+
+      <SectionTitle title="Explorá por región" />
+      <div style={styles.zoneHint}>Tocá una zona para filtrar sus bodegas</div>
+
       <div style={styles.zoneGrid}>
         {RUTA_ZONES.map((zone) => (
           <div
@@ -5857,21 +5990,6 @@ function RegionsScreen({
           >
             <span style={styles.zoneTileLabel}>{zone.label}</span>
           </div>
-        ))}
-      </div>
-      <div style={styles.zoneHint}>Tocá una zona para filtrar sus bodegas</div>
-
-      <SectionTitle title="Explorá por región" />
-
-      <div style={styles.chipsRow}>
-        {regionButtons.map((region) => (
-          <button
-            key={region.key}
-            style={activeRegion === region.key ? styles.chipActive : styles.chip}
-            onClick={() => setActiveRegion(region.key)}
-          >
-            {region.label}
-          </button>
         ))}
       </div>
 
@@ -5926,16 +6044,6 @@ function MapScreen({
   const [varietalFilter, setVarietalFilter] = useState("Cerca mío");
   const [search, setSearch] = useState("");
 
-  const mapVarietalChips = [
-    "Cerca mío",
-    "Pinot Noir",
-    "Merlot",
-    "Malbec",
-    "Blend",
-    "Rosé",
-    "Chardonnay",
-  ];
-
   const filteredWines = WINES.filter((w) => {
     const matchesVarietal =
       varietalFilter === "Cerca mío" || w.varietal === varietalFilter;
@@ -5983,7 +6091,7 @@ function MapScreen({
       </div>
 
       <div style={styles.chipsRow}>
-        {mapVarietalChips.map((chip) => (
+        {VARIETAL_CHIPS.map((chip) => (
           <button
             key={chip}
             style={varietalFilter === chip ? styles.chipActive : styles.chip}
@@ -6140,9 +6248,13 @@ const timeframeLabel = (tf: EventTimeframe) =>
 function AgendaScreen({
   onMenuClick,
   onProfile,
+  showBackToHome,
+  onBackToHome,
 }: {
   onMenuClick: () => void;
   onProfile?: () => void;
+  showBackToHome?: boolean;
+  onBackToHome?: () => void;
 }) {
   const [filter, setFilter] = useState<EventTimeframe>("hoy");
   const [openEvent, setOpenEvent] = useState<EventItem | null>(null);
@@ -6189,6 +6301,12 @@ function AgendaScreen({
       />
       <div ref={agendaScrollRef} style={styles.sheetSurface}>
         <div style={styles.stack22}>
+          {showBackToHome && (
+            <button style={styles.backButton} onClick={onBackToHome}>
+              <ArrowLeftIcon /> Volver
+            </button>
+          )}
+
           <div style={styles.gradientCard}>
             <div style={styles.locationStatusRow}>
               <span style={styles.locationDot} />
@@ -6795,7 +6913,7 @@ function BottomNav({
 }) {
   const items: Array<{ key: TabKey; label: string; icon: React.ReactNode }> = [
     { key: "home", label: "Inicio", icon: <HomeIcon /> },
-    { key: "map", label: "Mapa", icon: <MapIcon /> },
+    { key: "profile", label: "Perfil", icon: <PersonIcon /> },
     { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
     { key: "bodegas", label: "Ruta del Vino", icon: <WineIcon /> },
     { key: "shop", label: "Tienda", icon: <ShoppingBagIcon /> },
@@ -7684,6 +7802,9 @@ const styles: Record<string, React.CSSProperties> = {
   homePhotoTextWrap: {
     position: "relative",
     zIndex: 2,
+    // Empuja el bloque de texto al fondo del header, sin depender de tener
+    // otro hermano flex arriba (homePhotoTopRow ya no existe).
+    marginTop: "auto",
   },
   homePhotoTitle: {
     fontFamily: '"Lora", serif',
@@ -7749,6 +7870,19 @@ const styles: Record<string, React.CSSProperties> = {
     lineHeight: 1.5,
     color: "rgba(255,255,255,0.85)",
     maxWidth: 280,
+  },
+  homeGreetingSubtitle: {
+    marginTop: 6,
+    fontSize: 14,
+    lineHeight: 1.5,
+    color: theme.subtext,
+  },
+  decorativeMapImage: {
+    display: "block",
+    width: "100%",
+    height: 180,
+    objectFit: "cover" as const,
+    borderRadius: 24,
   },
   compactLocationBar: {
     display: "flex",
