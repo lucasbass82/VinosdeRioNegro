@@ -1,0 +1,63 @@
+INSTRUCCIONES PARA CLAUDE CODE - EL CARRUSEL NO ARRANCA PEGADO AL BORDE IZQUIERDO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+En un celular real (no en el navegador de escritorio), al entrar a Inicio
+por primera vez, la primera tarjeta de "Vinos Cerca Tuyo" (Bellaco
+Malcriado) aparece con el logo de región CORTADO en el borde izquierdo de
+la pantalla (se ve "TO VALLE" en vez de "ALTO VALLE"), y del lado derecho
+se asoma un pedacito de la tarjeta siguiente. O sea: el carrusel no está
+arrancando con scroll en la posición 0 (mostrando la primera tarjeta
+completa desde su borde), sino como si ya estuviera corrido un poco hacia
+la derecha desde el principio, SIN que el usuario haya tocado nada todavía.
+
+Esto es un problema de POSICIÓN de scroll al cargar la pantalla, no de
+cuánto recorta object-fit: cover — no toques height, objectFit, ni el %
+de ancho de la tarjeta, esos ya están bien calculados y no son la causa de
+este bug.
+
+============================================
+CAMBIO — Investigar y corregir la posición inicial del scroll
+============================================
+Investigá por qué el carrusel de wineCardScroller (usa marginLeft: -16 /
+marginRight: -16 para ir "a sangre" hasta el borde de pantalla) no está
+mostrando la primera tarjeta completamente alineada a la izquierda al
+cargar la pantalla. Candidatos a revisar:
+- Si hay algún scrollLeft inicial distinto de 0 seteado en algún lado.
+- Si el scroll-snap-align: "start" de la tarjeta está funcionando bien
+  combinado con el margin negativo del contenedor.
+- Si en mobile (a diferencia del navegador de escritorio, donde SÍ se ve
+  bien) hay algún comportamiento de scroll-padding o overflow distinto.
+
+Corregilo para que, al entrar a Inicio, la primera tarjeta de cada carrusel
+("Vinos Cerca Tuyo" y "Vinos Recomendados") se vea completa desde el borde
+izquierdo de la pantalla, sin ningún recorte, tanto al cargar la pantalla
+por primera vez como después de volver de otra pantalla.
+
+============================================
+QUÉ NO HACER
+============================================
+- No toques height: 170, objectFit: "cover", ni el % de ancho de
+  wineCardButton — eso ya está bien ajustado, este es un problema distinto.
+- No toques PinotExperienceListScreen.
+- No toques imágenes, WINES, WINERIES_DATA, ni el resto de Inicio.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador en modo responsive/mobile (probá varios anchos: 360, 375, 390,
+   414px) y, si es posible, confirmá también que el problema no aparece
+   recargando la página varias veces (no es un problema de "una vez sí, una
+   vez no").
+3. Confirmar que la primera tarjeta de ambos carruseles se ve completa,
+   pegada al borde izquierdo, sin cortar el logo.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

@@ -5617,6 +5617,34 @@ function HomeWineCardButton({
   );
 }
 
+// Carrusel horizontal de tarjetas de vino en Inicio. Fuerza el arranque en
+// scrollLeft 0 al montar (primera carga y cada vuelta a Inicio, que re-monta
+// HomeScreen) para que la primera tarjeta se vea completa desde el borde
+// izquierdo — el snap "proximity" no la vuelve a mover.
+function HomeWineCarousel({
+  cards,
+  onOpenHomeWineFicha,
+}: {
+  cards: HomeWineCard[];
+  onOpenHomeWineFicha: (id: string) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    if (ref.current) ref.current.scrollLeft = 0;
+  }, []);
+  return (
+    <div ref={ref} style={styles.wineCardScroller}>
+      {cards.map((card) => (
+        <HomeWineCardButton
+          key={card.wineId}
+          card={card}
+          onClick={() => onOpenHomeWineFicha(card.wineId)}
+        />
+      ))}
+    </div>
+  );
+}
+
 function HomeScreen({
   onOpenWinery,
   onOpenEvent,
@@ -5665,15 +5693,10 @@ function HomeScreen({
         onAction={() => onSetTabFromHome("nearby")}
       />
 
-      <div style={styles.wineCardScroller}>
-        {HOME_NEARBY_CARDS.map((card) => (
-          <HomeWineCardButton
-            key={card.wineId}
-            card={card}
-            onClick={() => onOpenHomeWineFicha(card.wineId)}
-          />
-        ))}
-      </div>
+      <HomeWineCarousel
+        cards={HOME_NEARBY_CARDS}
+        onOpenHomeWineFicha={onOpenHomeWineFicha}
+      />
 
       <SectionTitle
         title="Actividades destacadas"
@@ -5717,15 +5740,10 @@ function HomeScreen({
         onAction={() => onSetTabFromHome("winelist")}
       />
 
-      <div style={styles.wineCardScroller}>
-        {HOME_RECOMMENDED_CARDS.map((card) => (
-          <HomeWineCardButton
-            key={card.wineId}
-            card={card}
-            onClick={() => onOpenHomeWineFicha(card.wineId)}
-          />
-        ))}
-      </div>
+      <HomeWineCarousel
+        cards={HOME_RECOMMENDED_CARDS}
+        onOpenHomeWineFicha={onOpenHomeWineFicha}
+      />
 
       <SectionTitle
         title="Bodegas recomendadas"
@@ -7865,7 +7883,11 @@ const styles: Record<string, React.CSSProperties> = {
     paddingBottom: 6,
     marginLeft: -16,
     marginRight: -16,
-    scrollSnapType: "x mandatory",
+    // "proximity" (no "mandatory"): snapea al deslizar, pero no fuerza un snap
+    // en la carga/resize, así el carrusel arranca en scrollLeft 0 (ver
+    // HomeWineCarousel). Con "mandatory" el snap inicial en mobile podía
+    // engancharse corrido y cortar el logo de la primera tarjeta.
+    scrollSnapType: "x proximity",
   },
   wineCardButton: {
     flex: "0 0 98%",
