@@ -1,0 +1,62 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTAR ESCALA VISUAL DE LA FICHA DE VINO REDISEÑADA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+El rediseño de WineDetail del prompt anterior quedó con la ESTRUCTURA
+correcta (orden de elementos, qué se muestra, qué se oculta desde
+Experiencias), pero el PESO VISUAL de los elementos quedó muy chico y
+apretado comparado con la referencia original. No hay que cambiar el orden
+ni la lógica de nada — solo agrandar y dar más aire a lo que ya está.
+
+Puntos concretos a agrandar (compará contra cómo se ve hoy en el navegador):
+
+1. Logo circular de región: hoy se ve muy chico (~40px). Debe ser
+   notoriamente más grande — que ocupe una porción visible de la fila
+   superior, no un ícono diminuto en la esquina.
+
+2. Foto de la botella: hoy se ve chica y delgada. Debe ser mucho más alta y
+   protagonista, ocupando la mayor parte de la altura de esa fila superior
+   (la fila logo+botella en conjunto debe sentirse como el "hero" de la
+   pantalla, no un detalle chico arriba del texto).
+
+3. Título (nombre del vino): agrandar el tamaño de fuente — hoy se ve como
+   texto normal, debe verse claramente como un título grande y protagonista
+   (el tamaño que ya usa la app para títulos principales de ficha, no un
+   subtítulo).
+
+4. Espaciado general: agregar más padding/margen entre bloques (entre el
+   logo+botella y el título, entre el título y el varietal/año, entre el
+   párrafo y la fila de 4 celdas, etc.) — hoy todo está muy pegado.
+
+5. Fila de 4 celdas (Origen/Varietal/Crianza/Servicio) y "Notas de cata":
+   agrandar un poco los íconos y el espaciado entre columnas, mismo
+   criterio de "darle más aire".
+
+No toques: la lógica de fromExperience (qué se oculta/muestra según de
+dónde se entra), los campos de datos, el fallback description||note, ni
+"Bodega de origen"/"Disponible en"/"También te pueden gustar" (siguen
+exactamente donde están).
+
+Mostrame en el plan qué valores de tamaño (font-size, alto de imagen, etc.)
+vas a usar antes de aplicar, para poder darte el visto bueno.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: abrir la ficha de "Bellaco Malcriado Pinot Noir" (Ruta del
+   Vino) y compararla a ojo con el peso visual de una ficha de referencia
+   bien proporcionada — logo y botella protagonistas arriba, título grande,
+   buen aire entre secciones.
+3. Confirmar que la ficha dentro de Experiencia Pinot Noir (De Bernardi)
+   también se ve con la escala nueva, sin "Bodega de origen" ni "Disponible
+   en".
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

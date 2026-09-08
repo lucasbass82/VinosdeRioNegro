@@ -7,6 +7,11 @@ import React, {
   useState,
 } from "react";
 import logoIcon from "./assets/logo-icon.png";
+import logoRegionAltoValle from "./assets/logo-region-alto-valle.png";
+import logoRegionValleMedio from "./assets/logo-region-valle-medio.png";
+import logoRegionCordillera from "./assets/logo-region-cordillera.png";
+import logoRegionEstepa from "./assets/logo-region-estepa.png";
+import logoRegionMar from "./assets/logo-region-mar.png";
 import rioNegroRiverPhoto from "./assets/rio-negro-river.jpg";
 import mapaProvinciaPhoto from "./assets/mapa-provincia.jpg";
 import mapaDecorativoViedmaPhoto from "./assets/mapa-decorativo-viedma.jpg";
@@ -36,6 +41,43 @@ import experienciaPinotAltovalleBellacomalcriadoFichaPhoto from "./assets/experi
 import experienciaPinotVallemedioCalfulenFichaPhoto from "./assets/experiencia-pinot-vallemedio-calfulen-ficha.png";
 import experienciaPinotEstepaAraucanaFichaPhoto from "./assets/experiencia-pinot-estepa-araucana-ficha.png";
 import experienciaPinotIntroPhoto from "./assets/experiencia-pinot-intro.png";
+
+// Tarjetas "botón" + fichas de los 16 vinos destacados de Inicio
+// ("Vinos Cerca Tuyo" y "Vinos recomendados"). Ver HOME_NEARBY_CARDS /
+// HOME_RECOMMENDED_CARDS más abajo.
+import botonBellacoMalcriadoPn from "./assets/boton-bellaco-malcriado-pinot-noir.png";
+import botonUnChardonnay from "./assets/boton-un-chardonnay.png";
+import botonAniello006Merlot from "./assets/boton-aniello-006-merlot.png";
+import botonMirasSalvajeCurioso from "./assets/boton-miras-pinot-noir-salvaje-curioso.png";
+import botonDeBernardiPn from "./assets/boton-de-bernardi-pinot-noir.png";
+import botonEnclaveSurChardonnay from "./assets/boton-enclave-sur-chardonnay.png";
+import botonWapisaPn from "./assets/boton-wapisa-pinot-noir.png";
+import botonAraucanaPn from "./assets/boton-araucana-rio-de-los-ciervos-pinot-noir.png";
+import botonUnMalbecReserva from "./assets/boton-un-malbec-reserva.png";
+import botonUnRose from "./assets/boton-un-rose.png";
+import botonBarziCanaleBlend from "./assets/boton-barzi-canale-blend-de-familia.png";
+import botonOldVineyardPn from "./assets/boton-bodega-humberto-canale-old-vineyard-pinot-noir.png";
+import botonFincaFraschettiPn from "./assets/boton-finca-fraschetti-pinot-noir.png";
+import botonCalfulenPnReserva from "./assets/boton-calfulen-pinot-noir-reserva.png";
+import botonSavuMalbec from "./assets/boton-savu-malbec.png";
+import botonAraucanaMalbecRose from "./assets/boton-araucana-rio-de-los-ciervos-malbec-rose.png";
+import fichaBellacoMalcriadoPn from "./assets/ficha-antigua-bodega-patagonica-bellaco-malcriado-pinot-noir.png";
+import fichaUnChardonnay from "./assets/ficha-antigua-bodega-patagonica-un-chardonnay.png";
+import fichaAniello006Merlot from "./assets/ficha-bodega-finca-anielo-006-merlot.png";
+import fichaMirasSalvajeCurioso from "./assets/ficha-bodega-miras-pinot-salvaje-curiosos.png";
+import fichaDeBernardiPn from "./assets/ficha-de-bernardi-pinot-noir.png";
+import fichaEnclaveSurChardonnay from "./assets/ficha-enclave-sur-chardonnay.png";
+import fichaWapisaPn from "./assets/ficha-wapisa-pinot-noir.png";
+import fichaAraucanaPn from "./assets/ficha-araucana-rio-de-los-ciervos-pinot-noir.png";
+import fichaUnMalbecReserva from "./assets/ficha-antigua-bodega-patagonica-un-malbec-reserva.png";
+import fichaUnRose from "./assets/ficha-antigua-bodega-patagonica-un-rose.png";
+import fichaBarziCanaleBlend from "./assets/ficha-bodega-humberto-canale-barzi-canale-blend-de-familia.png";
+import fichaOldVineyardPn from "./assets/ficha-bodega-humberto-canale-old-vineyard-pinot-noir.png";
+import fichaFincaFraschettiPn from "./assets/ficha-finca-fraschetti-pinot-noir.png";
+import fichaCalfulenPnReserva from "./assets/ficha-videla-dorna-calfuen-pinot-noir-reserva.png";
+import fichaSavuMalbec from "./assets/ficha-savu-malbec.png";
+import fichaAraucanaMalbecRose from "./assets/ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec-rose.png";
+
 import cursosPhoto from "./assets/cursos.png";
 import oliviasYSaboresPhoto from "./assets/olivas-y-sabores.png";
 import vinopolitanPhoto from "./assets/vinopolitan.png";
@@ -399,6 +441,12 @@ type Wine = {
   availableAt: string[];
   tag: string;
   image: string;
+  vintage?: string;
+  aging?: string;
+  servingTemp?: string;
+  tastingVista?: string;
+  tastingNariz?: string;
+  tastingBoca?: string;
 };
 
 type EventTimeframe = "ahora" | "hoy" | "finde";
@@ -438,7 +486,8 @@ type TabKey =
   | "nearby";
 
 type DetailEntry =
-  | { kind: "wine"; id: string; fromShop?: boolean }
+  | { kind: "wine"; id: string; fromShop?: boolean; fromExperience?: boolean }
+  | { kind: "homeWineFicha"; id: string }
   | { kind: "winery"; id: string }
   | { kind: "shop"; id: string }
   | { kind: "event"; id: string };
@@ -455,6 +504,7 @@ const theme = {
   line: "#E6DED5",
   wine: "#6b1a2c",
   wineDark: "#6b1a2c",
+  gold: "#9c7a3c",
   cream: "#FBF8F3",
   river: "#0a3a5c",
   valley: "#3c7824",
@@ -499,6 +549,14 @@ const REGION_META: Record<
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80",
     tint: "#efe7dc",
   },
+};
+
+const REGION_LOGO: Record<RegionKey, string> = {
+  "alto-valle": logoRegionAltoValle,
+  "valle-medio": logoRegionValleMedio,
+  cordillera: logoRegionCordillera,
+  "linea-sur": logoRegionEstepa,
+  mar: logoRegionMar,
 };
 
 // Artículo correcto para el título "Bodegas ___ {región}" (RegionsScreen).
@@ -1427,7 +1485,12 @@ const WINES: Wine[] = [
   note: "Fruta roja fresca, acidez vibrante y final persistente.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Nuevo en Cordillera",
-  image: "/wines/finca-fraschetti-pinot-noir.png"
+  image: "/wines/finca-fraschetti-pinot-noir.png",
+  vintage: "2015",
+  aging: "36 meses en barricas de roble",
+  tastingVista: "Intenso color rojo rubí",
+  tastingNariz: "Delicados aromas de frutos rojos",
+  tastingBoca: "Elegantes taninos, con un suave tostado",
 },
 {
   id: "v8",
@@ -1791,6 +1854,12 @@ const WINES: Wine[] = [
   availableAt: [],
   tag: "Cordillera",
   image: deBernardiPinotNoirPhoto,
+  vintage: "2020",
+  aging: "Sin paso por madera",
+  servingTemp: "14 - 16 °C",
+  tastingVista: "Rojo rubí brillante de intensidad media y reflejos violáceos",
+  tastingNariz: "Aromas a cerezas, frutillas y frutos rojos, con sutiles matices florales y especiados",
+  tastingBoca: "Gran frescura, taninos delicados y un final largo y elegante",
 },
 {
   id: "v40",
@@ -1802,6 +1871,8 @@ const WINES: Wine[] = [
   availableAt: [],
   tag: "Cordillera",
   image: deBernardiGewurztraminerPhoto,
+  vintage: "2018",
+  tastingNariz: "Notas de lichi, rosas, jazmín y especias",
 },
 {
   id: "v41",
@@ -1813,6 +1884,9 @@ const WINES: Wine[] = [
   availableAt: [],
   tag: "Cordillera",
   image: deBernardiMerlotPhoto,
+  vintage: "2021",
+  tastingNariz: "Frutos negros, chocolate, café y vainilla",
+  tastingBoca: "Intenso, estructurado y complejo",
 },
 {
   id: "v42",
@@ -1824,6 +1898,10 @@ const WINES: Wine[] = [
   availableAt: [],
   tag: "Cordillera",
   image: deBernardiMerlotRosePhoto,
+  vintage: "2022",
+  tastingVista: "Color rosa pálido",
+  tastingNariz: "Frutos rojos, especias y hierbas",
+  tastingBoca: "Fresco, con acidez equilibrada",
 },
 {
   id: "v43",
@@ -3824,14 +3902,6 @@ const varietalOrDefault = (varietal: string | undefined, fallback: string) =>
 
 // ---- Recomendados de Home ----
 
-const REGION_OF_WINERY: Record<string, RegionKey> = WINERIES.reduce(
-  (acc, w) => {
-    acc[w.name] = w.region;
-    return acc;
-  },
-  {} as Record<string, RegionKey>
-);
-
 const ANTIGUA_NAME = "Antigua Bodega Patagónica";
 // Las 4 zonas de RUTA_ZONES distintas de la de Antigua Bodega Patagónica (alto-valle).
 const OTHER_ZONES: RegionKey[] = [
@@ -3841,39 +3911,10 @@ const OTHER_ZONES: RegionKey[] = [
   "linea-sur",
 ];
 
-// 10 vinos: los primeros 3 de Antigua, luego 7 repartidos parejo entre las otras
-// 4 zonas por round-robin. Criterio dentro de cada zona: orden del array WINES
-// (determinístico, estable entre recargas).
-const HOME_RECOMMENDED_WINES: Wine[] = (() => {
-  const antiguaWines = WINES.filter((w) => w.winery === ANTIGUA_NAME).slice(0, 3);
-
-  const byZone: Record<string, Wine[]> = {};
-  OTHER_ZONES.forEach((zone) => {
-    byZone[zone] = WINES.filter((w) => REGION_OF_WINERY[w.winery] === zone);
-  });
-
-  const picked: Wine[] = [];
-  const cursor: Record<string, number> = {};
-  OTHER_ZONES.forEach((zone) => {
-    cursor[zone] = 0;
-  });
-
-  while (picked.length < 7) {
-    let progressed = false;
-    for (const zone of OTHER_ZONES) {
-      if (picked.length >= 7) break;
-      const next = byZone[zone][cursor[zone]];
-      if (next) {
-        picked.push(next);
-        cursor[zone] += 1;
-        progressed = true;
-      }
-    }
-    if (!progressed) break;
-  }
-
-  return [...antiguaWines, ...picked];
-})();
+// "Vinos recomendados" y "Vinos Cerca Tuyo" de Inicio ya no usan una selección
+// calculada: son listas fijas de 8 tarjetas cada una (ver HOME_NEARBY_CARDS /
+// HOME_RECOMMENDED_CARDS más abajo). HOME_NEARBY_WINES se conserva porque sigue
+// alimentando la pantalla "Ver todas" (tab "nearby").
 
 // 5 bodegas: Antigua primera, luego la primera bodega (orden del array WINERIES)
 // de cada una de las otras 4 zonas.
@@ -3885,8 +3926,8 @@ const HOME_RECOMMENDED_WINERIES: Winery[] = (() => {
   return [...(antigua ? [antigua] : []), ...rest];
 })();
 
-// Chips de varietal compartidos por MapScreen y la sección "Vinos Cerca Tuyo"
-// de HomeScreen. "Cerca mío" no es un varietal real: es el filtro por defecto.
+// Chips de varietal de MapScreen. "Cerca mío" no es un varietal real: es el
+// filtro por defecto. (También los usa la lista "Ver todas" -> tab "nearby".)
 const VARIETAL_CHIPS = [
   "Cerca mío",
   "Pinot Noir",
@@ -3897,11 +3938,11 @@ const VARIETAL_CHIPS = [
   "Chardonnay",
 ];
 
-// ~20 vinos: los que tienen alguno de los 6 varietales de VARIETAL_CHIPS
-// (sin contar "Cerca mío"). Primero los de Antigua (hasta 3, regla de negocio
-// "Antigua siempre primera"), luego round-robin por esos mismos 6 varietales
-// en orden del array WINES (determinístico, mismo criterio que
-// HOME_RECOMMENDED_WINES) hasta completar 20.
+// ~20 vinos para la pantalla "Ver todas" (tab "nearby"): los que tienen alguno
+// de los 6 varietales de VARIETAL_CHIPS (sin contar "Cerca mío"). Primero los de
+// Antigua (hasta 3, regla de negocio "Antigua siempre primera"), luego
+// round-robin por esos mismos 6 varietales en orden del array WINES
+// (determinístico) hasta completar 20.
 const HOME_NEARBY_WINE_VARIETALS = VARIETAL_CHIPS.slice(1);
 
 const HOME_NEARBY_WINES: Wine[] = (() => {
@@ -3942,6 +3983,58 @@ const HOME_NEARBY_WINES: Wine[] = (() => {
 
   return [...antiguaWines, ...picked];
 })();
+
+// ---- Tarjetas grandes de vino en Inicio ----
+// Dos listas FIJAS de 8 vinos, en orden exacto (el 1º de cada una es de Antigua
+// Bodega Patagónica, regla de negocio "Antigua siempre primera"). Cada tarjeta
+// es una imagen "botón" que, al tocarla, abre una ficha grande (imagen "ficha")
+// con los bloques reales del vino (bodega de origen / disponible en / también te
+// pueden gustar) debajo. La asociación imagen→datos reales se hace por wineId
+// contra WINES (resuelto en carga; si un id no existiera, error explícito).
+type HomeWineCard = {
+  wineId: string;
+  boton: string;
+  ficha: string;
+};
+
+const HOME_NEARBY_CARDS: HomeWineCard[] = [
+  { wineId: "v16", boton: botonBellacoMalcriadoPn, ficha: fichaBellacoMalcriadoPn },
+  { wineId: "v9", boton: botonUnChardonnay, ficha: fichaUnChardonnay },
+  { wineId: "v2", boton: botonAniello006Merlot, ficha: fichaAniello006Merlot },
+  { wineId: "v1", boton: botonMirasSalvajeCurioso, ficha: fichaMirasSalvajeCurioso },
+  { wineId: "v39", boton: botonDeBernardiPn, ficha: fichaDeBernardiPn },
+  { wineId: "v28", boton: botonEnclaveSurChardonnay, ficha: fichaEnclaveSurChardonnay },
+  { wineId: "v6", boton: botonWapisaPn, ficha: fichaWapisaPn },
+  { wineId: "v44", boton: botonAraucanaPn, ficha: fichaAraucanaPn },
+];
+
+const HOME_RECOMMENDED_CARDS: HomeWineCard[] = [
+  { wineId: "v11", boton: botonUnMalbecReserva, ficha: fichaUnMalbecReserva },
+  { wineId: "v10", boton: botonUnRose, ficha: fichaUnRose },
+  { wineId: "v75", boton: botonBarziCanaleBlend, ficha: fichaBarziCanaleBlend },
+  { wineId: "v3", boton: botonOldVineyardPn, ficha: fichaOldVineyardPn },
+  { wineId: "v7", boton: botonFincaFraschettiPn, ficha: fichaFincaFraschettiPn },
+  { wineId: "v5", boton: botonCalfulenPnReserva, ficha: fichaCalfulenPnReserva },
+  { wineId: "v19", boton: botonSavuMalbec, ficha: fichaSavuMalbec },
+  { wineId: "v43", boton: botonAraucanaMalbecRose, ficha: fichaAraucanaMalbecRose },
+];
+
+// Búsqueda de la ficha de un vino a partir de su id (para la pantalla de ficha
+// grande abierta desde Inicio). Undefined si el vino no está en ninguna lista.
+const HOME_WINE_FICHA_BY_ID: Record<string, string> = [
+  ...HOME_NEARBY_CARDS,
+  ...HOME_RECOMMENDED_CARDS,
+].reduce((acc, c) => {
+  acc[c.wineId] = c.ficha;
+  return acc;
+}, {} as Record<string, string>);
+
+// Falla ruidosamente en build/dev si alguna tarjeta apunta a un id inexistente.
+[...HOME_NEARBY_CARDS, ...HOME_RECOMMENDED_CARDS].forEach((c) => {
+  if (!WINES.some((w) => w.id === c.wineId)) {
+    throw new Error(`HOME_*_CARDS: wineId inexistente en WINES: ${c.wineId}`);
+  }
+});
 
 function GlobalStyles() {
   return (
@@ -4041,8 +4134,10 @@ export default function App() {
       }
       return [...stack, entry];
     });
-  const openWine = (id: string, fromShop?: boolean) =>
-    pushDetail({ kind: "wine", id, fromShop });
+  const openWine = (id: string, fromShop?: boolean, fromExperience?: boolean) =>
+    pushDetail({ kind: "wine", id, fromShop, fromExperience });
+  const openHomeWineFicha = (id: string) =>
+    pushDetail({ kind: "homeWineFicha", id });
   const openWinery = (id: string) => pushDetail({ kind: "winery", id });
   const openShop = (id: string) => pushDetail({ kind: "shop", id });
   const openEvent = (id: string) => pushDetail({ kind: "event", id });
@@ -4117,7 +4212,8 @@ export default function App() {
   const detailView = useMemo(() => {
     const current = detailStack[detailStack.length - 1];
     if (!current) return null;
-    if (current.kind === "wine") return WINES.find((x) => x.id === current.id);
+    if (current.kind === "wine" || current.kind === "homeWineFicha")
+      return WINES.find((x) => x.id === current.id);
     if (current.kind === "winery")
       return WINERIES.find((x) => x.id === current.id);
     if (current.kind === "event")
@@ -4236,6 +4332,7 @@ export default function App() {
      ) : tab === "shop" && !detail ? (
        <ShopScreen
          onOpenWine={(id) => openWine(id, true)}
+         onOpenExperienceWine={(id) => openWine(id, false, true)}
          onMenuClick={toggleMenu}
          onProfile={() => goToTab("profile")}
          cart={cart}
@@ -4272,7 +4369,23 @@ export default function App() {
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
                   fromShop={detail.fromShop}
+                  fromExperience={detail.fromExperience}
                   onAddToCart={addToCart}
+                />
+              ) : detail.kind === "homeWineFicha" ? (
+                <HomeWineFichaScreen
+                  wine={detailView as Wine}
+                  fichaImage={HOME_WINE_FICHA_BY_ID[(detailView as Wine).id]}
+                  onBack={closeDetail}
+                  onOpenShop={openShop}
+                  onOpenWinery={(name) => {
+                    const found = WINERIES.find((w) => w.name === name);
+                    if (found) openWinery(found.id);
+                  }}
+                  onOpenWine={(name) => {
+                    const found = WINES.find((w) => w.name === name);
+                    if (found) openWine(found.id);
+                  }}
                 />
               ) : detail.kind === "winery" ? (
                 <WineryDetail
@@ -4307,9 +4420,9 @@ export default function App() {
               )
             ) : tab === "home" ? (
               <HomeScreen
-                onOpenWine={openWine}
                 onOpenWinery={openWinery}
                 onOpenEvent={openEvent}
+                onOpenHomeWineFicha={openHomeWineFicha}
                 onSetTab={goToTab}
                 onSetTabFromHome={goHomeShortcut}
                 favorites={favorites}
@@ -4391,6 +4504,9 @@ type PinotExperienceWine = {
   name: string;
   cardImage: string;
   fichaImage: string;
+  // Solo "Familia De Bernardi" lo tiene por ahora: abre la ficha real de
+  // WineDetail (id en WINES) en vez de la imagen estática fichaImage.
+  realWineId?: string;
 };
 
 const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
@@ -4399,6 +4515,7 @@ const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
     name: "Familia De Bernardi",
     cardImage: experienciaPinotCordilleraDebernardiPhoto,
     fichaImage: experienciaPinotCordilleraDebernardiFichaPhoto,
+    realWineId: "v39",
   },
   {
     id: "altovalle-chacrabarda",
@@ -4492,6 +4609,7 @@ const WINE_COURSES: Array<{ name: string; description: string }> = [
 
 function ShopScreen({
   onOpenWine,
+  onOpenExperienceWine,
   onMenuClick,
   onProfile,
   cart,
@@ -4503,6 +4621,7 @@ function ShopScreen({
   isFavorite,
 }: {
   onOpenWine: (id: string) => void;
+  onOpenExperienceWine: (id: string) => void;
   onMenuClick: () => void;
   onProfile?: () => void;
   cart: CartItem[];
@@ -4620,6 +4739,7 @@ function ShopScreen({
               <PinotExperienceListScreen
                 wines={openProduct.featured.wineCards}
                 onSelectWine={setOpenPinotWine}
+                onOpenRealWine={onOpenExperienceWine}
                 onBack={() => {
                   setOpenProduct(null);
                   setOpenPinotWine(null);
@@ -5039,10 +5159,12 @@ function ShopListCard({
 function PinotExperienceListScreen({
   wines,
   onSelectWine,
+  onOpenRealWine,
   onBack,
 }: {
   wines: PinotExperienceWine[];
   onSelectWine: (wine: PinotExperienceWine) => void;
+  onOpenRealWine: (id: string) => void;
   onBack: () => void;
 }) {
   return (
@@ -5060,7 +5182,11 @@ function PinotExperienceListScreen({
         {wines.map((wine) => (
           <button
             key={wine.id}
-            onClick={() => onSelectWine(wine)}
+            onClick={() =>
+              wine.realWineId
+                ? onOpenRealWine(wine.realWineId)
+                : onSelectWine(wine)
+            }
             style={{
               display: "block",
               width: "100%",
@@ -5470,30 +5596,44 @@ const PHOTO_HEADER_CONFIG: Record<
   },
 };
 
+// Tarjeta "botón" (imagen a ancho casi completo) de un vino destacado de Inicio.
+// Al tocarla abre su ficha grande (HomeWineFichaScreen).
+function HomeWineCardButton({
+  card,
+  onClick,
+}: {
+  card: HomeWineCard;
+  onClick: () => void;
+}) {
+  const wine = WINES.find((w) => w.id === card.wineId);
+  return (
+    <button style={styles.wineCardButton} onClick={onClick}>
+      <img
+        src={card.boton}
+        alt={wine ? `${wine.name} — ${wine.winery}` : ""}
+        style={{ width: "100%", display: "block" }}
+      />
+    </button>
+  );
+}
+
 function HomeScreen({
-  onOpenWine,
   onOpenWinery,
   onOpenEvent,
+  onOpenHomeWineFicha,
   onSetTab,
   onSetTabFromHome,
   favorites,
   toggleFavorite,
 }: {
-  onOpenWine: (id: string) => void;
   onOpenWinery: (id: string) => void;
   onOpenEvent: (id: string) => void;
+  onOpenHomeWineFicha: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
   onSetTabFromHome: (tab: TabKey) => void;
   favorites: FavoriteItem[];
   toggleFavorite: (item: FavoriteItem) => void;
 }) {
-  const [nearbyVarietalFilter, setNearbyVarietalFilter] = useState("Cerca mío");
-
-  const nearbyWines =
-    nearbyVarietalFilter === "Cerca mío"
-      ? HOME_NEARBY_WINES.slice(0, 10)
-      : HOME_NEARBY_WINES.filter((w) => w.varietal === nearbyVarietalFilter);
-
   return (
     <div style={styles.stack22}>
       <button
@@ -5525,25 +5665,13 @@ function HomeScreen({
         onAction={() => onSetTabFromHome("nearby")}
       />
 
-      <div style={styles.chipsRow}>
-        {VARIETAL_CHIPS.map((chip) => (
-          <button
-            key={chip}
-            style={
-              nearbyVarietalFilter === chip ? styles.chipActive : styles.chip
-            }
-            onClick={() => setNearbyVarietalFilter(chip)}
-          >
-            {chip}
-          </button>
-        ))}
-      </div>
-
-      <div style={styles.horizontalScroller}>
-        {nearbyWines.map((wine) => (
-          <div key={wine.id} style={styles.horizontalImageCard}>
-            <WineVisualRow wine={wine} onClick={() => onOpenWine(wine.id)} />
-          </div>
+      <div style={styles.wineCardScroller}>
+        {HOME_NEARBY_CARDS.map((card) => (
+          <HomeWineCardButton
+            key={card.wineId}
+            card={card}
+            onClick={() => onOpenHomeWineFicha(card.wineId)}
+          />
         ))}
       </div>
 
@@ -5589,11 +5717,13 @@ function HomeScreen({
         onAction={() => onSetTabFromHome("winelist")}
       />
 
-      <div style={styles.horizontalScroller}>
-        {HOME_RECOMMENDED_WINES.map((wine) => (
-          <div key={wine.id} style={styles.horizontalImageCard}>
-            <WineVisualRow wine={wine} onClick={() => onOpenWine(wine.id)} />
-          </div>
+      <div style={styles.wineCardScroller}>
+        {HOME_RECOMMENDED_CARDS.map((card) => (
+          <HomeWineCardButton
+            key={card.wineId}
+            card={card}
+            onClick={() => onOpenHomeWineFicha(card.wineId)}
+          />
         ))}
       </div>
 
@@ -6500,6 +6630,7 @@ function WineDetail({
   toggleFavorite,
   isFavorite,
   fromShop,
+  fromExperience,
   onAddToCart,
 }: {
   wine: Wine;
@@ -6510,11 +6641,18 @@ function WineDetail({
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
   fromShop?: boolean;
+  fromExperience?: boolean;
   onAddToCart: (wine: Wine) => void;
 }) {
   const [justAdded, setJustAdded] = useState(false);
 
   const originWinery = WINERIES.find((w) => w.name === wine.winery);
+  const regionTitle = originWinery
+    ? REGION_META[originWinery.region].title
+    : undefined;
+  const regionLogo = originWinery
+    ? REGION_LOGO[originWinery.region]
+    : undefined;
 
   const handleAddToCart = () => {
     onAddToCart(wine);
@@ -6554,16 +6692,45 @@ function WineDetail({
       </div>
 
       <div style={styles.wineHeroCard}>
-        <div
-          style={{
-            ...styles.wineDetailImage,
-            backgroundImage: `url('${wine.image}')`,
-          }}
-        />
+        <div style={styles.wineHeroTopRow}>
+          {regionTitle && regionLogo && (
+            <div style={styles.wineRegionLogoCol}>
+              <img
+                src={regionLogo}
+                alt={regionTitle}
+                style={styles.wineRegionLogoImg}
+              />
+              <div style={styles.wineRegionLogoLabel}>
+                {regionTitle.toUpperCase()}
+              </div>
+            </div>
+          )}
+          <div
+            style={{
+              ...styles.wineDetailImage,
+              flex: 1,
+              backgroundImage: `url('${wine.image}')`,
+            }}
+          />
+        </div>
         <div style={styles.wineInfoArea}>
-          <Badge kind="neutral">{wine.tag}</Badge>
-          <div style={styles.detailTitle}>{wine.name}</div>
-          <div style={styles.itemSub}>
+          <div style={styles.wineDetailTitle}>{wine.name}</div>
+          <div style={styles.wineVarietalLabel}>
+            {wine.varietal.toUpperCase()}
+          </div>
+          <div style={styles.wineVintageLabel}>{wine.vintage ?? "-"}</div>
+
+          <div style={styles.wineDividerRow}>
+            <div style={styles.wineDividerLine} />
+            <div style={styles.wineDividerDiamond} />
+            <div style={styles.wineDividerLine} />
+          </div>
+
+          {regionTitle && (
+            <div style={styles.wineRegionRepeat}>{regionTitle}</div>
+          )}
+
+          <div style={{ ...styles.itemSub, marginTop: 10 }}>
             {originWinery ? (
               <button
                 style={styles.wineryLinkButton}
@@ -6577,19 +6744,57 @@ function WineDetail({
             {hasRealVarietal(wine.varietal) ? ` · ${wine.varietal}` : ""}
           </div>
 
-          <div style={styles.grid3}>
-            {hasRealVarietal(wine.varietal) && (
-              <InfoBox label="Varietal" value={wine.varietal} />
-            )}
-            <InfoBox label="Estilo" value={wine.style} />
-            <InfoBox label="Origen" value="Río Negro" />
+          <div style={{ ...styles.placeText, marginTop: 16 }}>
+            {wine.description || wine.note}
           </div>
 
-          <div style={styles.placeText}>{wine.description || wine.note}</div>
+          <div style={styles.wineStatsGrid}>
+            <IconStat
+              icon={<MapPinIcon size={26} />}
+              label="ORIGEN"
+              value={originWinery?.city ?? "-"}
+            />
+            <IconStat
+              icon={<WineIcon size={26} />}
+              label="VARIETAL"
+              value={wine.varietal}
+            />
+            <IconStat
+              icon={<AgingIcon />}
+              label="CRIANZA"
+              value={wine.aging ?? "-"}
+            />
+            <IconStat
+              icon={<ServingTempIcon />}
+              label="SERVICIO"
+              value={wine.servingTemp ?? "-"}
+            />
+          </div>
+
+          <div style={styles.thinDivider} />
+
+          <SectionTitle title="Notas de cata" />
+          <div style={styles.wineTastingGrid}>
+            <IconStat
+              icon={<TastingEyeIcon />}
+              label="VISTA"
+              value={wine.tastingVista ?? "-"}
+            />
+            <IconStat
+              icon={<TastingNoseIcon />}
+              label="NARIZ"
+              value={wine.tastingNariz ?? "-"}
+            />
+            <IconStat
+              icon={<TastingMouthIcon />}
+              label="BOCA"
+              value={wine.tastingBoca ?? "-"}
+            />
+          </div>
         </div>
       </div>
 
-      {originWinery && (
+      {!fromExperience && originWinery && (
         <Block title="Bodega de origen">
           <ResultRow
             title={originWinery.name}
@@ -6601,35 +6806,38 @@ function WineDetail({
         </Block>
       )}
 
-      {fromShop ? (
-        <div style={styles.wineCartCard}>
-          <div style={styles.wineCartCardLabel}>Disponible en nuestra Tienda</div>
-          <button style={styles.wineCartCardButton} onClick={handleAddToCart}>
-            {justAdded ? "✓ Agregado" : "Agregar al carrito"}
-          </button>
-        </div>
-      ) : (
-        <Block title="Disponible en">
-          {availableShops.length > 0 ? (
-            <div style={styles.stack12}>
-              {availableShops.map((found) => (
-                <ResultRow
-                  key={found.id}
-                  title={found.name}
-                  subtitle={
-                    isPlaceholderText(found.benefit)
-                      ? found.city
-                      : `${found.city} · ${found.benefit}`
-                  }
-                  onClick={() => onOpenShop(found.id)}
-                />
-              ))}
+      {!fromExperience &&
+        (fromShop ? (
+          <div style={styles.wineCartCard}>
+            <div style={styles.wineCartCardLabel}>
+              Disponible en nuestra Tienda
             </div>
-          ) : (
-            <div style={styles.placeText}>Sin distribución confirmada</div>
-          )}
-        </Block>
-      )}
+            <button style={styles.wineCartCardButton} onClick={handleAddToCart}>
+              {justAdded ? "✓ Agregado" : "Agregar al carrito"}
+            </button>
+          </div>
+        ) : (
+          <Block title="Disponible en">
+            {availableShops.length > 0 ? (
+              <div style={styles.stack12}>
+                {availableShops.map((found) => (
+                  <ResultRow
+                    key={found.id}
+                    title={found.name}
+                    subtitle={
+                      isPlaceholderText(found.benefit)
+                        ? found.city
+                        : `${found.city} · ${found.benefit}`
+                    }
+                    onClick={() => onOpenShop(found.id)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div style={styles.placeText}>Sin distribución confirmada</div>
+            )}
+          </Block>
+        ))}
 
       <Block title="También te pueden gustar">
         <div style={styles.wineCardGrid}>
@@ -6645,6 +6853,149 @@ function WineDetail({
           ))}
         </div>
       </Block>
+    </div>
+  );
+}
+
+// Bloques "Bodega de origen" / "Disponible en" / "También te pueden gustar"
+// tal cual aparecen hoy en la ficha real de vino (WineDetail, variante no-Tienda
+// y no-Experiencia). Se usan tal cual, sin ocultar nada, debajo de la imagen de
+// ficha de los 16 vinos destacados de Inicio.
+function WineOriginBlocks({
+  wine,
+  onOpenShop,
+  onOpenWinery,
+  onOpenWine,
+}: {
+  wine: Wine;
+  onOpenShop: (id: string) => void;
+  onOpenWinery: (name: string) => void;
+  onOpenWine: (name: string) => void;
+}) {
+  const originWinery = WINERIES.find((w) => w.name === wine.winery);
+
+  const similar = WINES.filter(
+    (w) =>
+      w.id !== wine.id &&
+      (w.varietal === wine.varietal || w.winery === wine.winery)
+  ).slice(0, 2);
+
+  const availableShops = wine.availableAt
+    .map((name) => SHOPS.find((s) => s.name === name))
+    .filter((s): s is Shop => Boolean(s));
+
+  return (
+    <>
+      {originWinery && (
+        <Block title="Bodega de origen">
+          <ResultRow
+            title={originWinery.name}
+            subtitle={`${originWinery.city} · ${
+              REGION_META[originWinery.region].title
+            }`}
+            onClick={() => onOpenWinery(originWinery.name)}
+          />
+        </Block>
+      )}
+
+      <Block title="Disponible en">
+        {availableShops.length > 0 ? (
+          <div style={styles.stack12}>
+            {availableShops.map((found) => (
+              <ResultRow
+                key={found.id}
+                title={found.name}
+                subtitle={
+                  isPlaceholderText(found.benefit)
+                    ? found.city
+                    : `${found.city} · ${found.benefit}`
+                }
+                onClick={() => onOpenShop(found.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div style={styles.placeText}>Sin distribución confirmada</div>
+        )}
+      </Block>
+
+      <Block title="También te pueden gustar">
+        <div style={styles.wineCardGrid}>
+          {similar.map((w) => (
+            <WineGridCard
+              key={w.id}
+              image={w.image}
+              title={w.name}
+              subtitle={varietalOrDefault(w.varietal, "Vino")}
+              tag={w.tag}
+              onClick={() => onOpenWine(w.name)}
+            />
+          ))}
+        </div>
+      </Block>
+    </>
+  );
+}
+
+// Ficha grande (imagen "ficha") de un vino destacado de Inicio, a sangre completa,
+// con "← Volver" arriba y los bloques reales del vino debajo (sin ocultar nada,
+// a diferencia de la ficha de Experiencias).
+function HomeWineFichaScreen({
+  wine,
+  fichaImage,
+  onBack,
+  onOpenShop,
+  onOpenWinery,
+  onOpenWine,
+}: {
+  wine: Wine;
+  fichaImage?: string;
+  onBack: () => void;
+  onOpenShop: (id: string) => void;
+  onOpenWinery: (name: string) => void;
+  onOpenWine: (name: string) => void;
+}) {
+  return (
+    <div style={styles.stack22}>
+      <button style={styles.backButton} onClick={onBack}>
+        <ArrowLeftIcon /> Volver
+      </button>
+
+      {fichaImage && (
+        // A sangre: -16 a cada lado cancela el padding del contenedor
+        <div style={{ marginLeft: -16, marginRight: -16 }}>
+          <img
+            src={fichaImage}
+            alt={`Ficha de ${wine.name}`}
+            style={{ width: "100%", display: "block" }}
+          />
+        </div>
+      )}
+
+      <WineOriginBlocks
+        wine={wine}
+        onOpenShop={onOpenShop}
+        onOpenWinery={onOpenWinery}
+        onOpenWine={onOpenWine}
+      />
+    </div>
+  );
+}
+
+function IconStat({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div style={styles.iconStat}>
+      <div style={styles.iconStatIcon}>{icon}</div>
+      <div style={styles.iconStatLabel}>{label}</div>
+      <div style={styles.iconStatValue}>{value}</div>
     </div>
   );
 }
@@ -7120,7 +7471,13 @@ function CalendarIcon({ white = false }: { white?: boolean }) {
   );
 }
 
-function WineIcon({ white = false }: { white?: boolean }) {
+function WineIcon({
+  white = false,
+  size,
+}: {
+  white?: boolean;
+  size?: number;
+}) {
   return (
     <span style={{ color: white ? "#fff" : "currentColor" }}>
       {svgBase(
@@ -7128,7 +7485,8 @@ function WineIcon({ white = false }: { white?: boolean }) {
           <path d="M7 3h10c0 5-2 8-5 8s-5-3-5-8z" />
           <path d="M12 11v8" />
           <path d="M8 21h8" />
-        </>
+        </>,
+        size ? { width: size, height: size } : undefined
       )}
     </span>
   );
@@ -7223,13 +7581,13 @@ function PlusIcon() {
   );
 }
 
-function MapPinIcon({ color }: { color?: string }) {
+function MapPinIcon({ color, size = 16 }: { color?: string; size?: number }) {
   return svgBase(
     <>
       <path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z" />
       <circle cx="12" cy="9.5" r="2.5" />
     </>,
-    { width: 16, height: 16, stroke: color || theme.river }
+    { width: size, height: size, stroke: color || theme.river }
   );
 }
 
@@ -7243,6 +7601,57 @@ function ShoppingBagIcon({ white = false }: { white?: boolean }) {
         </>
       )}
     </span>
+  );
+}
+
+function AgingIcon() {
+  return svgBase(
+    <>
+      <path d="M12 3c-3 2.5-4.5 5.7-4.5 9s1.5 6.5 4.5 9c3-2.5 4.5-5.7 4.5-9s-1.5-6.5-4.5-9z" />
+      <path d="M7.5 9h9" />
+      <path d="M7.5 15h9" />
+    </>,
+    { width: 26, height: 26 }
+  );
+}
+
+function ServingTempIcon() {
+  return svgBase(
+    <>
+      <path d="M12 3a2 2 0 0 0-2 2v9.5a4 4 0 1 0 4 0V5a2 2 0 0 0-2-2z" />
+      <path d="M12 14V7" />
+    </>,
+    { width: 26, height: 26 }
+  );
+}
+
+function TastingEyeIcon() {
+  return svgBase(
+    <>
+      <path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12z" />
+      <circle cx="12" cy="12" r="2.6" />
+    </>,
+    { width: 26, height: 26 }
+  );
+}
+
+function TastingNoseIcon() {
+  return svgBase(
+    <>
+      <path d="M12 3v10a3 3 0 0 0 3 3" />
+      <path d="M7 16a5 5 0 0 0 10 0" />
+    </>,
+    { width: 26, height: 26 }
+  );
+}
+
+function TastingMouthIcon() {
+  return svgBase(
+    <>
+      <path d="M4 12c3-2 6-2.6 8-2.6s5 0.6 8 2.6" />
+      <path d="M4 12c3 2 6 2.6 8 2.6s5-0.6 8-2.6" />
+    </>,
+    { width: 26, height: 26 }
   );
 }
 
@@ -7442,6 +7851,24 @@ const styles: Record<string, React.CSSProperties> = {
   horizontalImageCard: {
     minWidth: 285,
     scrollSnapAlign: "start",
+  },
+  // Carrusel horizontal de las tarjetas grandes de vino en Inicio. Tarjetas
+  // anchas: se ve ~una por vez (tipo carrusel), es el comportamiento esperado.
+  wineCardScroller: {
+    display: "flex",
+    gap: 12,
+    overflowX: "auto",
+    paddingBottom: 6,
+    scrollSnapType: "x mandatory",
+    scrollPadding: "0 16px",
+  },
+  wineCardButton: {
+    flex: "0 0 88%",
+    scrollSnapAlign: "center",
+    padding: 0,
+    border: "none",
+    background: "none",
+    cursor: "pointer",
   },
   varietalBannerTile: {
     width: 100,
@@ -8308,13 +8735,126 @@ wineVisualTag: {
   },
   wineDetailImage: {
     width: "100%" ,
-    height: 260,
+    height: 360,
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
   },
   wineInfoArea: {
     padding: 18,
+  },
+  wineHeroTopRow: {
+    display: "flex",
+    alignItems: "stretch",
+  },
+  wineRegionLogoCol: {
+    width: 96,
+    flexShrink: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    padding: "16px 8px",
+  },
+  wineRegionLogoImg: {
+    width: 72,
+    height: 72,
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: `1px solid ${theme.line}`,
+  },
+  wineRegionLogoLabel: {
+    fontSize: 11,
+    fontWeight: 800,
+    letterSpacing: 0.4,
+    color: theme.subtext,
+    textAlign: "center",
+  },
+  wineDetailTitle: {
+    fontFamily: '"Lora", serif',
+    fontSize: 38,
+    lineHeight: 1.02,
+    fontWeight: 700,
+    color: theme.text,
+    letterSpacing: -0.9,
+    marginTop: 18,
+  },
+  wineVarietalLabel: {
+    marginTop: 10,
+    fontSize: 13,
+    fontWeight: 800,
+    letterSpacing: 0.6,
+    color: theme.text,
+  },
+  wineVintageLabel: {
+    marginTop: 6,
+    fontSize: 14,
+    fontWeight: 700,
+    color: theme.gold,
+  },
+  wineDividerRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    margin: "20px 0",
+  },
+  wineDividerLine: {
+    flex: 1,
+    height: 1,
+    background: theme.line,
+  },
+  wineDividerDiamond: {
+    width: 6,
+    height: 6,
+    background: theme.wine,
+    transform: "rotate(45deg)",
+    flexShrink: 0,
+  },
+  wineRegionRepeat: {
+    fontSize: 13,
+    fontWeight: 800,
+    letterSpacing: 0.6,
+    color: theme.wine,
+  },
+  wineStatsGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: 12,
+    marginTop: 24,
+  },
+  wineTastingGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    gap: 14,
+    marginTop: 12,
+  },
+  thinDivider: {
+    height: 1,
+    background: theme.line,
+    margin: "24px 0",
+  },
+  iconStat: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    gap: 6,
+  },
+  iconStatIcon: {
+    color: theme.wine,
+  },
+  iconStatLabel: {
+    fontSize: 11,
+    fontWeight: 800,
+    letterSpacing: 0.4,
+    color: theme.subtext,
+  },
+  iconStatValue: {
+    fontSize: 13,
+    fontWeight: 700,
+    color: theme.text,
+    lineHeight: 1.3,
   },
   detailImageCard: {
     background: theme.paper,

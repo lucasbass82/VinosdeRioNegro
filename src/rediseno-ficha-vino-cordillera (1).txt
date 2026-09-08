@@ -1,0 +1,207 @@
+INSTRUCCIONES PARA CLAUDE CODE - REDISEÑO DE FICHA DE VINO (PILOTO: CORDILLERA)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande (nuevo diseño + nuevos campos de datos), así
+que tomate el tiempo de mostrarme cómo vas a resolver cada parte antes de
+aplicar nada.
+
+============================================
+CONTEXTO
+============================================
+La ficha de vino actual (WineDetail, la pantalla que se abre al tocar
+cualquier vino en toda la app) se rediseña por completo con un estilo nuevo,
+más prolijo. Adjunto una referencia visual exacta de cómo debe verse (te la
+describo en detalle abajo, punto por punto).
+
+Esta MISMA ficha rediseñada es la que se debe usar también dentro de las
+Experiencias (por ejemplo, al tocar una de las 6 tarjetas de "Experiencia
+Ruta del Vino Pinot Noir") — pero SOLO para los vinos que ya tengan los datos
+nuevos confirmados. Por ahora eso es únicamente "De Bernardi Pinot Noir"
+(ver Cambio 4). El resto de los 5 vinos de esa experiencia debe seguir
+abriendo su imagen estática (ficha PNG) como hasta ahora, hasta que
+investiguemos sus datos en futuros prompts.
+
+Verificá primero que estos 5 archivos existen en src/assets/ con el nombre
+exacto antes de escribir cualquier import — si alguno no existe, avisame
+antes de seguir (son los mismos logos que ya usamos para las tarjetas
+"botón" de las Experiencias):
+- logo-region-alto-valle.png
+- logo-region-valle-medio.png
+- logo-region-cordillera.png
+- logo-region-estepa.png
+- logo-region-mar.png
+
+============================================
+CAMBIO 1 — Nuevos campos de datos en el tipo Wine
+============================================
+Agregar estos campos OPCIONALES nuevos al tipo Wine (no tocar los campos
+existentes: name, varietal, winery, style, note, availableAt, tag, image):
+
+- vintage?: string        (año de cosecha, ej. "2020")
+- aging?: string           (crianza/estilo de guarda, ej. "Sin paso por madera")
+- servingTemp?: string     (temperatura de servicio, ej. "14 - 16 °C")
+- tastingVista?: string
+- tastingNariz?: string
+- tastingBoca?: string
+
+Cuando cualquiera de estos 6 campos no esté cargado (undefined) para un
+vino, la ficha debe mostrar el guion "-" en ese lugar puntual — NUNCA ocultar
+el campo ni inventar un valor. Esto es distinto al criterio que usamos con
+contactInfo de bodegas (ahí ocultábamos); acá SIEMPRE se muestra la
+etiqueta (Crianza, Servicio, Vista, Nariz, Boca) con "-" si no hay dato.
+
+El campo "description" grande (el párrafo debajo de las 4 etiquetas de
+región/varietal) NO es un campo nuevo — reutilizá el campo "note" que ya
+existe en cada vino. No hace falta escribir párrafos nuevos.
+
+============================================
+CAMBIO 2 — Rediseño visual de WineDetail
+============================================
+Estructura de arriba a abajo (fondo marfil, mismo tono que el resto de la
+app):
+
+1. Esquina superior izquierda: logo circular de la región del vino (usar
+   winery.region del vino para elegir cuál de los 5 logos, mismo mapeo que
+   ya usamos: alto-valle, valle-medio, cordillera, linea-sur→estepa, mar) +
+   debajo, en mayúsculas, el nombre de la región (Alto Valle, Valle Medio,
+   Cordillera, Estepa, Mar).
+
+2. A la derecha del logo (o debajo en mobile si no entra al lado): la foto
+   de la botella (wine.image), grande, centrada verticalmente respecto al
+   bloque de texto.
+
+3. Bloque de texto a la derecha de la botella:
+   - Título: el nombre del vino (wine.name), en la tipografía serif bold que
+     ya usa el resto de la app para títulos grandes, en un solo estilo (SIN
+     la combinación mayúscula+cursiva de la referencia original — ya
+     acordamos simplificarlo a un estilo consistente).
+   - Debajo: el varietal (wine.varietal), en mayúsculas, tipografía sans
+     oscura.
+   - Debajo: el año (wine.vintage, o "-" si no hay), en un tono dorado/ocre.
+   - Línea horizontal fina con un rombo al centro, como separador.
+   - Nombre de la región otra vez, en bordó (repite el de la esquina, es
+     intencional, así está en la referencia).
+   - Debajo: "{winery.name} · {wine.varietal}" en gris.
+   - Párrafo: wine.note (el texto ya existente, no uno nuevo).
+   - Fila de 4 celdas, cada una con ícono arriba + etiqueta + valor:
+     ORIGEN (la ciudad de la bodega, winery.city — NO la región), VARIETAL
+     (wine.varietal), CRIANZA (wine.aging o "-"), SERVICIO (wine.servingTemp
+     o "-").
+   - Línea divisoria fina.
+   - "NOTAS DE CATA" como título de sección, y debajo 3 columnas: VISTA
+     (wine.tastingVista o "-"), NARIZ (wine.tastingNariz o "-"), BOCA
+     (wine.tastingBoca o "-"), cada una con su ícono (cereza/copa para
+     Vista, nariz para Nariz, boca/labios para Boca — reusá íconos
+     existentes en el proyecto si los hay, si no hacé unos simples en SVG
+     inline consistentes con el estilo del resto de íconos de la app).
+
+4. DEBAJO de todo lo anterior, SIN TOCAR: "Bodega de origen" y "Disponible
+   en" quedan exactamente como están hoy en el código actual — mismo
+   contenido, misma lógica, mismos botones. No rediseñes esta parte, es
+   pendiente para más adelante.
+
+============================================
+CAMBIO 3 — Datos reales de los 5 vinos de Cordillera
+============================================
+Cargar estos valores en los 5 vinos correspondientes de WINES (no toques
+ningún otro vino del catálogo en este prompt):
+
+1) Finca Fraschetti Pinot Noir (bodega: Finca Fraschetti)
+   vintage: "2015"
+   aging: "36 meses en barricas de roble"
+   servingTemp: (no cargar, dejar sin definir -> se muestra "-")
+   tastingVista: "Intenso color rojo rubí"
+   tastingNariz: "Delicados aromas de frutos rojos"
+   tastingBoca: "Elegantes taninos, con un suave tostado"
+
+2) De Bernardi Pinot Noir (bodega: Familia De Bernardi)
+   vintage: "2020"
+   aging: "Sin paso por madera"
+   servingTemp: "14 - 16 °C"
+   tastingVista: "Rojo rubí brillante de intensidad media y reflejos violáceos"
+   tastingNariz: "Aromas a cerezas, frutillas y frutos rojos, con sutiles matices florales y especiados"
+   tastingBoca: "Gran frescura, taninos delicados y un final largo y elegante"
+
+3) De Bernardi Gewürztraminer (bodega: Familia De Bernardi)
+   vintage: "2018"
+   aging: (sin definir -> "-")
+   servingTemp: (sin definir -> "-")
+   tastingVista: (sin definir -> "-")
+   tastingNariz: "Notas de lichi, rosas, jazmín y especias"
+   tastingBoca: (sin definir -> "-")
+
+4) De Bernardi Merlot (bodega: Familia De Bernardi)
+   vintage: "2021"
+   aging: (sin definir -> "-")
+   servingTemp: (sin definir -> "-")
+   tastingVista: (sin definir -> "-")
+   tastingNariz: "Frutos negros, chocolate, café y vainilla"
+   tastingBoca: "Intenso, estructurado y complejo"
+
+5) De Bernardi Merlot Rosé (bodega: Familia De Bernardi)
+   vintage: "2022"
+   aging: (sin definir -> "-")
+   servingTemp: (sin definir -> "-")
+   tastingVista: "Color rosa pálido"
+   tastingNariz: "Frutos rojos, especias y hierbas"
+   tastingBoca: "Fresco, con acidez equilibrada"
+
+El campo ORIGEN que se muestra en pantalla para estos 5 vinos sale de
+winery.city (ya existente en WINERIES_DATA) — NO hace falta tocar
+WINERIES_DATA para esto. Nota aparte, sin acción por ahora: el city real de
+Finca Fraschetti en WINERIES_DATA dice "San Carlos de Bariloche"; la fuente
+oficial de la bodega dice "El Bolsón". Por ahora se muestra tal cual está
+en WINERIES_DATA (San Carlos de Bariloche) — no lo corrijas en este prompt,
+lo vemos aparte.
+
+============================================
+CAMBIO 4 — Conectar la Experiencia Pinot Noir con la ficha real (solo De Bernardi)
+============================================
+Dentro de "Experiencia Ruta del Vino Pinot Noir" (PinotExperienceListScreen /
+PinotWineFichaScreen), la tarjeta de "Familia De Bernardi" debe abrir ahora
+la ficha REAL de WineDetail para el vino "De Bernardi Pinot Noir" (con los
+datos del Cambio 3), en vez de la imagen estática
+experiencia-pinot-cordillera-debernardi-ficha.png.
+
+Las otras 5 tarjetas de esa experiencia (Wapisa, Chacra Barda, Bellaco
+Malcriado, Calfulén, Araucana) NO se tocan — siguen abriendo su imagen
+estática como hasta ahora, hasta que investiguemos sus zonas.
+
+Mostrame en el plan cómo vas a resolver esto sin romper el patrón que ya
+existe para los otros 5 (por ejemplo, un campo opcional en la lista de
+tarjetas de esta experiencia que indique "usar ficha real" solo para este
+caso).
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WINERIES_DATA (salvo lectura).
+- No tocar ningún vino fuera de los 5 de Cordillera.
+- No tocar Malbec, Merlot ni Cursos de Cajas Experiencia.
+- No tocar "Bodega de origen" ni "Disponible en" (quedan igual).
+- No tocar el carrito, checkout, ni lógica de compra.
+- No inventar ningún dato de cata, año, crianza o servicio para ningún vino
+  que no esté en la lista de arriba.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador:
+   - Abrir la ficha de "De Bernardi Pinot Noir" (desde Ruta del Vino, no
+     desde la experiencia) → confirmar que se ve con el diseño nuevo, todos
+     los datos correctos, "Bodega de origen" y "Disponible en" intactos
+     abajo.
+   - Abrir la ficha de cualquier OTRO vino que no sea de Cordillera (por
+     ejemplo un Malbec de Bodega Miras) → debe verse con el diseño nuevo
+     también, pero con Año/Crianza/Servicio/Vista/Nariz/Boca mostrando "-"
+     en cada campo sin dato.
+   - Dentro de Experiencia Pinot Noir: tocar la tarjeta de Familia De
+     Bernardi → abre la ficha real (diseño nuevo, con datos). Tocar
+     cualquiera de las otras 5 tarjetas → sigue abriendo su imagen estática
+     de siempre.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

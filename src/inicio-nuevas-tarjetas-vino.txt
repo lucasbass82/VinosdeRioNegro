@@ -1,0 +1,170 @@
+INSTRUCCIONES PARA CLAUDE CODE - NUEVO FORMATO DE VINOS EN INICIO (BOTON + FICHA)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+"Vinos Cerca Tuyo" y "Vinos Recomendados" en Inicio hoy muestran una tarjeta
+chica (fila con nombre + varietal) por cada vino, en un scroll horizontal.
+Se reemplaza por una tarjeta nueva mucho más grande (imagen "botón": logo de
+región + botella + nombre + bodega), manteniendo el mismo scroll HORIZONTAL
+de izquierda a derecha (con tarjetas más anchas ahora, se va a ver
+aproximadamente una por vez, tipo carrusel — es el comportamiento esperado,
+no hay que forzar que se vean varias).
+
+Al tocar una tarjeta, se abre una ficha grande (imagen "ficha") del vino, y
+DEBAJO de esa imagen se mantienen, visibles, exactamente como están hoy:
+"Bodega de origen", "Disponible en" (con las vinotecas), y "También te
+pueden gustar". No se ocultan estos bloques para estos 16 vinos (a
+diferencia del criterio que usamos en las Experiencias, donde sí se
+ocultaban — acá NO).
+
+============================================
+ARCHIVOS — verificar antes de todo
+============================================
+Verificá primero que estos 32 archivos (16 botones + 16 fichas) existen en
+src/assets/ con el nombre exacto — si falta alguno, avisame antes de seguir:
+
+BOTONES:
+- boton-bellaco-malcriado-pinot-noir.png
+- boton-un-chardonnay.png
+- boton-un-malbec-reserva.png
+- boton-un-rose.png
+- boton-aniello-006-merlot.png
+- boton-barzi-canale-blend-de-familia.png
+- boton-bodega-humberto-canale-old-vineyard-pinot-noir.png
+- boton-miras-pinot-noir-salvaje-curioso.png
+- boton-de-bernardi-pinot-noir.png
+- boton-finca-fraschetti-pinot-noir.png
+- boton-enclave-sur-chardonnay.png
+- boton-calfulen-pinot-noir-reserva.png
+- boton-savu-malbec.png
+- boton-wapisa-pinot-noir.png
+- boton-araucana-rio-de-los-ciervos-malbec-rose.png
+- boton-araucana-rio-de-los-ciervos-pinot-noir.png
+
+FICHAS:
+- ficha-antigua-bodega-patagonica-bellaco-malcriado-pinot-noir.png
+- ficha-antigua-bodega-patagonica-un-chardonnay.png
+- ficha-antigua-bodega-patagonica-un-malbec-reserva.png
+- ficha-antigua-bodega-patagonica-un-rose.png
+- ficha-bodega-finca-anielo-006-merlot.png
+- ficha-bodega-humberto-canale-barzi-canale-blend-de-familia.png
+- ficha-bodega-humberto-canale-old-vineyard-pinot-noir.png
+- ficha-bodega-miras-pinot-salvaje-curiosos.png
+- ficha-de-bernardi-pinot-noir.png
+- ficha-finca-fraschetti-pinot-noir.png
+- ficha-enclave-sur-chardonnay.png
+- ficha-videla-dorna-calfuen-pinot-noir-reserva.png
+- ficha-savu-malbec.png
+- ficha-wapisa-pinot-noir.png
+- ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec-rose.png
+  (el nombre real puede tener el caracter "í" de "río" — confirmá el nombre
+  exacto tal como está guardado en disco, no asumas)
+- ficha-araucana-rio-de-los-ciervos-pinot-noir.png
+
+============================================
+CAMBIO 1 — Sacar el borde negro de los 16 botones
+============================================
+Los 16 archivos "boton-*.png" tienen un borde negro grueso alrededor de toda
+la tarjeta (se ve claramente si abrís cualquiera). Hay que sacarlo antes de
+usarlos: recortá cada imagen para eliminar el marco negro exterior, dejando
+solo la tarjeta real (fondo claro, logo, botella, texto), con las esquinas
+redondeadas tal como las tiene la tarjeta interior. Guardá las versiones
+recortadas (podés sobreescribir los mismos archivos o guardarlos con sufijo
+"-sinborde", lo que te resulte más prolijo) y usá esas versiones limpias en
+la app.
+
+============================================
+CAMBIO 2 — Color de fondo de las fichas
+============================================
+Revisá el color de fondo de los archivos "ficha-*.png" — puede no coincidir
+exactamente con el crema/marfil que ya usa el resto de la app (los "boton-*"
+sí coinciden bien, pero conviene que confirmes las fichas). Si alguna ficha
+tiene un fondo notoriamente distinto (más blanco/grisáceo que el crema de
+la app), avisame cuáles antes de decidir si las ajustamos o las dejamos así
+(son imágenes estáticas, no siempre vale la pena tocar el archivo si la
+diferencia es mínima — usá tu criterio y mostrame ejemplos si dudás).
+
+============================================
+CAMBIO 3 — Los 16 vinos, en dos listas fijas de 8
+============================================
+Reemplazar la selección actual de HOME_NEARBY_WINES (usada en "Vinos Cerca
+Tuyo") y HOME_RECOMMENDED_WINES (usada en "Vinos Recomendados") por estas
+listas fijas de 8 vinos cada una, EN ESTE ORDEN EXACTO (el primero de cada
+lista es intencionalmente de Antigua Bodega Patagónica):
+
+"Vinos Cerca Tuyo" (8):
+1. Bellaco Malcriado Pinot Noir (Antigua Bodega Patagónica)
+2. UN Chardonnay (Antigua Bodega Patagónica)
+3. Aniello 006 Merlot (Bodega Finca Aniello)
+4. Miras Pinot Noir Salvaje Curioso (Bodega Miras)
+5. De Bernardi Pinot Noir (Familia De Bernardi)
+6. Enclave Sur Chardonnay (Enclave Sur)
+7. Wapisa Pinot Noir (Wapisa)
+8. Araucana Río de los Ciervos Pinot Noir (Ribera del Cuarzo)
+
+"Vinos Recomendados" (8):
+1. UN Malbec Reserva (Antigua Bodega Patagónica)
+2. UN Rosé (Antigua Bodega Patagónica)
+3. Barzi Canale Blend de Familia (Humberto Canale)
+4. Pinot Noir de viñedo antiguo (Humberto Canale)
+5. Finca Fraschetti Pinot Noir (Finca Fraschetti)
+6. Calfulen Pinot Noir Reserva (Bodega Videla Dorna)
+7. Savu Malbec (Viñas de Lucía)
+8. Araucana Río de los Ciervos Malbec Rosé (Ribera del Cuarzo)
+
+Buscá cada nombre en WINES por nombre + bodega para confirmar que matchea
+exacto antes de armar la lista fija (si alguno no matchea por tilde/mayúscula,
+mostrame el nombre real en WINES antes de decidir, no lo cambies vos).
+
+El "Ver todas"/"Ver todos" de cada sección puede seguir llevando a la
+pantalla que ya tenían (winelist/nearby) sin cambios — esto no se toca.
+
+============================================
+CAMBIO 4 — Tarjeta y ficha nuevas
+============================================
+- El carrusel horizontal de cada sección usa boton-{slug}.png (ancho
+  completo o casi, mismo criterio "sangre completa" que ya usamos en
+  Experiencias) en vez de la fila chica actual.
+- Al tocar una tarjeta, se abre una pantalla con ficha-{slug}.png a ancho
+  completo, con "← Volver" arriba (mismo estilo que el resto de la app,
+  vuelve a la sección de Inicio de la que vino, restaurando el scroll —
+  mismo mecanismo que ya usamos para los accesos desde Inicio).
+- DEBAJO de la imagen de la ficha: "Bodega de origen", "Disponible en" y
+  "También te pueden gustar" tal cual están hoy en la ficha real de vino —
+  sin ocultar nada (a diferencia de cómo se hizo en Experiencias).
+
+Mostrame en el plan cómo vas a resolver la asociación botón→ficha→datos
+reales para bodega de origen/disponible en (por ejemplo, mapeando cada
+imagen a su wine id real en WINES, igual que ya hicimos con las fichas de
+Experiencia).
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WINERIES_DATA ni WINES (excepto lectura).
+- No tocar las Experiencias (Pinot Noir, Malbec, Merlot, Cursos).
+- No tocar el carrito, checkout, ni lógica de compra.
+- No tocar ninguna otra pantalla o sección de Inicio (Actividades
+  destacadas, Bodegas recomendadas, mapa decorativo, título superior).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador:
+   - Inicio → "Vinos Cerca Tuyo" muestra las 8 tarjetas nuevas (sin borde
+     negro), en el orden pedido, primero Bellaco Malcriado. Scroll
+     horizontal funciona.
+   - "Vinos Recomendados" → mismo criterio, primero UN Malbec Reserva.
+   - Tocar cualquiera de las 16 → abre su ficha grande, con "Bodega de
+     origen"/"Disponible en"/"También te pueden gustar" debajo, visibles.
+   - "← Volver" regresa a Inicio en la posición de scroll correcta.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
