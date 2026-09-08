@@ -1,0 +1,56 @@
+INSTRUCCIONES PARA CLAUDE CODE - IGUALAR ALTURA DE TARJETAS DE INICIO A LA DE EXPERIENCIA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio chico y puntual.
+
+============================================
+CONTEXTO
+============================================
+Ya confirmamos la causa exacta de la diferencia de tamaño:
+
+- Las tarjetas de PinotExperienceListScreen (Experiencia Ruta del Vino Pinot
+  Noir) tienen height: 170 fijo + objectFit: "cover" en su <img> — por eso
+  siempre miden lo mismo de alto, recortando lo que sobre.
+- Las tarjetas de HomeWineCardButton (Vinos Cerca Tuyo / Vinos
+  Recomendados) NO tienen altura fija: su <img> usa width: "100%" y el alto
+  sale solo de la proporción natural de la imagen boton-*.png (2022x889).
+  Por eso hoy quedan un poco más bajas (~91% del alto de la Experiencia).
+
+============================================
+CAMBIO — Misma altura fija
+============================================
+Agregale a la <img> dentro de HomeWineCardButton (línea ~5611-5615) la
+MISMA altura fija que ya usa PinotExperienceListScreen: height: 170 +
+objectFit: "cover" (idéntico valor, no un cálculo proporcional). El objetivo
+es que las tarjetas de Inicio queden con el mismo alto en píxeles que las de
+la Experiencia, no solo parecido.
+
+Mantené width: "100%" y el resto de estilos de wineCardButton
+(flex: "0 0 94%", scrollSnapAlign, etc.) sin cambios — el ancho de la
+tarjeta sigue igual, solo se fija el alto de la imagen.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar PinotExperienceListScreen ni sus tarjetas (son la referencia, no
+  se tocan).
+- No tocar ninguna imagen.
+- No tocar WINES, WINERIES_DATA, ni el resto de Inicio.
+- No tocar el carrito, checkout, ni Experiencias.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: medir/comparar en el DOM que la altura renderizada de una
+   tarjeta de Inicio y una de la Experiencia sea la misma (170px). Confirmar
+   que la botella y el logo no se ven recortados de forma rara por el
+   object-fit: cover (si algún boton necesita un ajuste de encuadre distinto
+   por su proporción particular, avisame antes de aplicar un valor
+   distinto).
+3. Scroll horizontal + snap siguen funcionando en ambas secciones.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

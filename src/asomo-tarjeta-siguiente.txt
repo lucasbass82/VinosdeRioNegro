@@ -1,0 +1,48 @@
+INSTRUCCIONES PARA CLAUDE CODE - QUE SE ASOME UN POCO LA TARJETA SIGUIENTE
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Cambio chico.
+
+============================================
+CONTEXTO
+============================================
+Con wineCardButton al 99% de ancho (396px), la flecha ">" y el logo quedan
+con buen margen (+28px y +45px), pero ya no se asoma nada de la tarjeta
+siguiente (quedan ~4px de gap vacío) — y eso hacía que se notara que hay
+que scrollear.
+
+============================================
+CAMBIO — Achicar un poco el ancho para que asome la siguiente
+============================================
+Bajá el porcentaje de wineCardButton desde 99% hasta encontrar un punto que
+deje asomar unos 15-20px de la tarjeta siguiente, PERO sin que el margen a
+la flecha ">" (borde derecho de la imagen en x=1902 del PNG) baje de un
+mínimo seguro — no lo dejes en un margen tan justo como los +9px que darían
+97% (eso es demasiado ajustado, cualquier variación mínima podría volver a
+cortarla). Buscá un equilibrio con margen de al menos +15-20px a la flecha.
+
+Probá valores entre 95% y 98%, calculá para cada uno el ancho de tarjeta,
+el margen a la flecha/logo, y cuánto se asoma de la tarjeta siguiente (mismo
+tipo de tabla que ya armaste antes), y elegí el que mejor equilibrio te dé.
+Mostrame esa tabla en el plan antes de aplicar, no elijas un valor sin
+mostrarme las opciones.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar la altura (170px) ni el object-fit (cover).
+- No tocar PinotExperienceListScreen ni ninguna imagen.
+- No tocar WINES, WINERIES_DATA, ni el resto de Inicio.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: confirmar que se asoma un poco la tarjeta siguiente en ambos
+   carruseles, y que la flecha ">" y el logo de región siguen completos en
+   varias tarjetas (no solo una).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

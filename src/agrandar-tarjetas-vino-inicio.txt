@@ -1,0 +1,73 @@
+INSTRUCCIONES PARA CLAUDE CODE - AGRANDAR LAS TARJETAS DE VINO EN INICIO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+"Vinos Cerca Tuyo" y "Vinos Recomendados" en Inicio muestran las tarjetas
+"boton-*.png" (logo + botella + texto, formato horizontal panorámico) en un
+carrusel horizontal — pero se ven chatas/comprimidas, con la botella chica.
+
+Dentro de Tienda → Cajas Experiencia → "Experiencia Ruta del Vino Pinot
+Noir", las 6 tarjetas de esa lista (PinotExperienceListScreen) usan EL MISMO
+TIPO de imagen (mismo diseño horizontal: logo + línea + botella + texto) y
+se ven mucho más grandes/con presencia — la botella se nota bien.
+
+No hay que tocar ninguna imagen. El problema es de tamaño del contenedor:
+el carrusel de Inicio está renderizando esas tarjetas mucho más bajas que
+como se ve la lista de la Experiencia. Necesito que el carrusel de Inicio use
+una altura/proporción similar a la que ya usa esa lista de Experiencia, para
+que la botella y el texto se vean igual de grandes.
+
+============================================
+CAMBIO — Igualar el tamaño de tarjeta
+============================================
+1. Investigá primero los dos lugares:
+   - El estilo que usa hoy el carrusel de "Vinos Cerca Tuyo"/"Vinos
+     Recomendados" en HomeScreen (probablemente algo como
+     styles.wineCardScroller / HomeWineCardButton, con la imagen del botón).
+   - El estilo que usa hoy PinotExperienceListScreen para sus 6 tarjetas
+     (recordá que en un prompt anterior le pusimos height fijo + objectFit:
+     "cover" a esas tarjetas para que todas midan igual).
+
+2. Reportame en el plan los valores exactos de altura (y cualquier otro
+   estilo relevante: object-fit, padding, ancho) que usa cada uno hoy, para
+   ver la diferencia real antes de igualarlos.
+
+3. Ajustá la altura (y object-fit si hace falta) del carrusel de Inicio para
+   que las tarjetas se vean con un tamaño equivalente al de la lista de
+   Experiencia — no hace falta que sea el valor idéntico en píxeles si el
+   carrusel de Inicio tiene proporciones de contenedor distintas, pero sí
+   que la SENSACIÓN de tamaño (qué tan grande se ve la botella, qué tan
+   protagonista es la tarjeta) sea equivalente.
+
+4. Esto es solo para "Vinos Cerca Tuyo" y "Vinos Recomendados" en Inicio.
+   No toques el tamaño de las tarjetas dentro de la Experiencia Pinot Noir
+   (esas ya están bien, son la referencia).
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ninguna imagen (ni boton-*.png ni ficha-*.png).
+- No tocar WINES, WINERIES_DATA, ni ninguna otra pantalla.
+- No tocar el carrito, checkout, ni Experiencias (más allá de leer su
+  estilo como referencia).
+- No tocar el resto de Inicio (Actividades destacadas, Bodegas
+  recomendadas, mapa decorativo, título superior).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: comparar a ojo "Vinos Cerca Tuyo" (Inicio) contra la lista de
+   Experiencia Ruta del Vino Pinot Noir (Tienda) — las tarjetas deben verse
+   con un tamaño/protagonismo similar, botella grande y clara en ambas.
+   Confirmar también "Vinos Recomendados".
+3. Scroll horizontal sigue funcionando bien (snap, sin cortar tarjetas raro).
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

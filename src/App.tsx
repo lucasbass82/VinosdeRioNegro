@@ -5611,7 +5611,7 @@ function HomeWineCardButton({
       <img
         src={card.boton}
         alt={wine ? `${wine.name} — ${wine.winery}` : ""}
-        style={{ width: "100%", display: "block" }}
+        style={{ width: "100%", height: 170, objectFit: "cover", display: "block" }}
       />
     </button>
   );
@@ -7853,18 +7853,23 @@ const styles: Record<string, React.CSSProperties> = {
     scrollSnapAlign: "start",
   },
   // Carrusel horizontal de las tarjetas grandes de vino en Inicio. Tarjetas
-  // anchas: se ve ~una por vez (tipo carrusel), es el comportamiento esperado.
+  // casi a ancho completo (a sangre) con la misma altura fija que la lista de
+  // la Experiencia Pinot Noir (img height 170 + objectFit "cover"). Ancho 98%
+  // + gap 0: el recorte lateral de "cover" queda en ~46px/lado (flecha ">" con
+  // +18px de margen, logo con +35px) y asoma ~8px de la tarjeta siguiente para
+  // indicar que se puede scrollear.
   wineCardScroller: {
     display: "flex",
-    gap: 12,
+    gap: 0,
     overflowX: "auto",
     paddingBottom: 6,
+    marginLeft: -16,
+    marginRight: -16,
     scrollSnapType: "x mandatory",
-    scrollPadding: "0 16px",
   },
   wineCardButton: {
-    flex: "0 0 88%",
-    scrollSnapAlign: "center",
+    flex: "0 0 98%",
+    scrollSnapAlign: "start",
     padding: 0,
     border: "none",
     background: "none",

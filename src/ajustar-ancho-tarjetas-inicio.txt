@@ -1,0 +1,53 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTAR ANCHO DE TARJETAS DE INICIO (SIN CORTAR LA FLECHA)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Ya identificaste la causa: con la tarjeta de Inicio en flex: "0 0 94%"
+(376px) y height: 170 + objectFit: "cover", el recorte lateral es de 84px
+por lado — bastante más que los ~21px por lado que tiene la tarjeta de
+Experiencia (399px de ancho, mismo alto 170). Por eso en Inicio la flecha
+">" queda cortada en las 16 tarjetas.
+
+============================================
+CAMBIO — Agrandar el ancho de la tarjeta
+============================================
+Subí el ancho de wineCardButton (hoy flex: "0 0 94%") a un valor entre 98%
+y 99% — el que te dé un ancho de tarjeta lo bastante cercano a los 399px de
+Experiencia como para que el recorte lateral de cover quede en un rango
+similar (~20-25px por lado), sin llegar a tapar el logo de región ni la
+flecha ">".
+
+Mostrame en el plan qué porcentaje exacto vas a usar y a cuántos px de
+recorte por lado equivale, antes de aplicarlo (mismo tipo de cálculo que ya
+hiciste para diagnosticar el problema).
+
+Si al agrandar el ancho se pierde el "se asoma la siguiente tarjeta" que
+ya teníamos (para indicar que hay scroll), fijate si con el gap actual
+(12px) sigue asomando un poco de la tarjeta de al lado — si no alcanza,
+avisame antes de decidir si vale la pena sacrificar un poco de ese
+"asomo" a cambio de no cortar la flecha.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar la altura (170px, ya está bien).
+- No tocar PinotExperienceListScreen.
+- No tocar ninguna imagen.
+- No tocar WINES, WINERIES_DATA, ni el resto de Inicio.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: confirmar que en las 16 tarjetas de Inicio ya no se corta la
+   flecha ">" ni el logo de región. Confirmar que se sigue notando que hay
+   scroll (aunque sea un poco menos de "asomo" que antes).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
