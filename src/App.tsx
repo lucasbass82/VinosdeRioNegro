@@ -5611,7 +5611,12 @@ function HomeWineCardButton({
       <img
         src={card.boton}
         alt={wine ? `${wine.name} — ${wine.winery}` : ""}
-        style={{ width: "100%", height: 170, objectFit: "cover", display: "block" }}
+        // Alto proporcional (aspect-ratio nativo del PNG) en vez de height fijo +
+        // objectFit "cover": con "cover" y alto fijo, en pantallas mobile más
+        // angostas que 400px el recorte se comía el logo de región, y en las más
+        // anchas se comía la base de la botella (el PNG tiene solo 33px de margen
+        // abajo). Así la imagen se ve entera a cualquier ancho, sin recorte.
+        style={{ width: "100%", aspectRatio: "1966 / 813", display: "block" }}
       />
     </button>
   );
@@ -7871,11 +7876,9 @@ const styles: Record<string, React.CSSProperties> = {
     scrollSnapAlign: "start",
   },
   // Carrusel horizontal de las tarjetas grandes de vino en Inicio. Tarjetas
-  // casi a ancho completo (a sangre) con la misma altura fija que la lista de
-  // la Experiencia Pinot Noir (img height 170 + objectFit "cover"). Ancho 98%
-  // + gap 0: el recorte lateral de "cover" queda en ~46px/lado (flecha ">" con
-  // +18px de margen, logo con +35px) y asoma ~8px de la tarjeta siguiente para
-  // indicar que se puede scrollear.
+  // casi a ancho completo (a sangre): ancho 98% + gap 0 → asoma ~2% (~8px) de
+  // la tarjeta siguiente para indicar que se puede scrollear. El alto lo da el
+  // aspect-ratio de la imagen (ver HomeWineCardButton), no un height fijo.
   wineCardScroller: {
     display: "flex",
     gap: 0,

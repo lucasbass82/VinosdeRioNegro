@@ -1,0 +1,59 @@
+INSTRUCCIONES PARA CLAUDE CODE - ACHICAR EL ALTO DE LAS TARJETAS (SE ESTÁ CORTANDO EL LOGO)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Con height: 170 + objectFit: "cover" y la tarjeta al 98% de ancho, los
+cálculos anteriores se hicieron asumiendo un ancho de contenedor de 400px
+(lo que medía el navegador de escritorio). En un celular real, el ancho de
+pantalla puede ser menor (anchos típicos: 360px, 375px, 390px, 414px) — con
+menos ancho disponible, objectFit: "cover" recorta más de la imagen para
+llegar a los 170px de alto, y eso está comiéndose el logo de región en la
+tarjeta real del usuario.
+
+============================================
+CAMBIO — Bajar el alto fijo para dar más margen
+============================================
+Bajá el height fijo de la <img> en HomeWineCardButton de 170 a un valor
+menor (probá con 150) — menos alto significa que cover necesita recortar
+menos ancho para llegar a esa altura, lo que da más margen de sobra al logo
+y a la flecha ">", sin importar el ancho exacto de la pantalla.
+
+IMPORTANTE — a diferencia de las veces anteriores, no calcules el margen
+para un solo ancho de contenedor. Calculá y probá el recorte resultante
+para estos anchos de pantalla típicos: 360px, 375px, 390px, 400px, 414px
+(con el 98% de flex ya aplicado, así que el ancho real de tarjeta es un
+poco menor a cada uno de esos). Mostrame una tabla con el margen resultante
+al logo y a la flecha para CADA uno de esos anchos, para el valor de altura
+que elijas — necesito ver que el margen sea positivo y con un colchón
+razonable (al menos +15px) en el caso más angosto (360px), no solo en el
+más ancho.
+
+Si con height: 150 no alcanza para tener margen seguro en 360px, probá con
+un valor todavía menor (140, 130) hasta que la tabla dé margen seguro en
+todos los anchos de la lista.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar PinotExperienceListScreen (esa sigue con su propio height: 170,
+  no se toca).
+- No tocar el ancho de la tarjeta (98% + gap: 0, eso ya quedó bien).
+- No tocar ninguna imagen, WINES, WINERIES_DATA, ni el resto de Inicio.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: probar el ancho de ventana en al menos 2-3 de los tamaños de
+   la lista (podés simular con las devtools de Chrome en modo responsive) y
+   confirmar visualmente que el logo y la flecha se ven completos en cada
+   uno, no solo en 400px.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
