@@ -1,0 +1,104 @@
+INSTRUCCIONES PARA CLAUDE CODE - FICHAS NUEVAS + "BODEGA DE ORIGEN" EN EXPERIENCIA PINOT NOIR
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio de criterio general para cómo se comportan los
+vinos dentro de cualquier Experiencia — hoy se aplica solo a Pinot Noir
+(es la única con los assets listos), pero dejalo armado de forma que sirva
+de plantilla reutilizable para Malbec/Merlot/Cursos el día que tengan sus
+propios assets (no las toques ahora, no tienen los archivos todavía).
+
+============================================
+REGLA NUEVA (reemplaza lo que había antes)
+============================================
+Al tocar el botón de un vino dentro de una Experiencia, se abre:
+1. La imagen de ficha de ese vino (fichaImage), a ancho completo.
+2. Debajo, un bloque "Bodega de origen": el título "Bodega de origen" +
+   un botón/chip con el nombre de la bodega real de ese vino — al tocarlo,
+   navega a la ficha de esa bodega (WineryDetail), igual que ya funciona
+   el bloque "Bodega de origen" en la ficha de vino normal en el resto de
+   la app (reusalo si ya existe un componente para esto, no lo reinventes).
+
+NO se muestra "Disponible en" ni "También te pueden gustar" — solo la
+ficha + Bodega de origen, nada más.
+
+Esto reemplaza el comportamiento actual de "Familia De Bernardi", que hoy
+es un caso especial (abre la ficha REAL de la app —WineDetail— sin bodega
+de origen). De Bernardi pasa a comportarse igual que los otros 5: ficha
+imagen + Bodega de origen. Sacá el mecanismo especial de realWineId para
+este caso (o dejalo en el código sin usar si preferís no tocar de más,
+vos decidís cuál es más prolijo y me lo explicás en el plan).
+
+============================================
+CAMBIO 1 — Nuevos assets (Bodega Chacra Barda)
+============================================
+El usuario ya agregó a src/assets/:
+- boton-barda-pinot-noir.png (con el mismo marco negro que tenían los
+  otros boton-*.png antes de que se lo sacaras — aplicale el mismo método
+  de flood-fill que ya usaste, y confirmá que quede con el mismo tamaño de
+  lienzo 1966×813 que el resto).
+- ficha-bodega-chacra-barda-pinot-noir.png (esta no necesita nada, es la
+  ficha nueva lista para usar).
+
+============================================
+CAMBIO 2 — Actualizar los 6 vinos de PINOT_EXPERIENCE_WINES
+============================================
+cardImage (imagen de la lista) — reemplazar por los boton-*.png ya
+limpios que ya usamos en Inicio:
+- De Bernardi (Cordillera) → boton-de-bernardi-pinot-noir.png
+- Araucana (Estepa) → boton-araucana-rio-de-los-ciervos-pinot-noir.png
+- Wapisa (Mar) → boton-wapisa-pinot-noir.png
+- Calfulén (Valle Medio) → boton-calfulen-pinot-noir-reserva.png
+- Chacra Barda (Alto Valle) → boton-barda-pinot-noir.png (del Cambio 1)
+- Bellaco Malcriado (Alto Valle) → boton-bellaco-malcriado-pinot-noir.png
+
+fichaImage (imagen que se abre al tocar) — actualizar:
+- Chacra Barda → ficha-bodega-chacra-barda-pinot-noir.png (del Cambio 1)
+- Los otros 5 mantienen su fichaImage actual (ya son las correctas).
+- De Bernardi: si hoy no tiene fichaImage propia (porque usaba
+  realWineId), asignale la ficha que corresponda — buscá si ya existe un
+  archivo ficha-de-bernardi-pinot-noir.png entre los assets ya agregados
+  en la tanda anterior (la de los 16 botones/fichas de Inicio); si existe,
+  usá ese. Si no lo encontrás, avisame antes de asumir cuál es.
+
+Bodega real de cada vino (para el botón de "Bodega de origen"):
+- Bellaco Malcriado → Antigua Bodega Patagónica
+- Calfulén Pinot Noir Reserva → Bodega Videla Dorna
+- De Bernardi Pinot Noir → Familia De Bernardi
+- Wapisa Pinot Noir → Wapisa
+- Araucana Río de los Ciervos Pinot Noir → Ribera del Cuarzo
+- Barda Pinot Noir → Bodega Chacra
+
+Buscá cada bodega en WINERIES_DATA por nombre para confirmar que matchea
+exacto antes de armar la lista fija (no inventes el nombre si no matchea,
+mostrame el nombre real primero).
+
+Estas 6 tarjetas siguen mostrándose con aspectRatio: "1966 / 813" (mismo
+criterio que ya aplicamos, sin recorte).
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar Malbec, Merlot ni Cursos de Cajas Experiencia (todavía no
+  tienen estos assets).
+- No tocar "Vinos Cerca Tuyo"/"Vinos Recomendados" de Inicio.
+- No tocar WINES, WINERIES_DATA (excepto lectura), ni el carrito/checkout.
+- No borrar ningún asset existente (ni los viejos experiencia-pinot-*.png
+  que quedan sin usar).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a Experiencia Ruta del Vino Pinot Noir → las 6
+   tarjetas con el diseño nuevo. Tocar cada una de las 6 (incluida De
+   Bernardi) → abre su ficha imagen + "Bodega de origen" con el nombre
+   correcto de cada bodega, sin "Disponible en" ni "También te pueden
+   gustar". Tocar el botón de bodega → lleva a la ficha real de esa
+   bodega con todos sus vinos.
+3. Probar en varios anchos de pantalla que ninguna de las 6 se vea
+   recortada.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

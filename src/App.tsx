@@ -28,19 +28,13 @@ import experienciaPinotPhoto from "./assets/experiencia-pinot.png";
 import tarjetaExperienciaRvPinotPhoto from "./assets/tarjeta-experiencia-ruta-del-vino-pinot-noir.png";
 import headExperienciaRvPinotPhoto from "./assets/head-experiencia-ruta-del-vino-pinot-noir.png";
 import tarjetaDescripcionRvPinotPhoto from "./assets/tarjeta-descripcion-ruta-del-vino-pinot-noir.png";
-import experienciaPinotCordilleraDebernardiPhoto from "./assets/experiencia-pinot-cordillera-debernardi.png";
-import experienciaPinotMarWapisaPhoto from "./assets/experiencia-pinot-mar-wapisa.png";
-import experienciaPinotAltovalleChacrabardaPhoto from "./assets/experiencia-pinot-altovalle-chacrabarda.png";
-import experienciaPinotAltovalleBellacomalcriadoPhoto from "./assets/experiencia-pinot-altovalle-bellacomalcriado.png";
-import experienciaPinotVallemedioCalfulenPhoto from "./assets/experiencia-pinot-vallemedio-calfulen.png";
-import experienciaPinotEstepaAraucanaPhoto from "./assets/experiencia-pinot-estepa-araucana.png";
-import experienciaPinotCordilleraDebernardiFichaPhoto from "./assets/experiencia-pinot-cordillera-debernardi-ficha.png";
 import experienciaPinotMarWapisaFichaPhoto from "./assets/experiencia-pinot-mar-wapisa-ficha.png";
-import experienciaPinotAltovalleChacrabardaFichaPhoto from "./assets/experiencia-pinot-altovalle-chacrabarda-ficha.png";
 import experienciaPinotAltovalleBellacomalcriadoFichaPhoto from "./assets/experiencia-pinot-altovalle-bellacomalcriado-ficha.png";
 import experienciaPinotVallemedioCalfulenFichaPhoto from "./assets/experiencia-pinot-vallemedio-calfulen-ficha.png";
 import experienciaPinotEstepaAraucanaFichaPhoto from "./assets/experiencia-pinot-estepa-araucana-ficha.png";
 import experienciaPinotIntroPhoto from "./assets/experiencia-pinot-intro.png";
+import botonBardaPn from "./assets/boton-barda-pinot-noir.png";
+import fichaBodegaChacraBardaPn from "./assets/ficha-bodega-chacra-barda-pinot-noir.png";
 
 // Tarjetas "botón" + fichas de los 16 vinos destacados de Inicio
 // ("Vinos Cerca Tuyo" y "Vinos recomendados"). Ver HOME_NEARBY_CARDS /
@@ -486,7 +480,7 @@ type TabKey =
   | "nearby";
 
 type DetailEntry =
-  | { kind: "wine"; id: string; fromShop?: boolean; fromExperience?: boolean }
+  | { kind: "wine"; id: string; fromShop?: boolean }
   | { kind: "homeWineFicha"; id: string }
   | { kind: "winery"; id: string }
   | { kind: "shop"; id: string }
@@ -4134,8 +4128,8 @@ export default function App() {
       }
       return [...stack, entry];
     });
-  const openWine = (id: string, fromShop?: boolean, fromExperience?: boolean) =>
-    pushDetail({ kind: "wine", id, fromShop, fromExperience });
+  const openWine = (id: string, fromShop?: boolean) =>
+    pushDetail({ kind: "wine", id, fromShop });
   const openHomeWineFicha = (id: string) =>
     pushDetail({ kind: "homeWineFicha", id });
   const openWinery = (id: string) => pushDetail({ kind: "winery", id });
@@ -4332,7 +4326,10 @@ export default function App() {
      ) : tab === "shop" && !detail ? (
        <ShopScreen
          onOpenWine={(id) => openWine(id, true)}
-         onOpenExperienceWine={(id) => openWine(id, false, true)}
+         onOpenWinery={(name) => {
+           const found = WINERIES.find((w) => w.name === name);
+           if (found) openWinery(found.id);
+         }}
          onMenuClick={toggleMenu}
          onProfile={() => goToTab("profile")}
          cart={cart}
@@ -4369,7 +4366,6 @@ export default function App() {
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
                   fromShop={detail.fromShop}
-                  fromExperience={detail.fromExperience}
                   onAddToCart={addToCart}
                 />
               ) : detail.kind === "homeWineFicha" ? (
@@ -4504,48 +4500,53 @@ type PinotExperienceWine = {
   name: string;
   cardImage: string;
   fichaImage: string;
-  // Solo "Familia De Bernardi" lo tiene por ahora: abre la ficha real de
-  // WineDetail (id en WINES) en vez de la imagen estática fichaImage.
-  realWineId?: string;
+  // Nombre exacto en WINERIES_DATA de la bodega real de este vino, para el
+  // bloque "Bodega de origen" de su ficha.
+  winery: string;
 };
 
 const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
   {
     id: "cordillera-debernardi",
     name: "Familia De Bernardi",
-    cardImage: experienciaPinotCordilleraDebernardiPhoto,
-    fichaImage: experienciaPinotCordilleraDebernardiFichaPhoto,
-    realWineId: "v39",
+    cardImage: botonDeBernardiPn,
+    fichaImage: fichaDeBernardiPn,
+    winery: "Familia De Bernardi",
   },
   {
     id: "altovalle-chacrabarda",
     name: "Chacra Barda",
-    cardImage: experienciaPinotAltovalleChacrabardaPhoto,
-    fichaImage: experienciaPinotAltovalleChacrabardaFichaPhoto,
+    cardImage: botonBardaPn,
+    fichaImage: fichaBodegaChacraBardaPn,
+    winery: "Bodega Chacra",
   },
   {
     id: "altovalle-bellacomalcriado",
     name: "Bellaco Malcriado",
-    cardImage: experienciaPinotAltovalleBellacomalcriadoPhoto,
+    cardImage: botonBellacoMalcriadoPn,
     fichaImage: experienciaPinotAltovalleBellacomalcriadoFichaPhoto,
+    winery: "Antigua Bodega Patagónica",
   },
   {
     id: "vallemedio-calfulen",
     name: "Calfulen",
-    cardImage: experienciaPinotVallemedioCalfulenPhoto,
+    cardImage: botonCalfulenPnReserva,
     fichaImage: experienciaPinotVallemedioCalfulenFichaPhoto,
+    winery: "Bodega Videla Dorna",
   },
   {
     id: "estepa-araucana",
     name: "Araucana",
-    cardImage: experienciaPinotEstepaAraucanaPhoto,
+    cardImage: botonAraucanaPn,
     fichaImage: experienciaPinotEstepaAraucanaFichaPhoto,
+    winery: "Ribera del Cuarzo",
   },
   {
     id: "mar-wapisa",
     name: "Wapisa",
-    cardImage: experienciaPinotMarWapisaPhoto,
+    cardImage: botonWapisaPn,
     fichaImage: experienciaPinotMarWapisaFichaPhoto,
+    winery: "Wapisa",
   },
 ];
 
@@ -4609,7 +4610,7 @@ const WINE_COURSES: Array<{ name: string; description: string }> = [
 
 function ShopScreen({
   onOpenWine,
-  onOpenExperienceWine,
+  onOpenWinery,
   onMenuClick,
   onProfile,
   cart,
@@ -4621,7 +4622,7 @@ function ShopScreen({
   isFavorite,
 }: {
   onOpenWine: (id: string) => void;
-  onOpenExperienceWine: (id: string) => void;
+  onOpenWinery: (name: string) => void;
   onMenuClick: () => void;
   onProfile?: () => void;
   cart: CartItem[];
@@ -4734,12 +4735,12 @@ function ShopScreen({
               <PinotWineFichaScreen
                 wine={openPinotWine}
                 onBack={() => setOpenPinotWine(null)}
+                onOpenWinery={onOpenWinery}
               />
             ) : (
               <PinotExperienceListScreen
                 wines={openProduct.featured.wineCards}
                 onSelectWine={setOpenPinotWine}
-                onOpenRealWine={onOpenExperienceWine}
                 onBack={() => {
                   setOpenProduct(null);
                   setOpenPinotWine(null);
@@ -5159,12 +5160,10 @@ function ShopListCard({
 function PinotExperienceListScreen({
   wines,
   onSelectWine,
-  onOpenRealWine,
   onBack,
 }: {
   wines: PinotExperienceWine[];
   onSelectWine: (wine: PinotExperienceWine) => void;
-  onOpenRealWine: (id: string) => void;
   onBack: () => void;
 }) {
   return (
@@ -5182,11 +5181,7 @@ function PinotExperienceListScreen({
         {wines.map((wine) => (
           <button
             key={wine.id}
-            onClick={() =>
-              wine.realWineId
-                ? onOpenRealWine(wine.realWineId)
-                : onSelectWine(wine)
-            }
+            onClick={() => onSelectWine(wine)}
             style={{
               display: "block",
               width: "100%",
@@ -5201,8 +5196,7 @@ function PinotExperienceListScreen({
               alt={wine.name}
               style={{
                 width: "100%",
-                height: 170,
-                objectFit: "cover",
+                aspectRatio: "1966 / 813",
                 display: "block",
               }}
             />
@@ -5216,10 +5210,13 @@ function PinotExperienceListScreen({
 function PinotWineFichaScreen({
   wine,
   onBack,
+  onOpenWinery,
 }: {
   wine: PinotExperienceWine;
   onBack: () => void;
+  onOpenWinery: (name: string) => void;
 }) {
+  const originWinery = WINERIES.find((w) => w.name === wine.winery);
   return (
     <div style={styles.stack22}>
       <button style={styles.backButton} onClick={onBack}>
@@ -5233,6 +5230,8 @@ function PinotWineFichaScreen({
           style={{ width: "100%", display: "block" }}
         />
       </div>
+
+      <WineryOriginBlock winery={originWinery} onOpenWinery={onOpenWinery} />
     </div>
   );
 }
@@ -6653,7 +6652,6 @@ function WineDetail({
   toggleFavorite,
   isFavorite,
   fromShop,
-  fromExperience,
   onAddToCart,
 }: {
   wine: Wine;
@@ -6664,7 +6662,6 @@ function WineDetail({
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
   fromShop?: boolean;
-  fromExperience?: boolean;
   onAddToCart: (wine: Wine) => void;
 }) {
   const [justAdded, setJustAdded] = useState(false);
@@ -6817,50 +6814,39 @@ function WineDetail({
         </div>
       </div>
 
-      {!fromExperience && originWinery && (
-        <Block title="Bodega de origen">
-          <ResultRow
-            title={originWinery.name}
-            subtitle={`${originWinery.city} · ${
-              REGION_META[originWinery.region].title
-            }`}
-            onClick={() => onOpenWinery(originWinery.name)}
-          />
+      <WineryOriginBlock winery={originWinery} onOpenWinery={onOpenWinery} />
+
+      {fromShop ? (
+        <div style={styles.wineCartCard}>
+          <div style={styles.wineCartCardLabel}>
+            Disponible en nuestra Tienda
+          </div>
+          <button style={styles.wineCartCardButton} onClick={handleAddToCart}>
+            {justAdded ? "✓ Agregado" : "Agregar al carrito"}
+          </button>
+        </div>
+      ) : (
+        <Block title="Disponible en">
+          {availableShops.length > 0 ? (
+            <div style={styles.stack12}>
+              {availableShops.map((found) => (
+                <ResultRow
+                  key={found.id}
+                  title={found.name}
+                  subtitle={
+                    isPlaceholderText(found.benefit)
+                      ? found.city
+                      : `${found.city} · ${found.benefit}`
+                  }
+                  onClick={() => onOpenShop(found.id)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div style={styles.placeText}>Sin distribución confirmada</div>
+          )}
         </Block>
       )}
-
-      {!fromExperience &&
-        (fromShop ? (
-          <div style={styles.wineCartCard}>
-            <div style={styles.wineCartCardLabel}>
-              Disponible en nuestra Tienda
-            </div>
-            <button style={styles.wineCartCardButton} onClick={handleAddToCart}>
-              {justAdded ? "✓ Agregado" : "Agregar al carrito"}
-            </button>
-          </div>
-        ) : (
-          <Block title="Disponible en">
-            {availableShops.length > 0 ? (
-              <div style={styles.stack12}>
-                {availableShops.map((found) => (
-                  <ResultRow
-                    key={found.id}
-                    title={found.name}
-                    subtitle={
-                      isPlaceholderText(found.benefit)
-                        ? found.city
-                        : `${found.city} · ${found.benefit}`
-                    }
-                    onClick={() => onOpenShop(found.id)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div style={styles.placeText}>Sin distribución confirmada</div>
-            )}
-          </Block>
-        ))}
 
       <Block title="También te pueden gustar">
         <div style={styles.wineCardGrid}>
@@ -6884,6 +6870,30 @@ function WineDetail({
 // tal cual aparecen hoy en la ficha real de vino (WineDetail, variante no-Tienda
 // y no-Experiencia). Se usan tal cual, sin ocultar nada, debajo de la imagen de
 // ficha de los 16 vinos destacados de Inicio.
+// Bloque "Bodega de origen" reutilizable: título + chip con el nombre de la
+// bodega real, que navega a su WineryDetail. Usado en la ficha de vino
+// normal (WineDetail), en la ficha de los vinos destacados de Inicio
+// (WineOriginBlocks) y en la ficha de los vinos de Experiencia
+// (PinotWineFichaScreen).
+function WineryOriginBlock({
+  winery,
+  onOpenWinery,
+}: {
+  winery: Winery | undefined;
+  onOpenWinery: (name: string) => void;
+}) {
+  if (!winery) return null;
+  return (
+    <Block title="Bodega de origen">
+      <ResultRow
+        title={winery.name}
+        subtitle={`${winery.city} · ${REGION_META[winery.region].title}`}
+        onClick={() => onOpenWinery(winery.name)}
+      />
+    </Block>
+  );
+}
+
 function WineOriginBlocks({
   wine,
   onOpenShop,
@@ -6909,17 +6919,7 @@ function WineOriginBlocks({
 
   return (
     <>
-      {originWinery && (
-        <Block title="Bodega de origen">
-          <ResultRow
-            title={originWinery.name}
-            subtitle={`${originWinery.city} · ${
-              REGION_META[originWinery.region].title
-            }`}
-            onClick={() => onOpenWinery(originWinery.name)}
-          />
-        </Block>
-      )}
+      <WineryOriginBlock winery={originWinery} onOpenWinery={onOpenWinery} />
 
       <Block title="Disponible en">
         {availableShops.length > 0 ? (
