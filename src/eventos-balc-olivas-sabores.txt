@@ -1,0 +1,101 @@
+INSTRUCCIONES PARA CLAUDE CODE - NUEVOS BOTONES Y FICHAS PARA 2 EVENTOS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO Y ARCHIVOS
+============================================
+El usuario agregó 4 imágenes a src/assets/, pero llegaron con doble
+extensión (ej. "boton-balc2026.png.png") — renombralas a extensión simple
+(.png) antes de importarlas:
+- boton-balc2026.png
+- ficha-balc2026.png
+- boton-evento-olivasysabores.png
+- ficha-evento-olivasysabores.png
+
+Ninguna tiene borde negro ni necesita procesamiento, son imágenes limpias
+listas para usar directo.
+
+Se aplican a los 2 primeros eventos de "Actividades destacadas" en Inicio
+(y donde sea que se lean los mismos EVENTS en Agenda):
+- Evento 1: "Cata de Malbecs Rionegrinos" → assets de BALC 2026.
+- Evento 2: el evento que hoy se ve como "Noche de..." en la tarjeta
+  chica (confirmá el título EXACTO tal como está en EVENTS antes de
+  aplicar el cambio — el usuario lo mencionó como "Noche de finos
+  patagónicos" pero puede no ser el título exacto guardado en los datos;
+  si no coincide, usá el que encuentres en el código, no inventes) →
+  assets de Olivas y Sabores.
+
+============================================
+CAMBIO 1 — Tarjeta chica en "Actividades destacadas"
+============================================
+- Evento 1: la imagen/ícono de la tarjeta pasa a ser boton-balc2026.png.
+- Evento 2: la imagen/ícono de la tarjeta pasa a ser
+  boton-evento-olivasysabores.png.
+
+Ambas tarjetas deben tener un ícono de corazón (favorito) visible, usando
+el MISMO mecanismo de favoritos que ya existe en la app (toggleFavorite /
+isFavorite — ya se usa en otras partes, como fichas de vino). No inventes
+un sistema de favoritos nuevo, reusá el que ya está.
+
+============================================
+CAMBIO 2 — Pantalla de detalle del evento (al tocar la tarjeta)
+============================================
+Para estos 2 eventos específicos, reemplazar TODO el contenido actual de
+la pantalla de detalle (EventDetailScreen o como se llame) por:
+
+1. La imagen de ficha correspondiente (ficha-balc2026.png o
+   ficha-evento-olivasysabores.png) a ancho completo.
+2. Un ícono de corazón (favorito) visible en esta pantalla también, mismo
+   mecanismo de toggleFavorite/isFavorite.
+3. Debajo de la imagen, el botón bordó que ya existe hoy (el que dice
+   "Quiero ir →" y hoy abre Google Maps con la dirección del evento) —
+   NO lo elimines, se reutiliza, pero con estos cambios puntuales por
+   evento:
+
+   EVENTO 1 (BALC 2026):
+   - Cambiar el texto del botón a "Quiero más info".
+   - Cambiar su acción: en vez de abrir Google Maps, debe abrir
+     https://barilochealacarta.com/ en una pestaña nueva.
+
+   EVENTO 2 (Olivas y Sabores):
+   - Cambiar el texto del botón a "Quiero ir!".
+   - La acción queda TAL CUAL está hoy (abre Google Maps con la dirección
+     del lugar del evento) — no la toques, ya está bien.
+
+Para estos 2 eventos en particular, no debe quedar ningún otro elemento de
+la pantalla de detalle anterior (título repetido, descripción vieja,
+horario, beneficio, etc.) — solo: imagen de ficha + corazón + botón bordó.
+Si hay otros eventos en EVENTS que no sean estos 2, esos siguen mostrando
+la pantalla de detalle como está hoy, sin cambios.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ningún otro evento fuera de estos 2.
+- No tocar Experiencias, Tienda, WINES, WINERIES_DATA.
+- No tocar el carrito/checkout.
+- No inventar un mecanismo de favoritos nuevo — reusar el existente.
+- No borrar ningún asset existente.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador:
+   - "Actividades destacadas" en Inicio muestra las 2 tarjetas nuevas, cada
+     una con su corazón de favorito funcionando.
+   - Tocar la tarjeta de BALC 2026 → ficha nueva a ancho completo + corazón
+     + botón "Quiero más info" que abre barilochealacarta.com en pestaña
+     nueva.
+   - Tocar la tarjeta de Olivas y Sabores → ficha nueva a ancho completo +
+     corazón + botón "Quiero ir!" que abre Google Maps con la dirección
+     real del lugar.
+   - Cualquier otro evento (si existe un tercero) sigue mostrándose como
+     antes, sin cambios.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

@@ -1,0 +1,57 @@
+INSTRUCCIONES PARA CLAUDE CODE - SACAR EL HEADER FIJO EN LOS 2 EVENTOS NUEVOS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+En la pantalla de detalle de los 2 eventos nuevos (BALC 2026 y Noche de
+Vinos Patagónicos / Olivas y Sabores), hoy se ve: arriba el header con foto
+fija (PhotoHeader o como se llame, con flecha de volver superpuesta), y
+debajo, en el scroll, la imagen de ficha nueva. Se ve como una imagen
+encima de otra, y no corresponde — la idea es que la ficha nueva sea LO
+ÚNICO que se vea, ocupando toda la pantalla, sin el header de foto fija
+arriba.
+
+============================================
+CAMBIO — Sacar el header de foto para estos 2 eventos
+============================================
+Para event.id === "e1" y "e2" únicamente, dentro de EventDetailScreen: no
+renderices el header de foto fija de arriba — que la imagen de ficha
+(ficha-balc2026.png / ficha-evento-olivasysabores.png) sea el contenido
+completo de la pantalla, de punta a punta.
+
+Como el header de foto es lo que hoy tiene la flecha "← Volver" superpuesta,
+necesitás dejar alguna forma de volver atrás — agregá un botón de volver
+simple (mismo estilo que uses en otras pantallas de la app que no llevan
+foto de fondo, si existe alguno; si no, un botón chico y discreto arriba de
+la imagen, sin tapar contenido de la ficha).
+
+El corazón de favorito que ya agregamos se mantiene visible.
+
+Cualquier otro evento (e3, y futuros) sigue mostrando el header de foto fija
+de siempre, sin cambios — esto es solo para estos 2.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar la pantalla de detalle de ningún otro evento.
+- No tocar WineryDetail, WineDetail, ni ningún otro lugar que use el mismo
+  header de foto.
+- No tocar Experiencias, Tienda, WINES, WINERIES_DATA.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar al detalle de BALC 2026 y de Olivas y Sabores → se ve
+   la ficha completa de punta a punta, sin la foto de header arriba. El
+   botón de volver funciona. El corazón de favorito sigue funcionando.
+3. Confirmar que el evento 3 (Maridaje en la Vinoteca) sigue con su header
+   de foto normal, sin cambios.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

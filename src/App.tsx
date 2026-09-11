@@ -74,6 +74,10 @@ import fichaAraucanaMalbecRose from "./assets/ficha-ribera-del-cuarzo-araucana-r
 
 import cursosPhoto from "./assets/cursos.png";
 import oliviasYSaboresPhoto from "./assets/olivas-y-sabores.png";
+import botonBalc2026Photo from "./assets/boton-balc2026.png";
+import fichaBalc2026Photo from "./assets/ficha-balc2026.png";
+import botonOlivasSaboresEventoPhoto from "./assets/boton-evento-olivasysabores.png";
+import fichaOlivasSaboresEventoPhoto from "./assets/ficha-evento-olivasysabores.png";
 import vinopolitanPhoto from "./assets/vinopolitan.png";
 import piquillinPhoto from "./assets/piquillin.png";
 import rioTintoPhoto from "./assets/rio-tinto.png";
@@ -460,7 +464,7 @@ type FavoriteItem = {
   id: string;
   name: string;
   city?: string;
-  kind: "wine" | "winery" | "shop";
+  kind: "wine" | "winery" | "shop" | "event";
 };
 
 type CartItem = {
@@ -3848,16 +3852,6 @@ const EVENTS: EventItem[] = [
     benefit: "10% OFF socios",
     timeframe: "finde",
   },
-  {
-    id: "e3",
-    title: "Maridaje en la Vinoteca",
-    organizer: "Antigua Bodega Patagónica",
-    place: "Vinoteca Olivas y Sabores",
-    when: "Este finde · 18:00",
-    city: "Viedma",
-    benefit: "Entrada libre",
-    timeframe: "finde",
-  },
 ];
 
 // ---- Helpers de auditoría (I4–I11) ----
@@ -3876,6 +3870,36 @@ const addressForPlace = (place: string): string | null => {
   const winery = WINERIES.find((w) => w.name === place);
   if (winery && winery.address) return `${winery.address}, ${winery.city}`;
   return null;
+};
+
+// Eventos con tarjeta/ficha propias (BALC 2026, Olivas y Sabores): en vez del
+// contenido genérico de evento, muestran su propio botón/ficha y un botón
+// bordó con texto y acción particulares. Cualquier evento fuera de este mapa
+// sigue usando la tarjeta y la pantalla de detalle genéricas.
+type FeaturedEventConfig = {
+  boton: string;
+  ficha: string;
+  buttonLabel: string;
+  onButtonClick: (event: EventItem) => void;
+};
+
+const FEATURED_EVENTS: Record<string, FeaturedEventConfig> = {
+  e1: {
+    boton: botonBalc2026Photo,
+    ficha: fichaBalc2026Photo,
+    buttonLabel: "Quiero más info",
+    onButtonClick: () =>
+      window.open("https://barilochealacarta.com/", "_blank", "noopener"),
+  },
+  e2: {
+    boton: botonOlivasSaboresEventoPhoto,
+    ficha: fichaOlivasSaboresEventoPhoto,
+    buttonLabel: "Quiero ir!",
+    onButtonClick: (event) => {
+      const address = addressForPlace(event.place);
+      if (address) openInMaps(address);
+    },
+  },
 };
 
 // Campos con valor placeholder (dato no confirmado) que no deben mostrarse.
@@ -4304,17 +4328,19 @@ export default function App() {
            </div>
          )}
 
-         {detail?.kind === "event" && detailView && (
-           <PhotoHeader
-             imageUrl={eventHeaderImage((detailView as EventItem).place)}
-             title={(detailView as EventItem).title}
-             subtitle={`${(detailView as EventItem).place} · ${
-               (detailView as EventItem).city
-             }`}
-             onMenuClick={toggleMenu}
-             onProfile={() => goToTab("profile")}
-           />
-         )}
+         {detail?.kind === "event" &&
+           detailView &&
+           !FEATURED_EVENTS[(detailView as EventItem).id] && (
+             <PhotoHeader
+               imageUrl={eventHeaderImage((detailView as EventItem).place)}
+               title={(detailView as EventItem).title}
+               subtitle={`${(detailView as EventItem).place} · ${
+                 (detailView as EventItem).city
+               }`}
+               onMenuClick={toggleMenu}
+               onProfile={() => goToTab("profile")}
+             />
+           )}
 
      {tab === "agenda" && !detail ? (
        <AgendaScreen
@@ -4322,6 +4348,8 @@ export default function App() {
          onProfile={() => goToTab("profile")}
          showBackToHome={cameFromHomeShortcut}
          onBackToHome={backToHome}
+         toggleFavorite={toggleFavorite}
+         isFavorite={isFavorite}
        />
      ) : tab === "shop" && !detail ? (
        <ShopScreen
@@ -4401,6 +4429,8 @@ export default function App() {
                 <EventDetailScreen
                   event={detailView as EventItem}
                   onBack={closeDetail}
+                  toggleFavorite={toggleFavorite}
+                  isFavorite={isFavorite}
                 />
               ) : (
                 <ShopDetail
@@ -5709,33 +5739,70 @@ function HomeScreen({
       />
 
       <div style={styles.horizontalScroller}>
-        {EVENTS.map((e) => (
-          <div
-            key={e.id}
-            style={{
-              ...styles.card,
-              ...styles.horizontalCard,
-              cursor: "pointer",
-            }}
-            onClick={() => onOpenEvent(e.id)}
-          >
-            <div style={styles.rowGap12}>
-              <div style={styles.iconBadgeWine}>
-                <SparklesIcon white />
+        {EVENTS.map((e) => {
+          const featured = FEATURED_EVENTS[e.id];
+          if (featured) {
+            return (
+              <div
+                key={e.id}
+                style={{
+                  ...styles.horizontalCard,
+                  width: 245,
+                  flexShrink: 0,
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+                onClick={() => onOpenEvent(e.id)}
+              >
+                <img
+                  src={featured.boton}
+                  alt={e.title}
+                  style={{
+                    width: "100%",
+                    display: "block",
+                    borderRadius: 28,
+                  }}
+                />
+                <button
+                  style={styles.shopCardHeartButton}
+                  onClick={(ev) => {
+                    ev.stopPropagation();
+                    toggleFavorite({ id: e.id, name: e.title, kind: "event" });
+                  }}
+                >
+                  <HeartIcon active={favorites.some((f) => f.id === e.id)} />
+                </button>
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={styles.itemTitle}>{e.title}</div>
-                <div style={styles.itemSub}>
-                  {e.place} · {e.city}
+            );
+          }
+          return (
+            <div
+              key={e.id}
+              style={{
+                ...styles.card,
+                ...styles.horizontalCard,
+                cursor: "pointer",
+              }}
+              onClick={() => onOpenEvent(e.id)}
+            >
+              <div style={styles.rowGap12}>
+                <div style={styles.iconBadgeWine}>
+                  <SparklesIcon white />
                 </div>
-                <div style={styles.itemMeta}>{e.when}</div>
-                <div style={{ marginTop: 10 }}>
-                  <Badge kind="benefit">{e.benefit}</Badge>
+                <div style={{ flex: 1 }}>
+                  <div style={styles.itemTitle}>{e.title}</div>
+                  <div style={styles.itemSub}>
+                    {e.place} · {e.city}
+                  </div>
+                  <div style={styles.itemMeta}>{e.when}</div>
+                  <div style={{ marginTop: 10 }}>
+                    <Badge kind="benefit">{e.benefit}</Badge>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <SectionTitle
@@ -6402,11 +6469,15 @@ function AgendaScreen({
   onProfile,
   showBackToHome,
   onBackToHome,
+  toggleFavorite,
+  isFavorite,
 }: {
   onMenuClick: () => void;
   onProfile?: () => void;
   showBackToHome?: boolean;
   onBackToHome?: () => void;
+  toggleFavorite: (item: FavoriteItem) => void;
+  isFavorite: (id: string) => boolean;
 }) {
   const [filter, setFilter] = useState<EventTimeframe>("hoy");
   const [openEvent, setOpenEvent] = useState<EventItem | null>(null);
@@ -6423,19 +6494,27 @@ function AgendaScreen({
   }, [openEvent]);
 
   if (openEvent) {
+    const isFeaturedEvent = Boolean(FEATURED_EVENTS[openEvent.id]);
     return (
       <>
-        <PhotoHeader
-          imageUrl={eventHeaderImage(openEvent.place)}
-          title={openEvent.title}
-          subtitle={`${openEvent.place} · ${openEvent.city}`}
-          onMenuClick={onMenuClick}
-          onProfile={onProfile}
-        />
-        <div ref={agendaScrollRef} style={styles.sheetSurface}>
+        {!isFeaturedEvent && (
+          <PhotoHeader
+            imageUrl={eventHeaderImage(openEvent.place)}
+            title={openEvent.title}
+            subtitle={`${openEvent.place} · ${openEvent.city}`}
+            onMenuClick={onMenuClick}
+            onProfile={onProfile}
+          />
+        )}
+        <div
+          ref={agendaScrollRef}
+          style={isFeaturedEvent ? styles.content : styles.sheetSurface}
+        >
           <EventDetailScreen
             event={openEvent}
             onBack={() => setOpenEvent(null)}
+            toggleFavorite={toggleFavorite}
+            isFavorite={isFavorite}
           />
         </div>
       </>
@@ -6536,10 +6615,55 @@ function AgendaScreen({
 function EventDetailScreen({
   event,
   onBack,
+  toggleFavorite,
+  isFavorite,
 }: {
   event: EventItem;
   onBack: () => void;
+  toggleFavorite: (item: FavoriteItem) => void;
+  isFavorite: (id: string) => boolean;
 }) {
+  const featured = FEATURED_EVENTS[event.id];
+
+  if (featured) {
+    return (
+      <div style={styles.stack22}>
+        <button style={styles.backButton} onClick={onBack}>
+          <ArrowLeftIcon /> Volver
+        </button>
+
+        <div
+          style={{ marginLeft: -16, marginRight: -16, position: "relative" }}
+        >
+          <img
+            src={featured.ficha}
+            alt={`Ficha de ${event.title}`}
+            style={{ width: "100%", display: "block" }}
+          />
+          <button
+            style={styles.shopCardHeartButton}
+            onClick={() =>
+              toggleFavorite({
+                id: event.id,
+                name: event.title,
+                kind: "event",
+              })
+            }
+          >
+            <HeartIcon active={isFavorite(event.id)} />
+          </button>
+        </div>
+
+        <button
+          style={{ ...styles.primaryButton, width: "100%" }}
+          onClick={() => featured.onButtonClick(event)}
+        >
+          {featured.buttonLabel}
+        </button>
+      </div>
+    );
+  }
+
   const eventAddress = addressForPlace(event.place);
 
   return (
@@ -6613,6 +6737,8 @@ function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
                     ? "Vino"
                     : f.kind === "winery"
                     ? "Bodega"
+                    : f.kind === "event"
+                    ? "Evento"
                     : "Vinoteca"}
                 </div>
               </div>

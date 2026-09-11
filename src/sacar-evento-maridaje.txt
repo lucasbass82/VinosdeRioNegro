@@ -1,0 +1,37 @@
+INSTRUCCIONES PARA CLAUDE CODE - SACAR EL EVENTO "MARIDAJE EN LA VINOTECA"
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Cambio chico.
+
+============================================
+CAMBIO
+============================================
+Sacar el evento "Maridaje en la Vinoteca" (e3) de EVENTS por completo — que
+no aparezca ni en "Actividades destacadas" de Inicio ni en la tab Agenda.
+Quedan solo los 2 eventos activos: BALC 2026 y Noche de Vinos Patagónicos.
+
+Antes de aplicarlo, fijate si hay algún otro lugar del código que dependa
+de que EVENTS tenga 3 elementos (algún índice fijo, algún texto tipo "3
+eventos", algún filtro que asuma una cantidad mínima) y avisame si
+encontrás algo así antes de sacarlo.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar los otros 2 eventos (BALC 2026, Noche de Vinos Patagónicos).
+- No tocar Experiencias, Tienda, WINES, WINERIES_DATA.
+- No borrar ningún asset (las imágenes de Maridaje, si las hay, quedan sin
+  usar en el proyecto, no hace falta eliminarlas).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: "Actividades destacadas" en Inicio muestra solo los 2
+   eventos. La tab Agenda también muestra solo esos 2. "Ver todo"/"Ver
+   todas" de esa sección (si existe) no rompe con la lista más corta.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
