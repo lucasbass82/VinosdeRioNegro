@@ -78,6 +78,41 @@ import botonBalc2026Photo from "./assets/boton-balc2026.png";
 import fichaBalc2026Photo from "./assets/ficha-balc2026.png";
 import botonOlivasSaboresEventoPhoto from "./assets/boton-evento-olivasysabores.png";
 import fichaOlivasSaboresEventoPhoto from "./assets/ficha-evento-olivasysabores.png";
+import fichaAntiguaBodegaPatagonicaPhoto from "./assets/ficha-antigua-bodega-patagonica.jpeg";
+import fichaBodegaAgrestisPhoto from "./assets/ficha-bodega-agrestis.jpeg";
+import fichaBodegaDonAmaroPhoto from "./assets/ficha-bodega-amaro-don-amaro.jpeg";
+import fichaBodegaAonikenkPhoto from "./assets/ficha-bodega-aonikenk.jpeg";
+import fichaBodegaBonomiYBernalPhoto from "./assets/ficha-bodega-bonomi-y-bernal.jpeg";
+import fichaBodegaChacraPhoto from "./assets/ficha-bodega-chacra.jpeg";
+import fichaBodegaCostaPhoto from "./assets/ficha-bodega-costa.jpeg";
+import fichaDominioDeFerenezaPhoto from "./assets/ficha-bodega-dominio-de-fereneza.jpeg";
+import fichaBodegaFabreMontmayouPhoto from "./assets/ficha-bodega-fabre-montmayou.jpeg";
+import fichaBodegaFamiliaDellanzoPhoto from "./assets/ficha-bodega-familia-dellanzo.jpeg";
+import fichaBodegaFavrettoPhoto from "./assets/ficha-bodega-favretto.jpeg";
+import fichaBodegaFincaAnielloPhoto from "./assets/ficha-bodega-finca-anielo.jpeg";
+import fichaBodegaFlorDelPradoPhoto from "./assets/ficha-bodega-flor-del-prado.jpeg";
+import fichaBodegaGennariPhoto from "./assets/ficha-bodega-gennari.jpeg";
+import fichaBodegaGeromeMarteauPhoto from "./assets/ficha-bodega-gerome-marteau.jpeg";
+import fichaHumbertoCanalePhoto from "./assets/ficha-bodega-humberto-canale.jpeg";
+import fichaBodegaTronelliPhoto from "./assets/ficha-bodega-humberto-tronelli.jpeg";
+import fichaBodegaMirasPhoto from "./assets/ficha-bodega-miras.jpeg";
+import fichaBodegaNoemiaPhoto from "./assets/ficha-bodega-noemia.jpeg";
+import fichaBodegaPujantePhoto from "./assets/ficha-bodega-pujante.jpeg";
+import fichaTierraDelVientoPhoto from "./assets/ficha-bodega-tierra-del-viento.jpeg";
+import fichaBodegaTrinaPhoto from "./assets/ficha-bodega-trina.jpeg";
+import fichaBodegaWeinglasPhoto from "./assets/ficha-bodega-weinglas.jpeg";
+import fichaBodegaMoschiniPhoto from "./assets/ficha-bodega-y-viñedos-moschini.jpeg";
+import fichaBodegaSanSebastianPhoto from "./assets/ficha-bodega-y-viñedos-san-sebastian.jpeg";
+import fichaChacrasDeFigaroPhoto from "./assets/ficha-chacras-del-figaro.jpeg";
+import fichaEnclaveSurPhoto from "./assets/ficha-enclave-sur.jpeg";
+import fichaFamiliaDeBernardiPhoto from "./assets/ficha-familia-de-bernardi.jpeg";
+import fichaFamiliaHerreroPhoto from "./assets/ficha-familia-herrero.jpeg";
+import fichaFincaFraschettiBodegaPhoto from "./assets/ficha-finca-fraschetti.jpeg";
+import fichaRiberaDelCuarzoBodegaPhoto from "./assets/ficha-ribera-del-cuarzo.jpeg";
+import fichaBodegaVidelaDornaPhoto from "./assets/ficha-videla-dorna.jpeg";
+import fichaVinasDeLuciaPhoto from "./assets/ficha-viñas-de-lucia.jpeg";
+import fichaVinasDelLagoPhoto from "./assets/ficha-viñas-del-lago.jpeg";
+import fichaWapisaBodegaPhoto from "./assets/ficha-wapisa.jpeg";
 import vinopolitanPhoto from "./assets/vinopolitan.png";
 import piquillinPhoto from "./assets/piquillin.png";
 import rioTintoPhoto from "./assets/rio-tinto.png";
@@ -412,6 +447,7 @@ type Winery = {
   distance: string;
   image: string;
   address?: string;
+  addressCoordinates?: string;
 };
 
 type Shop = {
@@ -607,6 +643,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.8,
     distance: "245 km",
     image: bodegaMirasPhoto,
+    address: "Ruta Nacional 22, Km 1208, General Fernández Oro, Río Negro",
   },
   {
     id: "w2",
@@ -636,6 +673,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.7,
     distance: "248 km",
     image: bodegaAnielloPhoto,
+    address: "Ruta Nacional 22, Km 1208, Mainqué, Río Negro",
   },
  {
   id: "w2a",
@@ -714,6 +752,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.9,
     distance: "285 km",
     image: bodegaHumbertoCanalePhoto,
+    address: "Chacra 186, J.J. Gómez, General Roca, Río Negro",
   },
   {
     id: "w4",
@@ -743,6 +782,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.8,
     distance: "170 km",
     image: bodegaVideladDornaPhoto,
+    address: "Av. Sarmiento y Av. Champleaux, Sección Chacras, Luis Beltrán, Río Negro",
   },
   {
     id: "w5",
@@ -785,6 +825,7 @@ const WINERIES_DATA: Winery[] = [
   rating: 4.7,
   distance: "160 km",
   image: fincaFraschettiPhoto,
+  address: "Subida del Marqués y Ruta 40, El Bolsón, Río Negro",
 },
 {
   id: "w7",
@@ -964,6 +1005,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaCostaPhoto,
+  addressCoordinates: "-39.0988041, -67.5879104",
 },
 {
   id: "w15",
@@ -1108,7 +1150,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaHumbertoTronelliPhoto,
-  address: "Martín Miguel de Güemes 1614, General Roca (zona Stefenelli).",
+  address: "Martín Miguel de Güemes 1614, General Roca, Río Negro",
 },
 {
   id: "w22",
@@ -1193,6 +1235,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaTierraDelVientoPhoto,
+  addressCoordinates: "-38.7239065, -68.0674713",
 },
 {
   id: "w26",
@@ -1326,6 +1369,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaBonomiYBernalPhoto,
+  addressCoordinates: "-39.0460065, -67.3032938",
 },
 {
   id: "w32",
@@ -1405,6 +1449,45 @@ const WINERIES = [...WINERIES_DATA].sort((a, b) => {
   if (b.name === priority) return 1;
   return 0;
 });
+
+// Ficha nueva (jpeg a ancho completo) de cada una de las 35 bodegas, por id.
+const WINERY_FICHA_BY_ID: Record<string, string> = {
+  w1: fichaBodegaMirasPhoto,
+  w2: fichaBodegaFincaAnielloPhoto,
+  w2a: fichaAntiguaBodegaPatagonicaPhoto,
+  w3: fichaHumbertoCanalePhoto,
+  w4: fichaBodegaVidelaDornaPhoto,
+  w5: fichaWapisaBodegaPhoto,
+  w6: fichaFincaFraschettiBodegaPhoto,
+  w7: fichaVinasDeLuciaPhoto,
+  w8: fichaFamiliaHerreroPhoto,
+  w9: fichaBodegaDonAmaroPhoto,
+  w10: fichaEnclaveSurPhoto,
+  w11: fichaBodegaTrinaPhoto,
+  w12: fichaFamiliaDeBernardiPhoto,
+  w13: fichaRiberaDelCuarzoBodegaPhoto,
+  w14: fichaBodegaCostaPhoto,
+  w15: fichaChacrasDeFigaroPhoto,
+  w16: fichaBodegaFamiliaDellanzoPhoto,
+  w17: fichaBodegaSanSebastianPhoto,
+  w18: fichaBodegaGennariPhoto,
+  w19: fichaBodegaAonikenkPhoto,
+  w20: fichaBodegaAgrestisPhoto,
+  w21: fichaBodegaTronelliPhoto,
+  w22: fichaBodegaWeinglasPhoto,
+  w23: fichaBodegaFabreMontmayouPhoto,
+  w24: fichaVinasDelLagoPhoto,
+  w25: fichaTierraDelVientoPhoto,
+  w26: fichaBodegaMoschiniPhoto,
+  w27: fichaBodegaChacraPhoto,
+  w28: fichaBodegaNoemiaPhoto,
+  w29: fichaBodegaFavrettoPhoto,
+  w30: fichaBodegaFlorDelPradoPhoto,
+  w31: fichaBodegaBonomiYBernalPhoto,
+  w32: fichaBodegaPujantePhoto,
+  w33: fichaDominioDeFerenezaPhoto,
+  w34: fichaBodegaGeromeMarteauPhoto,
+};
 
 const WINES: Wine[] = [
   {
@@ -4310,24 +4393,6 @@ export default function App() {
   />
 )}
 
-         {detail?.kind === "winery" && detailView && (
-           <div
-             style={{
-               ...styles.homePhoto,
-               height: 210,
-               backgroundImage: `${DEFAULT_HEADER_GRADIENT}, url('${
-                 (detailView as Winery).image
-               }')`,
-             }}
-           >
-             <div style={styles.homePhotoTopRow}>
-               <button style={styles.glassButton} onClick={closeDetail}>
-                 <ArrowLeftIcon />
-               </button>
-             </div>
-           </div>
-         )}
-
          {detail?.kind === "event" &&
            detailView &&
            !FEATURED_EVENTS[(detailView as EventItem).id] && (
@@ -4372,7 +4437,7 @@ export default function App() {
      <div
   ref={scrollRef}
   style={
-    (!detail && tab in PHOTO_HEADER_CONFIG) || detail?.kind === "winery"
+    !detail && tab in PHOTO_HEADER_CONFIG
       ? styles.sheetSurface
       : styles.content
   }
@@ -4422,6 +4487,7 @@ export default function App() {
                     const found = SHOPS.find((s) => s.name === name);
                     if (found) openShop(found.id);
                   }}
+                  onBack={closeDetail}
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
                 />
@@ -7153,45 +7219,42 @@ function WineryDetail({
   winery,
   onOpenWine,
   onOpenShop,
+  onBack,
   toggleFavorite,
   isFavorite,
 }: {
   winery: Winery;
   onOpenWine: (name: string) => void;
   onOpenShop: (name: string) => void;
+  onBack: () => void;
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
 }) {
-  const winesRef = useRef<HTMLDivElement>(null);
-
-  const varietals = Array.from(
-    new Set(
-      winery.wines
-        .map((w) => WINES.find((x) => x.name === w)?.varietal)
-        .filter((v): v is string => hasRealVarietal(v))
-    )
-  );
-
-  const directionsQuery = winery.address
+  const directionsQuery = winery.addressCoordinates
+    ? winery.addressCoordinates
+    : winery.address
     ? `${winery.address}, ${winery.city}`
     : null;
 
-  const contactInfo = (
-    [
-      { label: "Dirección", value: winery.address },
-      { label: "Horario de atención", value: winery.hours },
-    ] as Array<{ label: string; value?: string }>
-  ).filter((item): item is { label: string; value: string } => Boolean(item.value));
+  const ficha = WINERY_FICHA_BY_ID[winery.id];
 
   return (
     <div style={styles.stack22}>
-      <div style={styles.gradientCard}>
-        <div style={styles.rowBetweenCenter}>
-          <Badge kind={winery.openNow ? "open" : "closed"}>
-            {winery.openNow ? "Abierta ahora" : "Cerrada ahora"}
-          </Badge>
+      <button style={styles.backButton} onClick={onBack}>
+        <ArrowLeftIcon /> Volver
+      </button>
+
+      {ficha && (
+        <div
+          style={{ marginLeft: -16, marginRight: -16, position: "relative" }}
+        >
+          <img
+            src={ficha}
+            alt={`Ficha de ${winery.name}`}
+            style={{ width: "100%", display: "block" }}
+          />
           <button
-            style={styles.iconGlassButton}
+            style={styles.shopCardHeartButton}
             onClick={() =>
               toggleFavorite({
                 id: winery.id,
@@ -7204,66 +7267,24 @@ function WineryDetail({
             <HeartIcon active={isFavorite(winery.id)} />
           </button>
         </div>
-
-        <div style={styles.locationGreeting}>{winery.name}</div>
-        <div style={styles.locationEyebrow}>
-          {winery.city} · {REGION_META[winery.region].title}
-        </div>
-        <div style={styles.locationBody}>{winery.description}</div>
-
-        {winery.benefit && (
-          <div style={{ marginTop: 10 }}>
-            <Badge kind="benefit">🎁 {winery.benefit}</Badge>
-          </div>
-        )}
-
-        <div style={styles.rowGap10Wrap}>
-          {directionsQuery && (
-            <button
-              style={{ ...styles.secondarySoftButton, flex: 1 }}
-              onClick={() => openInMaps(directionsQuery)}
-            >
-              Cómo llegar
-            </button>
-          )}
-          <button
-            style={{ ...styles.primaryButton, flex: 2 }}
-            onClick={() =>
-              winesRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              })
-            }
-          >
-            Ver vinos →
-          </button>
-        </div>
-      </div>
-
-      {contactInfo.length > 0 && (
-        <Block title="Dirección y horario">
-          <div style={styles.stack12}>
-            {contactInfo.map((item) => (
-              <InfoBox key={item.label} label={item.label} value={item.value} />
-            ))}
-          </div>
-        </Block>
       )}
 
-      {varietals.length > 0 && (
-        <Block title="Varietales">
-          <div style={styles.chipsRow}>
-            {varietals.map((v) => (
-              <span key={v} style={styles.chip}>
-                {v}
-              </span>
-            ))}
-          </div>
-        </Block>
-      )}
+      <button
+        style={{
+          ...styles.primaryButton,
+          width: "100%",
+          ...(directionsQuery
+            ? null
+            : { opacity: 0.5, cursor: "default" }),
+        }}
+        disabled={!directionsQuery}
+        onClick={() => directionsQuery && openInMaps(directionsQuery)}
+      >
+        Cómo llegar
+      </button>
 
-      <div ref={winesRef}>
-        <SectionTitle title="Vinos destacados" />
+      <div>
+        <SectionTitle title="Sus Vinos" />
         <div style={styles.wineCardGrid}>
           {winery.wines.map((w) => {
             const wineData = WINES.find((x) => x.name === w);

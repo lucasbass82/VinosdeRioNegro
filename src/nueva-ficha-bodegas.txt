@@ -1,0 +1,88 @@
+INSTRUCCIONES PARA CLAUDE CODE - NUEVA FICHA DE BODEGA (35 BODEGAS)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande (afecta las 35 bodegas), así que quiero ver
+bien el plan antes de que apliques nada.
+
+============================================
+PASO 0 — Investigar la estructura actual de WineryDetail
+============================================
+Antes de proponer nada, leé cómo está armada hoy la pantalla de ficha de
+bodega (WineryDetail o como se llame) y reportame en el plan, en orden, TAL
+CUAL están hoy, todas las secciones que tiene, con sus títulos exactos
+(por ejemplo: PhotoHeader con foto+nombre, tarjeta con descripción+
+dirección+horario, sección "Varietales" con qué contenido exactamente
+—¿chips de texto? ¿algo más?—, sección "Vinos destacados" con qué
+contenido —¿grilla de todos los vinos o solo algunos destacados?—, sección
+"Dónde conseguir sus vinos" con los chips de vinotecas). Necesito confirmar
+esto antes de decidir cómo fusionar/renombrar nada.
+
+============================================
+CAMBIO 1 — Los 35 archivos de ficha nueva
+============================================
+El usuario ya copió los 35 archivos ficha-*.jpeg directo a src/assets/
+(sin pasar por zip, así que los nombres con ñ/í ya llegan bien escritos,
+sin el problema de codificación que tenían en el zip anterior — no hace
+falta renombrar nada).
+
+Para los 35 archivos, armá la tabla de mapeo archivo → bodega real de
+WINERIES_DATA (son 35 y 35, debería ser 1 a 1) y mostrámela en el plan
+antes de aplicar nada. Si algún archivo no tiene una bodega que matchee
+con confianza, avisame ese caso puntual en vez de adivinar — no apliques
+ningún mapeo dudoso sin confirmarlo primero.
+
+============================================
+CAMBIO 2 — Reemplazar Header + tarjeta azul por la ficha nueva
+============================================
+Sacar el PhotoHeader (foto de fondo con flecha de volver superpuesta) y la
+tarjeta con descripción/dirección/horario que hay debajo — todo eso se
+reemplaza por la imagen ficha-*.jpeg correspondiente, a ancho completo,
+arriba de todo. Como la ficha nueva ya no tiene la flecha de volver
+superpuesta sobre una foto, agregá un botón de volver simple arriba de la
+imagen (mismo criterio que ya usamos para los eventos nuevos hace poco).
+
+Si WineryDetail tenía un corazón de favorito en el header viejo, hay que
+mantenerlo visible en algún lugar de esta pantalla nueva (mismo mecanismo
+de toggleFavorite/isFavorite que ya existe, no inventar uno).
+
+============================================
+CAMBIO 3 — Sección "Sus Vinos"
+============================================
+Fusionar lo que hoy son "Varietales" y "Vinos destacados" (según lo que
+confirmes en el Paso 0) en UNA sola sección con el título "Sus Vinos",
+mostrando TODOS los vinos de esa bodega en la grilla (no solo destacados,
+si es que hoy solo mostraba una selección parcial — confirmame esto en el
+plan antes de decidir). Si "Varietales" hoy es solo una lista de texto sin
+grilla de vinos, esa lista de texto se elimina (ya no hace falta, la
+imagen ficha nueva ya muestra los varietales).
+
+============================================
+CAMBIO 4 — Lo que NO cambia
+============================================
+"Dónde conseguir sus vinos" y los chips de vinotecas quedan exactamente
+como están hoy, sin tocar — van justo debajo de "Sus Vinos".
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar WineDetail, EventDetailScreen, Experiencias, Tienda, Inicio.
+- No tocar WINES ni WINERIES_DATA (excepto lectura).
+- No tocar el carrito/checkout.
+- No aplicar ningún mapeo de archivo→bodega que no estés seguro, avisame
+  primero.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: abrir la ficha de al menos 4-5 bodegas de zonas distintas
+   (por ejemplo Antigua Bodega Patagónica, Familia De Bernardi, Wapisa,
+   Videla Dorna, Ribera del Cuarzo) y confirmar: imagen ficha nueva de
+   punta a punta arriba, botón volver funciona, favorito funciona, "Sus
+   Vinos" muestra todos los vinos de esa bodega en grilla, "Dónde
+   conseguir sus vinos" intacto debajo.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

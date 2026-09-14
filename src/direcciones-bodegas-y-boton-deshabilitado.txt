@@ -1,0 +1,79 @@
+INSTRUCCIONES PARA CLAUDE CODE - DIRECCIONES REALES + BOTÓN "CÓMO LLEGAR" DESHABILITADO SI NO HAY DATO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO — cambio de criterio
+============================================
+En el prompt anterior (ocultar-como-llegar-sin-direccion.txt) el criterio
+era ocultar el botón "Cómo llegar" por completo si la bodega no tenía
+dirección real. Ese criterio CAMBIA: ahora el botón se muestra SIEMPRE, en
+las 35 bodegas, pero si la bodega no tiene una dirección real cargada, el
+botón se ve pero queda deshabilitado (no hace nada al tocarlo — sin
+navegar a Maps, sin acción). Visualmente marcalo como deshabilitado (opacado
+o con el estilo que ya uses en la app para botones inactivos, si existe
+alguno; si no, bajale la opacidad y sacale el cursor pointer).
+
+============================================
+CAMBIO 1 — Cargar las direcciones reales que se consiguieron
+============================================
+Actualizá el campo de dirección en WINERIES_DATA para estas bodegas (si el
+campo no existe todavía para alguna, creálo; buscá cada bodega por nombre
+para confirmar el match antes de aplicar, avisame si alguna no coincide
+con confianza):
+
+- Bodega Miras → Ruta Nacional 22, Km 1208, General Fernández Oro, Río Negro
+- Bodega Finca Aniello → Ruta Nacional 22, Km 1208, Mainqué, Río Negro
+- Humberto Canale → Chacra 186, J.J. Gómez, General Roca, Río Negro
+- Bodega Videla Dorna → Av. Sarmiento y Av. Champleaux, Sección Chacras, Luis Beltrán, Río Negro
+- Finca Fraschetti → Subida del Marqués y Ruta 40, El Bolsón, Río Negro
+- Bodega Costa → coordenadas -39.0988041, -67.5879104 (no hay dirección de calle, usar directamente estas coordenadas para armar el link de Maps)
+- Tierra del Viento → coordenadas -38.7239065, -68.0674713 (ídem, usar coordenadas)
+- Bonomi y Bernal → coordenadas -39.0460065, -67.3032938 (ídem, usar coordenadas)
+- Bodega Humberto Tronelli → Martín Miguel de Güemes 1614, General Roca, Río Negro
+- Antigua Bodega Patagónica → coordenadas -39.0468724, -67.4942948 (usar coordenadas)
+- Wapisa → coordenadas -40.7660462, -63.3579418 (usar coordenadas)
+- Enclave Sur → coordenadas -39.3063868, -65.6706568 (usar coordenadas)
+
+Para las bodegas con coordenadas en vez de dirección de texto, el link de
+"Cómo llegar" debe armarse con las coordenadas directamente (por ejemplo
+https://www.google.com/maps/search/?api=1&query=-39.0988041,-67.5879104),
+no con un texto de dirección armado a mano.
+
+============================================
+CAMBIO 2 — Estas quedan SIN dirección (botón deshabilitado)
+============================================
+Estas bodegas no tienen dirección real disponible — el botón "Cómo llegar"
+se muestra pero deshabilitado, tal como se explica en el Cambio 2 general:
+
+- Antigua Bodega Patagónica
+- Wapisa
+- Enclave Sur
+- Familia Herrero
+- Chacras del Fígaro
+- Bodega Weinglas
+- Dominio de Fereneza
+- Bodega Gérôme Marteau
+
+============================================
+QUÉ NO HACER
+============================================
+- No inventar ninguna dirección para las 8 bodegas del Cambio 2.
+- No tocar ningún otro botón ni sección de la ficha de bodega.
+- No tocar WineDetail, Eventos, Experiencias, Tienda, Inicio.
+- No tocar WINES.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: abrir la ficha de una bodega con dirección nueva (ej. Bodega
+   Miras) → botón "Cómo llegar" funciona y abre Maps en el lugar correcto.
+   Abrir una de las 8 sin dirección (ej. Antigua Bodega Patagónica) → el
+   botón se ve pero deshabilitado, no hace nada al tocarlo.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
