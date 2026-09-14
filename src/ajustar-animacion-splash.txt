@@ -1,0 +1,52 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTAR LA ANIMACIÓN DEL SPLASH
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Cambio chico, 2 ajustes puntuales.
+
+============================================
+PROBLEMA ENCONTRADO
+============================================
+Al probarlo en el navegador, el destello (shimmer) se repite 3 veces en
+vez de pasar una sola vez. Revisá el @keyframes y la propiedad
+animation-iteration-count (o animation-fill-mode) de esa capa — lo más
+probable es que le falte animation-iteration-count: 1 explícito, o que el
+keyframe tenga un patrón que se repite dentro de la misma animación en vez
+de una sola pasada limpia.
+
+============================================
+CAMBIO 1 — El destello, una sola vez
+============================================
+Arreglar la capa de brillo para que cruce el logo UNA sola vez y quede
+así, sin repetirse.
+
+============================================
+CAMBIO 2 — Entrada más lenta
+============================================
+La animación de entrada (fade + escala con rebote) hoy dura ~800ms —
+alargala a algo como 1300-1500ms, para que se sienta más pausada y menos
+brusca. Ajustá el delay del destello para que siga arrancando recién
+cuando la entrada termina de asentarse del todo (no antes), y corré el
+resto de la secuencia (delay de la respiración) en cadena para que siga
+teniendo sentido con el nuevo timing.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar el timing del splash completo (los 3400/3800ms para pasar a
+  Inicio) salvo que el nuevo timing de la animación no llegue a completarse
+  en esa ventana — en ese caso, avisame antes de decidir si alargamos
+  también el splash completo o si ajustamos la animación para que entre
+  bien en el tiempo que ya hay.
+- No tocar ninguna otra pantalla ni lógica.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: recargar varias veces y confirmar que el destello pasa
+   exactamente una vez, y que la entrada se siente más pausada.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

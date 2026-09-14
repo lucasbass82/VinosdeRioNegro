@@ -9256,12 +9256,12 @@ wineVisualTag: {
     overflow: "hidden",
   },
   splashLogoEntranceWrap: {
-    animation: "splashLogoEntrance 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
+    animation: "splashLogoEntrance 1400ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
   },
   splashLogoBreatheWrap: {
     position: "relative",
     width: "min(72vw, 300px)",
-    animation: "splashBreathe 2.8s ease-in-out 1800ms infinite",
+    animation: "splashBreathe 2.8s ease-in-out 2400ms infinite",
   },
   splashShimmerOverlay: {
     position: "absolute",
@@ -9270,7 +9270,8 @@ wineVisualTag: {
       "linear-gradient(115deg, transparent 42%, rgba(255,255,255,0.65) 50%, transparent 58%)",
     backgroundSize: "300% 100%",
     backgroundPosition: "-120% 0",
-    animation: "splashShimmer 1000ms ease-in-out 800ms 1",
+    backgroundRepeat: "no-repeat",
+    animation: "splashShimmer 1000ms ease-in-out 1400ms 1",
     pointerEvents: "none",
   },
   splashLogo: {
