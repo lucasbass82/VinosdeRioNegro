@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import logoIcon from "./assets/logo-icon.png";
+import logoAppPhoto from "./assets/logo-app.jpeg";
 import logoRegionAltoValle from "./assets/logo-region-alto-valle.png";
 import logoRegionValleMedio from "./assets/logo-region-valle-medio.png";
 import logoRegionCordillera from "./assets/logo-region-cordillera.png";
@@ -4156,15 +4156,19 @@ function GlobalStyles() {
         font-family: "Inter", sans-serif;
       }
 
-      @keyframes splashLogoIn {
-        0% { opacity: 0; transform: scale(0.85); }
-        55% { opacity: 1; transform: scale(0.85); }
+      @keyframes splashLogoEntrance {
+        0% { opacity: 0; transform: scale(0.88); }
         100% { opacity: 1; transform: scale(1); }
       }
 
-      @keyframes splashTextIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
+      @keyframes splashShimmer {
+        0% { background-position: -120% 0; }
+        100% { background-position: 220% 0; }
+      }
+
+      @keyframes splashBreathe {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.015); }
       }
 
       ::-webkit-scrollbar {
@@ -4356,14 +4360,16 @@ export default function App() {
             transition: "opacity 0.4s ease",
           }}
         >
-          <div style={styles.splashLogoCircle}>
-            <img
-              src={logoIcon}
-              alt="Vinos de Río Negro"
-              style={styles.splashLogo}
-            />
+          <div style={styles.splashLogoEntranceWrap}>
+            <div style={styles.splashLogoBreatheWrap}>
+              <img
+                src={logoAppPhoto}
+                alt="Vinos Río Negro — De la Cordillera al Mar"
+                style={styles.splashLogo}
+              />
+              <div style={styles.splashShimmerOverlay} />
+            </div>
           </div>
-          <div style={styles.splashText}>Vinos de Río Negro</div>
         </div>
       </>
     );
@@ -9241,7 +9247,7 @@ wineVisualTag: {
   splashPage: {
     height: "100vh",
     width: "100%",
-    background: `linear-gradient(135deg, ${theme.text} 0%, ${theme.river} 100%)`,
+    background: `radial-gradient(circle at 50% 45%, #ffffff 0%, ${theme.cream} 65%)`,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -9249,27 +9255,27 @@ wineVisualTag: {
     position: "relative",
     overflow: "hidden",
   },
-  splashLogoCircle: {
-    width: 120,
-    height: 120,
-    borderRadius: "50%",
-    overflow: "hidden",
-    background: "#fff",
-    animation: "splashLogoIn 1.4s ease-out",
+  splashLogoEntranceWrap: {
+    animation: "splashLogoEntrance 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
   },
-  splashText: {
-    marginTop: 18,
-    fontFamily: '"Lora", serif',
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: 600,
-    textAlign: "center",
-    opacity: 0,
-    animation: "splashTextIn 1s ease-out 0.6s forwards",
+  splashLogoBreatheWrap: {
+    position: "relative",
+    width: "min(72vw, 300px)",
+    animation: "splashBreathe 2.8s ease-in-out 1800ms infinite",
+  },
+  splashShimmerOverlay: {
+    position: "absolute",
+    inset: 0,
+    background:
+      "linear-gradient(115deg, transparent 42%, rgba(255,255,255,0.65) 50%, transparent 58%)",
+    backgroundSize: "300% 100%",
+    backgroundPosition: "-120% 0",
+    animation: "splashShimmer 1000ms ease-in-out 800ms 1",
+    pointerEvents: "none",
   },
   splashLogo: {
     width: "100%",
-    height: "100%",
-    objectFit: "cover",
+    height: "auto",
+    display: "block",
   },
 };

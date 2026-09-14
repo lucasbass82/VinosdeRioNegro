@@ -1,0 +1,74 @@
+INSTRUCCIONES PARA CLAUDE CODE - NUEVO LOGO Y ANIMACIÓN EN LA PANTALLA DE CARGA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+El usuario agregó src/assets/logo-app.jpeg — el logo nuevo "VINOS RÍO
+NEGRO / DE LA CORDILLERA AL MAR" (una copa de vino armada con los
+paisajes de las 5 zonas: montaña, viñedo, desierto, agua). Es UNA sola
+imagen completa (no hay capas separadas — se decidió a propósito así para
+no arriesgar que algo se vea desalineado en la pantalla más importante de
+la app).
+
+Este logo reemplaza al logo azul actual de la pantalla de carga (splash
+screen / loading screen inicial de la app), y el fondo azul actual también
+se reemplaza.
+
+============================================
+CAMBIO 1 — Fondo
+============================================
+El fondo de la pantalla de carga pasa a ser el mismo crema/marfil que ya
+usa el resto de la app (buscá el color exacto que ya se usa en el resto
+del diseño, no inventes uno nuevo). Sumale un degradé radial muy sutil
+detrás de donde va el logo (mismo tono, apenas una variación de luminosidad
+hacia el centro) — nada de colores fuertes ni contrastantes.
+
+============================================
+CAMBIO 2 — Logo + animación
+============================================
+Mostrar src/assets/logo-app.jpeg centrado, con esta secuencia de animación
+(las 4 partes, en orden):
+
+1. Entrada: el logo aparece con fade-in (opacity 0→1) + escala (de 88% a
+   100%), con un easing tipo "ease-out-back" (rebote suave al final, no
+   lineal) — duración aproximada 700-900ms.
+
+2. Brillo (shimmer): inmediatamente después de que el logo se asienta, una
+   franja de luz diagonal muy sutil (un gradiente lineal claro, semi-
+   transparente) cruza una sola vez sobre el logo, de una punta a la otra
+   — duración aproximada 900ms-1.1s, se ejecuta UNA sola vez (no en loop).
+
+3. Respiración: mientras la pantalla de carga sigue visible (después del
+   shimmer), el logo entra en una pulsación de escala muy sutil y continua
+   (algo como 100%→101.5%→100%), lenta (ciclo de 2.5-3s), para que no se
+   sienta estático mientras se espera. Esta si es en loop, hasta que la
+   pantalla de carga desaparece.
+
+Todo esto con CSS (keyframes/transiciones), sin librerías de animación
+externas — es una sola imagen, no hace falta nada más sofisticado.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ninguna otra pantalla de la app.
+- No tocar WINES, WINERIES_DATA, Experiencias, Tienda, Inicio.
+- No perder el timing/lógica que ya tenga la pantalla de carga para
+  decidir cuándo desaparece y pasar a Inicio (si hoy espera X segundos o
+  espera a que cargue algo, mantené esa lógica, solo cambiá lo visual).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: recargar la app y ver la secuencia completa — fade+escala
+   con rebote, el brillo cruzando una vez, y la respiración sutil en loop
+   mientras se mantiene la pantalla de carga. Fondo crema con el degradé
+   sutil, sin el azul viejo.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
