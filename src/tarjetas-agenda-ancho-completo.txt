@@ -1,0 +1,49 @@
+INSTRUCCIONES PARA CLAUDE CODE - TARJETAS DE AGENDA A ANCHO COMPLETO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Cambio chico.
+
+============================================
+CONTEXTO
+============================================
+En los carruseles nuevos de Agenda ("Eventos Cerca Tuyo" y "Todos los
+eventos"), las tarjetas no están ocupando el ancho completo de la
+pantalla — se ven más chicas de lo que deberían.
+
+============================================
+CAMBIO
+============================================
+Aplicá a estos 2 carruseles el mismo criterio "a sangre" (casi ancho
+completo) que ya usamos para las tarjetas de vino de Inicio
+(wineCardScroller/wineCardButton: marginLeft/marginRight: -16 en el
+contenedor, flex "0 0 98%" + gap: 0 en la tarjeta) — mismo mecanismo,
+adaptado al componente compartido que ya armaste para estas tarjetas de
+evento.
+
+Si ya existe styles.horizontalScroller genérico compartido con otras
+partes de la app que NO deban cambiar de tamaño, no lo edites directamente
+— creá o reusá un estilo específico para este carrusel de eventos, como ya
+se hizo para wineCardScroller, para no afectar otros lugares que usen el
+mismo estilo base.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar el tamaño de las tarjetas de vino de Inicio (ya están bien).
+- No tocar "Actividades destacadas" de Inicio si usa un estilo distinto
+  que no corresponda tocar.
+- No tocar WINES, WINERIES_DATA, Experiencias, Tienda.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: Agenda → las tarjetas de "Eventos Cerca Tuyo" y "Todos los
+   eventos" ocupan el ancho completo de la pantalla (mismo criterio visual
+   que las tarjetas de vino de Inicio). Scroll horizontal sigue
+   funcionando.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

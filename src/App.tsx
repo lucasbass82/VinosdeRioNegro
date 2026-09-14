@@ -5786,23 +5786,29 @@ function EventCarouselCard({
   onOpen,
   isFavorite,
   toggleFavorite,
+  variant = "compact",
 }: {
   event: EventItem;
   onOpen: () => void;
   isFavorite: (id: string) => boolean;
   toggleFavorite: (item: FavoriteItem) => void;
+  variant?: "compact" | "full";
 }) {
   const featured = FEATURED_EVENTS[event.id];
   if (featured) {
     return (
       <div
-        style={{
-          ...styles.horizontalCard,
-          width: 245,
-          flexShrink: 0,
-          position: "relative",
-          cursor: "pointer",
-        }}
+        style={
+          variant === "full"
+            ? styles.eventCardFull
+            : {
+                ...styles.horizontalCard,
+                width: 245,
+                flexShrink: 0,
+                position: "relative",
+                cursor: "pointer",
+              }
+        }
         onClick={onOpen}
       >
         <img
@@ -5828,11 +5834,11 @@ function EventCarouselCard({
   }
   return (
     <div
-      style={{
-        ...styles.card,
-        ...styles.horizontalCard,
-        cursor: "pointer",
-      }}
+      style={
+        variant === "full"
+          ? { ...styles.card, ...styles.eventCardFull }
+          : { ...styles.card, ...styles.horizontalCard, cursor: "pointer" }
+      }
       onClick={onOpen}
     >
       <div style={styles.rowGap12}>
@@ -6686,7 +6692,7 @@ function AgendaScreen({
               </div>
             </div>
           ) : (
-            <div style={styles.horizontalScroller}>
+            <div style={styles.eventCardFullScroller}>
               {shownEvents.map((e) => (
                 <EventCarouselCard
                   key={e.id}
@@ -6694,6 +6700,7 @@ function AgendaScreen({
                   onOpen={() => openThisEvent(e)}
                   isFavorite={isFavorite}
                   toggleFavorite={toggleFavorite}
+                  variant="full"
                 />
               ))}
             </div>
@@ -6701,7 +6708,7 @@ function AgendaScreen({
 
           <SectionTitle title="Todos los eventos" />
 
-          <div style={styles.horizontalScroller}>
+          <div style={styles.eventCardFullScroller}>
             {allEventsSection.map((e) => (
               <EventCarouselCard
                 key={e.id}
@@ -6709,6 +6716,7 @@ function AgendaScreen({
                 onOpen={() => openThisEvent(e)}
                 isFavorite={isFavorite}
                 toggleFavorite={toggleFavorite}
+                variant="full"
               />
             ))}
           </div>
@@ -8061,6 +8069,25 @@ const styles: Record<string, React.CSSProperties> = {
   horizontalImageCard: {
     minWidth: 285,
     scrollSnapAlign: "start",
+  },
+  // Carrusel a sangre para EventCarouselCard con variant="full" (carruseles
+  // de Agenda) — mismo mecanismo que wineCardScroller/wineCardButton, pero
+  // aparte para no afectar horizontalScroller/horizontalCard, que comparten
+  // Bodegas recomendadas, Tienda y "Actividades destacadas" de Inicio.
+  eventCardFullScroller: {
+    display: "flex",
+    gap: 0,
+    overflowX: "auto",
+    paddingBottom: 10,
+    marginLeft: -16,
+    marginRight: -16,
+    scrollSnapType: "x proximity",
+  },
+  eventCardFull: {
+    flex: "0 0 98%",
+    scrollSnapAlign: "start",
+    position: "relative",
+    cursor: "pointer",
   },
   // Carrusel horizontal de las tarjetas grandes de vino en Inicio. Tarjetas
   // casi a ancho completo (a sangre): ancho 98% + gap 0 → asoma ~2% (~8px) de
