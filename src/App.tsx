@@ -78,6 +78,8 @@ import botonBalc2026Photo from "./assets/boton-balc2026.png";
 import fichaBalc2026Photo from "./assets/ficha-balc2026.png";
 import botonOlivasSaboresEventoPhoto from "./assets/boton-evento-olivasysabores.png";
 import fichaOlivasSaboresEventoPhoto from "./assets/ficha-evento-olivasysabores.png";
+import tarjetaCataMalbecVinopolitanPhoto from "./assets/tarjeta-cata-de-malbec-vinopolitan.png";
+import fichaCataMalbecVinopolitanPhoto from "./assets/ficha-cata-de-malbec-vinopolitan.png";
 import fichaAntiguaBodegaPatagonicaPhoto from "./assets/ficha-antigua-bodega-patagonica.jpeg";
 import fichaBodegaAgrestisPhoto from "./assets/ficha-bodega-agrestis.jpeg";
 import fichaBodegaDonAmaroPhoto from "./assets/ficha-bodega-amaro-don-amaro.jpeg";
@@ -3917,7 +3919,7 @@ const SHOPS: Shop[] = [
 const EVENTS: EventItem[] = [
   {
     id: "e1",
-    title: "Cata de Malbecs Rionegrinos",
+    title: "BALC 2026",
     organizer: "Antigua Bodega Patagónica",
     place: "Vinoteca Olivas y Sabores",
     when: "Hoy · 19:00",
@@ -3927,7 +3929,7 @@ const EVENTS: EventItem[] = [
   },
   {
     id: "e2",
-    title: "Noche de Vinos Patagónicos",
+    title: "Experiencia Ruta del Vino Pinot Noir",
     organizer: "Antigua Bodega Patagónica",
     place: "Vinoteca Olivas y Sabores",
     when: "Sábado · 20:30",
@@ -3935,7 +3937,20 @@ const EVENTS: EventItem[] = [
     benefit: "10% OFF socios",
     timeframe: "finde",
   },
+  {
+    id: "e3",
+    title: "Cata de Malbecs del Alto Valle",
+    place: "Vinopolitan",
+    when: "Hoy · 20:00",
+    city: "Viedma",
+    benefit: "1 copa de regalo",
+    timeframe: "hoy",
+  },
 ];
+
+// Eventos que viven de forma permanente en "Todos los eventos" (Agenda) en
+// vez de en el carrusel filtrado por chip de fecha.
+const AGENDA_ALL_EVENTS_IDS = ["e1"];
 
 // ---- Helpers de auditoría (I4–I11) ----
 
@@ -3982,6 +3997,17 @@ const FEATURED_EVENTS: Record<string, FeaturedEventConfig> = {
       const address = addressForPlace(event.place);
       if (address) openInMaps(address);
     },
+  },
+  e3: {
+    boton: tarjetaCataMalbecVinopolitanPhoto,
+    ficha: fichaCataMalbecVinopolitanPhoto,
+    buttonLabel: "Quiero más info",
+    onButtonClick: () =>
+      window.open(
+        "https://www.google.com/maps/search/?api=1&query=-40.8191635,-62.9852614",
+        "_blank",
+        "noopener"
+      ),
   },
 };
 
@@ -5751,6 +5777,83 @@ function HomeWineCarousel({
   );
 }
 
+// Tarjeta de un evento dentro de un carrusel horizontal: si el evento tiene
+// ficha propia en FEATURED_EVENTS, muestra su imagen "boton" con el corazón
+// de favorito superpuesto; si no, la tarjeta de texto genérica de siempre.
+// La usan "Actividades destacadas" (Inicio) y los carruseles de Agenda.
+function EventCarouselCard({
+  event,
+  onOpen,
+  isFavorite,
+  toggleFavorite,
+}: {
+  event: EventItem;
+  onOpen: () => void;
+  isFavorite: (id: string) => boolean;
+  toggleFavorite: (item: FavoriteItem) => void;
+}) {
+  const featured = FEATURED_EVENTS[event.id];
+  if (featured) {
+    return (
+      <div
+        style={{
+          ...styles.horizontalCard,
+          width: 245,
+          flexShrink: 0,
+          position: "relative",
+          cursor: "pointer",
+        }}
+        onClick={onOpen}
+      >
+        <img
+          src={featured.boton}
+          alt={event.title}
+          style={{
+            width: "100%",
+            display: "block",
+            borderRadius: 28,
+          }}
+        />
+        <button
+          style={styles.shopCardHeartButton}
+          onClick={(ev) => {
+            ev.stopPropagation();
+            toggleFavorite({ id: event.id, name: event.title, kind: "event" });
+          }}
+        >
+          <HeartIcon active={isFavorite(event.id)} />
+        </button>
+      </div>
+    );
+  }
+  return (
+    <div
+      style={{
+        ...styles.card,
+        ...styles.horizontalCard,
+        cursor: "pointer",
+      }}
+      onClick={onOpen}
+    >
+      <div style={styles.rowGap12}>
+        <div style={styles.iconBadgeWine}>
+          <SparklesIcon white />
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={styles.itemTitle}>{event.title}</div>
+          <div style={styles.itemSub}>
+            {event.place} · {event.city}
+          </div>
+          <div style={styles.itemMeta}>{event.when}</div>
+          <div style={{ marginTop: 10 }}>
+            <Badge kind="benefit">{event.benefit}</Badge>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function HomeScreen({
   onOpenWinery,
   onOpenEvent,
@@ -5811,70 +5914,15 @@ function HomeScreen({
       />
 
       <div style={styles.horizontalScroller}>
-        {EVENTS.map((e) => {
-          const featured = FEATURED_EVENTS[e.id];
-          if (featured) {
-            return (
-              <div
-                key={e.id}
-                style={{
-                  ...styles.horizontalCard,
-                  width: 245,
-                  flexShrink: 0,
-                  position: "relative",
-                  cursor: "pointer",
-                }}
-                onClick={() => onOpenEvent(e.id)}
-              >
-                <img
-                  src={featured.boton}
-                  alt={e.title}
-                  style={{
-                    width: "100%",
-                    display: "block",
-                    borderRadius: 28,
-                  }}
-                />
-                <button
-                  style={styles.shopCardHeartButton}
-                  onClick={(ev) => {
-                    ev.stopPropagation();
-                    toggleFavorite({ id: e.id, name: e.title, kind: "event" });
-                  }}
-                >
-                  <HeartIcon active={favorites.some((f) => f.id === e.id)} />
-                </button>
-              </div>
-            );
-          }
-          return (
-            <div
-              key={e.id}
-              style={{
-                ...styles.card,
-                ...styles.horizontalCard,
-                cursor: "pointer",
-              }}
-              onClick={() => onOpenEvent(e.id)}
-            >
-              <div style={styles.rowGap12}>
-                <div style={styles.iconBadgeWine}>
-                  <SparklesIcon white />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={styles.itemTitle}>{e.title}</div>
-                  <div style={styles.itemSub}>
-                    {e.place} · {e.city}
-                  </div>
-                  <div style={styles.itemMeta}>{e.when}</div>
-                  <div style={{ marginTop: 10 }}>
-                    <Badge kind="benefit">{e.benefit}</Badge>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {EVENTS.map((e) => (
+          <EventCarouselCard
+            key={e.id}
+            event={e}
+            onOpen={() => onOpenEvent(e.id)}
+            isFavorite={(id) => favorites.some((f) => f.id === id)}
+            toggleFavorite={toggleFavorite}
+          />
+        ))}
       </div>
 
       <SectionTitle
@@ -6533,9 +6581,6 @@ const AGENDA_FILTERS: Array<{ key: EventTimeframe; label: string }> = [
   { key: "finde", label: "Este finde" },
 ];
 
-const timeframeLabel = (tf: EventTimeframe) =>
-  AGENDA_FILTERS.find((f) => f.key === tf)?.label ?? "";
-
 function AgendaScreen({
   onMenuClick,
   onProfile,
@@ -6553,11 +6598,20 @@ function AgendaScreen({
 }) {
   const [filter, setFilter] = useState<EventTimeframe>("hoy");
   const [openEvent, setOpenEvent] = useState<EventItem | null>(null);
-  const shownEvents = EVENTS.filter((e) => e.timeframe === filter);
-  const nextEvent = shownEvents[0];
+  const shownEvents = EVENTS.filter(
+    (e) => e.timeframe === filter && !AGENDA_ALL_EVENTS_IDS.includes(e.id)
+  );
+  const allEventsSection = EVENTS.filter((e) =>
+    AGENDA_ALL_EVENTS_IDS.includes(e.id)
+  );
 
   const agendaScrollRef = useRef<HTMLDivElement>(null);
   const listScrollPos = useRef(0);
+
+  const openThisEvent = (e: EventItem) => {
+    listScrollPos.current = agendaScrollRef.current?.scrollTop ?? 0;
+    setOpenEvent(e);
+  };
 
   useLayoutEffect(() => {
     const el = agendaScrollRef.current;
@@ -6610,22 +6664,7 @@ function AgendaScreen({
             </button>
           )}
 
-          <div style={styles.gradientCard}>
-            <div style={styles.locationStatusRow}>
-              <span style={styles.locationDot} />
-              <span style={styles.locationEyebrow}>Hoy en Río Negro</span>
-            </div>
-            <div style={styles.locationGreeting}>
-              {shownEvents.length === 1
-                ? "1 evento cerca tuyo"
-                : `${shownEvents.length} eventos cerca tuyo`}
-            </div>
-            {nextEvent && (
-              <div style={styles.locationBody}>
-                {nextEvent.title} · {nextEvent.place} · {nextEvent.when}
-              </div>
-            )}
-          </div>
+          <SectionTitle title="Eventos Cerca Tuyo" />
 
           <div style={styles.rowGap10Wrap}>
             {AGENDA_FILTERS.map((f) => (
@@ -6647,37 +6686,32 @@ function AgendaScreen({
               </div>
             </div>
           ) : (
-            shownEvents.map((e) => (
-              <div key={e.id} style={styles.card}>
-                <div style={styles.rowBetweenTop}>
-                  <div>
-                    <div style={styles.itemTitle}>{e.title}</div>
-                    <div style={styles.itemSub}>
-                      {e.organizer ? `${e.organizer} · ` : ""}
-                      {e.place} · {e.city}
-                    </div>
-                  </div>
-                  <Badge kind="neutral">{timeframeLabel(e.timeframe)}</Badge>
-                </div>
-
-                <div style={styles.grid2}>
-                  <InfoBox label="Horario" value={e.when} />
-                  <InfoBox label="Beneficio" value={e.benefit} />
-                </div>
-
-                <button
-                  style={styles.primaryButton}
-                  onClick={() => {
-                    listScrollPos.current =
-                      agendaScrollRef.current?.scrollTop ?? 0;
-                    setOpenEvent(e);
-                  }}
-                >
-                  Ver actividad
-                </button>
-              </div>
-            ))
+            <div style={styles.horizontalScroller}>
+              {shownEvents.map((e) => (
+                <EventCarouselCard
+                  key={e.id}
+                  event={e}
+                  onOpen={() => openThisEvent(e)}
+                  isFavorite={isFavorite}
+                  toggleFavorite={toggleFavorite}
+                />
+              ))}
+            </div>
           )}
+
+          <SectionTitle title="Todos los eventos" />
+
+          <div style={styles.horizontalScroller}>
+            {allEventsSection.map((e) => (
+              <EventCarouselCard
+                key={e.id}
+                event={e}
+                onOpen={() => openThisEvent(e)}
+                isFavorite={isFavorite}
+                toggleFavorite={toggleFavorite}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </>

@@ -1,0 +1,118 @@
+INSTRUCCIONES PARA CLAUDE CODE - REESTRUCTURAR LA PANTALLA AGENDA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande, con varias partes — quiero ver el plan
+completo antes de que apliques nada.
+
+============================================
+PASO 0 — Investigar antes de tocar nada
+============================================
+Reportame en el plan, tal cual están hoy:
+- La estructura completa de EVENTS (todos los campos de cada evento: id,
+  título, fecha/categoría de filtro, lugar, etc.)
+- La estructura de FEATURED_EVENTS (el mapa que ya armamos para BALC 2026
+  y Olivas y Sabores/Noche de Vinos Patagónicos)
+- Cómo está armada hoy AgendaScreen: la tarjeta azul de arriba con qué
+  contenido exacto, los chips (Ahora/Hoy/Este finde) y cómo filtran, y
+  cómo se renderiza cada evento en la lista actual.
+- Confirmame los ids/títulos exactos de "Cata de Malbecs Rionegrinos" y de
+  "Noche de Vinos Patagónicos" en EVENTS antes de tocar cualquiera de los
+  dos.
+
+============================================
+CAMBIO 1 — Sacar la tarjeta azul de arriba
+============================================
+Eliminar por completo la tarjeta azul con descripción que hoy está arriba
+de todo en Agenda.
+
+============================================
+CAMBIO 2 — Nueva estructura de la pantalla
+============================================
+En este orden:
+
+1. Título "Eventos Cerca Tuyo".
+2. Los chips que ya existen (Ahora / Hoy / Este finde), sin tocar su
+   mecánica de filtrado.
+3. Debajo de los chips, las tarjetas de los eventos filtrados — en un
+   carrusel horizontal de izquierda a derecha, MISMO estilo/mecanismo que
+   ya usamos en "Actividades destacadas" de Inicio (mismo tipo de scroll).
+4. Después de esas tarjetas, título "Todos los eventos".
+5. Debajo, la tarjeta de BALC 2026 (con el mismo estilo tarjeta+ficha que
+   ya tiene) — es el único evento que va en esta sección por ahora.
+
+El chip "Ahora" sigue mostrando su estado vacío actual ("Sin actividades
+para este momento, probá con otro filtro") — no lo toques.
+
+============================================
+CAMBIO 3 — Borrar "Cata de Malbecs Rionegrinos"
+============================================
+Eliminar por completo este evento de EVENTS (y de cualquier otro lugar que
+lo referencie) — tarjeta, ficha, toda su data. No hace falta borrar los
+archivos de imagen viejos del proyecto, solo que dejen de usarse.
+
+============================================
+CAMBIO 4 — Nuevo evento: Cata de Malbecs del Alto Valle
+============================================
+El usuario agregó a src/assets/:
+- tarjeta-cata-de-malbec-vinopolitan.png
+- ficha-cata-de-malbec-vinopolitan.png
+
+Datos reales del evento (el título real es este, no el nombre del
+archivo — el archivo lleva "vinopolitan" porque ese es el LUGAR, no el
+nombre del evento):
+- Título: "Cata de Malbecs del Alto Valle"
+- Lugar: Vinopolitan, Viedma, Río Negro
+- Fecha/categoría de filtro: HOY (debe aparecer bajo el chip "Hoy")
+- Tipo de evento: Cata y gastronomía
+
+Se agrega como evento nuevo en EVENTS, con el mismo patrón que ya usamos
+para BALC 2026 y Olivas y Sabores (tarjeta + ficha a pantalla completa +
+botón bordó + corazón de favorito, mismo mecanismo toggleFavorite/
+isFavorite que ya existe).
+
+Botón bordó debajo de la ficha: texto "Quiero más info", acción = abrir
+en pestaña nueva Google Maps con las coordenadas de Vinopolitan:
+https://www.google.com/maps/search/?api=1&query=-40.8191635,-62.9852614
+
+============================================
+CAMBIO 5 — Renombrar el evento de "Este finde"
+============================================
+El evento que hoy está en EVENTS con el título "Noche de Vinos
+Patagónicos" (el que ya usa boton-evento-olivasysabores.png /
+ficha-evento-olivasysabores.png, mostrando el contenido real de
+"Experiencia Ruta del Vino Pinot Noir" en Olivas y Sabores) — cambiarle
+el CAMPO TÍTULO a "Experiencia Ruta del Vino Pinot Noir". Es el mismo
+evento, mismo id, mismas imágenes — NO crear un evento nuevo ni
+duplicado, solo corregir el texto del título para que sea consistente con
+el contenido real que ya muestra. Sigue apareciendo bajo el chip "Este
+finde".
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar BALC 2026 (ni su evento, ni sus assets, ni su botón).
+- No tocar Experiencias (Tienda), WINES, WINERIES_DATA.
+- No tocar el carrito/checkout.
+- No inventar ningún dato que no esté confirmado acá.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador, pantalla Agenda:
+   - Sin tarjeta azul arriba. Título "Eventos Cerca Tuyo" + chips + scroll
+     horizontal de tarjetas (mismo estilo que Actividades destacadas).
+   - Chip "Hoy" → aparece "Cata de Malbecs del Alto Valle" (Vinopolitan).
+     Tocarla → ficha completa + corazón + "Quiero más info" → abre Maps en
+     la ubicación de Vinopolitan en pestaña nueva.
+   - Chip "Este finde" → aparece "Experiencia Ruta del Vino Pinot Noir"
+     (ya no dice "Noche de Vinos Patagónicos"). Sigue funcionando como
+     antes.
+   - Chip "Ahora" → sigue con el estado vacío de siempre.
+   - "Todos los eventos" → solo BALC 2026, funciona como antes.
+   - "Cata de Malbecs Rionegrinos" no aparece en ningún lado.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
