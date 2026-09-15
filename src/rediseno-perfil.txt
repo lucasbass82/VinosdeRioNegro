@@ -1,0 +1,103 @@
+INSTRUCCIONES PARA CLAUDE CODE - REDISEÑO DE LA PANTALLA PERFIL
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande con varias partes.
+
+============================================
+PASO 0 — Investigar antes de proponer
+============================================
+Reportame en el plan:
+- Cómo está armada hoy ProfileScreen: el header actual (si tiene foto o
+  no), el título "Perfil" y su estilo/posición, la tarjeta roja
+  ("Membresía activa" y qué más contiene), y la sección "Tus guardados"
+  (cómo lista los favoritos hoy — si ya separa por kind o los mezcla
+  todos juntos con una etiqueta de tipo).
+- Cómo están posicionados los títulos de página en Inicio, Agenda, Ruta
+  del Vino y Tienda (para poder igualar el título de Perfil a ese mismo
+  criterio).
+- La estructura actual de FavoriteItem — confirmá los kind que existen hoy
+  ("wine" | "winery" | "shop" | "event", si mal no recuerdo de cambios
+  anteriores).
+- IMPORTANTE — avisame esto antes de tocar nada: ¿existe hoy alguna forma
+  de marcar como favorita una Experiencia (corazón en Cajas Experiencia o
+  en las tarjetas de Experiencia Pinot Noir)? Si no existe, la sección
+  nueva "Tus Experiencias" (punto 5 de abajo) va a quedar vacía siempre,
+  porque no hay ningún lugar de la app que guarde ese tipo de favorito
+  todavía. Marcámelo como punto abierto en el plan en vez de inventar un
+  mecanismo de favoritos nuevo para Experiencias por tu cuenta — eso lo
+  decidimos aparte si hace falta.
+
+============================================
+CAMBIO 1 — Mover el botón Perfil en la barra inferior
+============================================
+Orden actual: Inicio, Perfil, Agenda, Ruta del Vino, Tienda.
+Orden nuevo: Inicio, Agenda, Ruta del Vino, Tienda, Perfil (va al final,
+después de Tienda).
+
+============================================
+CAMBIO 2 — Imagen de header
+============================================
+El usuario agregó src/assets/head-perfil.png (foto de una copa de vino en
+una mesa de madera, con un viñedo de otoño de fondo). Se usa como foto de
+header de esta pantalla, mismo mecanismo de PhotoHeader que ya usan
+Inicio/Agenda/etc.
+
+============================================
+CAMBIO 3 — Título "Tu Perfil"
+============================================
+El título de la página (no el del botón de la barra inferior, que sigue
+diciendo "Perfil") cambia de "Perfil" a "Tu Perfil". Tiene que quedar
+ubicado en el mismo lugar/mismo estilo que los títulos de Inicio, Agenda,
+Ruta del Vino y Tienda (confirmá en el Paso 0 cuál es ese criterio exacto
+antes de aplicarlo).
+
+============================================
+CAMBIO 4 — Tarjeta roja más chica + "Membresía activa" afuera
+============================================
+- Sacar el texto "Membresía activa" de adentro de la tarjeta roja y
+  ponerlo como título de sección, debajo del header (mismo estilo de
+  título que usás para las demás secciones de esta pantalla).
+- La tarjeta roja en sí se achica (menos alto/padding) ahora que perdió
+  ese texto — ajustá su tamaño para que se vea proporcionada con el
+  contenido que le queda adentro.
+
+============================================
+CAMBIO 5 — Reestructurar "Tus guardados"
+============================================
+- Renombrar "Tus guardados" a "Tus Vinos" — esta sección muestra SOLO los
+  favoritos de kind "wine", en scroll horizontal (mismo criterio de
+  carrusel que ya usamos en otras partes de la app).
+- Agregar sección "Tus Bodegas" — favoritos de kind "winery".
+- Agregar sección "Tus Experiencias" — según lo que confirmes en el
+  Paso 0 (puede quedar vacía si no existe el mecanismo).
+- Agregar sección "Tus Eventos" — favoritos de kind "event".
+- Para el estilo de "Tus Bodegas"/"Tus Experiencias"/"Tus Eventos" (scroll
+  horizontal como vinos, o lista vertical simple), proponeme en el plan lo
+  que te parezca más consistente con el resto de la app y confirmo antes
+  de aplicar.
+- Debajo de las 4 secciones, sigue "Beneficios disponibles" con los 3
+  beneficios actuales, sin cambios.
+
+============================================
+QUÉ NO HACER
+============================================
+- No inventar un mecanismo de favoritos para Experiencias sin confirmarlo
+  primero (ver Paso 0).
+- No tocar Inicio, Agenda, Ruta del Vino, Tienda, Experiencias, WINES,
+  WINERIES_DATA, carrito/checkout.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: el botón Perfil aparece al final de la barra inferior, tras
+   Tienda. Al entrar: foto de header nueva, título "Tu Perfil" en el mismo
+   lugar que el resto de las pantallas, "Membresía activa" como título
+   debajo del header, tarjeta roja más chica, y las 4 secciones nuevas
+   (Tus Vinos en scroll horizontal, Tus Bodegas, Tus Experiencias, Tus
+   Eventos) seguidas de "Beneficios disponibles" sin cambios.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

@@ -17,6 +17,7 @@ import mapaProvinciaPhoto from "./assets/mapa-provincia.jpg";
 import mapaDecorativoViedmaPhoto from "./assets/mapa-decorativo-viedma.jpg";
 import agendaBrindisPhoto from "./assets/agenda-brindis.jpg";
 import tiendaHeaderPhoto from "./assets/tienda-header.jpg";
+import headPerfilPhoto from "./assets/head-perfil.png";
 import bodegaMirasPhoto from "./assets/bodega-miras.png";
 import bodegaAnielloPhoto from "./assets/bodega-aniello.png";
 import bodegaHumbertoCanalePhoto from "./assets/bodega-humberto-canale.png";
@@ -4589,7 +4590,13 @@ export default function App() {
                 setSearch={setSearch}
               />
             ) : (
-              <ProfileScreen favorites={favorites} />
+              <ProfileScreen
+                favorites={favorites}
+                onOpenWine={openWine}
+                onOpenWinery={openWinery}
+                onOpenShop={openShop}
+                onOpenEvent={openEvent}
+              />
             )}
           </div>
      )}
@@ -5695,7 +5702,7 @@ const RUTA_DEL_VINO_GRADIENT =
 // PhotoHeader distinto según su estado interno, así que cada una renderiza
 // el suyo (ver AgendaScreen y ShopScreen).
 const PHOTO_HEADER_CONFIG: Record<
-  "home" | "map" | "bodegas" | "winelist" | "nearby",
+  "home" | "map" | "bodegas" | "winelist" | "nearby" | "profile",
   {
     imageUrl: string;
     title: string;
@@ -5732,6 +5739,11 @@ const PHOTO_HEADER_CONFIG: Record<
     imageUrl: rioNegroRiverPhoto,
     title: "Vinos Cerca Tuyo",
     subtitle: "Los vinos que tenemos cerca tuyo, en un solo lugar.",
+  },
+  profile: {
+    imageUrl: headPerfilPhoto,
+    title: "Tu Perfil",
+    subtitle: "Tus beneficios, guardados y actividad en Vinos de Río Negro.",
   },
 };
 
@@ -6832,43 +6844,128 @@ function EventDetailScreen({
   );
 }
 
-function ProfileScreen({ favorites }: { favorites: FavoriteItem[] }) {
+function ProfileScreen({
+  favorites,
+  onOpenWine,
+  onOpenWinery,
+  onOpenShop,
+  onOpenEvent,
+}: {
+  favorites: FavoriteItem[];
+  onOpenWine: (id: string) => void;
+  onOpenWinery: (id: string) => void;
+  onOpenShop: (id: string) => void;
+  onOpenEvent: (id: string) => void;
+}) {
+  const favoriteWines = favorites
+    .filter((f) => f.kind === "wine")
+    .map((f) => WINES.find((w) => w.id === f.id))
+    .filter((w): w is Wine => Boolean(w));
+
+  const favoriteWineries = favorites
+    .filter((f) => f.kind === "winery")
+    .map((f) => WINERIES.find((w) => w.id === f.id))
+    .filter((w): w is Winery => Boolean(w));
+
+  const favoriteEvents = favorites
+    .filter((f) => f.kind === "event")
+    .map((f) => EVENTS.find((e) => e.id === f.id))
+    .filter((e): e is EventItem => Boolean(e));
+
+  const favoriteShops = favorites
+    .filter((f) => f.kind === "shop")
+    .map((f) => SHOPS.find((s) => s.id === f.id))
+    .filter((s): s is Shop => Boolean(s));
+
   return (
     <div style={styles.stack22}>
-      <div style={styles.profileHeroCard}>
-        <img src="/logo-vinos-rn.png" alt="Arte uvas" style={styles.profileArtImage} />
-        <div>
-          <div style={styles.membershipEyebrow}>Membresía activa</div>
-          <div style={styles.membershipTitle}>Tus Beneficios</div>
-          <div style={styles.membershipText}>
-            Descuentos en vinotecas, actividades y bodegas adheridas.
+      <Block title="Membresía activa">
+        <div style={styles.profileHeroCard}>
+          <img src="/logo-vinos-rn.png" alt="Arte uvas" style={styles.profileArtImage} />
+          <div>
+            <div style={styles.membershipTitle}>Tus Beneficios</div>
+            <div style={styles.membershipText}>
+              Descuentos en vinotecas, actividades y bodegas adheridas.
+            </div>
+          </div>
+
+          <div style={styles.savingsBigCard}>
+            <div style={styles.savingsBigLabel}>Ahorraste este mes</div>
+            <div style={styles.savingsBigValue}>$12.400</div>
+            <div style={styles.savingsBigSub}>6 beneficios usados</div>
           </div>
         </div>
+      </Block>
 
-        <div style={styles.savingsBigCard}>
-          <div style={styles.savingsBigLabel}>Ahorraste este mes</div>
-          <div style={styles.savingsBigValue}>$12.400</div>
-          <div style={styles.savingsBigSub}>6 beneficios usados</div>
-        </div>
-      </div>
-
-      {favorites.length > 0 && (
-        <Block title="Tus guardados">
-          <div style={styles.stack12}>
-            {favorites.map((f) => (
-              <div key={f.id} style={styles.card}>
-                <div style={styles.itemTitle}>{f.name}</div>
-                <div style={styles.itemSub}>
-                  {f.city ? `${f.city} · ` : ""}
-                  {f.kind === "wine"
-                    ? "Vino"
-                    : f.kind === "winery"
-                    ? "Bodega"
-                    : f.kind === "event"
-                    ? "Evento"
-                    : "Vinoteca"}
-                </div>
+      {favoriteWines.length > 0 && (
+        <Block title="Tus Vinos">
+          <div style={styles.horizontalScroller}>
+            {favoriteWines.map((wine) => (
+              <div
+                key={wine.id}
+                style={{ ...styles.horizontalCard, width: 245, flexShrink: 0 }}
+              >
+                <WineGridCard
+                  image={wine.image}
+                  title={wine.name}
+                  subtitle={varietalOrDefault(wine.varietal, "Vino")}
+                  tag={wine.tag}
+                  onClick={() => onOpenWine(wine.id)}
+                />
               </div>
+            ))}
+          </div>
+        </Block>
+      )}
+
+      {favoriteWineries.length > 0 && (
+        <Block title="Tus Bodegas">
+          <div style={styles.stack12}>
+            {favoriteWineries.map((winery) => (
+              <ResultRow
+                key={winery.id}
+                title={winery.name}
+                subtitle={`${winery.city} · ${REGION_META[winery.region].title}`}
+                onClick={() => onOpenWinery(winery.id)}
+              />
+            ))}
+          </div>
+        </Block>
+      )}
+
+      {/* Tus Experiencias: todavía no existe mecanismo de favoritos para
+          Experiencias en ningún lugar de la app, así que esta sección nunca
+          tiene ítems — punto abierto, ver rediseno-perfil.txt. */}
+
+      {favoriteEvents.length > 0 && (
+        <Block title="Tus Eventos">
+          <div style={styles.stack12}>
+            {favoriteEvents.map((event) => (
+              <ResultRow
+                key={event.id}
+                title={event.title}
+                subtitle={`${event.place} · ${event.city}`}
+                onClick={() => onOpenEvent(event.id)}
+              />
+            ))}
+          </div>
+        </Block>
+      )}
+
+      {favoriteShops.length > 0 && (
+        <Block title="Tus Vinotecas">
+          <div style={styles.stack12}>
+            {favoriteShops.map((shop) => (
+              <ResultRow
+                key={shop.id}
+                title={shop.name}
+                subtitle={
+                  isPlaceholderText(shop.benefit)
+                    ? shop.city
+                    : `${shop.city} · ${shop.benefit}`
+                }
+                onClick={() => onOpenShop(shop.id)}
+              />
             ))}
           </div>
         </Block>
@@ -7495,10 +7592,10 @@ function BottomNav({
 }) {
   const items: Array<{ key: TabKey; label: string; icon: React.ReactNode }> = [
     { key: "home", label: "Inicio", icon: <HomeIcon /> },
-    { key: "profile", label: "Perfil", icon: <PersonIcon /> },
     { key: "agenda", label: "Agenda", icon: <CalendarIcon /> },
     { key: "bodegas", label: "Ruta del Vino", icon: <WineIcon /> },
     { key: "shop", label: "Tienda", icon: <ShoppingBagIcon /> },
+    { key: "profile", label: "Perfil", icon: <PersonIcon /> },
   ];
 
   return (
@@ -9097,10 +9194,10 @@ const styles: Record<string, React.CSSProperties> = {
     background: `linear-gradient(135deg, ${theme.wineDark}, ${theme.wine})`,
     border: "1px solid rgba(108,21,39,0.35)",
     borderRadius: 28,
-    padding: 18,
+    padding: 14,
     color: "#fff",
     display: "grid",
-    gap: 16,
+    gap: 12,
     position: "relative",
     overflow: "hidden",
   },
@@ -9113,13 +9210,8 @@ const styles: Record<string, React.CSSProperties> = {
     opacity: 0.12,
     pointerEvents: "none",
   },
-  membershipEyebrow: {
-    fontSize: 13,
-    color: "rgba(255,255,255,0.76)",
-    fontWeight: 700,
-  },
   membershipTitle: {
-    marginTop: 6,
+    marginTop: 0,
     fontFamily: '"Lora", serif',
     fontSize: 32,
     fontWeight: 700,
