@@ -1,0 +1,55 @@
+INSTRUCCIONES PARA CLAUDE CODE - EL BUSCADOR TODAVÍA NAVEGA ANTES DE BUSCAR
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+PROBLEMA (sigue pasando después del cambio anterior)
+============================================
+Al tocar la barra de búsqueda en Inicio, TODAVÍA navega automáticamente a
+"Resultados de tu búsqueda" antes de haber escrito nada — la persona ve
+vinos random ahí, sin haber buscado todavía.
+
+============================================
+PASO 0 — Investigar qué está disparando la navegación hoy
+============================================
+Revisá exactamente qué evento dispara el cambio de pantalla ahora mismo
+(onFocus, onClick, algo en el primer render, un useEffect que reacciona a
+currentTab, lo que sea) y reportámelo en el plan antes de tocar nada — el
+cambio anterior puede no haber cubierto bien este disparador, o puede
+haber quedado algo adicional que sigue navegando al tocar/enfocar.
+
+============================================
+CAMBIO — Navegar SOLO al confirmar la búsqueda
+============================================
+El criterio cambia respecto al pedido anterior: ya no alcanza con "en
+cuanto haya texto" — tiene que navegar ÚNICAMENTE cuando la persona:
+- Aprieta el botón de buscar (la flechita u otro ícono de búsqueda), o
+- Aprieta Enter con el teclado
+
+Tocar la barra y escribir letra por letra NO debe navegar a ningún lado —
+todo eso pasa dentro de la misma pantalla de Inicio, en el input. Recién
+al confirmar (botón o Enter) navega a "Resultados de tu búsqueda" con el
+texto ya escrito y el filtro ya aplicado sobre ese texto real.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar el resto de Inicio.
+- No tocar la lógica de qué resultados aparecen una vez que sí se
+  confirma la búsqueda (eso ya quedó bien).
+- No tocar Experiencias, Tienda, Agenda, Perfil, WINES, WINERIES_DATA.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: tocar la barra de búsqueda en Inicio → el foco queda ahí,
+   sin cambiar de pantalla. Escribir varias letras → sigue sin navegar.
+   Recién al apretar el botón de buscar o Enter → navega a "Resultados de
+   tu búsqueda" con esos resultados reales, no random.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

@@ -1,0 +1,60 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTAR LA PANTALLA DE RESULTADOS DE BÚSQUEDA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Esto es un ajuste sobre la pantalla de resultados de búsqueda
+(la que se abre al escribir en el buscador de Inicio) — si ya aplicaste el
+cambio del buscador sin salto de pantalla, este prompt es el siguiente
+paso sobre esa misma pantalla de resultados.
+
+============================================
+CAMBIO 1 — Sin foto de header
+============================================
+Esta pantalla no lleva foto de header (PhotoHeader) — queda decidido así,
+solo el título simple arriba y los resultados debajo. Si ya está así, no
+hace falta tocar nada de esto.
+
+============================================
+CAMBIO 2 — Cambiar el título
+============================================
+El título actual "Buscar Vinos" pasa a decir "Resultados de tu búsqueda".
+
+============================================
+CAMBIO 3 — Achicar el espacio del header con el título
+============================================
+Hoy sobra espacio vacío en la zona del título, arriba de los resultados —
+achicar ese espacio (padding/margin/altura del contenedor del título) para
+que los resultados arranquen más arriba, sin tanto aire de más.
+
+============================================
+CAMBIO 4 — Resultados en cuadrícula
+============================================
+Los vinos de los resultados deben mostrarse en grilla (mismo componente/
+criterio de cuadrícula que ya usamos en otras partes de la app, como la
+sección "Sus Vinos" de la ficha de bodega o WineListScreen) — no como
+lista vertical de filas.
+
+Fijate primero si ya existe un componente de grilla de vinos reutilizable
+en el proyecto (por el trabajo que ya hicimos en fichas de bodega) y
+reusalo acá en vez de crear uno nuevo.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar la lógica de qué resultados aparecen (el filtro/búsqueda en sí),
+  solo cómo se ven.
+- No tocar el buscador de Inicio en sí (eso es el prompt anterior).
+- No tocar WineDetail, WineryDetail, Experiencias, Tienda, Agenda, WINES,
+  WINERIES_DATA.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: buscar algo desde Inicio → pantalla de resultados dice
+   "Resultados de tu búsqueda", sin foto de header, con poco espacio vacío
+   arriba, y los vinos en cuadrícula (no en lista).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

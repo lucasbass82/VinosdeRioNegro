@@ -4551,6 +4551,8 @@ export default function App() {
                 onSetTabFromHome={goHomeShortcut}
                 favorites={favorites}
                 toggleFavorite={toggleFavorite}
+                search={search}
+                setSearch={setSearch}
               />
             ) : tab === "map" ? (
               <MapScreen onOpenWine={openWine} onSetTab={goToTab} />
@@ -4574,6 +4576,8 @@ export default function App() {
                 onOpenWine={openWine}
                 onSetTab={goToTab}
                 onBack={backToHome}
+                search={search}
+                setSearch={setSearch}
               />
             ) : tab === "nearby" ? (
               <WineListScreen
@@ -4581,6 +4585,8 @@ export default function App() {
                 onSetTab={goToTab}
                 onBack={backToHome}
                 wines={HOME_NEARBY_WINES}
+                search={search}
+                setSearch={setSearch}
               />
             ) : (
               <ProfileScreen favorites={favorites} />
@@ -5584,14 +5590,20 @@ function Header({
   onMenuClick: () => void;
   onProfile?: () => void;
 }) {
- const title = currentTab === "profile" ? "Perfil" : "Buscar vinos";
+ const title =
+   currentTab === "profile"
+     ? "Perfil"
+     : currentTab === "search"
+     ? "Resultados de tu búsqueda"
+     : "Buscar vinos";
+ const isSearch = currentTab === "search";
 
   return (
     <div style={styles.header}>
       <div
         style={{
           ...styles.headerTitleWrap,
-          minHeight: 118,
+          minHeight: isSearch ? 60 : 118,
           paddingRight: 0,
         }}
       >
@@ -5601,7 +5613,7 @@ function Header({
             whiteSpace: "pre-line",
             fontSize: 36,
             lineHeight: 1.02,
-            marginTop: 10,
+            marginTop: isSearch ? 2 : 10,
             maxWidth: 320,
           }}
         >
@@ -5868,6 +5880,8 @@ function HomeScreen({
   onSetTabFromHome,
   favorites,
   toggleFavorite,
+  search,
+  setSearch,
 }: {
   onOpenWinery: (id: string) => void;
   onOpenEvent: (id: string) => void;
@@ -5876,18 +5890,30 @@ function HomeScreen({
   onSetTabFromHome: (tab: TabKey) => void;
   favorites: FavoriteItem[];
   toggleFavorite: (item: FavoriteItem) => void;
+  search: string;
+  setSearch: (value: string) => void;
 }) {
   return (
     <div style={styles.stack22}>
-      <button
-        style={{ ...styles.searchBar, marginTop: 0 }}
-        onClick={() => onSetTab("search")}
-      >
-        <SearchIcon />
-        <span style={styles.searchBarText}>
-          Busca tu vino, bodega o experiencia.
-        </span>
-      </button>
+      <div style={{ ...styles.searchBar, marginTop: 0 }}>
+        <button
+          type="button"
+          style={styles.searchBarIconButton}
+          onClick={() => onSetTab("search")}
+          aria-label="Buscar"
+        >
+          <SearchIcon />
+        </button>
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") onSetTab("search");
+          }}
+          placeholder="Busca tu vino, bodega o experiencia."
+          style={styles.searchBarInput}
+        />
+      </div>
 
       <div>
         <div style={styles.sectionTitle}>¡Hola, Viedma!</div>
@@ -5986,11 +6012,15 @@ function WineListScreen({
   onSetTab,
   onBack,
   wines = WINES,
+  search,
+  setSearch,
 }: {
   onOpenWine: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
   onBack: () => void;
   wines?: Wine[];
+  search: string;
+  setSearch: (value: string) => void;
 }) {
   const varietals = Array.from(
     new Set(wines.map((w) => w.varietal).filter(hasRealVarietal))
@@ -6008,15 +6038,25 @@ function WineListScreen({
         <ArrowLeftIcon /> Volver
       </button>
 
-      <button
-        style={{ ...styles.searchBar, marginTop: 0 }}
-        onClick={() => onSetTab("search")}
-      >
-        <SearchIcon />
-        <span style={styles.searchBarText}>
-          Busca tu vino, bodega o experiencia.
-        </span>
-      </button>
+      <div style={{ ...styles.searchBar, marginTop: 0 }}>
+        <button
+          type="button"
+          style={styles.searchBarIconButton}
+          onClick={() => onSetTab("search")}
+          aria-label="Buscar"
+        >
+          <SearchIcon />
+        </button>
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") onSetTab("search");
+          }}
+          placeholder="Busca tu vino, bodega o experiencia."
+          style={styles.searchBarInput}
+        />
+      </div>
 
       <div style={styles.chipsRow}>
         <button
@@ -6115,11 +6155,14 @@ function SearchScreen({
         <>
           {(!hasQuery || results.wines.length > 0) && (
             <Block title="Vinos">
-              <div style={styles.stack12}>
+              <div style={styles.wineCardGrid}>
                 {results.wines.map((wine) => (
-                  <WineVisualRow
+                  <WineGridCard
                     key={wine.id}
-                    wine={wine}
+                    image={wine.image}
+                    title={wine.name}
+                    subtitle={varietalOrDefault(wine.varietal, "Vino")}
+                    tag={wine.tag}
                     onClick={() => onOpenWine(wine.id)}
                   />
                 ))}
@@ -6166,36 +6209,6 @@ function SearchScreen({
   );
 }
 
-function WineVisualRow({
-  wine,
-  onClick,
-}: {
-  wine: Wine;
-  onClick: () => void;
-}) {
-  return (
-    <div style={styles.wineVisualRow} onClick={onClick}>
-      <div
-        style={{
-          ...styles.wineVisualImage,
-          backgroundImage: `url('${wine.image}')`,
-        }}
-      />
-
-      <div style={styles.wineVisualBody}>
-        <div>
-          <div style={styles.wineVisualTitle}>{wine.name}</div>
-          <div style={styles.wineVisualSub}>{wineSubtitle(wine)}</div>
-        </div>
-
-        <div style={styles.rowBetweenCenter}>
-          <span style={styles.wineVisualTag}>{wine.tag}</span>
-          <ChevronRightIcon />
-        </div>
-      </div>
-    </div>
-  );
-}
 function ImageCard({
   title,
   subtitle,
@@ -8038,9 +8051,24 @@ const styles: Record<string, React.CSSProperties> = {
     position: "relative",
     zIndex: 2,
   },
-  searchBarText: {
-    color: theme.subtext,
+  searchBarIconButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: 0,
+    background: "transparent",
+    padding: 0,
+    cursor: "pointer",
+    color: theme.text,
+  },
+  searchBarInput: {
+    flex: 1,
+    border: 0,
+    outline: "none",
+    background: "transparent",
     fontSize: 14,
+    color: theme.text,
+    minWidth: 0,
   },
   content: {
     flex: 1,
@@ -8861,64 +8889,6 @@ const styles: Record<string, React.CSSProperties> = {
     background: "transparent",
     color: theme.text,
   },
-  wineVisualRow: {
-  background: theme.paper,
-  border: `1px solid ${theme.line}`,
-  borderRadius: 28,
-  boxShadow: "0 14px 34px rgba(89, 36, 47, 0.08)",
-  padding: 0,
-  cursor: "pointer",
-  display: "flex",
-  flexDirection: "column",
-  overflow: "hidden",
-  minHeight: 340,
-},
-
-wineVisualImage: {
-  width: "120",
-  height: 160,
-  borderRadius: 0,
-  backgroundSize: "contain",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
-  flexShrink: 0,
-},
-
-wineVisualBody: {
-  padding: 16,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  gap: 16,
-  flex: 1,
-},
-
-wineVisualTitle: {
-  fontFamily: '"Lora", serif',
-  fontWeight: 700,
-  color: theme.text,
-  fontSize: 17,
-  lineHeight: 1.2,
-},
-
-wineVisualSub: {
-  marginTop: 6,
-  color: theme.subtext,
-  fontSize: 14,
-  lineHeight: 1.45,
-},
-
-wineVisualTag: {
-  display: "inline-flex",
-  alignItems: "center",
-  borderRadius: 999,
-  padding: "8px 14px",
-  fontSize: 12,
-  fontWeight: 700,
-  background: theme.cream,
-  color: "#777777",
-  border: `1px solid ${theme.line}`,
-},
   metricBox: {
     background: "#FAF8F5",
     border: `1px solid ${theme.line}`,
