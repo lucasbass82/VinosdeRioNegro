@@ -4221,6 +4221,12 @@ export default function App() {
   const detail: DetailState = detailStack[detailStack.length - 1] ?? null;
   const [favorites, setFavorites] = useState<FavoriteItem[]>([
     { id: "v1", name: "Miras Pinot Noir Salvaje Curioso", kind: "wine" },
+    { id: "w1", name: "Bodega Miras", city: "Mainqué", kind: "winery" },
+    { id: "w4", name: "Bodega Videla Dorna", city: "Luis Beltrán", kind: "winery" },
+    { id: "w5", name: "Wapisa", city: "San Javier", kind: "winery" },
+    { id: "w6", name: "Finca Fraschetti", city: "San Carlos de Bariloche", kind: "winery" },
+    { id: "w13", name: "Ribera del Cuarzo", city: "El Cuy (Valle Azul)", kind: "winery" },
+    { id: "e1", name: "BALC 2026", kind: "event" },
   ]);
   const [search, setSearch] = useState("");
   const [showSplash, setShowSplash] = useState(true);
@@ -4596,6 +4602,8 @@ export default function App() {
                 onOpenWinery={openWinery}
                 onOpenShop={openShop}
                 onOpenEvent={openEvent}
+                isFavorite={isFavorite}
+                toggleFavorite={toggleFavorite}
               />
             )}
           </div>
@@ -6850,12 +6858,16 @@ function ProfileScreen({
   onOpenWinery,
   onOpenShop,
   onOpenEvent,
+  isFavorite,
+  toggleFavorite,
 }: {
   favorites: FavoriteItem[];
   onOpenWine: (id: string) => void;
   onOpenWinery: (id: string) => void;
   onOpenShop: (id: string) => void;
   onOpenEvent: (id: string) => void;
+  isFavorite: (id: string) => boolean;
+  toggleFavorite: (item: FavoriteItem) => void;
 }) {
   const favoriteWines = favorites
     .filter((f) => f.kind === "wine")
@@ -6944,13 +6956,14 @@ function ProfileScreen({
 
       {favoriteEvents.length > 0 && (
         <Block title="Tus Eventos">
-          <div style={styles.stack12}>
+          <div style={styles.horizontalScroller}>
             {favoriteEvents.map((event) => (
-              <ResultRow
+              <EventCarouselCard
                 key={event.id}
-                title={event.title}
-                subtitle={`${event.place} · ${event.city}`}
-                onClick={() => onOpenEvent(event.id)}
+                event={event}
+                onOpen={() => onOpenEvent(event.id)}
+                isFavorite={isFavorite}
+                toggleFavorite={toggleFavorite}
               />
             ))}
           </div>

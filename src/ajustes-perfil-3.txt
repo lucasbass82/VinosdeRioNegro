@@ -1,0 +1,58 @@
+INSTRUCCIONES PARA CLAUDE CODE - TUS EVENTOS EN CARRUSEL + FAVORITOS PRECARGADOS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CAMBIO 1 — "Tus Eventos" pasa a carrusel horizontal
+============================================
+Mismo cambio que ya hicimos con "Tus Bodegas": "Tus Eventos" pasa de lista
+vertical a scroll horizontal, mismo mecanismo (horizontalScroller) que
+"Tus Vinos" y "Tus Bodegas".
+
+Para la tarjeta de cada evento, usar la imagen "botón" de ese evento (las
+mismas boton-*.png/tarjeta-*.png que ya se usan para mostrar cada evento
+en Agenda) — no crear una tarjeta nueva, reusar el mismo criterio visual
+que ya tienen las otras 2 secciones en carrusel.
+
+"Tus Vinotecas" sigue como lista vertical, sin cambios.
+
+============================================
+CAMBIO 2 — Favoritos precargados por defecto
+============================================
+Hoy favorites arranca con un solo favorito seed (un vino). Cambiar el
+estado inicial para que arranque con:
+- 1 evento favoriteado (cualquiera de los que ya existen, el que te
+  parezca más representativo).
+- 5 bodegas favoriteadas, una de cada región (Alto Valle, Valle Medio,
+  Mar, Cordillera, Estepa) — elegí una bodega real de cada zona buscando
+  en WINERIES_DATA, y mostrame en el plan cuáles elegiste antes de
+  aplicarlo.
+- El vino que ya está de seed hoy, dejalo también (no lo saques).
+
+La idea es que al entrar a Perfil por primera vede, ya se vea el
+funcionamiento completo de las 5 secciones (Vinos/Bodegas/Eventos/
+Vinotecas con al menos algo, Experiencias vacía porque no tiene mecanismo
+todavía) sin que la persona tenga que ir a favoritear cosas primero.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar "Tus Vinos", "Tus Vinotecas", el resto de Perfil, Inicio,
+  Agenda, Ruta del Vino, Tienda, Experiencias, WINES, WINERIES_DATA.
+- No inventar bodegas o eventos que no existan en los datos reales.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: recargar la app de cero (sin haber tocado ningún corazón
+   todavía) y entrar a Perfil → ya se ven las 4 secciones con contenido
+   real (Vinos, Bodegas con las 5 regiones representadas, Eventos con 1,
+   Vinotecas si aplica), "Tus Eventos" en carrusel horizontal con la
+   imagen botón de cada evento.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
