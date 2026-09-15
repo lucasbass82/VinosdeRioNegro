@@ -6920,14 +6920,19 @@ function ProfileScreen({
 
       {favoriteWineries.length > 0 && (
         <Block title="Tus Bodegas">
-          <div style={styles.stack12}>
+          <div style={styles.horizontalScroller}>
             {favoriteWineries.map((winery) => (
-              <ResultRow
+              <div
                 key={winery.id}
-                title={winery.name}
-                subtitle={`${winery.city} · ${REGION_META[winery.region].title}`}
-                onClick={() => onOpenWinery(winery.id)}
-              />
+                style={{ ...styles.horizontalCard, width: 245, flexShrink: 0 }}
+              >
+                <WineGridCard
+                  image={winery.image}
+                  title={winery.name}
+                  subtitle={`${winery.city} · ${REGION_META[winery.region].title}`}
+                  onClick={() => onOpenWinery(winery.id)}
+                />
+              </div>
             ))}
           </div>
         </Block>

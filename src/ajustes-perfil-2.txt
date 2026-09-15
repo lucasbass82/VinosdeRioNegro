@@ -1,0 +1,55 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTES SOBRE EL PERFIL YA HECHO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CAMBIO 1 — "Tus Bodegas" pasa a carrusel horizontal
+============================================
+Hoy "Tus Bodegas" es una lista vertical (ResultRow). Cambiarla a scroll
+horizontal, mismo mecanismo que ya usa "Tus Vinos" (horizontalScroller).
+
+Para la imagen/tarjeta de cada bodega en este carrusel, usar el MISMO
+componente de tarjeta que ya se usa para listar bodegas en Ruta del Vino
+(RegionsScreen o donde esté esa lista) — mismas imágenes/botones que ya
+existen ahí, no crear tarjetas nuevas ni buscar otro asset.
+
+"Tus Eventos" y "Tus Vinotecas" quedan como lista vertical, sin cambios —
+este cambio es solo para "Tus Bodegas".
+
+============================================
+CAMBIO 2 — Revisar por qué no aparece "Tus Eventos"
+============================================
+El usuario dice que no ve el título "Tus Eventos" en Perfil. Antes de
+asumir que es un bug: confirmá primero si el usuario tiene algún evento
+favoriteado en este momento — si no tiene ninguno, es el comportamiento
+esperado (la sección solo se muestra cuando favorites.length > 0 para ese
+kind, mismo criterio que las demás secciones). Si el usuario SÍ tiene un
+evento guardado y aun así no aparece la sección, ahí sí es un bug real —
+revisá el filtro por kind "event" y confirmá que esté anclado igual que
+"wine"/"winery"/"shop".
+
+Reportame en el plan cuál de los dos casos encontraste antes de tocar
+nada de este punto.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar "Tus Vinos", "Tus Eventos", "Tus Vinotecas" salvo que el
+  Cambio 2 confirme que hay un bug real.
+- No tocar el resto de Perfil, Inicio, Agenda, Ruta del Vino, Tienda,
+  Experiencias, WINES, WINERIES_DATA.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: favoritear al menos 2 bodegas distintas y confirmar que
+   "Tus Bodegas" se ve en carrusel horizontal con las mismas tarjetas que
+   usa Ruta del Vino. Favoritear un evento y confirmar que "Tus Eventos"
+   aparece correctamente.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
