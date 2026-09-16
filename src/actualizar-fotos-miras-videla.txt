@@ -1,0 +1,41 @@
+INSTRUCCIONES PARA CLAUDE CODE - ACTUALIZAR FOTOS DE BODEGA MIRAS Y VIDELA DORNA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Cambio chico y puntual.
+
+============================================
+CAMBIO
+============================================
+El usuario agregó a src/assets/:
+- bodega-miras.png
+- bodega-videla-dorna.png
+
+Son fotos nuevas para reemplazar las que ya está usando cada bodega en
+WINERIES_DATA (el campo image de "Bodega Miras" y de "Bodega Videla
+Dorna") — mismo nombre de bodega, mismo id, mismo lugar donde se usa hoy
+(Ruta del Vino, Bodegas recomendadas de Inicio, Perfil si está
+favoriteada, etc.) — solo cambia el archivo de imagen que usan.
+
+No cambies ningún otro campo de esas 2 bodegas (nombre, ciudad, región,
+descripción, horarios, dirección, etc.) — solo la imagen.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ninguna otra bodega.
+- No tocar WINES, ningún otro dato de WINERIES_DATA.
+- No tocar Perfil, Inicio, Agenda, Tienda, Experiencias.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a la ficha de Bodega Miras y de Bodega Videla Dorna
+   (y a cualquier lugar donde aparezcan como tarjeta — Ruta del Vino,
+   Bodegas recomendadas, Perfil si están favoriteadas) y confirmar que
+   se ve la foto nueva en todos los lugares donde antes se veía la vieja.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
