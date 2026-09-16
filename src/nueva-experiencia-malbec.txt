@@ -1,0 +1,125 @@
+INSTRUCCIONES PARA CLAUDE CODE - NUEVA "EXPERIENCIA RUTA DEL VINO MALBEC" + SACAR MERLOT
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande — quiero ver el plan completo antes de que
+apliques nada.
+
+============================================
+PASO 0 — Investigar antes de proponer
+============================================
+- Reportame cómo está armada hoy "Experiencia Ruta del Vino Pinot Noir"
+  de punta a punta: la tarjeta "caja" en el listado de Cajas Experiencia,
+  el head, la tarjeta de intro, PINOT_EXPERIENCE_WINES (todos sus campos:
+  cardImage, fichaImage, winery, region, etc.), PinotExperienceListScreen,
+  PinotWineFichaScreen, y el mecanismo de "Bodega de origen" que ya
+  reutilizamos ahí. La Experiencia Malbec nueva tiene que seguir
+  exactamente el mismo patrón — si hace falta generalizar algo para no
+  duplicar código (por ejemplo un componente genérico
+  WineExperienceListScreen en vez de uno hardcodeado a "Pinot"), proponelo
+  en el plan.
+- De paso, revisá el color de fondo real de las imágenes de ficha que ya
+  usa la Experiencia Pinot Noir, comparado con el crema de la app
+  (#FBF8F3 o el que corresponda) — el pedido es confirmar si ya están
+  parejas o no, antes de decidir si hay que tocar algo ahí también.
+- Confirmá en WINERIES_DATA/WINES los nombres reales de estas bodegas
+  (algunas pueden no coincidir exactamente con lo que dice el botón, no
+  asumas, mostrame la lista):
+  - Bodega Agrestis (el botón dice "Bodega Agrestis", pero la botella
+    dice "Humberto Canale" — confirmá cuál es el dato real en
+    WINERIES_DATA antes de asumir)
+  - Bodega Bonomi y Bernal (marca "Verziere")
+  - Enclave Sur
+  - Bodega Trina (o el nombre real que tenga en los datos — la etiqueta
+    dice "Bodega Trina Reserva de Malbec")
+  - Bodega Don Amaro
+  - Ribera del Cuarzo (marca "Clásico")
+
+============================================
+CAMBIO 1 — Sacar "Experiencia Merlot" por completo
+============================================
+Eliminar la Experiencia Merlot completa de Cajas Experiencia — la tarjeta
+"caja", toda su pantalla de listado, y cualquier dato asociado. No hace
+falta borrar los archivos de imagen del proyecto, solo que dejen de
+usarse.
+
+============================================
+CAMBIO 2 — Nueva "Experiencia Ruta del Vino Malbec"
+============================================
+El usuario agregó a src/assets/ estos 15 archivos:
+
+- caja-experiencia-ruta-del-vino-malbec.png (tarjeta en el listado de
+  Cajas Experiencia)
+- head-experiencia-ruta-del-vino-malbec.png (foto de header de la
+  experiencia)
+- experiencia-malbec-intro.png (tarjeta de introducción, fija, no
+  clickeable — mismo lugar/criterio que experiencia-pinot-intro.png)
+- Los 6 botones de la lista (YA vienen sin borde negro, limpios, no hace
+  falta procesarlos de nuevo):
+  boton-agrestis-malbec.png, boton-estepa-ribera-del-cuarzo-malbec.png,
+  boton-don-amaro-malbec.png, boton-enclave-sur-malbec.png,
+  boton-trina-reserva-de-malbec.png, boton-verziere-malbec.png
+- Las 6 fichas (una por vino):
+  experiencia-malbec-alto-valle-agrestis-ficha.png,
+  experiencia-malbec-alto-valle-verziere-ficha.png,
+  experiencia-malbec-estepa-ribera-del-cuarzo-ficha.png,
+  experiencia-malbec-mar-don-amaro-ficha.png,
+  experiencia-malbec-valle-medio-enclave-sur-ficha.png,
+  experiencia-malbec-valle-medio-trina-ficha.png
+
+El usuario ya renombró el botón que no coincidía con su ficha (antes se
+llamaba boton-clasico-malbec.png) a
+boton-estepa-ribera-del-cuarzo-malbec.png, para que quede claro que es el
+mismo vino que experiencia-malbec-estepa-ribera-del-cuarzo-ficha.png (la
+etiqueta de la botella dice "Ribera del Cuarzo / Clásico / Malbec" — el
+nombre real del vino sigue siendo "Clásico", solo se renombró el archivo).
+Los otros 5 coinciden por nombre de forma directa (agrestis↔agrestis,
+don-amaro↔don-amaro, enclave-sur↔enclave-sur, verziere↔verziere,
+trina-reserva-de↔valle-medio-trina).
+
+Región de cada vino (según el logo que ya trae cada botón/ficha):
+- Agrestis → Alto Valle
+- Verziere → Alto Valle
+- Enclave Sur → Valle Medio
+- Trina Reserva de Malbec → Valle Medio
+- Don Amaro → Mar
+- Clásico (Ribera del Cuarzo) → Estepa
+
+Armar esta experiencia nueva con el mismo patrón exacto que Pinot Noir:
+listado de 6 tarjetas (botón) → al tocar, ficha a pantalla completa +
+"Bodega de origen" (título + botón a la bodega real, mismo mecanismo
+WineryOriginBlock que ya existe) — sin "Disponible en" ni "También te
+pueden gustar", igual que Pinot Noir.
+
+============================================
+CAMBIO 3 — Fondos de imagen parejos con la app
+============================================
+Si en el Paso 0 encontrás que alguna imagen (de esta Experiencia Malbec o
+de la Pinot Noir ya existente) tiene un fondo notoriamente distinto al
+crema de la app, avisame cuáles antes de decidir si las ajustamos — no
+edites ninguna imagen sin mostrarme primero cuál y cuánto se nota la
+diferencia.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar Experiencia Pinot Noir (ni sus datos, ni su código base —
+  salvo la generalización de componente que propongas en el Paso 0, que
+  no debe cambiar su comportamiento actual).
+- No tocar Cursos, Vinos Cerca Tuyo/Recomendados, Agenda, Perfil, WINES,
+  WINERIES_DATA (excepto lectura), carrito/checkout.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: Tienda → Cajas Experiencia → ya no aparece Merlot, aparece
+   "Experiencia Ruta del Vino Malbec" nueva. Entrar → head + intro + 6
+   tarjetas sin borde negro. Tocar cada una de las 6 → ficha completa +
+   "Bodega de origen" con el nombre real de cada bodega, navega bien a su
+   ficha. Probar en varios anchos de pantalla que ninguna tarjeta se vea
+   recortada (mismo aspectRatio sin cover que ya usamos en Pinot Noir).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

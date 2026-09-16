@@ -34,6 +34,21 @@ import experienciaPinotAltovalleBellacomalcriadoFichaPhoto from "./assets/experi
 import experienciaPinotVallemedioCalfulenFichaPhoto from "./assets/experiencia-pinot-vallemedio-calfulen-ficha.png";
 import experienciaPinotEstepaAraucanaFichaPhoto from "./assets/experiencia-pinot-estepa-araucana-ficha.png";
 import experienciaPinotIntroPhoto from "./assets/experiencia-pinot-intro.png";
+import cajaExperienciaRvMalbecPhoto from "./assets/caja-experiencia-ruta-del-vino-malbec.png";
+import headExperienciaRvMalbecPhoto from "./assets/head-experiencia-ruta-del-vino-malbec.png";
+import experienciaMalbecIntroPhoto from "./assets/experiencia-malbec-intro.png";
+import botonAgrestisMalbec from "./assets/boton-agrestis-malbec.png";
+import botonVerziereMalbec from "./assets/boton-verziere-malbec.png";
+import botonEnclaveSurMalbec from "./assets/boton-enclave-sur-malbec.png";
+import botonTrinaReservaMalbec from "./assets/boton-trina-reserva-de-malbec.png";
+import botonDonAmaroMalbec from "./assets/boton-don-amaro-malbec.png";
+import botonRiberaDelCuarzoMalbec from "./assets/boton-ribera-del-cuarzo-malbec.png";
+import fichaAgrestisMalbec from "./assets/experiencia-malbec-alto-valle-agrestis-ficha.png";
+import fichaVerziereMalbec from "./assets/experiencia-malbec-alto-valle-verziere-ficha.png";
+import fichaEnclaveSurMalbec from "./assets/experiencia-malbec-valle-medio-enclave-sur-ficha.png";
+import fichaTrinaMalbec from "./assets/experiencia-malbec-valle-medio-trina-ficha.png";
+import fichaDonAmaroMalbec from "./assets/experiencia-malbec-mar-don-amaro-ficha.png";
+import fichaRiberaDelCuarzoMalbec from "./assets/experiencia-malbec-estepa-ribera-del-cuarzo-ficha.png";
 import botonBardaPn from "./assets/boton-barda-pinot-noir.png";
 import fichaBodegaChacraBardaPn from "./assets/ficha-bodega-chacra-barda-pinot-noir.png";
 
@@ -4644,7 +4659,7 @@ const SHOP_VARIETAL_BANNERS: Array<{
   },
 ];
 
-type PinotExperienceWine = {
+type ExperienceWine = {
   id: string;
   name: string;
   cardImage: string;
@@ -4654,7 +4669,7 @@ type PinotExperienceWine = {
   winery: string;
 };
 
-const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
+const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
   {
     id: "cordillera-debernardi",
     name: "Familia De Bernardi",
@@ -4699,6 +4714,56 @@ const PINOT_EXPERIENCE_WINES: PinotExperienceWine[] = [
   },
 ];
 
+// Región de cada vino según el logo que trae su botón/ficha: Agrestis y
+// Verziere → Alto Valle, Enclave Sur y Trina → Valle Medio, Don Amaro →
+// Mar, Clásico (Ribera del Cuarzo) → Estepa. La bodega "Bodega Agrestis"
+// existe como bodega propia en WINERIES_DATA (w20, con "Agrestis Malbec"
+// en su lista de vinos) — no es Humberto Canale (w3).
+const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
+  {
+    id: "altovalle-agrestis",
+    name: "Agrestis Malbec",
+    cardImage: botonAgrestisMalbec,
+    fichaImage: fichaAgrestisMalbec,
+    winery: "Bodega Agrestis",
+  },
+  {
+    id: "altovalle-verziere",
+    name: "Verziere Malbec",
+    cardImage: botonVerziereMalbec,
+    fichaImage: fichaVerziereMalbec,
+    winery: "Bodega Bonomi y Bernal",
+  },
+  {
+    id: "vallemedio-enclavesur",
+    name: "Enclave Sur Malbec",
+    cardImage: botonEnclaveSurMalbec,
+    fichaImage: fichaEnclaveSurMalbec,
+    winery: "Enclave Sur",
+  },
+  {
+    id: "vallemedio-trina",
+    name: "Trina Reserva de Malbec",
+    cardImage: botonTrinaReservaMalbec,
+    fichaImage: fichaTrinaMalbec,
+    winery: "Bodega Trina",
+  },
+  {
+    id: "mar-donamaro",
+    name: "Don Amaro Malbec",
+    cardImage: botonDonAmaroMalbec,
+    fichaImage: fichaDonAmaroMalbec,
+    winery: "Bodega Don Amaro",
+  },
+  {
+    id: "estepa-riberadelcuarzo",
+    name: "Clásico Malbec",
+    cardImage: botonRiberaDelCuarzoMalbec,
+    fichaImage: fichaRiberaDelCuarzoMalbec,
+    winery: "Ribera del Cuarzo",
+  },
+];
+
 type ExperienceBox = {
   name: string;
   description: string;
@@ -4708,10 +4773,16 @@ type ExperienceBox = {
   featured?: {
     cardImage: string;
     headerImage: string;
-    // Ya no se renderiza (reemplazada por wineCards); se deja asignada para
-    // no perder el import del asset original.
-    detailImage: string;
-    wineCards?: PinotExperienceWine[];
+    // Ya no se renderiza para Pinot (reemplazada por wineCards); se deja
+    // asignada ahí para no perder el import del asset original. Opcional
+    // porque las experiencias con wineCards no la necesitan.
+    detailImage?: string;
+    wineCards?: ExperienceWine[];
+    // Imagen de intro (fija, no clickeable) y aspect-ratio de las tarjetas
+    // de wineCards — cada experiencia puede traer botones con proporción
+    // distinta (ver Malbec vs Pinot), por eso no van hardcodeados.
+    introImage?: string;
+    cardAspectRatio?: string;
   };
 };
 
@@ -4725,17 +4796,21 @@ const EXPERIENCE_BOXES: ExperienceBox[] = [
       headerImage: headExperienciaRvPinotPhoto,
       detailImage: tarjetaDescripcionRvPinotPhoto,
       wineCards: PINOT_EXPERIENCE_WINES,
+      introImage: experienciaPinotIntroPhoto,
+      cardAspectRatio: "1966 / 813",
     },
   },
   {
-    name: "Experiencia Malbec",
+    name: "Experiencia Ruta del Vino Malbec",
     description:
       "6 Malbec rionegrinos para descubrir el carácter patagónico.",
-  },
-  {
-    name: "Experiencia Merlot",
-    description:
-      "6 Merlot seleccionados de las mejores bodegas del Alto y Valle Medio.",
+    featured: {
+      cardImage: cajaExperienciaRvMalbecPhoto,
+      headerImage: headExperienciaRvMalbecPhoto,
+      wineCards: MALBEC_EXPERIENCE_WINES,
+      introImage: experienciaMalbecIntroPhoto,
+      cardAspectRatio: "2022 / 889",
+    },
   },
 ];
 
@@ -4786,8 +4861,8 @@ function ShopScreen({
     useState<(typeof SHOP_TABS)[number]>("Cajas Experiencia");
   const [activeVarietal, setActiveVarietal] = useState<string | null>(null);
   const [openProduct, setOpenProduct] = useState<ExperienceBox | null>(null);
-  const [openPinotWine, setOpenPinotWine] =
-    useState<PinotExperienceWine | null>(null);
+  const [openExperienceWine, setOpenExperienceWine] =
+    useState<ExperienceWine | null>(null);
   const [search, setSearch] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
   const [cartView, setCartView] = useState<
@@ -4880,19 +4955,22 @@ function ShopScreen({
         />
         <div style={styles.sheetSurface}>
           {openProduct.featured?.wineCards ? (
-            openPinotWine ? (
-              <PinotWineFichaScreen
-                wine={openPinotWine}
-                onBack={() => setOpenPinotWine(null)}
+            openExperienceWine ? (
+              <WineExperienceFichaScreen
+                wine={openExperienceWine}
+                onBack={() => setOpenExperienceWine(null)}
                 onOpenWinery={onOpenWinery}
               />
             ) : (
-              <PinotExperienceListScreen
+              <WineExperienceListScreen
                 wines={openProduct.featured.wineCards}
-                onSelectWine={setOpenPinotWine}
+                introImage={openProduct.featured.introImage!}
+                introAlt={openProduct.name}
+                cardAspectRatio={openProduct.featured.cardAspectRatio!}
+                onSelectWine={setOpenExperienceWine}
                 onBack={() => {
                   setOpenProduct(null);
-                  setOpenPinotWine(null);
+                  setOpenExperienceWine(null);
                 }}
               />
             )
@@ -5306,13 +5384,19 @@ function ShopListCard({
   );
 }
 
-function PinotExperienceListScreen({
+function WineExperienceListScreen({
   wines,
+  introImage,
+  introAlt,
+  cardAspectRatio,
   onSelectWine,
   onBack,
 }: {
-  wines: PinotExperienceWine[];
-  onSelectWine: (wine: PinotExperienceWine) => void;
+  wines: ExperienceWine[];
+  introImage: string;
+  introAlt: string;
+  cardAspectRatio: string;
+  onSelectWine: (wine: ExperienceWine) => void;
   onBack: () => void;
 }) {
   return (
@@ -5323,8 +5407,8 @@ function PinotExperienceListScreen({
       {/* A sangre: -16 a cada lado cancela el padding de sheetSurface */}
       <div style={{ marginLeft: -16, marginRight: -16, ...styles.stack12 }}>
         <img
-          src={experienciaPinotIntroPhoto}
-          alt="Experiencia Ruta del Vino Pinot Noir"
+          src={introImage}
+          alt={introAlt}
           style={{ width: "100%", display: "block" }}
         />
         {wines.map((wine) => (
@@ -5345,7 +5429,7 @@ function PinotExperienceListScreen({
               alt={wine.name}
               style={{
                 width: "100%",
-                aspectRatio: "1966 / 813",
+                aspectRatio: cardAspectRatio,
                 display: "block",
               }}
             />
@@ -5356,12 +5440,12 @@ function PinotExperienceListScreen({
   );
 }
 
-function PinotWineFichaScreen({
+function WineExperienceFichaScreen({
   wine,
   onBack,
   onOpenWinery,
 }: {
-  wine: PinotExperienceWine;
+  wine: ExperienceWine;
   onBack: () => void;
   onOpenWinery: (name: string) => void;
 }) {
@@ -7242,7 +7326,7 @@ function WineDetail({
 // bodega real, que navega a su WineryDetail. Usado en la ficha de vino
 // normal (WineDetail), en la ficha de los vinos destacados de Inicio
 // (WineOriginBlocks) y en la ficha de los vinos de Experiencia
-// (PinotWineFichaScreen).
+// (WineExperienceFichaScreen).
 function WineryOriginBlock({
   winery,
   onOpenWinery,
