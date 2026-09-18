@@ -4249,6 +4249,10 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Contenedor con scroll propio del detalle (vino/bodega/vinoteca/evento),
+  // separado de scrollRef (que ahora se queda montado, oculto, mientras hay
+  // un detalle abierto encima — ver PASO 0 de auditoria-volver-app.txt).
+  const detailScrollRef = useRef<HTMLDivElement>(null);
   const scrollPositions = useRef<number[]>([]);
   const prevStackLen = useRef(0);
   // Scroll de Home guardado al salir por un acceso directo (actividad,
@@ -4267,7 +4271,7 @@ export default function App() {
   }, []);
 
   useLayoutEffect(() => {
-    const el = scrollRef.current;
+    const el = detail ? detailScrollRef.current : scrollRef.current;
     if (!el) return;
     const len = detailStack.length;
     const wentBack = len < prevStackLen.current;
@@ -4282,8 +4286,9 @@ export default function App() {
 
   const pushDetail = (entry: DetailEntry) =>
     setDetailStack((stack) => {
-      if (scrollRef.current) {
-        scrollPositions.current[stack.length] = scrollRef.current.scrollTop;
+      const activeEl = detail ? detailScrollRef.current : scrollRef.current;
+      if (activeEl) {
+        scrollPositions.current[stack.length] = activeEl.scrollTop;
       }
       return [...stack, entry];
     });
@@ -4461,7 +4466,14 @@ export default function App() {
              />
            )}
 
-     {tab === "agenda" && !detail ? (
+     {/* Pantallas de tab: se quedan siempre montadas mientras siguen siendo
+         el tab activo (solo se ocultan con display:none al abrir un
+         detalle encima), para que no pierdan su estado interno de
+         navegación (filtro de región, varietal, tab/caja de Tienda, etc.)
+         al volver — ver auditoria-volver-app.txt. Solo se desmontan de
+         verdad al cambiar de tab con goToTab. */}
+     <div style={{ display: detail ? "none" : "contents" }}>
+     {tab === "agenda" ? (
        <AgendaScreen
          onMenuClick={toggleMenu}
          onProfile={() => goToTab("profile")}
@@ -4470,7 +4482,7 @@ export default function App() {
          toggleFavorite={toggleFavorite}
          isFavorite={isFavorite}
        />
-     ) : tab === "shop" && !detail ? (
+     ) : tab === "shop" ? (
        <ShopScreen
          onOpenWine={(id) => openWine(id, true)}
          onOpenWinery={(name) => {
@@ -4490,14 +4502,72 @@ export default function App() {
      ) : (
      <div
   ref={scrollRef}
-  style={
-    !detail && tab in PHOTO_HEADER_CONFIG
-      ? styles.sheetSurface
-      : styles.content
-  }
+  style={tab in PHOTO_HEADER_CONFIG ? styles.sheetSurface : styles.content}
 >
-            {detail && detailView ? (
-              detail.kind === "wine" ? (
+            {tab === "home" ? (
+              <HomeScreen
+                onOpenWinery={openWinery}
+                onOpenEvent={openEvent}
+                onOpenHomeWineFicha={openHomeWineFicha}
+                onSetTab={goToTab}
+                onSetTabFromHome={goHomeShortcut}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+                search={search}
+                setSearch={setSearch}
+              />
+            ) : tab === "map" ? (
+              <MapScreen onOpenWine={openWine} onSetTab={goToTab} />
+            ) : tab === "search" ? (
+              <SearchScreen
+                search={search}
+                setSearch={setSearch}
+                results={results}
+                onOpenWine={openWine}
+                onOpenWinery={openWinery}
+                onOpenShop={openShop}
+              />
+            ) : tab === "bodegas" ? (
+              <RegionsScreen
+                onOpenWinery={openWinery}
+                showBackToHome={cameFromHomeShortcut}
+                onBackToHome={backToHome}
+              />
+            ) : tab === "winelist" ? (
+              <WineListScreen
+                onOpenWine={openWine}
+                onSetTab={goToTab}
+                onBack={backToHome}
+                search={search}
+                setSearch={setSearch}
+              />
+            ) : tab === "nearby" ? (
+              <WineListScreen
+                onOpenWine={openWine}
+                onSetTab={goToTab}
+                onBack={backToHome}
+                wines={HOME_NEARBY_WINES}
+                search={search}
+                setSearch={setSearch}
+              />
+            ) : (
+              <ProfileScreen
+                favorites={favorites}
+                onOpenWine={openWine}
+                onOpenWinery={openWinery}
+                onOpenShop={openShop}
+                onOpenEvent={openEvent}
+                isFavorite={isFavorite}
+                toggleFavorite={toggleFavorite}
+              />
+            )}
+          </div>
+     )}
+     </div>
+
+          {detail && detailView && (
+            <div ref={detailScrollRef} style={styles.content}>
+              {detail.kind === "wine" ? (
                 <WineDetail
                   wine={detailView as Wine}
                   onBack={closeDetail}
@@ -4563,66 +4633,9 @@ export default function App() {
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
                 />
-              )
-            ) : tab === "home" ? (
-              <HomeScreen
-                onOpenWinery={openWinery}
-                onOpenEvent={openEvent}
-                onOpenHomeWineFicha={openHomeWineFicha}
-                onSetTab={goToTab}
-                onSetTabFromHome={goHomeShortcut}
-                favorites={favorites}
-                toggleFavorite={toggleFavorite}
-                search={search}
-                setSearch={setSearch}
-              />
-            ) : tab === "map" ? (
-              <MapScreen onOpenWine={openWine} onSetTab={goToTab} />
-            ) : tab === "search" ? (
-              <SearchScreen
-                search={search}
-                setSearch={setSearch}
-                results={results}
-                onOpenWine={openWine}
-                onOpenWinery={openWinery}
-                onOpenShop={openShop}
-              />
-            ) : tab === "bodegas" ? (
-              <RegionsScreen
-                onOpenWinery={openWinery}
-                showBackToHome={cameFromHomeShortcut}
-                onBackToHome={backToHome}
-              />
-            ) : tab === "winelist" ? (
-              <WineListScreen
-                onOpenWine={openWine}
-                onSetTab={goToTab}
-                onBack={backToHome}
-                search={search}
-                setSearch={setSearch}
-              />
-            ) : tab === "nearby" ? (
-              <WineListScreen
-                onOpenWine={openWine}
-                onSetTab={goToTab}
-                onBack={backToHome}
-                wines={HOME_NEARBY_WINES}
-                search={search}
-                setSearch={setSearch}
-              />
-            ) : (
-              <ProfileScreen
-                favorites={favorites}
-                onOpenWine={openWine}
-                onOpenWinery={openWinery}
-                onOpenShop={openShop}
-                onOpenEvent={openEvent}
-                isFavorite={isFavorite}
-                toggleFavorite={toggleFavorite}
-              />
-            )}
-          </div>
-     )}
+              )}
+            </div>
+          )}
 
           {!detail && <BottomNav tab={tab} setTab={goToTab} />}
         </div>

@@ -1,0 +1,70 @@
+INSTRUCCIONES PARA CLAUDE CODE - AUDITORÍA DE "VOLVER" EN TODA LA APP
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es una auditoría completa, no un solo arreglo puntual — quiero
+ver el panorama entero antes de tocar nada.
+
+============================================
+PROBLEMA ENCONTRADO (el caso que disparó esto)
+============================================
+Flujo: Ruta del Vino → tocar una región (ej. "Alto Valle") → se filtra la
+lista de bodegas de esa región → tocar una bodega → entra a su ficha →
+tocar "Volver".
+
+Lo que pasa hoy: vuelve al principio de Ruta del Vino (la pantalla con las
+5 regiones para elegir), en vez de volver a la lista de bodegas YA
+FILTRADA por la región que se había elegido — "Volver" debería retroceder
+UN SOLO PASO, no saltar hasta el principio del flujo.
+
+El usuario encontró este caso puntual navegando al azar — pide que
+revisemos TODA la app en busca del mismo patrón roto (cualquier "Volver"
+que en vez de deshacer el último paso, resetea a una pantalla inicial),
+no solo que arreglemos este caso.
+
+============================================
+PASO 0 — Auditoría completa antes de tocar nada
+============================================
+Recorré todos los flujos de navegación de la app que tengan más de un
+paso hacia adentro (Ruta del Vino → región → bodega; Inicio → sección →
+ficha; Agenda → chip/filtro → evento; Tienda → Experiencia → vino;
+búsqueda → resultado; Perfil → sección → ficha; cualquier otro que
+encuentres) y para cada uno confirmá si "Volver" respeta el paso anterior
+real o si resetea a una pantalla más atrás de la que corresponde.
+
+Armame una tabla en el plan: flujo | comportamiento actual de Volver |
+¿está roto o bien? — para que pueda ver el panorama completo antes de
+aprobar qué se toca.
+
+============================================
+CAMBIO
+============================================
+Para cada flujo que confirmes roto en el Paso 0, corregilo para que
+"Volver" retroceda un paso real (mismo criterio: si venías de una lista
+filtrada, volvés a esa lista filtrada, no al principio del flujo).
+
+Si encontrás que varios flujos comparten el mismo mecanismo/bug de fondo
+(por ejemplo, todos usan una versión vieja de cómo se arma el
+detailStack), proponeme una solución centralizada en vez de parchear cada
+lugar por separado — mostrámela en el plan antes de aplicarla.
+
+============================================
+QUÉ NO HACER
+============================================
+- No toques ningún flujo que confirmes que YA funciona bien (un paso
+  atrás real) — solo los que encuentres rotos.
+- No toques WINES, WINERIES_DATA, el carrito/checkout, ni nada que no sea
+  navegación de "Volver".
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: probar cada flujo que identificaste como roto en el Paso 0,
+   confirmando que ahora "Volver" retrocede un paso real. Probar también
+   2-3 flujos que ya estaban bien, para confirmar que no se rompieron con
+   el cambio.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
