@@ -1,0 +1,96 @@
+INSTRUCCIONES PARA CLAUDE CODE - PULIR LA PANTALLA TIENDA (TAB VINOS)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Son varios cambios sobre la misma pantalla — quiero ver el
+plan completo antes de aplicar nada.
+
+============================================
+PASO 0 — Investigar antes de proponer
+============================================
+- Cómo está armado hoy el título de la pantalla Tienda, y si cambia según
+  el tab activo (Cajas Experiencia / Vinos / Cursos) o es fijo.
+- La tarjeta promocional actual de "Experiencia Pinot" dentro del tab
+  Vinos: qué contiene exactamente hoy (texto, chip "Ver la caja", punto
+  verde "Nuevo", a dónde navega al tocarla) y de qué imagen depende.
+- Los chips bordó de varietales: cómo están estilados hoy (tamaño,
+  bordes), y a dónde navegan hoy al tocarlos — confirmame el nombre de esa
+  pantalla "página nueva" a la que llevan hoy, para poder eliminarla o
+  dejarla de usar según corresponda.
+- La lista de vinos que hoy aparece debajo de los chips (todos los vinos
+  de la app) — cómo está armada, si ya soporta algún tipo de filtro o hay
+  que agregarlo de cero.
+
+============================================
+CAMBIO 1 — Título dinámico
+============================================
+Cuando el tab activo dentro de Tienda es "Vinos", el título de la pantalla
+pasa a decir "Vinos" en vez de "Tienda". En los otros tabs (Cajas
+Experiencia, Cursos) el título sigue diciendo lo que corresponda hoy (no
+lo cambies si ya es distinto, solo agregá el caso "Vinos").
+
+La barra de búsqueda queda exactamente como está — no la toques.
+
+============================================
+CAMBIO 2 — Reciclar la tarjeta promocional
+============================================
+Mismo lugar, misma imagen de fondo que ya tiene la tarjeta — pero el
+contenido de texto cambia por completo a esto, y nada más que esto (sin
+"Ver la caja", sin el punto verde "Nuevo"):
+
+Título: "Descubrí el vino Rionegrino"
+P�rrafo: "Hay un Río Negro distinto en cada copa. De la Cordillera al
+Mar, viñedos, paisajes y personas dan vida a vinos con identidades
+únicas. Recorré regiones, descubrí nuevas bodegas y varietales, y
+encontrá ese vino que todavía no conocías."
+
+Esta tarjeta deja de ser un link a la Experiencia Pinot Noir — pasa a ser
+puramente descriptiva/decorativa (sin acción al tocarla), salvo que
+prefieras proponerme otra cosa en el plan (por ejemplo, si tiene más
+sentido que seguir siendo clickeable hacia algún lado — mostrámelo como
+propuesta, no lo decidas solo).
+
+============================================
+CAMBIO 3 — Rediseño de los chips de varietal
+============================================
+Los chips bordó de varietales se ven muy cuadrados y grandes hoy —
+modernizalos: bordes más redondeados, más compactos/chicos, buen
+contraste, mismo criterio visual "chip" que ya usamos en otras partes de
+la app (por ejemplo los chips de Agenda Ahora/Hoy/Este finde, si aplica
+un estilo similar).
+
+============================================
+CAMBIO 4 — Los chips filtran la lista de abajo, no navegan
+============================================
+Este es el cambio más importante: sacar la navegación a otra pantalla al
+tocar un chip de varietal. En su lugar, el chip debe actuar como FILTRO
+en vivo sobre la lista de vinos que ya está debajo, en la misma pantalla
+— tocar "Malbec" deja visibles solo los vinos Malbec en esa lista, sin
+cambiar de pantalla. Tocar el mismo chip de nuevo (o un chip "Todos", si
+ya existe o hace falta agregarlo) vuelve a mostrar la lista completa.
+
+Si la pantalla a la que hoy navegan los chips tiene algo de lógica o
+diseño que valga la pena reusar para el filtrado en vivo (en vez de
+tirarla entera), proponémelo en el plan.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar Cajas Experiencia, Cursos, Ruta del Vino, Inicio, Agenda,
+  Perfil, Experiencias.
+- No tocar WINES, WINERIES_DATA, carrito/checkout.
+- No tocar la barra de búsqueda.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: Tienda → tab Vinos → título dice "Vinos". Tarjeta
+   promocional con el texto nuevo, sin chip ni punto verde. Chips de
+   varietal más prolijos, y al tocar uno (probar con 2-3 distintos) la
+   lista de abajo se filtra en la misma pantalla, sin navegar a ningún
+   lado. Confirmar que se puede volver a ver todos los vinos.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

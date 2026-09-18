@@ -4648,28 +4648,11 @@ const SHOP_TABS = ["Cajas Experiencia", "Vinos", "Cursos"] as const;
 const SHOP_VARIETAL_BANNERS: Array<{
   label: string;
   varietal: string;
-  gradient: string;
 }> = [
-  {
-    label: "Pinot Noir",
-    varietal: "Pinot Noir",
-    gradient: "linear-gradient(135deg, #6b1a2c, #4a1220)",
-  },
-  {
-    label: "Malbec",
-    varietal: "Malbec",
-    gradient: "linear-gradient(135deg, #5c1522, #3d0f18)",
-  },
-  {
-    label: "Merlot",
-    varietal: "Merlot",
-    gradient: "linear-gradient(135deg, #7d2436, #57182a)",
-  },
-  {
-    label: "Cabernet",
-    varietal: "Cabernet Sauvignon",
-    gradient: "linear-gradient(135deg, #4a1535, #2d0d22)",
-  },
+  { label: "Pinot Noir", varietal: "Pinot Noir" },
+  { label: "Malbec", varietal: "Malbec" },
+  { label: "Merlot", varietal: "Merlot" },
+  { label: "Cabernet", varietal: "Cabernet Sauvignon" },
 ];
 
 type ExperienceWine = {
@@ -4903,7 +4886,9 @@ function ShopScreen({
 }) {
   const [activeShopTab, setActiveShopTab] =
     useState<(typeof SHOP_TABS)[number]>("Cajas Experiencia");
-  const [activeVarietal, setActiveVarietal] = useState<string | null>(null);
+  // Filtro de varietal de la lista "Vinos disponibles" (tab Vinos) — vive acá,
+  // junto a `search`, para no perderse si se abre el carrito y se vuelve.
+  const [shopVarietalFilter, setShopVarietalFilter] = useState("Todos");
   const [openProduct, setOpenProduct] = useState<ExperienceBox | null>(null);
   const [openExperienceWine, setOpenExperienceWine] =
     useState<ExperienceWine | null>(null);
@@ -4928,18 +4913,7 @@ function ShopScreen({
 
   let body: React.ReactNode;
 
-  if (activeVarietal) {
-    body = (
-      <VarietalDetailScreen
-        varietal={activeVarietal}
-        onBack={() => setActiveVarietal(null)}
-        onOpenWine={onOpenWine}
-        onAddToCart={addToCart}
-        toggleFavorite={toggleFavorite}
-        isFavorite={isFavorite}
-      />
-    );
-  } else if (cartView === "cart") {
+  if (cartView === "cart") {
     body = (
       <>
         <PhotoHeader
@@ -5040,7 +5014,8 @@ function ShopScreen({
         isFavorite={isFavorite}
         activeShopTab={activeShopTab}
         setActiveShopTab={setActiveShopTab}
-        setActiveVarietal={setActiveVarietal}
+        shopVarietalFilter={shopVarietalFilter}
+        setShopVarietalFilter={setShopVarietalFilter}
         setOpenProduct={setOpenProduct}
         search={search}
         setSearch={setSearch}
@@ -5072,7 +5047,8 @@ function ShopMainView({
   isFavorite,
   activeShopTab,
   setActiveShopTab,
-  setActiveVarietal,
+  shopVarietalFilter,
+  setShopVarietalFilter,
   setOpenProduct,
   search,
   setSearch,
@@ -5087,7 +5063,8 @@ function ShopMainView({
   isFavorite: (id: string) => boolean;
   activeShopTab: (typeof SHOP_TABS)[number];
   setActiveShopTab: (tab: (typeof SHOP_TABS)[number]) => void;
-  setActiveVarietal: (varietal: string) => void;
+  shopVarietalFilter: string;
+  setShopVarietalFilter: (varietal: string) => void;
   setOpenProduct: (product: ExperienceBox) => void;
   search: string;
   setSearch: (value: string) => void;
@@ -5106,14 +5083,18 @@ function ShopMainView({
           subtitle: "Aprendé, descubrí y viví el vino Rionegrino.",
         }
       : {
-          title: "Tienda",
+          title: "Vinos",
           subtitle: "Nuestros vinos, para vos — con envío a todo el país.",
         };
 
   const filteredShopWines = WINES.filter((w) => {
+    const matchesVarietal =
+      shopVarietalFilter === "Todos" || w.varietal === shopVarietalFilter;
     const q = search.toLowerCase().trim();
-    if (!q) return true;
-    return [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q);
+    const matchesSearch =
+      !q ||
+      [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q);
+    return matchesVarietal && matchesSearch;
   });
 
   return (
@@ -5170,38 +5151,38 @@ function ShopMainView({
                   backgroundPosition: "center",
                 }}
               >
-                <div style={styles.locationStatusRow}>
-                  <span style={styles.locationDot} />
-                  <span style={styles.locationEyebrow}>Nuevo</span>
+                <div style={styles.locationGreeting}>
+                  Descubrí el vino Rionegrino
                 </div>
-                <div style={styles.locationGreeting}>Experiencia Pinot 🍷</div>
                 <div style={styles.locationBody}>
-                  6 Pinot Noir de distintas bodegas de la provincia, en una
-                  sola caja. Envío a todo el país.
+                  Hay un Río Negro distinto en cada copa. De la Cordillera al
+                  Mar, viñedos, paisajes y personas dan vida a vinos con
+                  identidades únicas. Recorré regiones, descubrí nuevas
+                  bodegas y varietales, y encontrá ese vino que todavía no
+                  conocías.
                 </div>
-                <button
-                  style={styles.primaryButton}
-                  onClick={() =>
-                    setOpenProduct({
-                      name: "Experiencia Pinot",
-                      description:
-                        "Una selección de 6 Pinot Noir de las mejores bodegas de Río Negro, curada especialmente para descubrir la diversidad de esta variedad en la Patagonia. Cada botella cuenta una historia diferente, desde la cordillera hasta el mar.",
-                    })
-                  }
-                >
-                  Ver la caja →
-                </button>
               </div>
 
-              <div style={styles.horizontalScroller}>
+              <div style={styles.chipsRow}>
+                <button
+                  style={
+                    shopVarietalFilter === "Todos"
+                      ? styles.chipActive
+                      : styles.chip
+                  }
+                  onClick={() => setShopVarietalFilter("Todos")}
+                >
+                  Todos
+                </button>
                 {SHOP_VARIETAL_BANNERS.map((banner) => (
                   <button
                     key={banner.label}
-                    style={{
-                      ...styles.varietalBannerTile,
-                      background: banner.gradient,
-                    }}
-                    onClick={() => setActiveVarietal(banner.varietal)}
+                    style={
+                      shopVarietalFilter === banner.varietal
+                        ? styles.chipActive
+                        : styles.chip
+                    }
+                    onClick={() => setShopVarietalFilter(banner.varietal)}
                   >
                     {banner.label}
                   </button>
@@ -5255,89 +5236,6 @@ function ShopMainView({
         </div>
       </div>
     </>
-  );
-}
-
-function VarietalDetailScreen({
-  varietal,
-  onBack,
-  onOpenWine,
-  onAddToCart,
-  toggleFavorite,
-  isFavorite,
-}: {
-  varietal: string;
-  onBack: () => void;
-  onOpenWine: (id: string) => void;
-  onAddToCart: (wine: Wine) => void;
-  toggleFavorite: (item: FavoriteItem) => void;
-  isFavorite: (id: string) => boolean;
-}) {
-  const [activeWinery, setActiveWinery] = useState("Todos");
-
-  const matchingWines = WINES.filter((w) => w.varietal === varietal);
-  const wineries = Array.from(new Set(matchingWines.map((w) => w.winery)));
-
-  const shownWines =
-    activeWinery === "Todos"
-      ? matchingWines
-      : matchingWines.filter((w) => w.winery === activeWinery);
-
-  return (
-    <div style={styles.stack22}>
-      <div style={styles.rowBetweenCenter}>
-        <button style={styles.backButton} onClick={onBack}>
-          <ArrowLeftIcon /> Volver
-        </button>
-      </div>
-
-      <div>
-        <div style={styles.sectionTitle}>{varietal}</div>
-        <div style={styles.placeText}>
-          Todos los {varietal} de la provincia, de todas las bodegas.
-        </div>
-      </div>
-
-      <div style={styles.chipsRow}>
-        <button
-          style={activeWinery === "Todos" ? styles.chipActive : styles.chip}
-          onClick={() => setActiveWinery("Todos")}
-        >
-          Todos
-        </button>
-        {wineries.map((w) => (
-          <button
-            key={w}
-            style={activeWinery === w ? styles.chipActive : styles.chip}
-            onClick={() => setActiveWinery(w)}
-          >
-            {w}
-          </button>
-        ))}
-      </div>
-
-      {shownWines.length ? (
-        <div style={styles.shopWineGrid}>
-          {shownWines.map((wine) => (
-            <ShopWineCard
-              key={wine.id}
-              wine={wine}
-              onClick={() => onOpenWine(wine.id)}
-              onAddToCart={onAddToCart}
-              toggleFavorite={toggleFavorite}
-              isFavorite={isFavorite}
-            />
-          ))}
-        </div>
-      ) : (
-        <div style={styles.card}>
-          <div style={styles.itemTitle}>Sin resultados</div>
-          <div style={styles.placeText}>
-            Todavía no tenemos cargado ningún {varietal} de la provincia.
-          </div>
-        </div>
-      )}
-    </div>
   );
 }
 
@@ -8396,21 +8294,6 @@ const styles: Record<string, React.CSSProperties> = {
     border: "none",
     background: "none",
     cursor: "pointer",
-  },
-  varietalBannerTile: {
-    width: 100,
-    height: 76,
-    borderRadius: 16,
-    border: 0,
-    display: "flex",
-    alignItems: "flex-end",
-    padding: 10,
-    color: "#fff",
-    fontWeight: 700,
-    fontSize: 13,
-    cursor: "pointer",
-    flexShrink: 0,
-    textAlign: "left",
   },
   shopWineGrid: {
     display: "grid",
