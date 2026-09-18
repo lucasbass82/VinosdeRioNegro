@@ -1,0 +1,109 @@
+INSTRUCCIONES PARA CLAUDE CODE - NUEVA "EXPERIENCIA CORDILLERA Y ESTEPA"
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Esta es la tercera Experiencia con este formato (después de Pinot Noir y
+Malbec) — a diferencia de esas dos (armadas por varietal, cubriendo las 5
+regiones), esta se arma por REGIÓN: 3 vinos de Cordillera + 3 vinos de
+Estepa, varietales mixtos.
+
+Ya generalizamos el código en el cambio de Malbec (ExperienceWine,
+WineExperienceListScreen, WineExperienceFichaScreen, ExperienceBox.featured
+con introImage y cardAspectRatio configurables) — esta nueva experiencia
+tiene que usar exactamente ese mismo mecanismo genérico, sin volver a
+duplicar código.
+
+============================================
+PASO 0 — Investigar antes de proponer
+============================================
+- Confirmá que el mecanismo genérico armado en el cambio de Malbec sigue
+  vigente tal cual, y que alcanza para esta experiencia nueva sin tocarlo
+  (más allá de agregar los datos).
+- Medí el aspect ratio real de los 6 botones nuevos (boton-de-bernardi-
+  gewurztraminer.png es 1891×832; los otros 5 son 2022×889 — son
+  prácticamente la misma proporción, ~2.27:1, pero confirmalo con
+  precisión antes de fijar el cardAspectRatio de esta experiencia).
+- Confirmá en WINES/WINERIES_DATA los ids reales de estos 6 vinos (no
+  asumas por el nombre del botón — ya nos pasó antes que el nombre de
+  archivo no siempre coincide con el vino real):
+  - "De Bernardi Gewürztraminer" (Familia De Bernardi)
+  - "De Bernardi Merlot" (Familia De Bernardi)
+  - "Finca Fraschetti Pinot Noir" (Finca Fraschetti)
+  - "Araucana Azul" (Ribera del Cuarzo) — blend de Malbec, Merlot y Petit
+    Verdot, según dice la etiqueta
+  - "Araucana Río de los Ciervos Malbec" (Ribera del Cuarzo)
+  - "Clásico Merlot Rosé" (Ribera del Cuarzo)
+
+  OJO — "Araucana" y "Clásico" ya son nombres de sub-marca que usamos
+  antes para OTROS vinos distintos de las mismas bodegas (Araucana Pinot
+  Noir, Araucana Malbec Rosé, y Clásico Malbec de la Experiencia Malbec) —
+  confirmá que estos 3 de acá son vinos REALMENTE DISTINTOS a esos (por
+  varietal/blend), no el mismo vino repetido con otro nombre de archivo.
+  Mostrame la tabla completa de coincidencias en WINES antes de aplicar
+  nada, igual que hicimos con Malbec.
+
+============================================
+CAMBIO 1 — Nueva Experiencia
+============================================
+El usuario agregó a src/assets/ estos 15 archivos:
+
+- boton-experiencia-cordillera-estepa.png (tarjeta "caja" en el listado
+  de Cajas Experiencia)
+- head-experiencia-regiones-cordillera-estepa.png (foto de header)
+- experiencia-region-cordillera-estepa-intro.png (tarjeta de intro fija)
+- Los 6 botones de vino (YA vienen sin borde negro, limpios):
+  boton-de-bernardi-gewurztraminer.png,
+  boton-familia-de-bernardi-merlot.png,
+  boton-finca-fraschetti-pinot-noir.png,
+  boton-ribera-del-cuarzo-araucana-azul.png,
+  boton-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec.png,
+  boton-ribera-del-cuarzo-clasico-merlot-rose.png
+- Las 6 fichas correspondientes (mismo nombre base que su botón, con
+  "-ficha" al final y el prefijo largo "experiencia-region-cordillera-
+  estepa-").
+
+Región de cada vino (según el logo que ya trae cada botón/ficha):
+- De Bernardi Gewürztraminer → Cordillera
+- De Bernardi Merlot → Cordillera
+- Finca Fraschetti Pinot Noir → Cordillera
+- Araucana Azul → Estepa
+- Araucana Río de los Ciervos Malbec → Estepa
+- Clásico Merlot Rosé → Estepa
+
+Armar esta experiencia nueva con el mismo patrón que Pinot Noir y Malbec:
+listado de 6 tarjetas (botón) → al tocar, ficha a pantalla completa +
+"Bodega de origen" (título + botón a la bodega real) — sin "Disponible
+en" ni "También te pueden gustar".
+
+Nombre de la experiencia para la tarjeta "caja" y el título de la
+pantalla: "Experiencia Ruta del Vino Cordillera y Estepa" (o el que te
+parezca más consistente con el patrón de nombres ya usado — proponelo en
+el plan).
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar Experiencia Pinot Noir ni Experiencia Malbec (ni sus datos, ni
+  el componente genérico — salvo agregarle los datos de esta tercera).
+- No tocar Cursos, Vinos Cerca Tuyo/Recomendados, Agenda, Perfil, WINES,
+  WINERIES_DATA (excepto lectura), carrito/checkout.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: Tienda → Cajas Experiencia → aparece la nueva tarjeta.
+   Entrar → head + intro + 6 tarjetas sin borde negro ni recorte raro.
+   Tocar cada una de las 6 → ficha completa + "Bodega de origen" con el
+   nombre real de cada bodega, navega bien a su ficha. Confirmar que
+   Pinot Noir y Malbec siguen funcionando igual que antes (sin
+   regresión).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

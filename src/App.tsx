@@ -51,6 +51,24 @@ import fichaDonAmaroMalbec from "./assets/experiencia-malbec-mar-don-amaro-ficha
 import fichaRiberaDelCuarzoMalbec from "./assets/experiencia-malbec-estepa-ribera-del-cuarzo-ficha.png";
 import botonBardaPn from "./assets/boton-barda-pinot-noir.png";
 import fichaBodegaChacraBardaPn from "./assets/ficha-bodega-chacra-barda-pinot-noir.png";
+import botonExperienciaCordilleraEstepa from "./assets/boton-experiencia-cordillera-estepa.png";
+import headExperienciaCordilleraEstepa from "./assets/head-experiencia-regiones-cordillera-estepa.png";
+import experienciaCordilleraEstepaIntro from "./assets/experiencia-region-cordillera-estepa-intro.png";
+import botonDeBernardiGewurztraminerCe from "./assets/boton-de-bernardi-gewurztraminer.png";
+import botonDeBernardiMerlotCe from "./assets/boton-familia-de-bernardi-merlot.png";
+// Renombrado en disco desde boton-finca-fraschetti-pinot-noir.png: ese nombre
+// ya lo usaba el botón de Inicio (v7, sin borde) — este es la versión limpia
+// nueva, solo para esta Experiencia (ver nueva-experiencia-cordillera-estepa.txt).
+import botonFincaFraschettiPnCe from "./assets/boton-finca-fraschetti-pinot-noir-cordillera-estepa.png";
+import botonAraucanaAzulCe from "./assets/boton-ribera-del-cuarzo-araucana-azul.png";
+import botonAraucanaRioDeLosCiervosMalbecCe from "./assets/boton-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec.png";
+import botonClasicoMerlotRoseCe from "./assets/boton-ribera-del-cuarzo-clasico-merlot-rose.png";
+import fichaDeBernardiGewurztraminerCe from "./assets/experiencia-region-cordillera-estepa-familia-de-bernardi-gewurztraminer-ficha.png";
+import fichaDeBernardiMerlotCe from "./assets/experiencia-region-cordillera-estepa-familia-de-bernardi-merlot-ficha.png";
+import fichaFincaFraschettiPnCe from "./assets/experiencia-region-cordillera-estepa-finca-fraschetti-pinot-noir-ficha.png";
+import fichaAraucanaAzulCe from "./assets/experiencia-region-cordillera-estepa-ribera-del-cuarzo-araucana-azul-ficha.png";
+import fichaAraucanaRioDeLosCiervosMalbecCe from "./assets/experiencia-region-cordillera-estepa-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec-ficha.png";
+import fichaClasicoMerlotRoseCe from "./assets/experiencia-region-cordillera-estepa-ribera-del-cuarzo-clasico-merlot-rose-ficha.png";
 
 // Tarjetas "botón" + fichas de los 16 vinos destacados de Inicio
 // ("Vinos Cerca Tuyo" y "Vinos recomendados"). Ver HOME_NEARBY_CARDS /
@@ -4775,6 +4793,59 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
   },
 ];
 
+// A diferencia de Pinot y Malbec (armadas por varietal, 5 regiones), esta va
+// por REGIÓN: 3 de Cordillera + 3 de Estepa, varietales mixtos.
+const CORDILLERA_ESTEPA_EXPERIENCE_WINES: ExperienceWine[] = [
+  {
+    id: "cordillera-debernardigewurztraminer",
+    name: "De Bernardi Gewürztraminer",
+    cardImage: botonDeBernardiGewurztraminerCe,
+    fichaImage: fichaDeBernardiGewurztraminerCe,
+    winery: "Familia De Bernardi",
+    wineId: "v40",
+  },
+  {
+    id: "cordillera-debernardimerlot",
+    name: "De Bernardi Merlot",
+    cardImage: botonDeBernardiMerlotCe,
+    fichaImage: fichaDeBernardiMerlotCe,
+    winery: "Familia De Bernardi",
+    wineId: "v41",
+  },
+  {
+    id: "cordillera-fincafraschetti",
+    name: "Finca Fraschetti Pinot Noir",
+    cardImage: botonFincaFraschettiPnCe,
+    fichaImage: fichaFincaFraschettiPnCe,
+    winery: "Finca Fraschetti",
+    wineId: "v7",
+  },
+  {
+    id: "estepa-araucanaazul",
+    name: "Araucana Azul",
+    cardImage: botonAraucanaAzulCe,
+    fichaImage: fichaAraucanaAzulCe,
+    winery: "Ribera del Cuarzo",
+    wineId: "v46",
+  },
+  {
+    id: "estepa-araucanariodelosciervosmalbec",
+    name: "Araucana Río de los Ciervos Malbec",
+    cardImage: botonAraucanaRioDeLosCiervosMalbecCe,
+    fichaImage: fichaAraucanaRioDeLosCiervosMalbecCe,
+    winery: "Ribera del Cuarzo",
+    wineId: "v45",
+  },
+  {
+    id: "estepa-clasicomerlotrose",
+    name: "Clásico Merlot Rosé",
+    cardImage: botonClasicoMerlotRoseCe,
+    fichaImage: fichaClasicoMerlotRoseCe,
+    winery: "Ribera del Cuarzo",
+    wineId: "v48",
+  },
+];
+
 // Mapeo centralizado wineId → fichaImage para WineDetail (la ficha normal de
 // cualquier vino, ver fichas-nuevas-en-wine-detail.txt): combina las fichas
 // de las Experiencias con las de Inicio, sin duplicar datos. Cuando un vino
@@ -4782,7 +4853,11 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
 // la de Inicio (usa el logo de región real de la app y la ciudad real de la
 // bodega, más consistente con el resto de la app).
 const EXPERIENCE_WINE_FICHA_BY_ID: Record<string, string> = {};
-[...PINOT_EXPERIENCE_WINES, ...MALBEC_EXPERIENCE_WINES].forEach((w) => {
+[
+  ...PINOT_EXPERIENCE_WINES,
+  ...MALBEC_EXPERIENCE_WINES,
+  ...CORDILLERA_ESTEPA_EXPERIENCE_WINES,
+].forEach((w) => {
   EXPERIENCE_WINE_FICHA_BY_ID[w.wineId] = w.fichaImage;
 });
 
@@ -4836,6 +4911,18 @@ const EXPERIENCE_BOXES: ExperienceBox[] = [
       headerImage: headExperienciaRvMalbecPhoto,
       wineCards: MALBEC_EXPERIENCE_WINES,
       introImage: experienciaMalbecIntroPhoto,
+      cardAspectRatio: "2022 / 889",
+    },
+  },
+  {
+    name: "Experiencia Ruta del Vino Cordillera y Estepa",
+    description:
+      "3 vinos de Cordillera y 3 de Estepa, los extremos de la provincia en una sola caja.",
+    featured: {
+      cardImage: botonExperienciaCordilleraEstepa,
+      headerImage: headExperienciaCordilleraEstepa,
+      wineCards: CORDILLERA_ESTEPA_EXPERIENCE_WINES,
+      introImage: experienciaCordilleraEstepaIntro,
       cardAspectRatio: "2022 / 889",
     },
   },
