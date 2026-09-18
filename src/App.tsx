@@ -169,7 +169,7 @@ import trinaBlendDeMalbecPhoto from "./assets/vinos/bodega-trina-blend-de-malbec
 import trinaNaranjoDeCriollasPhoto from "./assets/vinos/bodega-trina-naranjo-de-criollas.jpg";
 import trinaReservaDeMalbecPhoto from "./assets/vinos/bodega-trina-reserva-de-malbec.jpg";
 import deBernardiPinotNoirPhoto from "./assets/vinos/familia-de-bernardi-pinot-noir.jpg";
-import deBernardiGewurztraminerPhoto from "./assets/vinos/familia-de-bernardi-gewurztraminer.jpg";
+import deBernardiGewurztraminerPhoto from "./assets/vinos/familia-de-bernardi-gewurztraminer.png";
 import deBernardiMerlotPhoto from "./assets/vinos/familia-de-bernardi-merlot.jpg";
 import deBernardiMerlotRosePhoto from "./assets/vinos/familia-de-bernardi-merlot-rose.jpg";
 import araucanaRioDeLosCiervosMalbecRosePhoto from "./assets/vinos/ribera-del-cuarzo-araucana-río-de-los-ciervos-malbec-rose.jpg";
@@ -4667,6 +4667,9 @@ type ExperienceWine = {
   // Nombre exacto en WINERIES_DATA de la bodega real de este vino, para el
   // bloque "Bodega de origen" de su ficha.
   winery: string;
+  // Id real en WINES de este vino, para el mapeo centralizado WINE_FICHA_BY_ID
+  // (ver fichas-nuevas-en-wine-detail.txt) que usa también WineDetail.
+  wineId: string;
 };
 
 const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
@@ -4676,6 +4679,7 @@ const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonDeBernardiPn,
     fichaImage: fichaDeBernardiPn,
     winery: "Familia De Bernardi",
+    wineId: "v39",
   },
   {
     id: "altovalle-chacrabarda",
@@ -4683,6 +4687,7 @@ const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonBardaPn,
     fichaImage: fichaBodegaChacraBardaPn,
     winery: "Bodega Chacra",
+    wineId: "v175",
   },
   {
     id: "altovalle-bellacomalcriado",
@@ -4690,6 +4695,7 @@ const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonBellacoMalcriadoPn,
     fichaImage: experienciaPinotAltovalleBellacomalcriadoFichaPhoto,
     winery: "Antigua Bodega Patagónica",
+    wineId: "v16",
   },
   {
     id: "vallemedio-calfulen",
@@ -4697,6 +4703,7 @@ const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonCalfulenPnReserva,
     fichaImage: experienciaPinotVallemedioCalfulenFichaPhoto,
     winery: "Bodega Videla Dorna",
+    wineId: "v5",
   },
   {
     id: "estepa-araucana",
@@ -4704,6 +4711,7 @@ const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonAraucanaPn,
     fichaImage: experienciaPinotEstepaAraucanaFichaPhoto,
     winery: "Ribera del Cuarzo",
+    wineId: "v44",
   },
   {
     id: "mar-wapisa",
@@ -4711,6 +4719,7 @@ const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonWapisaPn,
     fichaImage: experienciaPinotMarWapisaFichaPhoto,
     winery: "Wapisa",
+    wineId: "v6",
   },
 ];
 
@@ -4726,6 +4735,7 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonAgrestisMalbec,
     fichaImage: fichaAgrestisMalbec,
     winery: "Bodega Agrestis",
+    wineId: "v135",
   },
   {
     id: "altovalle-verziere",
@@ -4733,6 +4743,7 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonVerziereMalbec,
     fichaImage: fichaVerziereMalbec,
     winery: "Bodega Bonomi y Bernal",
+    wineId: "v193",
   },
   {
     id: "vallemedio-enclavesur",
@@ -4740,6 +4751,7 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonEnclaveSurMalbec,
     fichaImage: fichaEnclaveSurMalbec,
     winery: "Enclave Sur",
+    wineId: "v29",
   },
   {
     id: "vallemedio-trina",
@@ -4747,6 +4759,7 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonTrinaReservaMalbec,
     fichaImage: fichaTrinaMalbec,
     winery: "Bodega Trina",
+    wineId: "v38",
   },
   {
     id: "mar-donamaro",
@@ -4754,6 +4767,7 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonDonAmaroMalbec,
     fichaImage: fichaDonAmaroMalbec,
     winery: "Bodega Don Amaro",
+    wineId: "v25",
   },
   {
     id: "estepa-riberadelcuarzo",
@@ -4761,8 +4775,25 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
     cardImage: botonRiberaDelCuarzoMalbec,
     fichaImage: fichaRiberaDelCuarzoMalbec,
     winery: "Ribera del Cuarzo",
+    wineId: "v50",
   },
 ];
+
+// Mapeo centralizado wineId → fichaImage para WineDetail (la ficha normal de
+// cualquier vino, ver fichas-nuevas-en-wine-detail.txt): combina las fichas
+// de las Experiencias con las de Inicio, sin duplicar datos. Cuando un vino
+// tiene ficha en ambos lados (Bellaco Malcriado, Calfulen, Araucana), gana
+// la de Inicio (usa el logo de región real de la app y la ciudad real de la
+// bodega, más consistente con el resto de la app).
+const EXPERIENCE_WINE_FICHA_BY_ID: Record<string, string> = {};
+[...PINOT_EXPERIENCE_WINES, ...MALBEC_EXPERIENCE_WINES].forEach((w) => {
+  EXPERIENCE_WINE_FICHA_BY_ID[w.wineId] = w.fichaImage;
+});
+
+const WINE_FICHA_BY_ID: Record<string, string> = {
+  ...EXPERIENCE_WINE_FICHA_BY_ID,
+  ...HOME_WINE_FICHA_BY_ID,
+};
 
 type ExperienceBox = {
   name: string;
@@ -7118,6 +7149,7 @@ function WineDetail({
 }) {
   const [justAdded, setJustAdded] = useState(false);
 
+  const fichaImage = WINE_FICHA_BY_ID[wine.id];
   const originWinery = WINERIES.find((w) => w.name === wine.winery);
   const regionTitle = originWinery
     ? REGION_META[originWinery.region].title
@@ -7163,6 +7195,16 @@ function WineDetail({
         </button>
       </div>
 
+      {fichaImage ? (
+        // A sangre: -16 a cada lado cancela el padding de sheetSurface/content
+        <div style={{ marginLeft: -16, marginRight: -16 }}>
+          <img
+            src={fichaImage}
+            alt={`Ficha de ${wine.name}`}
+            style={{ width: "100%", display: "block" }}
+          />
+        </div>
+      ) : (
       <div style={styles.wineHeroCard}>
         <div style={styles.wineHeroTopRow}>
           {regionTitle && regionLogo && (
@@ -7265,6 +7307,7 @@ function WineDetail({
           </div>
         </div>
       </div>
+      )}
 
       <WineryOriginBlock winery={originWinery} onOpenWinery={onOpenWinery} />
 

@@ -1,0 +1,98 @@
+INSTRUCCIONES PARA CLAUDE CODE - USAR LAS FICHAS NUEVAS TAMBIÉN EN LA FICHA NORMAL DE VINO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Ya tenemos fichas nuevas (imagen completa, diseño moderno con logo de
+región) para varios vinos del catálogo — no son solo los de las
+Experiencias: hoy existen fichas nuevas para los 6 vinos de la Experiencia
+Pinot Noir, los 6 de la Experiencia Malbec, y además los 16 vinos que ya
+usamos en "Vinos Cerca Tuyo"/"Recomendados" de Inicio (que se superponen
+parcialmente con los de Pinot Noir, pero suman varios vinos más que no
+están en ninguna Experiencia — por ejemplo UN Chardonnay, Aniello 006
+Merlot, Bodega Miras, Savu Malbec, Araucana Malbec Rosé, etc.).
+
+En total son alrededor de 22-23 vinos con ficha nueva lista para usar (la
+cuenta exacta depende de cuánto se superponen los tres grupos — confirmala
+vos mismo en el Paso 0, no asumas un número).
+
+Hoy esas fichas SOLO se ven cuando se entra al vino desde adentro de la
+Experiencia correspondiente, o desde "Vinos Cerca Tuyo"/"Recomendados" de
+Inicio (HomeWineFichaScreen, que ya las usa ahí). Si se entra al mismo
+vino por CUALQUIER OTRO camino normal de la app (por ejemplo, desde la
+ficha de la bodega, o buscándolo), todavía se ve la ficha vieja de
+WineDetail.
+
+Ejemplo concreto: entrando a Antigua Bodega Patagónica y tocando "Bellaco
+Malcriado Pinot Noir" (que tiene ficha nueva) se debería ver la ficha
+nueva; tocando "Bellaco Malcriado Merlot" (que no tiene ficha nueva
+todavía) debe seguir viéndose la ficha vieja de siempre, sin cambios.
+
+Esto es el primer paso de un plan más grande: eventualmente los más de
+200 vinos del catálogo van a tener su ficha nueva — por ahora, que los que
+YA la tienen la usen en todos lados, no solo dentro de la Experiencia.
+
+============================================
+PASO 0 — Investigar antes de proponer
+============================================
+- ¿Dónde vive hoy el mapeo vino→ficha? Revisá los CUATRO lugares:
+  PINOT_EXPERIENCE_WINES, MALBEC_EXPERIENCE_WINES, HOME_NEARBY_CARDS y
+  HOME_RECOMMENDED_CARDS. Reportame el panorama completo: la lista
+  unificada de TODOS los vinos únicos que tienen fichaImage lista en
+  cualquiera de esos cuatro (puede haber overlap entre ellos — por
+  ejemplo un vino que está tanto en PINOT_EXPERIENCE_WINES como en
+  HOME_NEARBY_CARDS — listalo una sola vez en el resultado final).
+- ¿Cómo decide WineDetail (la ficha real de toda la app, la que se abre
+  desde bodega/búsqueda/etc.) qué mostrar hoy? Confirmame el mecanismo
+  actual antes de tocarlo.
+- Proponeme cómo armar UN mapeo centralizado (wine id o nombre → fichaImage
+  + su bodega ya resuelta) que puedan usar tanto las Experiencias como
+  WineDetail, sin duplicar imports ni datos — mostrame la propuesta antes
+  de aplicar.
+
+============================================
+CAMBIO
+============================================
+WineDetail (la ficha normal de cualquier vino en toda la app): si el vino
+que se está abriendo tiene una ficha nueva disponible en el mapeo
+centralizado, mostrar esa imagen a pantalla completa en vez del diseño
+viejo — y DEBAJO, mantener las 3 secciones normales que ya tiene WineDetail
+hoy para cualquier vino: "Bodega de origen", "Disponible en" (vinotecas),
+y "También te pueden gustar". Esto es distinto al comportamiento dentro de
+la Experiencia (que solo muestra "Bodega de origen", sin las otras dos) —
+acá SÍ van las 3, porque es el camino normal de la app.
+
+Si el vino NO tiene ficha nueva todavía, WineDetail sigue mostrando
+exactamente el diseño de siempre, sin ningún cambio.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar el comportamiento de las Experiencias (siguen mostrando solo
+  "Bodega de origen", como ya está).
+- No tocar HomeWineFichaScreen ni "Vinos Cerca Tuyo"/"Recomendados".
+- No inventar fichas para vinos que no las tienen — esos 200+ vinos
+  restantes quedan con el diseño viejo hasta que les hagamos su ficha,
+  en otro momento.
+- No tocar WINES, WINERIES_DATA, Experiencias, Tienda, Agenda, Perfil,
+  carrito/checkout.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a Antigua Bodega Patagónica → tocar "Bellaco
+   Malcriado Pinot Noir" → se ve la ficha nueva + Bodega de
+   origen/Disponible en/También te pueden gustar debajo. Tocar "Bellaco
+   Malcriado Merlot" (u otro vino sin ficha nueva) → sigue con el diseño
+   viejo de siempre. Repetir con 2-3 vinos más de Malbec (por ejemplo
+   Agrestis Malbec desde Bodega Agrestis) para confirmar que también
+   funciona.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
