@@ -1,0 +1,72 @@
+INSTRUCCIONES PARA CLAUDE CODE - ORGANIZAR ASSETS EN CARPETAS + LIMPIAR SIN USO
+Proyecto: Vinos de Río Negro
+
+Antes de mover o borrar un solo archivo, presentame el plan completo y
+esperá mi aprobación. Es un cambio de riesgo real (mover archivos rompe
+imports si no se actualizan todos) — quiero ver la propuesta completa
+antes de tocar nada.
+
+============================================
+PASO 0 — Auditoría de uso (si no la hiciste ya)
+============================================
+Recorré src/assets/ y compará cada archivo contra los imports reales en
+el código. Separá en: (a) en uso real, (b) sin uso — versión vieja ya
+reemplazada, con confianza alta, (c) sin uso — no identificable con
+certeza. Mostrame la lista completa de (b) y (c) antes de borrar nada.
+
+============================================
+CAMBIO 1 — Proponer la estructura de carpetas
+============================================
+Antes de mover nada, proponeme en el plan una estructura de subcarpetas
+dentro de src/assets/ que agrupe los archivos por tipo/uso. Por ejemplo
+(ajustalo vos según lo que realmente encuentres, esto es solo orientativo):
+
+- botones-vinos/ (los boton-*.png de vinos individuales)
+- fichas-vinos/ (las ficha-*.png de vinos individuales)
+- botones-experiencias/ (las cajas de Cajas Experiencia y sus intro/head)
+- fichas-bodegas/ (las ficha-*.png de bodegas)
+- fichas-eventos/ (boton/ficha de eventos como BALC 2026, Vinopolitan)
+- logos-region/ (los 5 logos de región)
+- otros/ (lo que no encaje claramente en ninguna categoría — no fuerces
+  una categoría si no corresponde)
+
+Mostrame la lista completa: carpeta propuesta → qué archivos entrarían
+en cada una, para que la revise antes de que muevas nada.
+
+============================================
+CAMBIO 2 — Mover y actualizar imports (recién después de mi aprobación)
+============================================
+Una vez que apruebe la estructura:
+1. Creá las carpetas y movés cada archivo a la que corresponda.
+2. Actualizá TODOS los imports en el código que apunten a esos archivos,
+   con la ruta nueva.
+3. Corré npm run build para confirmar que compila sin errores — si algo
+   rompe, es señal de un import que no se actualizó bien; arreglalo antes
+   de darlo por terminado.
+
+============================================
+CAMBIO 3 — Limpieza de archivos sin uso (recién después de mi confirmación)
+============================================
+De la lista del Paso 0, categoría (b) con confianza alta: esperá mi
+confirmación explícita de cuáles borrar antes de borrar ninguno. Los de
+categoría (c) no se tocan salvo que yo lo pida después de revisarlos.
+
+============================================
+QUÉ NO HACER
+============================================
+- No muevas ni borres ningún archivo antes de que apruebe cada paso por
+  separado (estructura primero, después el movimiento, después el borrado).
+- No toques el resto del código más allá de las rutas de import.
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores después de mover los archivos.
+2. Navegador: abrir 5-6 pantallas distintas de la app (Inicio, una bodega,
+   un vino, una Experiencia, un evento) y confirmar que todas las
+   imágenes se siguen viendo bien, ninguna rota.
+3. Confirmame un conteo final: cuántas carpetas se crearon, cuántos
+   archivos se movieron, cuántos se borraron (si aplica) y cuánto espacio
+   se liberó.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
