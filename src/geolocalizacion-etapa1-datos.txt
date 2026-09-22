@@ -1,0 +1,51 @@
+INSTRUCCIONES PARA CLAUDE CODE - GEOLOCALIZACIÓN, ETAPA 1: AUDITORÍA DE COORDENADAS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Este prompt es SOLO de investigación y reporte — no se toca
+ningún dato ni código todavía.
+
+============================================
+CONTEXTO
+============================================
+Vamos a construir geolocalización real (mapa interactivo con Leaflet +
+OpenStreetMap, mostrando pines de las 35 bodegas y las 4 vinotecas, más la
+ubicación del usuario, y ordenando "Vinos Cerca Tuyo"/"Bodegas
+recomendadas" por distancia real). Antes de construir nada de eso,
+necesitamos saber qué datos de coordenadas ya existen y cuáles faltan.
+
+Hace un tiempo ya cargamos coordenadas reales (lat/lng) para varias
+bodegas, para el botón "Cómo llegar" — pero no para las 35 completas, ni
+para ninguna vinoteca.
+
+============================================
+PASO 0 — Investigar el estado actual
+============================================
+- Revisá si existe algún componente MapScreen o similar ya armado en el
+  código (recordá que en la auditoría de "Volver" se mencionó un MapScreen
+  con un patrón de navegación potencialmente roto, pero no alcanzable
+  desde ningún botón real de la UI todavía — confirmá si sigue existiendo
+  y en qué estado).
+- Confirmá qué campo(s) usa hoy WINERIES_DATA para guardar coordenadas
+  (lat/lng, o dirección de texto, o ambos) y lo mismo para SHOPS
+  (vinotecas).
+- Armame una tabla completa: las 35 bodegas + las 4 vinotecas, con 3
+  columnas — nombre, ¿tiene coordenadas reales hoy? (sí/no), y si tiene,
+  cuáles son. Para las que NO tienen, marcá también si al menos tienen una
+  dirección de texto cargada (útil para que yo la busque) o no tienen
+  nada.
+
+============================================
+QUÉ NO HACER EN ESTE PROMPT
+============================================
+- No agregues ni modifiques ninguna coordenada todavía.
+- No toques el mapa decorativo actual, ni ningún componente.
+- No implementes nada de Leaflet ni geolocalización todavía — este prompt
+  es solo el Paso 0, el reporte.
+
+============================================ AL TERMINAR
+============================================
+Mostrame la tabla completa de las 39 (35 bodegas + 4 vinotecas) y el
+estado de MapScreen. Con eso, yo investigo y te paso las coordenadas que
+falten en un prompt siguiente, antes de arrancar con la construcción real
+del mapa.

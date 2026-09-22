@@ -1,0 +1,56 @@
+INSTRUCCIONES PARA CLAUDE CODE - ACTUALIZAR CON COORDENADAS PRECISAS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Cambio de datos puntual.
+
+============================================
+CONTEXTO
+============================================
+El usuario consiguió coordenadas exactas de Google Maps para 16 bodegas
+que hasta ahora tenían solo una coordenada aproximada a nivel
+localidad/pueblo (de la geocodificación con Nominatim). Reemplazá el
+valor de addressCoordinates de estas 16, con las coordenadas reales:
+
+- Humberto Canale (w3) → -39.0687096, -67.6409601
+- Bodega Videla Dorna (w4) → -39.2729464, -65.7280558
+- Bodega Don Amaro (w9) → -40.7088813, -64.9990844
+- Bodega Familia Dellanzo (w16) → -38.68124, -68.1757222
+- Bodega y Viñedos San Sebastián (w17) → -39.0296848, -67.42989
+- Bodega Aonikenk (w19) → -38.9617252, -67.9207304
+- Bodega y Viñedos Moschini (w26) → -39.0634803, -67.2057532
+- Bodega Chacra (w27) → -39.0339961, -67.3294159
+- Bodega Noemía (w28) → -39.0376042, -67.3270916
+- Bodega Favretto (w29) → -39.110489, -67.1090254
+- Bodega Flor del Prado (w30) → -38.9467659, -68.0167154
+- Antigua Bodega Patagónica (w2a) → -39.0468724, -67.4942948
+- Bodega Wapisa (w5) → -40.7660462, -63.3579418
+- Enclave Sur (w10) → -39.3063868, -65.6706568
+- Dominio de Fereneza (w33) → -38.9247499, -67.958306
+- Bodega Gérôme Marteau (w34) → -38.939491, -67.9638961
+
+============================================
+CAMBIO — Sacar la coordenada aproximada de Fabre Montmayou
+============================================
+Fabre Montmayou (w23) tenía la coordenada aproximada de General Roca
+(fallback de la geocodificación). El usuario decidió que quede SIN
+coordenada por ahora — el link que se consiguió resultó ser el de la sede
+en Mendoza, no el de la locación en Río Negro, así que preferimos no
+tener dato antes que tener uno impreciso o de la ciudad/provincia
+equivocada. Vaciá o eliminá el campo addressCoordinates de esta bodega
+(mismo estado que Familia Herrero y Bodega Weinglas, que ya están sin
+coordenada).
+
+============================================
+QUÉ NO HACER
+============================================
+- No toques ninguna otra bodega ni vinoteca — estas 16 más el vaciado de
+  Fabre Montmayou son los únicos cambios.
+- No toques el resto de WINERIES_DATA (nombre, ciudad, descripción, etc.)
+
+============================================ AL TERMINAR
+============================================
+Mostrame confirmación de que las 16 coordenadas quedaron actualizadas y
+que Fabre Montmayou quedó sin coordenada. No hace falta levantar servidor
+ni build para este cambio de datos, pero corré npm run build igual para
+confirmar que no se rompió nada de sintaxis.

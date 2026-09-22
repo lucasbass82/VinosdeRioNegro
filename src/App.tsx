@@ -491,6 +491,7 @@ type Shop = {
   name: string;
   city: string;
   address: string;
+  coordinates?: string;
   description: string;
   hours: string;
   openNow: boolean;
@@ -679,6 +680,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.8,
     distance: "245 km",
     image: bodegaMirasPhoto,
+    addressCoordinates: "-38.9799754, -67.9354898",
     address: "Ruta Nacional 22, Km 1208, General Fernández Oro, Río Negro",
   },
   {
@@ -709,6 +711,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.7,
     distance: "248 km",
     image: bodegaAnielloPhoto,
+    addressCoordinates: "-39.0724394, -67.2884889",
     address: "Ruta Nacional 22, Km 1208, Mainqué, Río Negro",
   },
  {
@@ -741,7 +744,8 @@ const WINERIES_DATA: Winery[] = [
   benefit: "10% OFF socios",
   rating: 4.8,
   distance: "",
-  image: "/antigua-bodega-patagonica.png"
+  image: "/antigua-bodega-patagonica.png",
+  addressCoordinates: "-39.0468724, -67.4942948",
 },
   
   
@@ -788,6 +792,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.9,
     distance: "285 km",
     image: bodegaHumbertoCanalePhoto,
+    addressCoordinates: "-39.0687096, -67.6409601",
     address: "Chacra 186, J.J. Gómez, General Roca, Río Negro",
   },
   {
@@ -818,6 +823,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.8,
     distance: "170 km",
     image: bodegaVideladDornaPhoto,
+    addressCoordinates: "-39.2729464, -65.7280558",
     address: "Av. Sarmiento y Av. Champleaux, Sección Chacras, Luis Beltrán, Río Negro",
   },
   {
@@ -843,6 +849,7 @@ const WINERIES_DATA: Winery[] = [
     rating: 4.9,
     distance: "32 km",
     image: bodegaWapisaPhoto,
+    addressCoordinates: "-40.7660462, -63.3579418",
 },
  {
   id: "w6",
@@ -861,6 +868,7 @@ const WINERIES_DATA: Winery[] = [
   rating: 4.7,
   distance: "160 km",
   image: fincaFraschettiPhoto,
+  addressCoordinates: "-41.9765922, -71.5227415",
   address: "Subida del Marqués y Ruta 40, El Bolsón, Río Negro",
 },
 {
@@ -880,6 +888,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaVinasDeLuciaPhoto,
+  addressCoordinates: "-40.7499219, -63.2670243",
   address: "Entrada de San Javier, ~25 km de Viedma, Valle de Viedma",
 },
 {
@@ -917,6 +926,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaDonAmaroPhoto,
+  addressCoordinates: "-40.7088813, -64.9990844",
   address: "Cruce de Ruta 3 y Ruta 251, cerca de San Antonio Oeste (~10 km de Las Grutas)",
 },
 {
@@ -947,6 +957,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaEnclaveSurPhoto,
+  addressCoordinates: "-39.3063868, -65.6706568",
 },
 {
   id: "w11",
@@ -965,6 +976,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaTrinaPhoto,
+  addressCoordinates: "-38.9808169, -64.1106288",
   address: "Arturo Benini 1471, Colonia Reig, Río Colorado, Río Negro",
 },
 {
@@ -989,6 +1001,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaFamiliaDeBernardiPhoto,
+  addressCoordinates: "-41.9853674, -71.4595973",
   address: "Al pie del Cerro Piltriquitrón, \"Villa Turismo\", El Bolsón",
 },
 {
@@ -1018,6 +1031,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaRiberaDelCuarzoPhoto,
+  addressCoordinates: "-39.1524364, -66.7871532",
   address: "Ruta Provincial N° 7, Km 12, Valle Azul, Río Negro. CP 8336.",
 },
 {
@@ -1079,6 +1093,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaFamiliaDellanzoPhoto,
+  addressCoordinates: "-38.68124, -68.1757222",
   address: "Sección Chacras, Lote 69, Calle Rural 11, Campo Grande/Colonia El Manzano. CP 8305.",
 },
 {
@@ -1108,6 +1123,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaYVinedosSanSebastianPhoto,
+  addressCoordinates: "-39.0296848, -67.42989",
   address: "Chacra N° 297, Cervantes, Río Negro.",
 },
 {
@@ -1125,6 +1141,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaGennariPhoto,
+  addressCoordinates: "-38.9649401, -67.8844992",
   address: "Ruta Provincial N° 65, Km 1181, General Fernández Oro.",
 },
 {
@@ -1142,6 +1159,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaAonikenkPhoto,
+  addressCoordinates: "-38.9617252, -67.9207304",
   address: "Chacra 129, Ruta Provincial 65, General Fernández Oro (Barrio Los Frutales).",
 },
 {
@@ -1159,6 +1177,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaAgrestisPhoto,
+  addressCoordinates: "-39.0834168, -67.5994151",
   address: "Gobernador Castello 1539, General Roca. CP 8334.",
 },
 {
@@ -1186,6 +1205,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaHumbertoTronelliPhoto,
+  addressCoordinates: "-39.0397659, -67.5337581",
   address: "Martín Miguel de Güemes 1614, General Roca, Río Negro",
 },
 {
@@ -1249,6 +1269,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: vinasDelLagoPhoto,
+  addressCoordinates: "-38.7565275, -68.0970153",
   address: "A metros del Lago Pellegrini.",
 },
 {
@@ -1295,6 +1316,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaYVinedosMoschiniPhoto,
+  addressCoordinates: "-39.0634803, -67.2057532",
   address: "Chacra 433, Lote 6, Ingeniero Huergo.",
 },
 {
@@ -1322,6 +1344,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaChacraPhoto,
+  addressCoordinates: "-39.0339961, -67.3294159",
   address: "Distrito Mainqué (zona Chacra 357). Sin dirección pública para visitas.",
 },
 {
@@ -1339,6 +1362,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaNoemiaPhoto,
+  addressCoordinates: "-39.0376042, -67.3270916",
   address: "Chacra 357, Mainqué (junto a Bodega Chacra).",
 },
 {
@@ -1364,6 +1388,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaFavrettoPhoto,
+  addressCoordinates: "-39.110489, -67.1090254",
   address: "Chacra 104, Lote 4, Villa Regina (segunda chacra en General Godoy).",
 },
 {
@@ -1388,6 +1413,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaFlorDelPradoPhoto,
+  addressCoordinates: "-38.9467659, -68.0167154",
   address: "Chacra El Puente, Ruta Nacional 22 Km 1215 y Calle 225, CP 8324, Cipolletti.",
 },
 {
@@ -1427,6 +1453,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaPujanteVinedosPatagonicosPhoto,
+  addressCoordinates: "-38.9795062, -67.8280092",
   address: "Entre Allen y Guerrico, ~10 ha.",
 },
 {
@@ -1450,6 +1477,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaDominioDeFerenezaPhoto,
+  addressCoordinates: "-38.9247499, -67.958306",
 },
 {
   id: "w34",
@@ -1476,6 +1504,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaGeromeMarteauPhoto,
+  addressCoordinates: "-38.939491, -67.9638961",
 },
 ];
 
@@ -3896,6 +3925,7 @@ const SHOPS: Shop[] = [
     name: "Vinoteca Vinopolitan",
     city: "Viedma",
     address: "Rivadavia 890",
+    coordinates: "-40.8191012, -62.9852478",
     description: "Descripción pendiente de confirmar con el comercio.",
     hours: "Horario a confirmar",
     openNow: false,
@@ -3909,6 +3939,7 @@ const SHOPS: Shop[] = [
     name: "Vinoteca Río Tinto",
     city: "Viedma",
     address: "San Martín 420",
+    coordinates: "-40.8064210, -62.9956966",
     description: "Descripción pendiente de confirmar con el comercio.",
     hours: "Horario a confirmar",
     openNow: false,
@@ -3922,6 +3953,7 @@ const SHOPS: Shop[] = [
     name: "Vinoteca Piquillín",
     city: "Viedma",
     address: "Colón 508",
+    coordinates: "-40.8104261, -62.9925086",
     description: "Descripción pendiente de confirmar con el comercio.",
     hours: "Horario a confirmar",
     openNow: false,
@@ -3935,6 +3967,7 @@ const SHOPS: Shop[] = [
     name: "Vinoteca Olivas y Sabores",
     city: "Viedma",
     address: "Moreno 973",
+    coordinates: "-40.8091376, -63.0011012",
     description: "Descripción pendiente de confirmar con el comercio.",
     hours: "Horario a confirmar",
     openNow: false,

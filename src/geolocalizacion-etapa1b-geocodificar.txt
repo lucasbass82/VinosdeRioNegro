@@ -1,0 +1,77 @@
+INSTRUCCIONES PARA CLAUDE CODE - GEOLOCALIZACIÓN, ETAPA 1B: GEOCODIFICAR DIRECCIONES
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código o dato, presentame el plan completo y
+esperá mi aprobación.
+
+============================================
+CONTEXTO
+============================================
+Ya tenemos el panorama completo (de la auditoría anterior): 3 bodegas con
+coordenadas reales, 24 bodegas + 4 vinotecas con dirección de texto pero
+sin coordenadas, y 8 bodegas sin nada. De esas 8, conseguí ubicación
+aproximada (a nivel localidad/zona, no dirección exacta) para 5, y quedan
+3 sin ningún dato.
+
+============================================
+CAMBIO — Geocodificar con Nominatim (OpenStreetMap)
+============================================
+Escribí un script (Node o el que uses para scripts puntuales del
+proyecto, no hace falta que quede en el bundle de producción) que:
+
+1. Tome las 24 bodegas + 4 vinotecas que tienen address de texto hoy, y
+   consulte la API gratuita de Nominatim (https://nominatim.openstreetmap.org/search)
+   para cada una, pidiendo el resultado en formato JSON y tomando
+   lat/lon del primer resultado.
+2. Respetá la política de uso de Nominatim: un request por segundo como
+   máximo (esperar ~1100ms entre cada consulta), y mandar un header
+   User-Agent identificando la app (ej. "VinosDeRioNegro/1.0").
+3. Para las 4 vinotecas, sumale ", Viedma, Río Negro, Argentina" a la
+   dirección si no lo tiene ya, para que geocodifique bien.
+4. Además, geocodificá estas 5 ubicaciones aproximadas (a nivel
+   localidad, no dirección exacta — marcalas como aproximadas en un
+   comentario en el código al guardarlas):
+   - Antigua Bodega Patagónica → "Cervantes, Río Negro, Argentina"
+   - Wapisa → "San Javier, Río Negro, Argentina"
+   - Enclave Sur → "Choele Choel, Río Negro, Argentina"
+   - Dominio de Fereneza → "Cipolletti, Río Negro, Argentina"
+   - Bodega Gérôme Marteau → "Cipolletti, Río Negro, Argentina"
+
+5. Estas 3 quedan SIN coordenadas por ahora (no hay ningún dato de
+   ubicación para geocodificar) — no inventes nada:
+   - Familia Herrero
+   - Bodega Weinglas
+   - Chacras de Fígaro (es un proyecto itinerante sin sede fija, nunca va
+     a tener una coordenada real — dejalo así a propósito)
+
+============================================
+CAMBIO — Guardar los resultados
+============================================
+- Para WINERIES_DATA: guardá el resultado en el campo addressCoordinates
+  (mismo formato "lat, lng" que ya usan las 3 que hoy lo tienen).
+- Para SHOPS (vinotecas): hoy no existe ningún campo de coordenadas —
+  agregá uno nuevo (por ejemplo coordinates?: string, mismo formato) y
+  completalo para las 4.
+- Mostrame en el plan, ANTES de aplicar nada, el resultado completo de la
+  geocodificación (nombre → coordenadas encontradas) para que lo revise —
+  puede pasar que Nominatim encuentre algo impreciso o incorrecto para
+  alguna dirección rara, y prefiero confirmarlas antes de guardarlas.
+
+============================================
+QUÉ NO HACER
+============================================
+- No implementes todavía el mapa, ni Leaflet, ni geolocalización del
+  usuario — este prompt es solo para completar los datos de coordenadas.
+  Eso lo hacemos en un prompt siguiente, una vez que los datos estén
+  confirmados.
+- No inventes coordenadas para Familia Herrero, Bodega Weinglas ni
+  Chacras de Fígaro.
+- No toques ningún otro dato de WINERIES_DATA/SHOPS más allá de las
+  coordenadas.
+
+============================================ AL TERMINAR
+============================================
+Mostrame la tabla completa final: las 39 bodegas/vinotecas con sus
+coordenadas (reales, geocodificadas, aproximadas marcadas como tales, o
+"sin dato" para las 3 que quedan pendientes). Esperá mi confirmación
+antes de guardar nada en el código — quiero revisar la tabla primero.
