@@ -6,6 +6,9 @@ import React, {
   useRef,
   useState,
 } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import logoAppPhoto from "./assets/otros/logo-app.jpeg";
 import logoRegionAltoValle from "./assets/logos-region/logo-region-alto-valle.png";
 import logoRegionValleMedio from "./assets/logos-region/logo-region-valle-medio.png";
@@ -14,7 +17,6 @@ import logoRegionEstepa from "./assets/logos-region/logo-region-estepa.png";
 import logoRegionMar from "./assets/logos-region/logo-region-mar.png";
 import rioNegroRiverPhoto from "./assets/otros/rio-negro-river.jpg";
 import mapaProvinciaPhoto from "./assets/otros/mapa-provincia.jpg";
-import mapaDecorativoViedmaPhoto from "./assets/otros/mapa-decorativo-viedma.jpg";
 import agendaBrindisPhoto from "./assets/otros/agenda-brindis.jpg";
 import tiendaHeaderPhoto from "./assets/otros/tienda-header.jpg";
 import headPerfilPhoto from "./assets/otros/head-perfil.png";
@@ -4110,6 +4112,137 @@ const OTHER_ZONES: RegionKey[] = [
 // HOME_RECOMMENDED_CARDS más abajo). HOME_NEARBY_WINES se conserva porque sigue
 // alimentando la pantalla "Ver todas" (tab "nearby").
 
+// ---- Geolocalización: distancia real y orden híbrido (Etapa 2) ----
+
+type Coords = [number, number];
+
+// WINERIES_DATA/SHOPS guardan las coordenadas como texto "lat, lng".
+function parseCoords(value?: string): Coords | null {
+  if (!value) return null;
+  const parts = value.split(",").map((p) => parseFloat(p.trim()));
+  if (parts.length !== 2 || parts.some((n) => Number.isNaN(n))) return null;
+  return [parts[0], parts[1]];
+}
+
+function haversineDistanceKm(a: Coords, b: Coords): number {
+  const toRad = (deg: number) => (deg * Math.PI) / 180;
+  const R = 6371;
+  const dLat = toRad(b[0] - a[0]);
+  const dLon = toRad(b[1] - a[1]);
+  const s =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+}
+
+// Texto de distancia: real si hay ubicación del usuario y coordenadas
+// cargadas, si no el texto fijo que ya tenía el lugar (fallback intacto).
+function distanceLabelFromCoords(
+  coordsText: string | undefined,
+  userCoords: Coords | null,
+  fallback: string
+): string {
+  const c = parseCoords(coordsText);
+  if (userCoords && c) return `${haversineDistanceKm(userCoords, c).toFixed(1)} km`;
+  return fallback;
+}
+
+// Reordena bodegas por distancia real, dejando siempre a Antigua Bodega
+// Patagónica primera (regla de negocio existente) y las que no tienen
+// coordenadas al final (no se excluyen, solo quedan últimas). Sin ubicación
+// del usuario, devuelve el orden curado original sin tocarlo.
+function sortWineriesByDistance<T extends Winery>(
+  items: T[],
+  userCoords: Coords | null
+): T[] {
+  if (!userCoords) return items;
+  const antigua = items.filter((w) => w.name === ANTIGUA_NAME);
+  const rest = items.filter((w) => w.name !== ANTIGUA_NAME);
+  const withDistance = rest.map((w) => {
+    const c = parseCoords(w.addressCoordinates);
+    return { w, dist: c ? haversineDistanceKm(userCoords, c) : Infinity };
+  });
+  withDistance.sort((a, b) => a.dist - b.dist);
+  return [...antigua, ...withDistance.map((x) => x.w)];
+}
+
+// Mismo criterio que sortWineriesByDistance, pero para listas de vinos:
+// resuelve la bodega de origen de cada vino (mismo patrón que ya usa el
+// resto del código, WINERIES.find(w => w.name === wine.winery)) y ordena
+// por la distancia de esa bodega.
+function sortWinesByWineryDistance(
+  wines: Wine[],
+  userCoords: Coords | null
+): Wine[] {
+  if (!userCoords) return wines;
+  const antiguaWines = wines.filter((w) => w.winery === ANTIGUA_NAME);
+  const restWines = wines.filter((w) => w.winery !== ANTIGUA_NAME);
+  const withDistance = restWines.map((wine) => {
+    const winery = WINERIES.find((w) => w.name === wine.winery);
+    const c = winery ? parseCoords(winery.addressCoordinates) : null;
+    return { wine, dist: c ? haversineDistanceKm(userCoords, c) : Infinity };
+  });
+  withDistance.sort((a, b) => a.dist - b.dist);
+  return [...antiguaWines, ...withDistance.map((x) => x.wine)];
+}
+
+// Vinotecas de "Disponible en": mismo criterio que las bodegas, sin la regla
+// "Antigua primera" (no aplica a SHOPS). Sin ubicación, orden intacto.
+function sortShopsByDistance<T extends Shop>(
+  shops: T[],
+  userCoords: Coords | null
+): T[] {
+  if (!userCoords) return shops;
+  const withDistance = shops.map((s) => {
+    const c = parseCoords(s.coordinates);
+    return { s, dist: c ? haversineDistanceKm(userCoords, c) : Infinity };
+  });
+  withDistance.sort((a, b) => a.dist - b.dist);
+  return withDistance.map((x) => x.s);
+}
+
+// Subtítulo de una vinoteca en "Disponible en": suma la distancia real sin
+// pisar el beneficio (son datos distintos, no se reemplazan entre sí).
+function shopAvailabilitySubtitle(shop: Shop, userCoords: Coords | null): string {
+  const distanceText = distanceLabelFromCoords(shop.coordinates, userCoords, "");
+  const hasBenefit = !isPlaceholderText(shop.benefit);
+  if (hasBenefit && distanceText) return `${shop.city} · ${shop.benefit} · ${distanceText}`;
+  if (hasBenefit) return `${shop.city} · ${shop.benefit}`;
+  if (distanceText) return `${shop.city} · ${distanceText}`;
+  return shop.city;
+}
+
+type UserLocationState =
+  | { status: "idle" }
+  | { status: "unavailable" }
+  | { status: "denied" }
+  | { status: "granted"; coords: Coords };
+
+// Nunca bloquea: sin soporte, sin permiso o mientras no responde, el estado
+// se queda en algo distinto de "granted" y todo lo que dependa de esto usa
+// su fallback normal (ver distanceLabelFromCoords / sortWineriesByDistance).
+function useUserLocation(): UserLocationState {
+  const [state, setState] = useState<UserLocationState>({ status: "idle" });
+
+  useEffect(() => {
+    if (!("geolocation" in navigator)) {
+      setState({ status: "unavailable" });
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) =>
+        setState({
+          status: "granted",
+          coords: [pos.coords.latitude, pos.coords.longitude],
+        }),
+      () => setState({ status: "denied" }),
+      { enableHighAccuracy: false, timeout: 10000 }
+    );
+  }, []);
+
+  return state;
+}
+
 // 5 bodegas: Antigua primera, luego la primera bodega (orden del array WINERIES)
 // de cada una de las otras 4 zonas.
 const HOME_RECOMMENDED_WINERIES: Winery[] = (() => {
@@ -4298,6 +4431,8 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [splashFading, setSplashFading] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
+  const userLocation = useUserLocation();
+  const userCoords = userLocation.status === "granted" ? userLocation.coords : null;
 
   const scrollRef = useRef<HTMLDivElement>(null);
   // Contenedor con scroll propio del detalle (vino/bodega/vinoteca/evento),
@@ -4558,6 +4693,7 @@ export default function App() {
             {tab === "home" ? (
               <HomeScreen
                 onOpenWinery={openWinery}
+                onOpenShop={openShop}
                 onOpenEvent={openEvent}
                 onOpenHomeWineFicha={openHomeWineFicha}
                 onSetTab={goToTab}
@@ -4566,9 +4702,14 @@ export default function App() {
                 toggleFavorite={toggleFavorite}
                 search={search}
                 setSearch={setSearch}
+                userCoords={userCoords}
               />
             ) : tab === "map" ? (
-              <MapScreen onOpenWine={openWine} onSetTab={goToTab} />
+              <MapScreen
+                onOpenWine={openWine}
+                onSetTab={goToTab}
+                userCoords={userCoords}
+              />
             ) : tab === "search" ? (
               <SearchScreen
                 search={search}
@@ -4597,7 +4738,7 @@ export default function App() {
                 onOpenWine={openWine}
                 onSetTab={goToTab}
                 onBack={backToHome}
-                wines={HOME_NEARBY_WINES}
+                wines={sortWinesByWineryDistance(HOME_NEARBY_WINES, userCoords)}
                 search={search}
                 setSearch={setSearch}
               />
@@ -4635,6 +4776,7 @@ export default function App() {
                   isFavorite={isFavorite}
                   fromShop={detail.fromShop}
                   onAddToCart={addToCart}
+                  userCoords={userCoords}
                 />
               ) : detail.kind === "homeWineFicha" ? (
                 <HomeWineFichaScreen
@@ -4650,6 +4792,7 @@ export default function App() {
                     const found = WINES.find((w) => w.name === name);
                     if (found) openWine(found.id);
                   }}
+                  userCoords={userCoords}
                 />
               ) : detail.kind === "winery" ? (
                 <WineryDetail
@@ -4683,6 +4826,7 @@ export default function App() {
                   }}
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
+                  userCoords={userCoords}
                 />
               )}
             </div>
@@ -6038,8 +6182,112 @@ function EventCarouselCard({
   );
 }
 
+// Íconos de pin custom vía divIcon: evita el bug clásico de CRA/webpack con
+// los PNG default de Leaflet, y de paso nos da el color distinto que pide
+// el Cambio 1 para distinguir bodega / vinoteca / usuario de un vistazo.
+function pinIcon(color: string, size = 14) {
+  return L.divIcon({
+    className: "",
+    html: `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};border:2px solid white;box-shadow:0 0 3px rgba(0,0,0,0.45);"></div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+    popupAnchor: [0, -size / 2],
+  });
+}
+
+const WINERY_PIN_ICON = pinIcon(theme.wine);
+const SHOP_PIN_ICON = pinIcon(theme.gold);
+const USER_PIN_ICON = pinIcon(theme.river, 16);
+
+// Ajusta el zoom/centro inicial para que entren todos los pines (Cambio 1).
+function FitMapBounds({ bounds }: { bounds: L.LatLngBoundsExpression }) {
+  const map = useMap();
+  useEffect(() => {
+    map.fitBounds(bounds, { padding: [20, 20] });
+  }, [map, bounds]);
+  return null;
+}
+
+function HomeMap({
+  wineries,
+  shops,
+  userCoords,
+  onOpenWinery,
+  onOpenShop,
+}: {
+  wineries: Winery[];
+  shops: Shop[];
+  userCoords: Coords | null;
+  onOpenWinery: (id: string) => void;
+  onOpenShop: (id: string) => void;
+}) {
+  const wineryPins = wineries
+    .map((w) => ({ winery: w, coords: parseCoords(w.addressCoordinates) }))
+    .filter((p): p is { winery: Winery; coords: Coords } => p.coords !== null);
+
+  const shopPins = shops
+    .map((s) => ({ shop: s, coords: parseCoords(s.coordinates) }))
+    .filter((p): p is { shop: Shop; coords: Coords } => p.coords !== null);
+
+  const allPoints: Coords[] = [
+    ...wineryPins.map((p) => p.coords),
+    ...shopPins.map((p) => p.coords),
+    ...(userCoords ? [userCoords] : []),
+  ];
+  if (allPoints.length === 0) return null;
+  const bounds = L.latLngBounds(allPoints);
+
+  return (
+    <div style={styles.decorativeMapImage}>
+      <MapContainer
+        bounds={bounds}
+        style={{ width: "100%", height: "100%" }}
+        scrollWheelZoom={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <FitMapBounds bounds={bounds} />
+        {wineryPins.map(({ winery, coords }) => (
+          <Marker key={winery.id} position={coords} icon={WINERY_PIN_ICON}>
+            <Popup>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>{winery.name}</div>
+              <button
+                style={styles.primaryButton}
+                onClick={() => onOpenWinery(winery.id)}
+              >
+                Ver ficha →
+              </button>
+            </Popup>
+          </Marker>
+        ))}
+        {shopPins.map(({ shop, coords }) => (
+          <Marker key={shop.id} position={coords} icon={SHOP_PIN_ICON}>
+            <Popup>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>{shop.name}</div>
+              <button
+                style={styles.primaryButton}
+                onClick={() => onOpenShop(shop.id)}
+              >
+                Ver ficha →
+              </button>
+            </Popup>
+          </Marker>
+        ))}
+        {userCoords && (
+          <Marker position={userCoords} icon={USER_PIN_ICON}>
+            <Popup>Estás acá</Popup>
+          </Marker>
+        )}
+      </MapContainer>
+    </div>
+  );
+}
+
 function HomeScreen({
   onOpenWinery,
+  onOpenShop,
   onOpenEvent,
   onOpenHomeWineFicha,
   onSetTab,
@@ -6048,8 +6296,10 @@ function HomeScreen({
   toggleFavorite,
   search,
   setSearch,
+  userCoords,
 }: {
   onOpenWinery: (id: string) => void;
+  onOpenShop: (id: string) => void;
   onOpenEvent: (id: string) => void;
   onOpenHomeWineFicha: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
@@ -6058,6 +6308,7 @@ function HomeScreen({
   toggleFavorite: (item: FavoriteItem) => void;
   search: string;
   setSearch: (value: string) => void;
+  userCoords: Coords | null;
 }) {
   return (
     <div style={styles.stack22}>
@@ -6088,10 +6339,12 @@ function HomeScreen({
         </div>
       </div>
 
-      <img
-        src={mapaDecorativoViedmaPhoto}
-        alt=""
-        style={styles.decorativeMapImage}
+      <HomeMap
+        wineries={WINERIES}
+        shops={SHOPS}
+        userCoords={userCoords}
+        onOpenWinery={onOpenWinery}
+        onOpenShop={onOpenShop}
       />
 
       <SectionTitle
@@ -6141,11 +6394,13 @@ function HomeScreen({
       />
 
       <div style={styles.horizontalScroller}>
-        {HOME_RECOMMENDED_WINERIES.map((w) => (
+        {sortWineriesByDistance(HOME_RECOMMENDED_WINERIES, userCoords).map((w) => {
+          const distanceText = distanceLabelFromCoords(w.addressCoordinates, userCoords, w.distance);
+          return (
           <div key={w.id} style={styles.horizontalImageCard}>
             <ImageCard
               title={w.name}
-              subtitle={w.distance ? `${w.city} · ${w.distance}` : w.city}
+              subtitle={distanceText ? `${w.city} · ${distanceText}` : w.city}
               description={w.description}
               feature={w.activity}
               image={w.image}
@@ -6167,7 +6422,8 @@ function HomeScreen({
               onClick={() => onOpenWinery(w.id)}
             />
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -6561,22 +6817,27 @@ function RegionsScreen({
 function MapScreen({
   onOpenWine,
   onSetTab,
+  userCoords,
 }: {
   onOpenWine: (id: string) => void;
   onSetTab: (tab: TabKey) => void;
+  userCoords: Coords | null;
 }) {
   const [varietalFilter, setVarietalFilter] = useState("Cerca mío");
   const [search, setSearch] = useState("");
 
-  const filteredWines = WINES.filter((w) => {
-    const matchesVarietal =
-      varietalFilter === "Cerca mío" || w.varietal === varietalFilter;
-    const q = search.toLowerCase().trim();
-    const matchesSearch =
-      !q ||
-      [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q);
-    return matchesVarietal && matchesSearch;
-  });
+  const filteredWines = sortWinesByWineryDistance(
+    WINES.filter((w) => {
+      const matchesVarietal =
+        varietalFilter === "Cerca mío" || w.varietal === varietalFilter;
+      const q = search.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q);
+      return matchesVarietal && matchesSearch;
+    }),
+    userCoords
+  );
 
   return (
     <div style={styles.stack22}>
@@ -7167,6 +7428,7 @@ function WineDetail({
   isFavorite,
   fromShop,
   onAddToCart,
+  userCoords,
 }: {
   wine: Wine;
   onBack: () => void;
@@ -7177,6 +7439,7 @@ function WineDetail({
   isFavorite: (id: string) => boolean;
   fromShop?: boolean;
   onAddToCart: (wine: Wine) => void;
+  userCoords: Coords | null;
 }) {
   const [justAdded, setJustAdded] = useState(false);
 
@@ -7201,9 +7464,12 @@ function WineDetail({
       (w.varietal === wine.varietal || w.winery === wine.winery)
   ).slice(0, 2);
 
-  const availableShops = wine.availableAt
-    .map((name) => SHOPS.find((s) => s.name === name))
-    .filter((s): s is Shop => Boolean(s));
+  const availableShops = sortShopsByDistance(
+    wine.availableAt
+      .map((name) => SHOPS.find((s) => s.name === name))
+      .filter((s): s is Shop => Boolean(s)),
+    userCoords
+  );
 
   return (
     <div style={styles.stack22}>
@@ -7359,11 +7625,7 @@ function WineDetail({
                 <ResultRow
                   key={found.id}
                   title={found.name}
-                  subtitle={
-                    isPlaceholderText(found.benefit)
-                      ? found.city
-                      : `${found.city} · ${found.benefit}`
-                  }
+                  subtitle={shopAvailabilitySubtitle(found, userCoords)}
                   onClick={() => onOpenShop(found.id)}
                 />
               ))}
@@ -7425,11 +7687,13 @@ function WineOriginBlocks({
   onOpenShop,
   onOpenWinery,
   onOpenWine,
+  userCoords,
 }: {
   wine: Wine;
   onOpenShop: (id: string) => void;
   onOpenWinery: (name: string) => void;
   onOpenWine: (name: string) => void;
+  userCoords: Coords | null;
 }) {
   const originWinery = WINERIES.find((w) => w.name === wine.winery);
 
@@ -7439,9 +7703,12 @@ function WineOriginBlocks({
       (w.varietal === wine.varietal || w.winery === wine.winery)
   ).slice(0, 2);
 
-  const availableShops = wine.availableAt
-    .map((name) => SHOPS.find((s) => s.name === name))
-    .filter((s): s is Shop => Boolean(s));
+  const availableShops = sortShopsByDistance(
+    wine.availableAt
+      .map((name) => SHOPS.find((s) => s.name === name))
+      .filter((s): s is Shop => Boolean(s)),
+    userCoords
+  );
 
   return (
     <>
@@ -7454,11 +7721,7 @@ function WineOriginBlocks({
               <ResultRow
                 key={found.id}
                 title={found.name}
-                subtitle={
-                  isPlaceholderText(found.benefit)
-                    ? found.city
-                    : `${found.city} · ${found.benefit}`
-                }
+                subtitle={shopAvailabilitySubtitle(found, userCoords)}
                 onClick={() => onOpenShop(found.id)}
               />
             ))}
@@ -7496,6 +7759,7 @@ function HomeWineFichaScreen({
   onOpenShop,
   onOpenWinery,
   onOpenWine,
+  userCoords,
 }: {
   wine: Wine;
   fichaImage?: string;
@@ -7503,6 +7767,7 @@ function HomeWineFichaScreen({
   onOpenShop: (id: string) => void;
   onOpenWinery: (name: string) => void;
   onOpenWine: (name: string) => void;
+  userCoords: Coords | null;
 }) {
   return (
     <div style={styles.stack22}>
@@ -7526,6 +7791,7 @@ function HomeWineFichaScreen({
         onOpenShop={onOpenShop}
         onOpenWinery={onOpenWinery}
         onOpenWine={onOpenWine}
+        userCoords={userCoords}
       />
     </div>
   );
@@ -7668,12 +7934,14 @@ function ShopDetail({
   onOpenWine,
   toggleFavorite,
   isFavorite,
+  userCoords,
 }: {
   shop: Shop;
   onBack: () => void;
   onOpenWine: (name: string) => void;
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
+  userCoords: Coords | null;
 }) {
   return (
     <div style={styles.stack22}>
@@ -7708,7 +7976,10 @@ function ShopDetail({
         <div style={styles.imageCardBody}>
           <div style={styles.sectionTitle}>{shop.name}</div>
           <div style={styles.itemSub}>
-            {shop.distance ? `${shop.city} · ${shop.distance}` : shop.city}
+            {(() => {
+              const distanceText = distanceLabelFromCoords(shop.coordinates, userCoords, shop.distance);
+              return distanceText ? `${shop.city} · ${distanceText}` : shop.city;
+            })()}
           </div>
 
           <div style={{ ...styles.rowGap8, marginTop: 10 }}>

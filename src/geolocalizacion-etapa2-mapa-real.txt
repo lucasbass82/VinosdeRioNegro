@@ -1,0 +1,97 @@
+INSTRUCCIONES PARA CLAUDE CODE - GEOLOCALIZACIÓN, ETAPA 2: MAPA REAL CON LEAFLET
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande — quiero ver el plan completo antes de
+que apliques nada.
+
+============================================
+CONTEXTO
+============================================
+Ya completamos la Etapa 1 (31 de 35 bodegas + las 4 vinotecas tienen
+addressCoordinates/coordinates reales en WINERIES_DATA/SHOPS). Ahora
+construimos el mapa real.
+
+Recordá: MapScreen (el componente que existe hoy con ese nombre) NO es un
+mapa — es la pantalla de lista "Vinos cerca tuyo". No confundir con lo que
+vamos a construir acá. La imagen decorativa mapa-provincia.jpg de Ruta del
+Vino NO se toca — solo reemplazamos el mapa decorativo de Inicio
+(mapa-decorativo-viedma.jpg).
+
+============================================
+PASO 0 — Investigar antes de proponer
+============================================
+- Confirmá exactamente dónde y cómo se renderiza hoy el mapa decorativo de
+  Inicio (mapa-decorativo-viedma.jpg) — tamaño, posición, qué hay
+  alrededor.
+- Confirmá cómo están hoy definidas HOME_NEARBY_WINES/HOME_NEARBY_CARDS y
+  la sección "Bodegas recomendadas" de Inicio (la selección curada fija
+  que hay que convertir a híbrida).
+- Confirmá que no hay ninguna dependencia de mapas instalada todavía
+  (Leaflet, react-leaflet, etc.) — instalar lo necesario.
+
+============================================
+CAMBIO 1 — Mapa real con Leaflet + OpenStreetMap
+============================================
+Reemplazar el mapa decorativo de Inicio por un mapa real e interactivo
+(Leaflet + react-leaflet, tiles de OpenStreetMap, sin costo ni API key)
+que muestre:
+- Un pin por cada bodega con coordenadas (31 de 35 — para las 4 sin dato,
+  simplemente no tienen pin, no rompas nada por eso).
+- Un pin por cada vinoteca (4).
+- Pines de bodega y de vinoteca visualmente distinguibles entre sí (color
+  o ícono distinto), para que se entienda cuál es cuál de un vistazo.
+- Al tocar un pin, mostrar el nombre del lugar (popup/tooltip) y un botón
+  o link que lleve a su ficha real dentro de la app (WineryDetail o
+  ShopDetail, según corresponda).
+- Zoom/centro inicial que muestre toda la provincia (todos los pines
+  visibles) por defecto.
+
+============================================
+CAMBIO 2 — Geolocalización del usuario, con fallback correcto
+============================================
+Pedir permiso de ubicación al usuario (Geolocation API del navegador). Si
+lo acepta: mostrar un pin/marcador de "estás acá" en el mapa, y calcular
+distancia real a cada bodega/vinoteca. Si lo rechaza, no está disponible,
+o el usuario todavía no respondió: el mapa se ve igual (todos los pines
+visibles), simplemente sin el marcador de "estás acá" ni el cálculo de
+distancia — la app NUNCA debe bloquearse ni mostrar un estado roto por no
+tener el permiso.
+
+============================================
+CAMBIO 3 — "Vinos Cerca Tuyo" y "Bodegas recomendadas": orden híbrido
+============================================
+Regla: Antigua Bodega Patagónica SIEMPRE aparece primera (ya es una regla
+existente del proyecto, no la cambies) — el resto de la selección se
+ordena por distancia real a la ubicación del usuario, de más cerca a más
+lejos, cuando el permiso de ubicación esté disponible.
+
+Si el usuario no dio permiso de ubicación: estas secciones vuelven al
+orden curado fijo que ya tienen hoy (no rompas el comportamiento actual
+para quien no comparte su ubicación).
+
+Para las bodegas que no tienen coordenadas (las 4 sin dato), como no se
+puede calcular su distancia real, dejalas al final del orden en vez de
+excluirlas de la sección.
+
+============================================ QUÉ NO HACER
+============================================
+- No toques la imagen decorativa de Ruta del Vino (mapa-provincia.jpg).
+- No toques MapScreen (la pantalla de lista) más allá de lo estrictamente
+  necesario para el orden híbrido del Cambio 3.
+- No toques Agenda, Perfil, Experiencias, Tienda, WINES, carrito/checkout.
+- No agregues Google Maps ni Mapbox — solo Leaflet + OpenStreetMap.
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: Inicio muestra el mapa real con todos los pines (bodegas +
+   vinotecas, distinguibles). Tocar un pin lleva a su ficha real.
+   Aceptar/rechazar el permiso de ubicación y confirmar que en ambos casos
+   la app se sigue viendo bien (con y sin "estás acá"). "Vinos Cerca
+   Tuyo"/"Bodegas recomendadas" respetan el orden híbrido (Antigua
+   primera, resto por cercanía cuando hay permiso).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

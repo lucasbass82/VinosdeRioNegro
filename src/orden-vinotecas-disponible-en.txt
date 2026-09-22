@@ -1,0 +1,67 @@
+INSTRUCCIONES PARA CLAUDE CODE - "DISPONIBLE EN" NO ORDENA LAS VINOTECAS POR CERCANÍA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Este reemplaza al prompt anterior (bug-orden-por-cercania.txt)
+— ese apuntaba a los 4 lugares de bodega que ya cubrimos en la Etapa 2,
+pero el caso real que encontró el usuario es otro lugar distinto, que
+puede que nunca se haya tocado.
+
+============================================ CASO CONCRETO REPORTADO
+============================================
+Usuario ubicado en Gallardo 49 (Viedma), con permiso de ubicación
+concedido. Busca "Bellaco Malcriado Pinot Noir" desde el buscador de
+Inicio, entra a la ficha, baja a "Disponible en" (la lista de vinotecas
+donde se consigue ese vino). Orden que ve: 1º Vinopolitan, 2º Río Tinto,
+3º Piquillín — pero Piquillín (Colón 508) está a ~400 metros de Gallardo
+49, mucho más cerca que las otras dos. El orden no respeta la cercanía
+real.
+
+============================================ PASO 0 — Confirmar el alcance real antes de tocar nada
+============================================
+Confirmá si la sección "Disponible en" de WineDetail (la lista de
+vinotecas/SHOPS donde se consigue un vino) fue tocada en algún momento
+por el Cambio 3 de la Etapa 2 (orden híbrido) — mi sospecha es que NO,
+que esta sección quedó fuera del alcance de ese prompt (que solo cubrió
+Bodegas recomendadas, Vinos Cerca Tuyo carrusel, "Ver todas", y
+MapScreen — ninguno de esos 4 es "Disponible en"). Confirmame en el plan
+cuál de las dos situaciones es:
+(a) Nunca se tocó — hoy usa el orden que tenga SHOPS/el array de
+    vinotecas de ese vino tal cual está definido, sin ningún criterio de
+    distancia.
+(b) Se tocó pero tiene un bug real en el cálculo u orden.
+
+============================================ CAMBIO
+============================================
+Aplicá el mismo criterio de orden híbrido que ya usamos en los otros 4
+lugares: cuando hay ubicación del usuario disponible, las vinotecas de
+"Disponible en" se ordenan de más cerca a más lejos (usando las
+coordinates reales de SHOPS que ya cargamos en la Etapa 1). Sin ubicación
+disponible, se mantiene el orden actual (el que tenga hoy, sea cual sea).
+
+Mismo criterio de mostrar la distancia real si corresponde (ya lo
+aplicamos en los otros lugares) — si tiene sentido sumarlo acá también
+para consistencia visual, hacelo; si no, dejalo como está y avisame por
+qué.
+
+============================================ QUÉ NO HACER
+============================================
+- No toques los 4 lugares que ya están bien (Bodegas recomendadas, Vinos
+  Cerca Tuyo, Ver todas, MapScreen) — solo "Disponible en".
+- No toques "Bodega de origen" (esa es la bodega productora, no una
+  vinoteca, y no tiene sentido de "cercanía" en el mismo lugar — a menos
+  que quieras señalarme si aplica ahí también, avisame en el plan).
+- No toques Ruta del Vino, Agenda, Perfil, Experiencias, Tienda.
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: simular ubicación en Gallardo 49 (o cerca), abrir la ficha
+   de Bellaco Malcriado Pinot Noir, confirmar que "Disponible en" muestra
+   Piquillín primero (la más cercana real).
+3. Probar con otro vino/otra ubicación simulada para confirmar que no es
+   casualidad.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
