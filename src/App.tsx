@@ -4430,6 +4430,9 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [showSplash, setShowSplash] = useState(true);
   const [splashFading, setSplashFading] = useState(false);
+  const [ageGate, setAgeGate] = useState<"checking" | "ask" | "denied" | "ok">(
+    "checking"
+  );
   const [cart, setCart] = useState<CartItem[]>([]);
   const userLocation = useUserLocation();
   const userCoords = userLocation.status === "granted" ? userLocation.coords : null;
@@ -4455,6 +4458,19 @@ export default function App() {
       clearTimeout(hideTimer);
     };
   }, []);
+
+  useEffect(() => {
+    setAgeGate(
+      localStorage.getItem("vrn_age_verified") === "true" ? "ok" : "ask"
+    );
+  }, []);
+
+  const confirmAge = () => {
+    localStorage.setItem("vrn_age_verified", "true");
+    setAgeGate("ok");
+  };
+  const denyAge = () => setAgeGate("denied");
+  const retryAgeGate = () => setAgeGate("ask");
 
   useLayoutEffect(() => {
     const el = detail ? detailScrollRef.current : scrollRef.current;
@@ -4609,6 +4625,36 @@ export default function App() {
               <div style={styles.splashShimmerOverlay} />
             </div>
           </div>
+        </div>
+      </>
+    );
+  }
+  if (ageGate !== "ok") {
+    return (
+      <>
+        <GlobalStyles />
+        <div style={styles.ageGatePage}>
+          {ageGate === "ask" && (
+            <div style={styles.ageGateCard}>
+              <p style={styles.ageGateQuestion}>¿Sos mayor de 18 años?</p>
+              <button style={styles.primaryButton} onClick={confirmAge}>
+                Sí
+              </button>
+              <button style={styles.secondaryButton} onClick={denyAge}>
+                No
+              </button>
+            </div>
+          )}
+          {ageGate === "denied" && (
+            <div style={styles.ageGateCard}>
+              <p style={styles.ageGateQuestion}>
+                Esta app es solo para mayores de 18 años
+              </p>
+              <button style={styles.primaryButton} onClick={retryAgeGate}>
+                Volver a intentar
+              </button>
+            </div>
+          )}
         </div>
       </>
     );
@@ -9833,5 +9879,29 @@ const styles: Record<string, React.CSSProperties> = {
     width: "100%",
     height: "auto",
     display: "block",
+  },
+  ageGatePage: {
+    height: "100vh",
+    width: "100%",
+    background: `radial-gradient(circle at 50% 45%, #ffffff 0%, ${theme.cream} 65%)`,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  ageGateCard: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "min(84vw, 320px)",
+    textAlign: "center",
+  },
+  ageGateQuestion: {
+    fontSize: 20,
+    fontWeight: 700,
+    color: theme.text,
+    margin: 0,
+    marginBottom: 8,
   },
 };
