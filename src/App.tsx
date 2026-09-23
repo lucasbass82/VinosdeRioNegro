@@ -154,6 +154,18 @@ import fichaWapisaBodegaPhoto from "./assets/fichas-bodegas/ficha-wapisa.jpeg";
 import vinopolitanPhoto from "./assets/fichas-eventos/vinopolitan.png";
 import piquillinPhoto from "./assets/fichas-eventos/piquillin.png";
 import rioTintoPhoto from "./assets/fichas-eventos/rio-tinto.png";
+import logoLaMasiaPhoto from "./assets/fichas-eventos/logo-la-masia.png";
+import logoPlaceresVinotecaPhoto from "./assets/fichas-eventos/logo-placeres-vinoteca.png";
+import logoSantoRemedioPhoto from "./assets/fichas-eventos/logo-santo-remedio.png";
+import logoVinotecaCavasPhoto from "./assets/fichas-eventos/logo-vinoteca-cavas.png";
+import logoCepasPhoto from "./assets/fichas-eventos/logo-cepas.png";
+import logoLaVinotecaPhoto from "./assets/fichas-eventos/logo-la-vinoteca.png";
+import logoTintoVineriaPhoto from "./assets/fichas-eventos/logo-tinto-vineria.png";
+import logoAcequiaCasaDeVinosPhoto from "./assets/fichas-eventos/logo-acequia-casa-de-vinos.png";
+import logoPatagoniaVinosPhoto from "./assets/fichas-eventos/logo-patagonia-vinos.png";
+import logoVientosDelSurPhoto from "./assets/fichas-eventos/logo-vientos-del-sur.png";
+import logoVinotecaAlmaPhoto from "./assets/fichas-eventos/logo-vinoteca-alma.png";
+import logoRusticaVinotecaPhoto from "./assets/fichas-eventos/logo-rustica-vinoteca.png";
 import zonaCordilleraPhoto from "./assets/zona-region/zona-cordillera.jpg";
 import zonaAltoVallePhoto from "./assets/zona-region/zona-alto-valle.jpg";
 import zonaValleMedioPhoto from "./assets/zona-region/zona-valle-medio.jpg";
@@ -3978,6 +3990,179 @@ const SHOPS: Shop[] = [
     distance: "Distancia a confirmar",
     image: "/grapes.png",
   },
+  {
+    id: "s5",
+    name: "La Masía",
+    city: "General Roca",
+    address: "Tucumán 128",
+    coordinates: "-39.02957951, -67.56655164",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 09:00-13:00 y 17:30-22:00 hs. Domingos 10:00-13:00 hs.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s6",
+    name: "Placeres Vinoteca",
+    city: "General Roca",
+    address: "Tucumán 662",
+    coordinates: "-39.02867418, -67.57380969",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 09:00-13:00 y 17:30-22:00 hs. Domingos 10:30-13:00 hs.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s7",
+    name: "Santo Remedio",
+    city: "General Roca",
+    address: "Mendoza 1472",
+    coordinates: "-39.02989273, -67.56401771",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 10:30-13:15 y 18:00-22:30 hs.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s8",
+    name: "Vinoteca Cavas",
+    city: "Cipolletti",
+    address: "Brentana 98",
+    coordinates: "-38.9416717, -67.9900236",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours:
+      "Lunes 18:30-22:30 hs. Martes a Jueves 10:30-13:30 y 18:30-22:30 hs. Viernes y Sábados 10:30-13:30 y 18:30-23:00 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s9",
+    name: "Cepas",
+    city: "Cipolletti",
+    address: "Saenz Peña 410",
+    coordinates: "-38.9379704, -67.9902365",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours:
+      "Lunes 18:30-22:30 hs. Martes a Jueves 10:30-13:30 y 18:30-22:30 hs. Viernes y Sábados 10:30-13:30 y 18:30-23:00 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s10",
+    name: "La Vinoteca",
+    city: "Cipolletti",
+    address: "Av. Alem 1325",
+    coordinates: "-38.9389284, -67.9813893",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 10:00-14:00 y 17:00-21:30 hs. Domingos 10:00-13:00 hs.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s11",
+    name: "Tinto Vinería",
+    city: "San Carlos de Bariloche",
+    address: "Av. Juan Manuel de Rosas 437",
+    coordinates: "-41.1324559, -71.3155805",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 10:00-13:00 y 14:00-20:00 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s12",
+    name: "Acequia Casa de Vinos",
+    city: "San Carlos de Bariloche",
+    address: "Av. Exequiel Bustillo 13024 (L.2)",
+    coordinates: "-41.1011127, -71.4452592",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Consultar horario",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s13",
+    name: "Patagonia Vinos",
+    city: "San Carlos de Bariloche",
+    address: "Av. San Martín 586",
+    coordinates: "-41.1345634, -71.3102300",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours:
+      "Lunes, Miércoles a Sábados 10:00-14:00 y 17:00-22:00 hs. Martes 10:00-14:00 y 23:00-00:00 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s14",
+    name: "Vientos del Sur",
+    city: "Villa Regina",
+    address: "San Lorenzo 839",
+    coordinates: "-39.1044559, -67.0900195",
+    description:
+      "Descripción pendiente de confirmar con el comercio. Horario según una fuente de 2013, no confirmado que el local siga abierto.",
+    hours: "Todos los días 10:00-01:00 hs.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s15",
+    name: "Rústica Vinoteca",
+    city: "Las Grutas",
+    address: "Dirección a confirmar",
+    coordinates: "-40.8119157, -65.0928355",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours:
+      "Miércoles a Martes 11:00-13:00 hs. Miércoles a Sábados y Lunes/Martes también 19:00-21:00 hs (19:00-21:30 vie/sáb). Domingos solo 11:00-13:00 hs.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s16",
+    name: "Vinoteca Alma",
+    city: "El Bolsón",
+    address: "Dirección a confirmar",
+    coordinates: "-41.9613852, -71.5353478",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 10:00-13:00 y 16:30-20:30 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
 ].sort((a, b) => {
   const priority = "Vinoteca Olivas y Sabores";
   if (a.name === priority) return -1;
@@ -7061,6 +7246,18 @@ const SHOP_HEADER_IMAGES: Record<string, string> = {
   "Vinoteca Vinopolitan": vinopolitanPhoto,
   "Vinoteca Piquillín": piquillinPhoto,
   "Vinoteca Río Tinto": rioTintoPhoto,
+  "La Masía": logoLaMasiaPhoto,
+  "Placeres Vinoteca": logoPlaceresVinotecaPhoto,
+  "Santo Remedio": logoSantoRemedioPhoto,
+  "Vinoteca Cavas": logoVinotecaCavasPhoto,
+  Cepas: logoCepasPhoto,
+  "La Vinoteca": logoLaVinotecaPhoto,
+  "Tinto Vinería": logoTintoVineriaPhoto,
+  "Acequia Casa de Vinos": logoAcequiaCasaDeVinosPhoto,
+  "Patagonia Vinos": logoPatagoniaVinosPhoto,
+  "Vientos del Sur": logoVientosDelSurPhoto,
+  "Vinoteca Alma": logoVinotecaAlmaPhoto,
+  "Rústica Vinoteca": logoRusticaVinotecaPhoto,
 };
 
 function shopHeaderImage(name: string): string {
@@ -8045,7 +8242,13 @@ function ShopDetail({
           <div style={styles.rowGap10Wrap}>
             <button
               style={{ ...styles.primaryButton, flex: 1 }}
-              onClick={() => openInMaps(`${shop.address}, ${shop.city}`)}
+              onClick={() =>
+                openInMaps(
+                  shop.coordinates
+                    ? shop.coordinates
+                    : `${shop.address}, ${shop.city}`
+                )
+              }
             >
               Cómo llegar
             </button>
