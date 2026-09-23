@@ -4397,6 +4397,66 @@ function shopAvailabilitySubtitle(shop: Shop, userCoords: Coords | null): string
   return shop.city;
 }
 
+// Ciudades conocidas para el saludo de Inicio: todas las que ya aparecen en
+// WINERIES_DATA/SHOPS, con coordenada de centro aproximada (geocodificada a
+// nivel localidad; en 2 casos —Las Grutas y El Cuy (Valle Azul)— el centro
+// administrativo de Nominatim caía muy lejos del lugar real, así que se usó
+// la coordenada exacta de un comercio/bodega ya cargado ahí). "greeting" es
+// la forma corta para "¡Hola, X!" (ej. "Roca", "Bariloche"); el resto usa el
+// mismo nombre que ya usa la app en city/addressCoordinates.
+const KNOWN_CITIES: { name: string; greeting: string; coords: Coords }[] = [
+  { name: "Viedma", greeting: "Viedma", coords: [-40.8084274, -62.994722] },
+  { name: "General Roca", greeting: "Roca", coords: [-39.0268342, -67.5754674] },
+  { name: "Cipolletti", greeting: "Cipolletti", coords: [-38.931342, -67.9905921] },
+  {
+    name: "San Carlos de Bariloche",
+    greeting: "Bariloche",
+    coords: [-41.1334781, -71.3101474],
+  },
+  { name: "Villa Regina", greeting: "Villa Regina", coords: [-39.0987435, -67.0852996] },
+  { name: "Las Grutas", greeting: "Las Grutas", coords: [-40.8119157, -65.0928355] },
+  { name: "El Bolsón", greeting: "El Bolsón", coords: [-41.9649027, -71.5348197] },
+  { name: "Allen", greeting: "Allen", coords: [-38.9795062, -67.8280092] },
+  { name: "Barda del Medio", greeting: "Barda del Medio", coords: [-38.7256442, -68.1558658] },
+  { name: "Cervantes", greeting: "Cervantes", coords: [-39.0540087, -67.3940797] },
+  { name: "Choele Choel", greeting: "Choele Choel", coords: [-39.2932355, -65.6615828] },
+  {
+    name: "Contralmirante Cordero",
+    greeting: "Contralmirante Cordero",
+    coords: [-38.7578252, -68.0997165],
+  },
+  { name: "El Cuy (Valle Azul)", greeting: "Valle Azul", coords: [-39.1524364, -66.7871532] },
+  { name: "Fernández Oro", greeting: "Fernández Oro", coords: [-38.9563161, -67.9212057] },
+  { name: "Guardia Mitre", greeting: "Guardia Mitre", coords: [-40.425038, -63.6721943] },
+  { name: "Ingeniero Huergo", greeting: "Ingeniero Huergo", coords: [-39.0694381, -67.2362915] },
+  { name: "Luis Beltrán", greeting: "Luis Beltrán", coords: [-39.3107313, -65.7635561] },
+  { name: "Mainqué", greeting: "Mainqué", coords: [-39.0612216, -67.3101776] },
+  { name: "Río Colorado", greeting: "Río Colorado", coords: [-38.9908428, -64.0957548] },
+  { name: "San Antonio Oeste", greeting: "San Antonio Oeste", coords: [-40.7302125, -64.9389955] },
+  { name: "San Javier", greeting: "San Javier", coords: [-40.7499219, -63.2670243] },
+];
+const MAX_GREETING_CITY_DISTANCE_KM = 150;
+
+// Saludo de Inicio: sin ubicación concedida (idle/denied/unavailable, ya
+// colapsados a userCoords null) se queda igual que siempre. Con ubicación,
+// busca la ciudad conocida más cercana por Haversine; si la más cercana
+// queda a una distancia irrazonable, saludo genérico sin nombre de ciudad.
+function homeGreeting(userCoords: Coords | null): string {
+  if (!userCoords) return "¡Hola, Viedma!";
+  let nearest = KNOWN_CITIES[0];
+  let bestDist = haversineDistanceKm(userCoords, nearest.coords);
+  for (const city of KNOWN_CITIES.slice(1)) {
+    const d = haversineDistanceKm(userCoords, city.coords);
+    if (d < bestDist) {
+      nearest = city;
+      bestDist = d;
+    }
+  }
+  return bestDist > MAX_GREETING_CITY_DISTANCE_KM
+    ? "¡Hola!"
+    : `¡Hola, ${nearest.greeting}!`;
+}
+
 type UserLocationState =
   | { status: "idle" }
   | { status: "unavailable" }
@@ -6564,7 +6624,7 @@ function HomeScreen({
       </div>
 
       <div>
-        <div style={styles.sectionTitle}>¡Hola, Viedma!</div>
+        <div style={styles.sectionTitle}>{homeGreeting(userCoords)}</div>
         <div style={styles.homeGreetingSubtitle}>
           Más de 54 etiquetas Rionegrinas cerca tuyo
         </div>
