@@ -1,0 +1,96 @@
+INSTRUCCIONES PARA CLAUDE CODE - 2 PROBLEMAS ENCONTRADOS EN PRUEBA REAL DESDE GENERAL ROCA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Son 2 problemas distintos, encontrados en la misma prueba real
+— tratalos como 2 cambios separados en el plan, aunque los apliques en el
+mismo prompt.
+
+============================================ PROBLEMA REPORTADO
+============================================
+Un usuario real en General Roca (con geolocalización concedida, y
+confirmando que el saludo dinámico "¡Hola, Roca!" ya funciona bien) buscó
+un vino, entró a la ficha, bajó a "Disponible en" — y ahí solo aparecen
+las 4 vinotecas de Viedma, todas con distancias enormes (ej. "Olivas y
+Sabores a 437.6 km"). Ninguna de las 14 vinotecas nuevas que agregamos
+(General Roca, Cipolletti, Bariloche, Villa Regina, Las Grutas, El
+Bolsón) aparece ahí, a pesar de que varias deberían estar mucho más
+cerca.
+
+============================================ PASO 0 — Confirmar la causa antes de tocar nada
+============================================
+Mi sospecha (confirmala antes de asumir): "Disponible en" arma su lista
+a partir de un campo tipo wine.availableAt (nombres de vinotecas que
+venden ese vino puntual) — y cuando agregamos las 14 vinotecas nuevas a
+SHOPS, nunca las sumamos a ese campo en ningún vino de WINES. Por eso,
+aunque las 14 ya existen como Shop con coordenadas reales, ningún vino
+"sabe" que se puede conseguir ahí.
+
+Confirmá en el plan: nombre exacto del campo, cómo está poblado hoy para
+los ~230 vinos (¿todos apuntan a las mismas 4 vinotecas de Viedma?), y si
+mi sospecha es correcta.
+
+============================================ CAMBIO — Todos los vinos disponibles en todas las vinotecas de la provincia
+============================================
+Decisión simple y pareja: TODOS los vinos de WINES quedan disponibles en
+las 18 vinotecas (las 4 de Viedma que ya existían + las 14 nuevas) — no
+hace falta preservar ninguna curación puntual que hubiera antes, si es
+que la había. El campo availableAt (o el que corresponda) de cada uno de
+los ~230 vinos pasa a listar los nombres de las 18 vinotecas.
+
+Esto no es el dato real definitivo de stock por local — es una decisión
+consciente de simplificar a "todo vino, en toda vinoteca de la provincia"
+hasta que en el futuro se cargue disponibilidad real por local.
+
+============================================ PROBLEMA 2 — El saludo no se actualiza solo al conceder el permiso
+============================================
+Mismo usuario, mismo test: al entrar por primera vez desde Roca, el
+saludo apareció como "¡Hola, Viedma!" (el default sin ubicación) — y
+recién después de refrescar la página manualmente, pasó a "¡Hola, Roca!"
+correctamente. Lo esperable es que en cuanto el usuario concede el
+permiso de ubicación (sin necesidad de refrescar nada), el saludo se
+actualice solo, ya que React debería re-renderizar automáticamente
+cuando el estado de useUserLocation() pasa a "granted".
+
+Investigá la causa antes de proponer el arreglo — candidatos típicos:
+- Que el saludo se calcule una sola vez en el mount y quede en un useState
+  propio en vez de recalcularse en cada render a partir de userCoords.
+- Algún useMemo/useCallback con dependencias mal puestas que no incluya
+  userCoords y por eso no dispare el recálculo.
+- Un timing real del navegador (el primer getCurrentPosition tarda en
+  resolver y el usuario ve el estado "sin ubicación" brevemente antes de
+  que se resuelva) — en ese caso NO es un bug real, es esperable que haya
+  un instante inicial con el saludo default hasta que el navegador
+  responda; confirmá si el problema es que nunca se actualiza sin
+  refrescar (bug real) o que tarda unos segundos en actualizarse solo
+  (comportamiento normal, no hay que arreglarlo, hay que confirmarlo nada
+  más).
+
+Arreglalo solo si confirmás que es un bug real (nunca se actualiza sin
+refrescar) — si es solo timing normal del navegador, no toques nada y
+avisame que es esperado.
+
+============================================ QUÉ NO HACER
+============================================
+- No toques las 4 vinotecas de Viedma ni su relación existente con los
+  vinos.
+- No toques WINERIES_DATA, el mapa, ni ninguna otra pantalla.
+- No toques el umbral de 150km ni los nombres cortos de KNOWN_CITIES, sólo
+  el mecanismo de actualización si el Problema 2 resulta ser un bug real.
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: simular ubicación en General Roca (mismas coordenadas que
+   ya usamos: -39.0333, -67.5805), buscar cualquier vino, entrar a
+   "Disponible en", y confirmar que ahora aparecen las 18 vinotecas
+   (incluidas las de General Roca) ordenadas por cercanía real, con las
+   de Roca primero. Repetir con Bariloche para confirmar.
+3. Sobre el Problema 2: si lo arreglaste, confirmar que conceder el
+   permiso de ubicación por primera vez actualiza el saludo solo, sin
+   necesidad de refrescar la página. Si confirmaste que era solo timing
+   normal del navegador, no hace falta este paso.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
