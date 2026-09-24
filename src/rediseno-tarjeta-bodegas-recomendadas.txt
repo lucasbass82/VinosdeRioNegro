@@ -1,0 +1,55 @@
+INSTRUCCIONES PARA CLAUDE CODE - SACAR EL TEXTO DE ENCIMA DE LA FOTO EN "BODEGAS RECOMENDADAS"
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================ PROBLEMA
+============================================
+En "Bodegas recomendadas" de Inicio (el componente ImageCard), hoy el
+nombre de la bodega, la ciudad/región y la distancia están escritos
+ENCIMA de la foto de la bodega (como overlay de texto), junto con el chip
+"Abierta"/"Cerrada" y el corazón de favorito. Ese texto tapa la foto que
+diseñamos para cada bodega.
+
+============================================ PASO 0 — Investigar antes de proponer
+============================================
+Confirmá la estructura actual exacta de ImageCard: qué elementos están
+overlay sobre la imagen hoy (nombre, ciudad/región, distancia, chip
+abierta/cerrada, corazón), y qué hay debajo de la imagen actualmente (la
+descripción corta que ya existe, según recordás vos mismo de un cambio
+anterior).
+
+============================================ CAMBIO
+============================================ Reorganizar así:
+- ENCIMA de la foto (overlay): SOLO quedan el chip "Abierta"/"Cerrada" y
+  el corazón de favorito. Nada de texto de nombre/ubicación/distancia.
+- DEBAJO de la foto (mismo lugar donde ya está la descripción corta):
+  agregar el nombre de la bodega, y debajo "ciudad · región" + la
+  distancia (mismo criterio que ya se usa en otras tarjetas de la app
+  para mostrar "ciudad · región · X km").
+
+La foto queda completamente libre de texto — se ve el diseño completo de
+cada bodega sin nada tapándolo.
+
+============================================ QUÉ NO HACER
+============================================
+- No toques el mecanismo de favoritos (corazón) ni el cálculo de
+  abierta/cerrada — solo se mueven, no cambia su funcionamiento.
+- No toques el cálculo de distancia por geolocalización, solo dónde se
+  muestra el texto.
+- No toques "Tus Bodegas" de Perfil ni ningún otro lugar que use un
+  componente distinto — solo "Bodegas recomendadas" de Inicio (ImageCard).
+- No toques el resto de Inicio, Ruta del Vino, ni ninguna otra pantalla.
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: "Bodegas recomendadas" en Inicio — la foto de cada bodega
+   se ve completa y limpia, con solo el chip abierta/cerrada y el corazón
+   encima. Debajo: nombre, ciudad · región, y distancia (con y sin
+   ubicación concedida, para confirmar ambos casos).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

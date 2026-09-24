@@ -6746,7 +6746,9 @@ function HomeScreen({
           <div key={w.id} style={styles.horizontalImageCard}>
             <ImageCard
               title={w.name}
-              subtitle={distanceText ? `${w.city} · ${distanceText}` : w.city}
+              subtitle={[w.city, REGION_META[w.region].title, distanceText]
+                .filter(Boolean)
+                .join(" · ")}
               description={w.description}
               feature={w.activity}
               image={w.image}
@@ -7003,7 +7005,9 @@ function ImageCard({
       <div
         style={{
           ...styles.imageCardTop,
-          backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.10), rgba(24,12,12,0.62)), url('${image}')`,
+          // Sombra sutil solo arriba, para que el chip y el corazón se lean
+          // sobre fotos claras; el resto de la foto queda sin tapar.
+          backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.28) 0%, rgba(16,10,9,0) 45%), url('${image}')`,
         }}
       >
         <div style={styles.rowBetweenTop}>
@@ -7012,14 +7016,11 @@ function ImageCard({
             <HeartIcon active={favoriteActive} />
           </button>
         </div>
-
-        <div>
-          <div style={styles.imageCardTitle}>{title}</div>
-          <div style={styles.imageCardSub}>{subtitle}</div>
-        </div>
       </div>
 
       <div style={styles.imageCardBody}>
+        <div style={styles.imageCardTitle}>{title}</div>
+        <div style={styles.imageCardSub}>{subtitle}</div>
         <div style={styles.placeText}>{description}</div>
         <div style={styles.rowBetweenCenter}>
           <div style={styles.featureText}>{feature}</div>
@@ -9698,16 +9699,16 @@ const styles: Record<string, React.CSSProperties> = {
   },
   imageCardTitle: {
     fontFamily: '"Lora", serif',
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: 700,
-    color: "#fff",
-    letterSpacing: -0.8,
-    lineHeight: 1.04,
+    color: theme.text,
+    letterSpacing: -0.5,
+    lineHeight: 1.15,
   },
   imageCardSub: {
     marginTop: 4,
-    color: "rgba(255,255,255,0.88)",
-    fontSize: 14,
+    color: theme.subtext,
+    fontSize: 13,
   },
   iconGlassButton: {
     width: 42,
