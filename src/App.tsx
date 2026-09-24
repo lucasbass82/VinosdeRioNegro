@@ -6753,7 +6753,7 @@ function HomeScreen({
               feature={w.activity}
               image={w.image}
               badge={
-                <Badge kind={w.openNow ? "open" : "closed"}>
+                <Badge kind={w.openNow ? "open" : "closed"} compact>
                   {w.openNow ? "Abierta" : "Cerrada"}
                 </Badge>
               }
@@ -8499,9 +8499,12 @@ function ResultRow({
 function Badge({
   children,
   kind,
+  compact = false,
 }: {
   children: React.ReactNode;
   kind: "neutral" | "open" | "closed" | "benefit";
+  // Versión más chica (ej. sobre la foto de "Bodegas recomendadas").
+  compact?: boolean;
 }) {
   const style =
     kind === "open"
@@ -8512,7 +8515,11 @@ function Badge({
       ? styles.badgeBenefit
       : styles.badgeNeutral;
 
-  return <span style={style}>{children}</span>;
+  return (
+    <span style={compact ? { ...style, ...styles.badgeCompact } : style}>
+      {children}
+    </span>
+  );
 }
 
 function Metric({ label, value }: { label: string; value: string }) {
@@ -9634,6 +9641,10 @@ const styles: Record<string, React.CSSProperties> = {
     background: "#EEF4EA",
     color: theme.valley,
     border: "1px solid #D7E7D9",
+  },
+  badgeCompact: {
+    padding: "3px 8px",
+    fontSize: 10.5,
   },
   badgeClosed: {
     display: "inline-flex",

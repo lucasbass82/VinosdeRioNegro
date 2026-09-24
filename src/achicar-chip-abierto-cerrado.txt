@@ -1,0 +1,33 @@
+INSTRUCCIONES PARA CLAUDE CODE - ACHICAR EL CHIP "ABIERTA"/"CERRADA"
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Cambio chico y puntual.
+
+============================================ CONTEXTO
+============================================
+En "Bodegas recomendadas" de Inicio (ImageCard, el mismo que ajustamos en
+el prompt anterior), el chip "Abierta"/"Cerrada" que queda arriba a la
+izquierda de la foto está un poco grande — hay que achicarlo.
+
+============================================ CAMBIO
+============================================
+Reducí el tamaño del chip (padding y/o font-size, lo que corresponda) para
+que se vea más discreto y proporcionado arriba de la foto, sin tocar su
+posición, color, ni el corazón de favorito que está al lado.
+
+============================================ QUÉ NO HACER
+============================================
+- No toques el corazón de favorito, el nombre/ubicación/distancia debajo
+  de la foto, ni nada más de lo que ya ajustamos.
+- No toques ninguna otra pantalla.
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: "Bodegas recomendadas" en Inicio — el chip se ve más chico
+   y proporcionado, sigue siendo legible.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
