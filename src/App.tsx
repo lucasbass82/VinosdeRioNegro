@@ -576,7 +576,8 @@ type TabKey =
   | "profile"
   | "shop"
   | "winelist"
-  | "nearby";
+  | "nearby"
+  | "vinotecas";
 
 type DetailEntry =
   | { kind: "wine"; id: string; fromShop?: boolean }
@@ -4641,18 +4642,28 @@ const MAX_GREETING_CITY_DISTANCE_KM = 150;
 // queda a una distancia irrazonable, saludo genérico sin nombre de ciudad.
 function homeGreeting(userCoords: Coords | null): string {
   if (!userCoords) return "¡Hola, Viedma!";
-  let nearest = KNOWN_CITIES[0];
-  let bestDist = haversineDistanceKm(userCoords, nearest.coords);
-  for (const city of KNOWN_CITIES.slice(1)) {
-    const d = haversineDistanceKm(userCoords, city.coords);
-    if (d < bestDist) {
-      nearest = city;
-      bestDist = d;
+  const { city, distanceKm } = nearestKnownCity(userCoords);
+  return distanceKm > MAX_GREETING_CITY_DISTANCE_KM
+    ? "¡Hola!"
+    : `¡Hola, ${city.greeting}!`;
+}
+
+// Ciudad conocida más cercana a unas coordenadas (saludo de Inicio y
+// "Vinotecas recomendadas").
+function nearestKnownCity(coords: Coords): {
+  city: (typeof KNOWN_CITIES)[number];
+  distanceKm: number;
+} {
+  let city = KNOWN_CITIES[0];
+  let distanceKm = haversineDistanceKm(coords, city.coords);
+  for (const candidate of KNOWN_CITIES.slice(1)) {
+    const d = haversineDistanceKm(coords, candidate.coords);
+    if (d < distanceKm) {
+      city = candidate;
+      distanceKm = d;
     }
   }
-  return bestDist > MAX_GREETING_CITY_DISTANCE_KM
-    ? "¡Hola!"
-    : `¡Hola, ${nearest.greeting}!`;
+  return { city, distanceKm };
 }
 
 type UserLocationState =
@@ -5271,6 +5282,13 @@ export default function App() {
                 wines={sortWinesByWineryDistance(HOME_NEARBY_WINES, userCoords)}
                 search={search}
                 setSearch={setSearch}
+              />
+            ) : tab === "vinotecas" ? (
+              <ShopListScreen
+                onOpenShop={openShop}
+                showBackToHome={cameFromHomeShortcut}
+                onBackToHome={backToHome}
+                userCoords={userCoords}
               />
             ) : (
               <ProfileScreen
@@ -6530,7 +6548,7 @@ const RUTA_DEL_VINO_GRADIENT =
 // PhotoHeader distinto según su estado interno, así que cada una renderiza
 // el suyo (ver AgendaScreen y ShopScreen).
 const PHOTO_HEADER_CONFIG: Record<
-  "home" | "map" | "bodegas" | "winelist" | "nearby" | "profile",
+  "home" | "map" | "bodegas" | "winelist" | "nearby" | "vinotecas" | "profile",
   {
     imageUrl: string;
     title: string;
@@ -6567,6 +6585,15 @@ const PHOTO_HEADER_CONFIG: Record<
     imageUrl: rioNegroRiverPhoto,
     title: "Vinos Cerca Tuyo",
     subtitle: "Los vinos que tenemos cerca tuyo, en un solo lugar.",
+  },
+  // Mismo encabezado que Ruta del Vino ("bodegas").
+  vinotecas: {
+    imageUrl: mapaProvinciaPhoto,
+    title: "Vinotecas",
+    subtitle: "Dónde encontrar vinos rionegrinos.",
+    gradient: RUTA_DEL_VINO_GRADIENT,
+    height: 180,
+    backgroundSize: "contain",
   },
   profile: {
     imageUrl: headPerfilPhoto,
@@ -6957,6 +6984,48 @@ function HomeScreen({
           );
         })}
       </div>
+
+      <SectionTitle
+        title="Vinotecas recomendadas"
+        action="Ver todas"
+        onAction={() => onSetTabFromHome("vinotecas")}
+      />
+
+      <div style={styles.horizontalScroller}>
+        {homeRecommendedShops(userCoords).map((s) => {
+          const open = shopOpenNow(s, new Date());
+          return (
+            <div key={s.id} style={styles.horizontalImageCard}>
+              <ImageCard
+                title={s.name}
+                subtitle={shopCitySubtitle(s, userCoords)}
+                description={SHOP_CARD_DESCRIPTIONS[s.name] ?? ""}
+                feature=""
+                image={shopHeaderImage(s.name)}
+                imageFit={shopImageFit(s.name)}
+                badge={
+                  open === null ? null : (
+                    <Badge kind={open ? "open" : "closed"} compact>
+                      {open ? "Abierta" : "Cerrada"}
+                    </Badge>
+                  )
+                }
+                onFavorite={(e) => {
+                  e.stopPropagation();
+                  toggleFavorite({
+                    id: s.id,
+                    name: s.name,
+                    city: s.city,
+                    kind: "shop",
+                  });
+                }}
+                favoriteActive={favorites.some((f) => f.id === s.id)}
+                onClick={() => onOpenShop(s.id)}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -7173,6 +7242,7 @@ function ImageCard({
   onFavorite,
   favoriteActive,
   onClick,
+  imageFit = "cover",
 }: {
   title: string;
   subtitle: string;
@@ -7183,20 +7253,46 @@ function ImageCard({
   onFavorite: (e: React.MouseEvent<HTMLButtonElement>) => void;
   favoriteActive: boolean;
   onClick: () => void;
+  // "contain": logo entero sobre crema (vinotecas), sin la sombra de foto.
+  imageFit?: "cover" | "contain";
 }) {
   return (
     <div style={styles.imageCard} onClick={onClick}>
       <div
-        style={{
-          ...styles.imageCardTop,
-          // Sombra sutil solo arriba, para que el chip y el corazón se lean
-          // sobre fotos claras; el resto de la foto queda sin tapar.
-          backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.28) 0%, rgba(16,10,9,0) 45%), url('${image}')`,
-        }}
+        style={
+          imageFit === "contain"
+            ? {
+                ...styles.imageCardTop,
+                backgroundImage: `url('${image}')`,
+                backgroundSize: "contain",
+                backgroundOrigin: "content-box",
+                backgroundColor: theme.cream,
+                borderBottom: `1px solid ${theme.line}`,
+              }
+            : {
+                ...styles.imageCardTop,
+                // Sombra sutil solo arriba, para que el chip y el corazón se lean
+                // sobre fotos claras; el resto de la foto queda sin tapar.
+                backgroundImage: `linear-gradient(180deg, rgba(16,10,9,0.28) 0%, rgba(16,10,9,0) 45%), url('${image}')`,
+              }
+        }
       >
         <div style={styles.rowBetweenTop}>
           <div style={styles.rowGap8}>{badge}</div>
-          <button style={styles.iconGlassButton} onClick={onFavorite}>
+          <button
+            style={
+              imageFit === "contain"
+                ? {
+                    ...styles.iconGlassButton,
+                    // Sobre crema el corazón blanco no se ve: va oscuro.
+                    color: theme.text,
+                    border: `1px solid ${theme.line}`,
+                    background: "rgba(255,255,255,0.7)",
+                  }
+                : styles.iconGlassButton
+            }
+            onClick={onFavorite}
+          >
             <HeartIcon active={favoriteActive} />
           </button>
         </div>
@@ -7567,6 +7663,231 @@ const SHOP_HEADER_IMAGES: Record<string, string> = {
 
 function shopHeaderImage(name: string): string {
   return SHOP_HEADER_IMAGES[name] || GENERIC_VINOTECA_PHOTO;
+}
+
+// Los logos se muestran enteros (contain sobre crema, como en ShopDetail); la
+// foto genérica de las vinotecas sin logo, a sangre (cover).
+function shopImageFit(name: string): "contain" | "cover" {
+  return SHOP_HEADER_IMAGES[name] ? "contain" : "cover";
+}
+
+// ---- Vinotecas recomendadas de Inicio / "Ver todas" (tab "vinotecas") ----
+
+// Descripción corta de cada vinoteca para sus tarjetas. Aparte de SHOPS: la
+// ficha de la vinoteca sigue usando shop.description.
+const SHOP_CARD_DESCRIPTIONS: Record<string, string> = {
+  "Vinoteca Vinopolitan":
+    "Una selección cuidada de vinos patagónicos, pensada para descubrir de a poco.",
+  "Vinoteca Río Tinto": "Vinos de la región elegidos con criterio, para todos los gustos.",
+  "Vinoteca Piquillín": "Un rincón de barrio para encontrar tu próxima botella favorita.",
+  "Vinoteca Olivas y Sabores": "Vinos y productos regionales, en un mismo lugar.",
+  "La Masía": "Vinoteca de referencia en General Roca, con variedad de etiquetas locales.",
+  "Placeres Vinoteca": "Un espacio pensado para disfrutar y descubrir vinos de la zona.",
+  "Santo Remedio": "Buenos vinos a mano, cerca de todo.",
+  "Vinoteca Cavas": "Vinos y cervezas artesanales, en un ambiente cálido.",
+  Cepas: "Una propuesta variada de vinos regionales y nacionales.",
+  "La Vinoteca": "El lugar de siempre para renovar la bodega de casa.",
+  "Tinto Vinería": "Selección de vinos patagónicos en el corazón de Bariloche.",
+  "Acequia Casa de Vinos": "Una casa de vinos con identidad patagónica.",
+  "Patagonia Vinos": "Etiquetas de la región para acompañar cualquier ocasión.",
+  "Vientos del Sur": "Vinos de siempre, con la calidez de un negocio de pueblo.",
+  "Rústica Vinoteca": "Vinos para disfrutar frente al mar, en Las Grutas.",
+  "Vinoteca Alma": "Un lugar tranquilo para elegir con calma tu próxima botella.",
+  "El Gran Tabacal": "Vinos y productos regionales de Conesa y alrededores.",
+  "Vinoteca La Pizca": "Vinos del Valle Medio, elegidos con dedicación.",
+  "Vinoteca Raíces": "Una vinoteca de pueblo, con etiquetas que vale la pena conocer.",
+  "Vinoteca Mal Arreado": "Vinos con onda, cerca de Bariloche.",
+  "Vinoteca Piscis": "Vinos de la costa, para todos los momentos.",
+  "Vinoteca El Regio": "Vinos y variedad, a metros de la ruta principal.",
+};
+
+// Abierta/Cerrada calculado desde el texto real de shop.hours (openNow de
+// SHOPS es un placeholder). Formato esperado por tramo: "<días> HH:MM-HH:MM
+// [y HH:MM-HH:MM] hs." o "<días> cerrado". Si algún tramo no se entiende
+// ("Horario a confirmar", "Consultar horario", horarios irregulares), el
+// horario entero se descarta y no se muestra chip. Día 0 = lunes.
+const SHOP_DAY_INDEX: Record<string, number> = {
+  lunes: 0,
+  martes: 1,
+  miércoles: 2,
+  jueves: 3,
+  viernes: 4,
+  sábado: 5,
+  sábados: 5,
+  domingo: 6,
+  domingos: 6,
+};
+
+const SHOP_HOURS_SEGMENT_RE =
+  /^(.+?)\s+(cerrado|\d{1,2}:\d{2}-\d{1,2}:\d{2}(?:\s+y\s+\d{1,2}:\d{2}-\d{1,2}:\d{2})*)$/i;
+
+// Por día: lista de tramos [inicio, fin] en minutos (fin > 1440 si cruza la
+// medianoche); [] = cerrado; undefined = el horario no dice nada de ese día.
+type ShopWeekSchedule = Array<Array<[number, number]> | undefined>;
+
+function parseShopDays(text: string): number[] | null {
+  const t = text.trim().toLowerCase();
+  if (t === "todos los días") return [0, 1, 2, 3, 4, 5, 6];
+  const days: number[] = [];
+  for (const part of t.split(/,\s*|\s+y\s+/)) {
+    const ends = part.split(/\s+a\s+/).map((d) => SHOP_DAY_INDEX[d.trim()]);
+    if (ends.length > 2 || ends.some((i) => i === undefined)) return null;
+    if (ends.length === 1) {
+      days.push(ends[0]);
+      continue;
+    }
+    for (let i = ends[0]; ; i = (i + 1) % 7) {
+      days.push(i);
+      if (i === ends[1]) break;
+    }
+  }
+  return days.length > 0 ? days : null;
+}
+
+function parseShopHours(hours: string): ShopWeekSchedule | null {
+  const toMinutes = (hhmm: string) => {
+    const [h, m] = hhmm.split(":").map(Number);
+    return h * 60 + m;
+  };
+  const week: ShopWeekSchedule = new Array(7).fill(undefined);
+  const segments = hours
+    .split(/\bhs\b\.?/)
+    .map((s) => s.trim().replace(/\.$/, "").trim())
+    .filter(Boolean);
+  if (segments.length === 0) return null;
+  for (const segment of segments) {
+    const match = segment.match(SHOP_HOURS_SEGMENT_RE);
+    if (!match) return null;
+    const days = parseShopDays(match[1]);
+    if (!days) return null;
+    const intervals: Array<[number, number]> =
+      match[2].toLowerCase() === "cerrado"
+        ? []
+        : match[2].split(/\s+y\s+/).map((range) => {
+            const [start, end] = range.split("-").map(toMinutes);
+            return [start, end <= start ? end + 1440 : end];
+          });
+    for (const d of days) week[d] = [...(week[d] ?? []), ...intervals];
+  }
+  return week;
+}
+
+const SHOP_SCHEDULES = new Map(SHOPS.map((s) => [s.id, parseShopHours(s.hours)]));
+
+// true/false según la hora del dispositivo; null si no se puede saber.
+function shopOpenNow(shop: Shop, now: Date): boolean | null {
+  const week = SHOP_SCHEDULES.get(shop.id);
+  if (!week) return null;
+  const today = (now.getDay() + 6) % 7;
+  const yesterday = (today + 6) % 7;
+  const t = now.getHours() * 60 + now.getMinutes();
+  if (week[yesterday]?.some(([, end]) => end > 1440 && t + 1440 < end)) return true;
+  const todays = week[today];
+  if (!todays) return null;
+  return todays.some(([start, end]) => t >= start && t < end);
+}
+
+// Sin ubicación, las vinotecas se ordenan como si el usuario estuviera en
+// Viedma (mismo default que el saludo "¡Hola, Viedma!"), sin mostrar km.
+const VINOTECAS_DEFAULT_COORDS: Coords =
+  KNOWN_CITIES.find((c) => c.name === "Viedma")?.coords ?? KNOWN_CITIES[0].coords;
+
+function shopsByDistance(origin: Coords): Shop[] {
+  return SHOPS.map((s) => {
+    const c = parseCoords(s.coordinates);
+    return { s, dist: c ? haversineDistanceKm(origin, c) : Infinity };
+  })
+    .sort((a, b) => a.dist - b.dist)
+    .map((x) => x.s);
+}
+
+// 5 vinotecas: primero todas las de la ciudad del usuario (ciudad conocida
+// más cercana, mismo tope de 150 km que el saludo), después las más cercanas
+// de otras localidades.
+const HOME_RECOMMENDED_SHOPS_COUNT = 5;
+
+function homeRecommendedShops(userCoords: Coords | null): Shop[] {
+  const origin = userCoords ?? VINOTECAS_DEFAULT_COORDS;
+  const { city, distanceKm } = nearestKnownCity(origin);
+  const sorted = shopsByDistance(origin);
+  const local =
+    distanceKm <= MAX_GREETING_CITY_DISTANCE_KM
+      ? sorted.filter((s) => s.city === city.name)
+      : [];
+  const others = sorted.filter((s) => !local.includes(s));
+  return [...local, ...others].slice(0, HOME_RECOMMENDED_SHOPS_COUNT);
+}
+
+// "Ciudad · X km" (sin ubicación, solo la ciudad).
+function shopCitySubtitle(shop: Shop, userCoords: Coords | null): string {
+  return [shop.city, distanceLabelFromCoords(shop.coordinates, userCoords, "")]
+    .filter(Boolean)
+    .join(" · ");
+}
+
+// Listado completo de "Ver todas" desde "Vinotecas recomendadas": mismo
+// patrón de fila que Ruta del Vino (RegionsScreen), sin filtro por zona.
+function ShopListScreen({
+  onOpenShop,
+  showBackToHome,
+  onBackToHome,
+  userCoords,
+}: {
+  onOpenShop: (id: string) => void;
+  showBackToHome?: boolean;
+  onBackToHome?: () => void;
+  userCoords: Coords | null;
+}) {
+  const shops = shopsByDistance(userCoords ?? VINOTECAS_DEFAULT_COORDS);
+
+  return (
+    <div style={styles.stack22}>
+      {showBackToHome && (
+        <button style={styles.backButton} onClick={onBackToHome}>
+          <ArrowLeftIcon /> Volver
+        </button>
+      )}
+
+      <SectionTitle title="Vinotecas de Río Negro" />
+
+      <div style={styles.stack12}>
+        {shops.map((s) => {
+          const fit = shopImageFit(s.name);
+          return (
+            <div
+              key={s.id}
+              style={styles.resultRow}
+              onClick={() => onOpenShop(s.id)}
+            >
+              <div
+                style={{
+                  width: 92,
+                  height: 78,
+                  borderRadius: 18,
+                  backgroundImage: `url('${shopHeaderImage(s.name)}')`,
+                  backgroundSize: fit,
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  ...(fit === "contain"
+                    ? { backgroundColor: theme.cream, border: `1px solid ${theme.line}` }
+                    : {}),
+                  flexShrink: 0,
+                }}
+              />
+
+              <div style={{ flex: 1 }}>
+                <div style={styles.itemTitle}>{s.name}</div>
+                <div style={styles.itemSub}>{shopCitySubtitle(s, userCoords)}</div>
+                <div style={styles.placeText}>{SHOP_CARD_DESCRIPTIONS[s.name] ?? ""}</div>
+              </div>
+
+              <ChevronRightIcon />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 const AGENDA_FILTERS: Array<{ key: EventTimeframe; label: string }> = [

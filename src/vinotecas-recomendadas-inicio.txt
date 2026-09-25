@@ -1,0 +1,101 @@
+INSTRUCCIONES PARA CLAUDE CODE - NUEVA SECCIÓN "VINOTECAS RECOMENDADAS" EN INICIO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================ CONTEXTO
+============================================
+Ya tenemos 22 vinotecas cargadas en SHOPS, con coordenadas reales en toda
+la provincia. Se agrega una sección nueva en Inicio, debajo de "Bodegas
+recomendadas", que muestre vinotecas cercanas al usuario.
+
+============================================ PASO 0 — Investigar antes de proponer
+============================================
+Confirmá cómo está armada hoy "Bodegas recomendadas" (el componente
+ImageCard que ya rediseñamos, el mecanismo de "Ver todas" si existe, y
+cómo arma su selección de 5 bodegas) para replicar el mismo patrón acá.
+
+============================================ CAMBIO — Sección "Vinotecas recomendadas"
+============================================
+Mismo título/estilo de sección que "Bodegas recomendadas", ubicada justo
+debajo.
+
+Criterio de selección (4-5 vinotecas):
+- Con ubicación del usuario disponible: priorizar las vinotecas de la
+  MISMA ciudad del usuario (todas las que haya ahí, hasta completar el
+  cupo). Si no hay 5 en su ciudad, completar con las vinotecas más
+  cercanas de otras localidades, ordenadas por distancia real.
+- Sin ubicación disponible: usá el mismo criterio de fallback que ya
+  tiene "Bodegas recomendadas" para su propio caso sin ubicación
+  (mostrame en el plan qué hace hoy esa sección sin ubicación, y aplicá
+  el mismo tipo de solución acá — probablemente un default fijo,
+  como Viedma).
+
+Diseño de tarjeta: EXACTAMENTE el mismo componente ImageCard que ya usa
+"Bodegas recomendadas" (mismo tamaño, mismo comportamiento) — encima de
+la foto, el chip "Abierta"/"Cerrada" y el corazón de favorito; debajo de
+la foto, el nombre de la vinoteca, ciudad · distancia (mismo formato ya
+usado para bodegas), y una descripción corta.
+
+Como las vinotecas no tienen una descripción real cargada hoy, el usuario
+pidió inventar una genérica para cada una, sin que se repitan entre sí.
+Van las 22, ya escritas — usalas tal cual, no inventes otras ni las
+cambies:
+
+- Vinopolitan: "Una selección cuidada de vinos patagónicos, pensada para descubrir de a poco."
+- Río Tinto: "Vinos de la región elegidos con criterio, para todos los gustos."
+- Piquillín: "Un rincón de barrio para encontrar tu próxima botella favorita."
+- Olivas y Sabores: "Vinos y productos regionales, en un mismo lugar."
+- La Masía: "Vinoteca de referencia en General Roca, con variedad de etiquetas locales."
+- Placeres Vinoteca: "Un espacio pensado para disfrutar y descubrir vinos de la zona."
+- Santo Remedio: "Buenos vinos a mano, cerca de todo."
+- Vinoteca Cavas: "Vinos y cervezas artesanales, en un ambiente cálido."
+- Cepas: "Una propuesta variada de vinos regionales y nacionales."
+- La Vinoteca: "El lugar de siempre para renovar la bodega de casa."
+- Tinto Vinería: "Selección de vinos patagónicos en el corazón de Bariloche."
+- Acequia Casa de Vinos: "Una casa de vinos con identidad patagónica."
+- Patagonia Vinos: "Etiquetas de la región para acompañar cualquier ocasión."
+- Vientos del Sur: "Vinos de siempre, con la calidez de un negocio de pueblo."
+- Rústica Vinoteca: "Vinos para disfrutar frente al mar, en Las Grutas."
+- Vinoteca Alma: "Un lugar tranquilo para elegir con calma tu próxima botella."
+- El Gran Tabacal: "Vinos y productos regionales de Conesa y alrededores."
+- La Pizca: "Vinos del Valle Medio, elegidos con dedicación."
+- Raíces: "Una vinoteca de pueblo, con etiquetas que vale la pena conocer."
+- Mal Arreado: "Vinos con onda, cerca de Bariloche."
+- Piscis: "Vinos de la costa, para todos los momentos."
+- El Regio: "Vinos y variedad, a metros de la ruta principal."
+
+Si el campo de descripción de Shop no existe todavía, agregalo (mismo
+tipo que ya use ImageCard para mostrar la descripción de bodega).
+
+Favoritos: mismo corazón/mecanismo de toggleFavorite que ya usa "Bodegas
+recomendadas" (esto ya alimenta "Tus Vinotecas" en Perfil, que ya
+existe).
+
+"Ver todas": agregar el link/botón "Ver todas" (mismo estilo que ya use
+la sección de Bodegas o Vinos Cerca Tuyo para este mismo propósito) que
+lleve a una pantalla con el listado completo de las 22 vinotecas,
+ordenadas por distancia real cuando hay ubicación. Confirmá en el plan si
+conviene reusar alguna pantalla de listado que ya exista (por ejemplo, si
+ya hay algo similar para bodegas) o si hace falta una nueva.
+
+============================================ QUÉ NO HACER
+============================================
+- No toques "Bodegas recomendadas" ni "Vinos Cerca Tuyo".
+- No toques el mapa de Inicio, ni ninguna otra pantalla.
+- No toques SHOPS, WINERIES_DATA, ni la lógica de "Disponible en"
+  (Parte 3 de la geolocalización, ya funcionando).
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: simular ubicación en Viedma → "Vinotecas recomendadas"
+   muestra primero las 4 de Viedma. Simular en una ciudad con pocas o
+   ninguna vinoteca propia (por ejemplo El Cuy) → se completa con las más
+   cercanas de otras localidades. "Ver todas" lleva al listado completo.
+   Corazón de favorito funciona y aparece en "Tus Vinotecas" de Perfil.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.
