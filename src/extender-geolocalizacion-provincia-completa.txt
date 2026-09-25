@@ -1,0 +1,150 @@
+INSTRUCCIONES PARA CLAUDE CODE - GEOLOCALIZACIÓN A TODA LA PROVINCIA + BODEGA COMO PUNTO DE VENTA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación. Es un cambio grande con 3 partes — quiero ver el plan
+completo antes de aplicar nada.
+
+============================================ PASO 0 — Confirmar antes de tocar nada
+============================================
+- Confirmá la estructura actual de KNOWN_CITIES y homeGreeting()
+  (Etapa de saludo dinámico) y de ALL_SHOP_NAMES/SHOPS (Etapa de
+  vinotecas nuevas) — ambas ya existen y hay que extenderlas, no
+  rehacerlas.
+- Confirmá dónde vive hoy availableAt de cada vino y cómo arma
+  "Disponible en" (sortShopsByDistance), para poder sumarle la bodega
+  productora como una opción más en esa misma lista.
+
+============================================ PARTE 1 — Ampliar KNOWN_CITIES con 27 localidades más
+============================================
+Sumar estas localidades a la lista de ciudades conocidas para el saludo
+dinámico (mismo mecanismo ya armado, greeting = forma corta que indico
+entre paréntesis):
+
+- Gral. Conesa (greeting: "Conesa") → -40.1076505, -64.4518589
+- Lamarque (greeting: "Lamarque") → -39.4240795, -65.7014299
+- Luis Beltrán (greeting: "Beltrán") → -39.3131462, -65.759527
+- Choele Choel (greeting: "Choele") → -39.2940185, -65.6563995
+- Darwin (greeting: "Darwin") → -39.2040404, -65.7400555
+- Coronel Belisle (greeting: "Belisle") → -39.1863818, -65.9541176
+- Chimpay (greeting: "Chimpay") → -39.164431, -66.1457519
+- Chichinales (greeting: "Chichinales") → -39.1148098, -66.9424288
+- Gral. Enrique Godoy (greeting: "Godoy") → -39.0793017, -67.159883
+- Ingeniero Luis A. Huergo (greeting: "Huergo") → -39.0701776, -67.2335204
+- Mainqué (greeting: "Mainqué") → -39.0642847, -67.3056428 (ya podría
+  existir de antes con otra coordenada muy similar — si ya está, dejá la
+  que ya había, son prácticamente la misma ubicación)
+- Cervantes (greeting: "Cervantes") → -39.0541169, -67.3941844 (ídem,
+  puede ya existir — mismo criterio)
+- Gral. Fernández Oro (greeting: "Fernández Oro") → -38.953462, -67.9189225
+- Allen (greeting: "Allen") → ya debería existir de la Etapa de
+  vinotecas, confirmá su coordenada actual, no la cambies
+- Cipolletti (greeting: "Cipo") → ya existe, confirmá que el greeting
+  corto sea "Cipo" (ajustalo si hoy dice el nombre completo)
+- Dina Huapi (greeting: "Dina Huapi") → -41.0736612, -71.1695871
+- El Bolsón (greeting: "Bolsón") → ya existe, confirmá que el greeting
+  corto sea "Bolsón" (ajustalo si hoy dice "El Bolsón" completo)
+- Pilcaniyeu (greeting: "Pilcaniyeu") → -41.1226452, -70.7215709
+- Comallo (greeting: "Comallo") → -41.0318057, -70.2629206
+- Ingeniero Jacobacci (greeting: "Jacobacci") → -41.3305058, -69.552274
+- Maquinchao (greeting: "Maquinchao") → -41.2485581, -68.7019736
+- Los Menucos (greeting: "Menucos") → -40.8428, -68.0859
+- Valcheta (greeting: "Valcheta") → -40.6804699, -66.1628028
+- Sierra Grande (greeting: "Sierra Grande") → -41.608166, -65.3612843
+- Las Grutas (greeting: "Las Grutas") → ya existe, no la toques
+- San Antonio Oeste (greeting: "San Antonio") → -40.7285601, -64.9390216
+- El Cuy (greeting: "El Cuy") → -39.9265426, -68.3452125 — OJO: esta es
+  la coordenada del pueblo REAL de El Cuy, que es un lugar DISTINTO a
+  "Valle Azul" (que ya está cargado con otra coordenada, la de la bodega
+  Ribera del Cuarzo) — no confundas ni fusiones las dos entradas, son dos
+  ciudades separadas.
+
+No hace falta ningún umbral nuevo ni concepto de "radio por ciudad" — el
+mecanismo de "ciudad más cercana" que ya existe (con el tope de 150km que
+ya está puesto) resuelve esto solo: aunque las localidades del Valle Medio
+estén muy pegadas entre sí, cada usuario simplemente ve la que tenga más
+cerca en cada momento, sin superposición.
+
+============================================ PARTE 2 — 6 vinotecas nuevas
+============================================
+El usuario agregó a src/assets/fichas-eventos/ (misma carpeta ya
+organizada) estos 5 logos: logo-el-gran-tabacal.png,
+logo-vinoteca-raices.png, logo-vinoteca-la-pizca.png,
+logo-vinoteca-el-regio.png, logo-vinoteca-mal-arreado.png
+
+- Gral. Conesa: El Gran Tabacal — logo-el-gran-tabacal.png —
+  coordenadas -40.1076505, -64.4518589 — sin horario confirmado, usá el
+  mismo placeholder ya usado en casos similares.
+- Choele Choel: Vinoteca La Pizca — logo-vinoteca-la-pizca.png —
+  coordenadas -39.2940185, -65.6563995 — Horario: Lunes a Sábados
+  10:00-14:00 y 18:00-22:00 hs. Domingos cerrado.
+- Gral. Fernández Oro: Vinoteca Raíces — logo-vinoteca-raices.png —
+  coordenadas -38.953462, -67.9189225 — Horario: Lunes a Sábados
+  18:00-23:00 hs. Domingos 12:00-14:00 hs.
+- Dina Huapi: Vinoteca Mal Arreado — logo-vinoteca-mal-arreado.png —
+  coordenadas -41.0736612, -71.1695871 — Horario: Lunes a Sábados
+  18:00-21:00 hs. Domingos cerrado.
+- Sierra Grande: Vinoteca Piscis (el nombre real es "Piscis", no
+  "Pisis") — SIN logo (no se consiguió, ni imagen ni más datos — dejala
+  sin logo, usando el mismo tratamiento visual que ya tenga la app para
+  un Shop sin imagen, si existe alguno; si no existe ese caso, avisame
+  antes de asumir cómo se ve) — coordenadas -41.608166, -65.3612843 —
+  Horario: Lunes a Sábados 18:00-21:00 hs. Domingos cerrado.
+- San Antonio Oeste: Vinoteca El Regio — logo-vinoteca-el-regio.png —
+  coordenadas -40.7285601, -64.9390216 — sin horario confirmado, usá el
+  mismo placeholder ya usado en casos similares.
+
+Mismo criterio de siempre: ciudad real (no agrupar como Viedma), sumarlas
+a ALL_SHOP_NAMES, y agregarlas al availableAt de todos los vinos (mismo
+criterio "todo vino en toda vinoteca de la provincia" que ya aplicamos).
+
+============================================ PARTE 3 — La bodega productora como punto de venta, cuando corresponde
+============================================
+Funcionalidad nueva: cuando alguien busca un vino y ese vino se vende
+también directo en su propia bodega productora, mostrar esa opción junto
+a las vinotecas en "Disponible en" (o un bloque separado si tiene más
+sentido visualmente — proponeme en el plan cuál preferís), marcada
+claramente como "Comprá directo en la bodega" (o un texto similar,
+proponeme el que te parezca mejor), con su distancia real calculada igual
+que las vinotecas — ordenada por cercanía junto con ellas, no en un lugar
+fijo.
+
+Ejemplo concreto: alguien en El Cuy busca un vino de Ribera del Cuarzo
+(bodega ubicada en Valle Azul, relativamente cerca de El Cuy) — hoy le
+aparecería la vinoteca de Roca como más cercana (aunque esté lejos),
+cuando en realidad la bodega productora, que vende directo, está más
+cerca. Con este cambio, la bodega aparece en la lista con su distancia
+real, compitiendo por posición con las vinotecas según cercanía real —
+no reemplaza a las vinotecas, se suma como una opción más.
+
+Para saber si una bodega vende directo, fijate si ya existe algún campo
+en WINERIES_DATA que indique esto (por ejemplo relacionado a "Visitas"
+que vimos en las fichas de bodega) — si no existe un campo así, proponeme
+en el plan si asumimos que TODAS las bodegas venden directo (mismo
+criterio simplificado que ya usamos para "todo vino en toda vinoteca"), o
+si preferís que quede pendiente hasta tener el dato real.
+
+============================================ QUÉ NO HACER
+============================================
+- No inventes ningún dato de horario que no esté en esta lista — usá el
+  placeholder ya establecido donde falte.
+- No toques las vinotecas/ciudades que ya existían, salvo los 2 ajustes
+  de greeting corto que pedí (Cipolletti→"Cipo", El Bolsón→"Bolsón").
+- No toques WINES, WINERIES_DATA (salvo lectura, o el campo nuevo de la
+  Parte 3 si hace falta agregarlo), el mapa, ni ninguna otra pantalla.
+
+============================================ VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: simular ubicación en 3-4 de las localidades nuevas (por
+   ejemplo Choele Choel, Sierra Grande, El Cuy) y confirmar el saludo
+   correcto en cada una.
+3. Buscar un vino desde El Cuy (o cerca) y confirmar que "Disponible en"
+   ahora puede mostrar la bodega productora si está más cerca que
+   cualquier vinoteca, con su distancia real.
+4. Confirmar que las 6 vinotecas nuevas aparecen en el mapa real de
+   Inicio.
+5. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el que
+esté activo.

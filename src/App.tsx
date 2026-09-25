@@ -166,6 +166,11 @@ import logoPatagoniaVinosPhoto from "./assets/fichas-eventos/logo-patagonia-vino
 import logoVientosDelSurPhoto from "./assets/fichas-eventos/logo-vientos-del-sur.png";
 import logoVinotecaAlmaPhoto from "./assets/fichas-eventos/logo-vinoteca-alma.png";
 import logoRusticaVinotecaPhoto from "./assets/fichas-eventos/logo-rustica-vinoteca.png";
+import logoElGranTabacalPhoto from "./assets/fichas-eventos/logo-el-gran-tabacal.png";
+import logoVinotecaLaPizcaPhoto from "./assets/fichas-eventos/logo-vinoteca-la-pizca.png";
+import logoVinotecaRaicesPhoto from "./assets/fichas-eventos/logo-vinoteca-raices.png";
+import logoVinotecaMalArreadoPhoto from "./assets/fichas-eventos/logo-vinoteca-mal-arreado.png";
+import logoVinotecaElRegioPhoto from "./assets/fichas-eventos/logo-vinoteca-el-regio.png";
 import zonaCordilleraPhoto from "./assets/zona-region/zona-cordillera.jpg";
 import zonaAltoVallePhoto from "./assets/zona-region/zona-alto-valle.jpg";
 import zonaValleMedioPhoto from "./assets/zona-region/zona-valle-medio.jpg";
@@ -492,6 +497,9 @@ type Winery = {
   wines: string[];
   shops: string[];
   activity: string;
+  // Solo true donde está confirmado que la bodega vende directo al público;
+  // sin dato, se omite (no se asume). Suma la bodega a "Disponible en".
+  ventaDirecta?: boolean;
   benefit: string;
   rating?: number;
   distance: string;
@@ -672,6 +680,12 @@ const ALL_SHOP_NAMES = [
   "Vientos del Sur",
   "Rústica Vinoteca",
   "Vinoteca Alma",
+  "El Gran Tabacal",
+  "Vinoteca La Pizca",
+  "Vinoteca Raíces",
+  "Vinoteca Mal Arreado",
+  "Vinoteca Piscis",
+  "Vinoteca El Regio",
 ];
 
 const WINERIES_DATA: Winery[] = [
@@ -982,6 +996,7 @@ const WINERIES_DATA: Winery[] = [
   ],
   shops: [],
   activity: "Venta directa, sin visitas públicas",
+  ventaDirecta: true,
   benefit: "",
   distance: "",
   image: bodegaEnclaveSurPhoto,
@@ -1118,6 +1133,7 @@ const WINERIES_DATA: Winery[] = [
   ],
   shops: [],
   activity: "Venta directa en bodega",
+  ventaDirecta: true,
   benefit: "",
   distance: "",
   image: bodegaFamiliaDellanzoPhoto,
@@ -1166,6 +1182,7 @@ const WINERIES_DATA: Winery[] = [
   wines: ["Gennari Malbec", "Gennari Rosé", "Gennari Single Vineyard"],
   shops: [],
   activity: "Local de venta de vinos y frutos secos",
+  ventaDirecta: true,
   benefit: "",
   distance: "",
   image: bodegaGennariPhoto,
@@ -1317,6 +1334,7 @@ const WINERIES_DATA: Winery[] = [
   ],
   shops: [],
   activity: "Venta directa",
+  ventaDirecta: true,
   benefit: "",
   distance: "",
   image: bodegaTierraDelVientoPhoto,
@@ -4177,6 +4195,91 @@ const SHOPS: Shop[] = [
     distance: "Distancia a confirmar",
     image: "/grapes.png",
   },
+  {
+    id: "s17",
+    name: "El Gran Tabacal",
+    city: "General Conesa",
+    address: "Dirección a confirmar",
+    coordinates: "-40.1076505, -64.4518589",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Horario a confirmar",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s18",
+    name: "Vinoteca La Pizca",
+    city: "Choele Choel",
+    address: "Dirección a confirmar",
+    coordinates: "-39.2940185, -65.6563995",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 10:00-14:00 y 18:00-22:00 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s19",
+    name: "Vinoteca Raíces",
+    city: "Fernández Oro",
+    address: "Dirección a confirmar",
+    coordinates: "-38.953462, -67.9189225",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 18:00-23:00 hs. Domingos 12:00-14:00 hs.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s20",
+    name: "Vinoteca Mal Arreado",
+    city: "Dina Huapi",
+    address: "Dirección a confirmar",
+    coordinates: "-41.0736612, -71.1695871",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 18:00-21:00 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    // Sin logo: la ficha usa GENERIC_VINOTECA_PHOTO (fallback de shopHeaderImage).
+    id: "s21",
+    name: "Vinoteca Piscis",
+    city: "Sierra Grande",
+    address: "Dirección a confirmar",
+    coordinates: "-41.608166, -65.3612843",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Lunes a Sábados 18:00-21:00 hs. Domingos cerrado.",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
+  {
+    id: "s22",
+    name: "Vinoteca El Regio",
+    city: "San Antonio Oeste",
+    address: "Dirección a confirmar",
+    coordinates: "-40.7285601, -64.9390216",
+    description: "Descripción pendiente de confirmar con el comercio.",
+    hours: "Horario a confirmar",
+    openNow: false,
+    wines: WINES.map((w) => w.name),
+    benefit: "Beneficio a confirmar",
+    distance: "Distancia a confirmar",
+    image: "/grapes.png",
+  },
 ].sort((a, b) => {
   const priority = "Vinoteca Olivas y Sabores";
   if (a.name === priority) return -1;
@@ -4385,20 +4488,6 @@ function sortWinesByWineryDistance(
   return [...antiguaWines, ...withDistance.map((x) => x.wine)];
 }
 
-// Vinotecas de "Disponible en": mismo criterio que las bodegas, sin la regla
-// "Antigua primera" (no aplica a SHOPS). Sin ubicación, orden intacto.
-function sortShopsByDistance<T extends Shop>(
-  shops: T[],
-  userCoords: Coords | null
-): T[] {
-  if (!userCoords) return shops;
-  const withDistance = shops.map((s) => {
-    const c = parseCoords(s.coordinates);
-    return { s, dist: c ? haversineDistanceKm(userCoords, c) : Infinity };
-  });
-  withDistance.sort((a, b) => a.dist - b.dist);
-  return withDistance.map((x) => x.s);
-}
 
 // Subtítulo de una vinoteca en "Disponible en": suma la distancia real sin
 // pisar el beneficio (son datos distintos, no se reemplazan entre sí).
@@ -4411,6 +4500,83 @@ function shopAvailabilitySubtitle(shop: Shop, userCoords: Coords | null): string
   return shop.city;
 }
 
+// Opciones de "Disponible en": las vinotecas del vino más su bodega
+// productora si vende directo (ventaDirecta), todas ordenadas juntas por
+// distancia real, sin la regla "Antigua primera" (no aplica acá). Sin
+// ubicación del usuario, la bodega va primera y las vinotecas quedan en su
+// orden original.
+type AvailabilityOption =
+  | { kind: "shop"; shop: Shop }
+  | { kind: "winery"; winery: Winery };
+
+function wineAvailabilityOptions(
+  wine: Wine,
+  userCoords: Coords | null
+): AvailabilityOption[] {
+  const shops: AvailabilityOption[] = wine.availableAt
+    .map((name) => SHOPS.find((s) => s.name === name))
+    .filter((s): s is Shop => Boolean(s))
+    .map((shop) => ({ kind: "shop", shop }));
+  const winery = WINERIES.find((w) => w.name === wine.winery);
+  const options: AvailabilityOption[] = winery?.ventaDirecta
+    ? [{ kind: "winery", winery }, ...shops]
+    : shops;
+  if (!userCoords) return options;
+  const withDistance = options.map((o) => {
+    const c = parseCoords(
+      o.kind === "shop" ? o.shop.coordinates : o.winery.addressCoordinates
+    );
+    return { o, dist: c ? haversineDistanceKm(userCoords, c) : Infinity };
+  });
+  withDistance.sort((a, b) => a.dist - b.dist);
+  return withDistance.map((x) => x.o);
+}
+
+function wineryDirectSaleSubtitle(winery: Winery, userCoords: Coords | null): string {
+  const distanceText = distanceLabelFromCoords(winery.addressCoordinates, userCoords, "");
+  const base = `Comprá directo en la bodega · ${winery.city}`;
+  return distanceText ? `${base} · ${distanceText}` : base;
+}
+
+// Lista de "Disponible en" compartida por WineDetail y WineOriginBlocks.
+function WineAvailabilityList({
+  wine,
+  userCoords,
+  onOpenShop,
+  onOpenWinery,
+}: {
+  wine: Wine;
+  userCoords: Coords | null;
+  onOpenShop: (id: string) => void;
+  onOpenWinery: (name: string) => void;
+}) {
+  const options = wineAvailabilityOptions(wine, userCoords);
+  if (options.length === 0) {
+    return <div style={styles.placeText}>Sin distribución confirmada</div>;
+  }
+  return (
+    <div style={styles.stack12}>
+      {options.map((o) =>
+        o.kind === "shop" ? (
+          <ResultRow
+            key={o.shop.id}
+            title={o.shop.name}
+            subtitle={shopAvailabilitySubtitle(o.shop, userCoords)}
+            onClick={() => onOpenShop(o.shop.id)}
+          />
+        ) : (
+          <ResultRow
+            key={o.winery.id}
+            title={o.winery.name}
+            subtitle={wineryDirectSaleSubtitle(o.winery, userCoords)}
+            onClick={() => onOpenWinery(o.winery.name)}
+          />
+        )
+      )}
+    </div>
+  );
+}
+
 // Ciudades conocidas para el saludo de Inicio: todas las que ya aparecen en
 // WINERIES_DATA/SHOPS, con coordenada de centro aproximada (geocodificada a
 // nivel localidad; en 2 casos —Las Grutas y El Cuy (Valle Azul)— el centro
@@ -4421,7 +4587,7 @@ function shopAvailabilitySubtitle(shop: Shop, userCoords: Coords | null): string
 const KNOWN_CITIES: { name: string; greeting: string; coords: Coords }[] = [
   { name: "Viedma", greeting: "Viedma", coords: [-40.8084274, -62.994722] },
   { name: "General Roca", greeting: "Roca", coords: [-39.0268342, -67.5754674] },
-  { name: "Cipolletti", greeting: "Cipolletti", coords: [-38.931342, -67.9905921] },
+  { name: "Cipolletti", greeting: "Cipo", coords: [-38.931342, -67.9905921] },
   {
     name: "San Carlos de Bariloche",
     greeting: "Bariloche",
@@ -4429,11 +4595,11 @@ const KNOWN_CITIES: { name: string; greeting: string; coords: Coords }[] = [
   },
   { name: "Villa Regina", greeting: "Villa Regina", coords: [-39.0987435, -67.0852996] },
   { name: "Las Grutas", greeting: "Las Grutas", coords: [-40.8119157, -65.0928355] },
-  { name: "El Bolsón", greeting: "El Bolsón", coords: [-41.9649027, -71.5348197] },
+  { name: "El Bolsón", greeting: "Bolsón", coords: [-41.9649027, -71.5348197] },
   { name: "Allen", greeting: "Allen", coords: [-38.9795062, -67.8280092] },
   { name: "Barda del Medio", greeting: "Barda del Medio", coords: [-38.7256442, -68.1558658] },
   { name: "Cervantes", greeting: "Cervantes", coords: [-39.0540087, -67.3940797] },
-  { name: "Choele Choel", greeting: "Choele Choel", coords: [-39.2932355, -65.6615828] },
+  { name: "Choele Choel", greeting: "Choele", coords: [-39.2932355, -65.6615828] },
   {
     name: "Contralmirante Cordero",
     greeting: "Contralmirante Cordero",
@@ -4442,12 +4608,30 @@ const KNOWN_CITIES: { name: string; greeting: string; coords: Coords }[] = [
   { name: "El Cuy (Valle Azul)", greeting: "Valle Azul", coords: [-39.1524364, -66.7871532] },
   { name: "Fernández Oro", greeting: "Fernández Oro", coords: [-38.9563161, -67.9212057] },
   { name: "Guardia Mitre", greeting: "Guardia Mitre", coords: [-40.425038, -63.6721943] },
-  { name: "Ingeniero Huergo", greeting: "Ingeniero Huergo", coords: [-39.0694381, -67.2362915] },
-  { name: "Luis Beltrán", greeting: "Luis Beltrán", coords: [-39.3107313, -65.7635561] },
+  { name: "Ingeniero Huergo", greeting: "Huergo", coords: [-39.0694381, -67.2362915] },
+  { name: "Luis Beltrán", greeting: "Beltrán", coords: [-39.3107313, -65.7635561] },
   { name: "Mainqué", greeting: "Mainqué", coords: [-39.0612216, -67.3101776] },
   { name: "Río Colorado", greeting: "Río Colorado", coords: [-38.9908428, -64.0957548] },
-  { name: "San Antonio Oeste", greeting: "San Antonio Oeste", coords: [-40.7302125, -64.9389955] },
+  { name: "San Antonio Oeste", greeting: "San Antonio", coords: [-40.7302125, -64.9389955] },
   { name: "San Javier", greeting: "San Javier", coords: [-40.7499219, -63.2670243] },
+  // Resto de la provincia (Valle Medio, Línea Sur, costa y cordillera). "El
+  // Cuy" es el pueblo real, distinto de "El Cuy (Valle Azul)" de arriba.
+  { name: "General Conesa", greeting: "Conesa", coords: [-40.1076505, -64.4518589] },
+  { name: "Lamarque", greeting: "Lamarque", coords: [-39.4240795, -65.7014299] },
+  { name: "Darwin", greeting: "Darwin", coords: [-39.2040404, -65.7400555] },
+  { name: "Coronel Belisle", greeting: "Belisle", coords: [-39.1863818, -65.9541176] },
+  { name: "Chimpay", greeting: "Chimpay", coords: [-39.164431, -66.1457519] },
+  { name: "Chichinales", greeting: "Chichinales", coords: [-39.1148098, -66.9424288] },
+  { name: "General Enrique Godoy", greeting: "Godoy", coords: [-39.0793017, -67.159883] },
+  { name: "Dina Huapi", greeting: "Dina Huapi", coords: [-41.0736612, -71.1695871] },
+  { name: "Pilcaniyeu", greeting: "Pilcaniyeu", coords: [-41.1226452, -70.7215709] },
+  { name: "Comallo", greeting: "Comallo", coords: [-41.0318057, -70.2629206] },
+  { name: "Ingeniero Jacobacci", greeting: "Jacobacci", coords: [-41.3305058, -69.552274] },
+  { name: "Maquinchao", greeting: "Maquinchao", coords: [-41.2485581, -68.7019736] },
+  { name: "Los Menucos", greeting: "Menucos", coords: [-40.8428, -68.0859] },
+  { name: "Valcheta", greeting: "Valcheta", coords: [-40.6804699, -66.1628028] },
+  { name: "Sierra Grande", greeting: "Sierra Grande", coords: [-41.608166, -65.3612843] },
+  { name: "El Cuy", greeting: "El Cuy", coords: [-39.9265426, -68.3452125] },
 ];
 const MAX_GREETING_CITY_DISTANCE_KM = 150;
 
@@ -7374,6 +7558,11 @@ const SHOP_HEADER_IMAGES: Record<string, string> = {
   "Vientos del Sur": logoVientosDelSurPhoto,
   "Vinoteca Alma": logoVinotecaAlmaPhoto,
   "Rústica Vinoteca": logoRusticaVinotecaPhoto,
+  "El Gran Tabacal": logoElGranTabacalPhoto,
+  "Vinoteca La Pizca": logoVinotecaLaPizcaPhoto,
+  "Vinoteca Raíces": logoVinotecaRaicesPhoto,
+  "Vinoteca Mal Arreado": logoVinotecaMalArreadoPhoto,
+  "Vinoteca El Regio": logoVinotecaElRegioPhoto,
 };
 
 function shopHeaderImage(name: string): string {
@@ -7823,12 +8012,6 @@ function WineDetail({
       (w.varietal === wine.varietal || w.winery === wine.winery)
   ).slice(0, 2);
 
-  const availableShops = sortShopsByDistance(
-    wine.availableAt
-      .map((name) => SHOPS.find((s) => s.name === name))
-      .filter((s): s is Shop => Boolean(s)),
-    userCoords
-  );
 
   return (
     <div style={styles.stack22}>
@@ -7978,20 +8161,12 @@ function WineDetail({
         </div>
       ) : (
         <Block title="Disponible en">
-          {availableShops.length > 0 ? (
-            <div style={styles.stack12}>
-              {availableShops.map((found) => (
-                <ResultRow
-                  key={found.id}
-                  title={found.name}
-                  subtitle={shopAvailabilitySubtitle(found, userCoords)}
-                  onClick={() => onOpenShop(found.id)}
-                />
-              ))}
-            </div>
-          ) : (
-            <div style={styles.placeText}>Sin distribución confirmada</div>
-          )}
+          <WineAvailabilityList
+            wine={wine}
+            userCoords={userCoords}
+            onOpenShop={onOpenShop}
+            onOpenWinery={onOpenWinery}
+          />
         </Block>
       )}
 
@@ -8062,32 +8237,18 @@ function WineOriginBlocks({
       (w.varietal === wine.varietal || w.winery === wine.winery)
   ).slice(0, 2);
 
-  const availableShops = sortShopsByDistance(
-    wine.availableAt
-      .map((name) => SHOPS.find((s) => s.name === name))
-      .filter((s): s is Shop => Boolean(s)),
-    userCoords
-  );
 
   return (
     <>
       <WineryOriginBlock winery={originWinery} onOpenWinery={onOpenWinery} />
 
       <Block title="Disponible en">
-        {availableShops.length > 0 ? (
-          <div style={styles.stack12}>
-            {availableShops.map((found) => (
-              <ResultRow
-                key={found.id}
-                title={found.name}
-                subtitle={shopAvailabilitySubtitle(found, userCoords)}
-                onClick={() => onOpenShop(found.id)}
-              />
-            ))}
-          </div>
-        ) : (
-          <div style={styles.placeText}>Sin distribución confirmada</div>
-        )}
+        <WineAvailabilityList
+          wine={wine}
+          userCoords={userCoords}
+          onOpenShop={onOpenShop}
+          onOpenWinery={onOpenWinery}
+        />
       </Block>
 
       <Block title="También te pueden gustar">
