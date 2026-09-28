@@ -191,6 +191,9 @@ import fichaBodegaUnRefugioPhoto from "./assets/fichas-bodegas/ficha-bodega-un-r
 import fichaRivusMalbecReserva from "./assets/fichas-vinos/ficha-rivus-malbec-reserva.png";
 import fichaRivusCabernetSauvignonReserva from "./assets/fichas-vinos/ficha-rivus-cabernet-sauvignon-reserva.png";
 import fichaRivusPinotNoir from "./assets/fichas-vinos/ficha-rivus-pinot-noir.png";
+import fichaWapisaMalbec from "./assets/fichas-vinos/ficha-wapisa-malbec.png";
+import fichaWapisaCabernetSauvignon from "./assets/fichas-vinos/ficha-wapisa-cabernet-sauvignon.png";
+import fichaWapisaSauvignonBlanc from "./assets/fichas-vinos/ficha-wapisa-sauvignon-blanc.png";
 import fichaUnRefugioMalbec from "./assets/fichas-vinos/ficha-un-refugio-malbec.png";
 import rivusMalbecReservaPhoto from "./assets/vinos/rivus-malbec-reserva.png";
 import rivusCabernetSauvignonReservaPhoto from "./assets/vinos/rivus-cabernet-sauvignon-reserva.png";
@@ -2277,10 +2280,16 @@ const WINES: Wine[] = [
   varietal: "Sauvignon Blanc",
   winery: "Wapisa",
   style: "Fresco y herbáceo",
-  description: "Blanco de aromas frescos y herbáceos, con notas cítricas, hierba recién cortada y en ocasiones pomelo. En boca es seco, de acidez marcada y cuerpo liviano, ideal como aperitivo.",
+  description: "Wapisa Sauvignon Blanc es un vino fresco y expresivo, elaborado en la región de Mar, Río Negro. Sus aromas cítricos y herbáceos reflejan la pureza del terroir patagónico, logrando un blanco vibrante, equilibrado y de gran frescura. Sin paso por barrica ni fermentación maloláctica, se elabora mediante un método protectivo que preserva sus aromas y carácter varietal.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Atlántico",
   image: wapisaSauvignonBlancPhoto,
+  vintage: "2019",
+  aging: "Sin paso por barrica",
+  servingTemp: "8 - 10 °C",
+  tastingVista: "Amarillo pálido brillante, con reflejos verdosos",
+  tastingNariz: "Aromas cítricos a pomelo rosa y lima, con notas de flores blancas y un toque delicado de jengibre",
+  tastingBoca: "Equilibrado, fresco e intenso, con presencia de guayaba tropical, acidez vibrante y un paso limpio",
 },
 {
   id: "v55",
@@ -2827,10 +2836,16 @@ const WINES: Wine[] = [
   varietal: "Cabernet Sauvignon",
   winery: "Wapisa",
   style: "Estructurado y herbáceo",
-  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  description: "Wapisa Cabernet Sauvignon es un vino tinto de cuerpo firme y estructurado, que refleja el carácter del terroir de la región de Mar, Río Negro. Con una crianza en barricas, desarrolla complejidad y equilibrio, combinando fruta madura, notas especiadas y un elegante carácter herbáceo.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Atlántico",
   image: wapisaCabernetSauvignonPhoto,
+  vintage: "2019",
+  aging: "11 meses en barricas de roble",
+  servingTemp: "16 - 18 °C",
+  tastingVista: "Rojo rubí intenso y profundo",
+  tastingNariz: "Aromas a moras, grosellas y confitura de ciruela, con notas especiadas de pimienta negra y eucalipto",
+  tastingBoca: "Taninos amables, cuerpo equilibrado, paso largo y un sutil carácter mineral o salino",
 },
 {
   id: "v105",
@@ -2838,10 +2853,14 @@ const WINES: Wine[] = [
   varietal: "Malbec",
   winery: "Wapisa",
   style: "Untuoso e intenso",
-  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  description: "Wapisa Malbec es un vino tinto patagónico de Bodega Tapiz, reconocido por su origen costero. Parte de su producción incluye una estiba o crianza bajo el mar, un proceso pionero en Argentina que acelera y modifica sutilmente la evolución de la botella, aportando mayor complejidad y elegancia al vino.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Atlántico",
   image: wapisaMalbecPhoto,
+  aging: "8 meses en barricas de roble",
+  tastingVista: "Rojo brillante con reflejos violáceos",
+  tastingNariz: "Aromas a frutos negros (ciruelas, moras, cerezas negras), con toques minerales, especias y vainilla",
+  tastingBoca: "Taninos maduros, estructura equilibrada, frescura y un sutil toque salino característico de su influencia marítima",
 },
 {
   id: "v107",
@@ -5726,6 +5745,9 @@ const CATALOG_WINE_FICHA_BY_ID: Record<string, string> = {
   v214: fichaRivusCabernetSauvignonReserva,
   v215: fichaRivusPinotNoir,
   v216: fichaUnRefugioMalbec,
+  v54: fichaWapisaSauvignonBlanc,
+  v104: fichaWapisaCabernetSauvignon,
+  v105: fichaWapisaMalbec,
 };
 
 const WINE_FICHA_BY_ID: Record<string, string> = {

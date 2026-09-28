@@ -1,0 +1,117 @@
+INSTRUCCIONES PARA CLAUDE CODE - FICHAS NUEVAS DE BODEGA WAPISA
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Bodega Wapisa tiene 4 vinos. Su Pinot Noir ya usa la ficha real nueva (vía
+WINE_FICHA_BY_ID o el mapa que corresponda). Los otros 3 (Malbec, Cabernet
+Sauvignon y Sauvignon Blanc) todavía muestran el diseño viejo de WineDetail.
+Te paso las 3 fichas nuevas, mismo estilo que el resto, para que Wapisa quede
+completa con sus 4 vinos en ficha real.
+
+============================================
+PASO 0
+============================================
+Buscá en el código el mecanismo real que usó la última bodega a la que se le
+agregaron fichas nuevas (por ejemplo Rivus/Un Refugio o el prompt anterior de
+"nuevas fichas de vinos") y seguí exactamente el mismo patrón: mismo mapa
+(WINE_FICHA_BY_ID o el que corresponda), misma carpeta de assets
+(fichas-vinos/), mismo tipo de import. Si el patrón real es distinto de lo que
+describo abajo, seguí el real y avisame la diferencia en el plan.
+
+Confirmá también los ids exactos de los 3 vinos de Wapisa (Malbec, Cabernet
+Sauvignon, Sauvignon Blanc) en WINES antes de tocar nada — no asumas.
+
+============================================ ASSETS
+============================================
+Las 3 imágenes están en la carpeta que voy a copiar a src/assets/fichas-vinos/
+(mismo lugar que las demás fichas de vino):
+- ficha-wapisa-malbec.png
+- ficha-wapisa-cabernet-sauvignon.png
+- ficha-wapisa-sauvignon-blanc.png
+
+============================================
+DATOS (por si hace falta cargar algo además de la imagen — mismo criterio que
+las últimas fichas: si el mecanismo solo muestra la imagen y no usa estos
+campos, no hace falta cargarlos, decímelo en el plan)
+============================================
+
+1) Wapisa Malbec
+   - Varietal: Malbec
+   - Origen: Región Mar, Río Negro (San Javier, Río Negro, Patagonia
+     Argentina, según la etiqueta)
+   - Descripción: "Wapisa Malbec es un vino tinto patagónico de Bodega Tapiz,
+     reconocido por su origen costero. Parte de su producción incluye una
+     estiba o crianza bajo el mar, un proceso pionero en Argentina que
+     acelera y modifica sutilmente la evolución de la botella, aportando
+     mayor complejidad y elegancia al vino."
+   - Crianza: "8 meses en barricas de roble."
+   - Particularidad: "Parte del vino con estiba bajo el mar."
+   - Notas de cata:
+     - Vista: "Rojo brillante con reflejos violáceos."
+     - Nariz: "Aromas a frutos negros (ciruelas, moras, cerezas negras), con
+       toques minerales, especias y vainilla."
+     - Boca: "Taninos maduros, estructura equilibrada, frescura y un sutil
+       toque salino característico de su influencia marítima."
+
+2) Wapisa Cabernet Sauvignon
+   - Varietal: Cabernet Sauvignon
+   - Año: 2019
+   - Origen: Región Mar, Río Negro (San Javier, Río Negro, Argentina)
+   - Descripción: "Wapisa Cabernet Sauvignon es un vino tinto de cuerpo firme
+     y estructurado, que refleja el carácter del terroir de la región de
+     Mar, Río Negro. Con una crianza en barricas, desarrolla complejidad y
+     equilibrio, combinando fruta madura, notas especiadas y un elegante
+     carácter herbáceo."
+   - Crianza: "11 meses en barricas de roble."
+   - Servicio: "16 - 18 °C."
+   - Notas de cata:
+     - Vista: "Rojo rubí intenso y profundo."
+     - Nariz: "Aromas a moras, grosellas y confitura de ciruela, con notas
+       especiadas de pimienta negra y eucalipto."
+     - Boca: "Taninos amables, cuerpo equilibrado, paso largo y un sutil
+       carácter mineral o salino."
+
+3) Wapisa Sauvignon Blanc
+   - Varietal: Sauvignon Blanc (vino blanco)
+   - Año: 2019
+   - Origen: Región Mar, Río Negro (San Javier, Río Negro, Patagonia
+     Argentina)
+   - Descripción: "Wapisa Sauvignon Blanc es un vino fresco y expresivo,
+     elaborado en la región de Mar, Río Negro. Sus aromas cítricos y
+     herbáceos reflejan la pureza del terroir patagónico, logrando un blanco
+     vibrante, equilibrado y de gran frescura. Sin paso por barrica ni
+     fermentación maloláctica, se elabora mediante un método protectivo que
+     preserva sus aromas y carácter varietal."
+   - Crianza: "Sin paso por barrica."
+   - Servicio: "8 - 10 °C."
+   - Notas de cata:
+     - Vista: "Amarillo pálido brillante, con reflejos verdosos."
+     - Nariz: "Aromas cítricos a pomelo rosa y lima, con notas de flores
+       blancas y un toque delicado de jengibre."
+     - Boca: "Equilibrado, fresco e intenso, con presencia de guayaba
+       tropical, acidez vibrante y un paso limpio."
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ningún otro vino ni bodega.
+- No tocar el Pinot Noir de Wapisa (ya tiene su ficha).
+- No tocar el mapa, scroll, saludo, ni ninguna otra pantalla.
+- No inventar ningún dato que no esté arriba.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: desde Bodega Wapisa, abrir los 4 vinos (Pinot Noir, Malbec,
+   Cabernet Sauvignon, Sauvignon Blanc) — los 4 deben mostrar su ficha real
+   (imagen), ninguno debe quedar con el diseño viejo.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
