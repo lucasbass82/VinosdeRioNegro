@@ -1,0 +1,215 @@
+INSTRUCCIONES PARA CLAUDE CODE - AGREGAR 2 BODEGAS NUEVAS (RIVUS Y UN REFUGIO)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo (ids que vas a usar,
+en qué archivo/función va cada cosa, y cómo vas a resolver el punto de Paso 0
+marcado más abajo) y esperá mi aprobación.
+
+============================================
+PASO 0 — INVESTIGAR ANTES DE TOCAR NADA
+============================================
+Buscá en el código cuál fue la bodega real más reciente que se agregó siguiendo
+este mismo patrón (foto de bodega + ficha de vino en el estilo "real" nuevo:
+logo de región circular, botella, título serif, varietal, año en ocre,
+separador con rombo, región en bordó, párrafo, fila de 4 celdas con íconos, y
+"Notas de cata" con Vista/Nariz/Boca) — por ejemplo Enclave Sur, Bodega Trina,
+Don Amaro o Ribera del Cuarzo, las últimas bodegas reales cargadas con este
+mismo estilo de ficha.
+
+Confirmá y decime en el plan:
+1. Si las imágenes tipo "ficha-bodega-X.png" (la tarjeta con foto + nombre +
+   ciudad·región + descripción + 4 íconos Ubicación/Visitas/Horarios/Varietales)
+   se usan hoy como un asset estático embebido en algún lado de la app, o si
+   son solo la fuente de datos que yo uso para cargar los campos de texto en
+   WINERIES_DATA (y la ficha de bodega se sigue renderizando por código, como
+   ya está hoy en WineryDetail). Si es lo segundo (lo más probable, según cómo
+   se cargaron las últimas bodegas), no hace falta importar ficha-bodega-rivus.png
+   ni ficha-bodega-un-refugio.png a ningún lado del código — son solo para que
+   vos extraigas los datos de abajo.
+2. Si las imágenes tipo "ficha-vino-X.png" / "ficha-X.png" (la ficha completa
+   del vino, ya con el diseño real) se usan como asset estático vía
+   WINE_FICHA_BY_ID (mostrando esa imagen en vez de renderizar WineDetail por
+   código) — según lo que se decidió en el prompt anterior de "nuevas fichas de
+   vinos". Si es así, los 4 archivos ficha-rivus-*.png / ficha-un-refugio-malbec.png
+   van a WINE_FICHA_BY_ID igual que los últimos vinos agregados con este
+   mecanismo.
+3. Qué next id (wXX) y next id (vXXX) corresponden hoy en WINERIES_DATA y WINES,
+   para no pisar ningún id existente.
+
+Si algo de lo que describo abajo no coincide con el patrón real del código
+(nombre de campos, mecanismo, carpeta de assets), seguí el patrón real y
+avisame la diferencia en el plan — esto describe la intención, no una
+instrucción literal de código.
+
+============================================
+ASSETS
+============================================
+Están en la carpeta nuevas_bodegas/ que voy a copiar a src/. Organizalos según
+la convención ya usada en src/assets/ (bodega-fotos/, fichas-bodegas/,
+fichas-vinos/, botones-vinos/, vinos/, según corresponda — mismo criterio que
+las últimas bodegas cargadas):
+
+- bodega-rivus.png (1507×775, foto aérea del viñedo con logo "Bodega Rivus"
+  superpuesto) → foto/header de la bodega (mismo uso que la foto de cualquier
+  otra bodega en WINERIES_DATA).
+- bodega-un-refugio.png (1672×941, foto de las piletas de hormigón con logo
+  "Un Refugio" superpuesto) → foto/header de la bodega.
+- ficha-bodega-rivus.png / ficha-bodega-un-refugio.png → ver Paso 0, punto 1.
+- ficha-rivus-malbec-reserva.png, ficha-rivus-cabernet-sauvignon-reserva.png,
+  ficha-rivus-pinot-noir.png, ficha-un-refugio-malbec.png → ver Paso 0, punto 2.
+- rivus-malbec-reserva.png, rivus-cabernet-sauvignon-reserva.png,
+  rivus-pinot-noir.png, un-refugio-malbec.png (1023×1537, foto de botella sola,
+  fondo blanco sólido ~#FEFEFE, sin transparencia real) → foto de botella para
+  el campo image de cada vino, mismo uso que las demás botellas.
+
+============================================
+DATOS — BODEGA RIVUS
+============================================
+- Nombre: Bodega Rivus
+- Ciudad: Darwin
+- Región: Valle Medio
+- Coordenadas: -39.1927939, -65.8007772 (resueltas del link de Google Maps que
+  me pasó el usuario: https://maps.app.goo.gl/iG3TFpwZc83ibPDZ6 — nombre del
+  lugar confirmado como "Bodega RIVUS")
+- Descripción: "Proyecto dedicado a la producción de vinos orgánicos en
+  Darwin, sobre la Ruta Nacional 22. Sus viñedos, conducidos a cordón
+  unilateral, favorecen una maduración más pareja de los racimos y una mayor
+  homogeneidad en la fruta. La selección comienza en la cosecha y continúa
+  manualmente en bodega, cuidando cada racimo para elaborar vinos de alta
+  calidad, auténticos del terruño de Río Negro."
+- Visitas: "Sin visitas públicas por ahora." (usar el mismo criterio ya usado
+  en otras bodegas sin visitas — activity u equivalente, y ocultar cualquier
+  botón/dato que dependa de visitas habilitadas, igual que con las demás)
+- Horarios: "Horario a confirmar."
+- Varietales que trabaja la bodega (no solo los 3 cargados): Pinot Noir,
+  Cabernet Sauvignon, Malbec y más.
+
+Vinos de Rivus (3):
+
+1) Rivus Malbec Reserva
+   - Varietal: Malbec
+   - Año: 2012
+   - Región/origen: Valle Medio, Río Negro
+   - Descripción: "Rivus Malbec Reserva es un vino elaborado con uvas de alta
+     calidad del Valle Medio, que expresa el carácter del terroir patagónico.
+     Añejado en barricas de roble francés y americano, logra una gran
+     complejidad, estructura y equilibrio. De producción orgánica y
+     biodinámica, refleja el compromiso con el cuidado del suelo y la
+     identidad de la región."
+   - Crianza: "Hasta 14 meses en barricas de roble francés y americano."
+   - Certificación: "Orgánico (Argencert / Ecocert)." — usar el mismo campo
+     que ya exista para esto si lo hay; si no existe un campo "certificación"
+     en el tipo Wine, decime en el plan cómo lo resolvés (ej. agregarlo al
+     párrafo de descripción) en vez de inventar un campo nuevo sin avisar.
+   - Notas de cata:
+     - Vista: "Rojo rubí intenso, con reflejos violáceos o teja."
+     - Nariz: "Frutos negros maduros, con notas especiadas y sutiles toques
+       tostados del roble."
+     - Boca: "Taninos redondos y bien integrados, con buena estructura y
+       final persistente."
+
+2) Rivus Cabernet Sauvignon Reserva
+   - Varietal: Cabernet Sauvignon
+   - Año: 2008
+   - Región/origen: Valle Medio, Río Negro
+   - Descripción: "Rivus Cabernet Sauvignon Reserva es un vino elaborado bajo
+     estrictas normas de producción orgánica y biodinámica, que expresa el
+     carácter único del terroir del sur argentino. Con una cuidadosa crianza
+     en madera, logra una gran estructura, complejidad y equilibrio."
+   - Crianza: "En barricas de roble."
+   - Certificación: "Orgánico (Argencert / Ecocert)."
+   - Notas de cata:
+     - Vista: "Rojo rubí intenso, con reflejos violáceos o teja."
+     - Nariz: "Frutos negros y rojos maduros, con notas especiadas y sutiles
+       toques tostados del roble."
+     - Boca: "Taninos suaves y bien integrados, con buen equilibrio entre
+       fruta y madera, y un final persistente."
+
+3) Rivus Pinot Noir
+   - Varietal: Pinot Noir
+   - Año: 2015
+   - Región/origen: Valle Medio, Río Negro
+   - Descripción: "Rivus Pinot Noir es un vino que expresa el carácter de
+     esta región fría del norte patagónico, con baja intensidad de color,
+     perfil elegante y notas a frutas rojas. Proviene de un viñedo implantado
+     en Darwin, donde se trabaja con cosecha manual y fermentación en piletas
+     de hormigón, buscando resaltar la pureza de la variedad y las
+     características del terruño."
+   - Crianza: "Sin paso por barrica."
+   - Servicio: "14 - 16 °C."
+   - Notas de cata:
+     - Vista: "Rojo teja o rubí brillante, de baja intensidad."
+     - Nariz: "Aromas a cerezas, guindas y frutos rojos, con sutiles toques
+       complejos."
+     - Boca: "Suave y delicado, de cuerpo medio-bajo, con taninos finos y
+       equilibrada acidez."
+
+============================================
+DATOS — BODEGA UN REFUGIO
+============================================
+- Nombre: Bodega Un Refugio
+- Ciudad: General Conesa
+- Región: Mar
+- Coordenadas: el link que me pasó el usuario
+  (https://maps.app.goo.gl/cKy4siZibrspBtNT6) no lo pude resolver por un
+  límite de la herramienta de mi lado. Intentá abrirlo vos (tenés navegador);
+  si no se puede, geocodificá "General Conesa, Río Negro, Argentina" con
+  Nominatim, mismo mecanismo ya usado para otras bodegas/ciudades sin
+  dirección exacta, y avisame que quedó a nivel ciudad por si después el
+  usuario consigue el link exacto.
+- Descripción: "El proyecto de Pablo Rodriguez en General Conesa se
+  desarrolla a partir de un emprendimiento familiar que decidió implantar en
+  el año 2012 un viñedo de aproximadamente una hectárea y media de Malbec con
+  el fin de elaborar, en principio, un 'vino artesanal' que represente las
+  características del terruño."
+- Visitas: "Sin visitas públicas por ahora."
+- Horarios: "Horario a confirmar."
+- Varietal que trabaja la bodega: Malbec.
+
+Vino de Un Refugio (1):
+
+1) Un Refugio Malbec (Crianza)
+   - Varietal: Malbec
+   - Descripción: "Un Refugio es un vino patagónico nacido de un
+     emprendimiento familiar en General Conesa, con un viñedo de Malbec
+     implantado en 2012 que expresa las singularidades del terruño. La uva
+     se cosecha a mano y fermenta con levaduras indígenas en piletas de
+     hormigón revestidas en epoxi, con una maceración de 2 a 3 semanas.
+     Luego el vino cría durante 4 meses en barricas de roble francés y
+     reposa en botella en una cava subterránea."
+   - Región/origen: General Conesa, Río Negro
+   - Crianza: "4 meses en barricas de roble francés."
+   - Servicio: "16 - 18 °C."
+   - Notas de cata:
+     - Vista: "Rojo bordó con matiz teja, de brillo bajo y alta intensidad."
+     - Nariz: "Aromas a moras y ciruelas maduras, con un sutil toque terroso
+       ahumado."
+     - Boca: "Suave y carnoso, con buen equilibrio, baja acidez y final
+       persistente."
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ninguna otra bodega ni vino existente.
+- No tocar WINE_FICHA_BY_ID de ningún vino que no sea uno de estos 4 nuevos.
+- No tocar el mapa, el mecanismo de scroll/volver, el saludo, KNOWN_CITIES,
+  SHOPS, ni ninguna otra pantalla.
+- No inventar ningún dato que no esté en esta lista (por ejemplo, no inventes
+  contactInfo/redes/teléfono para ninguna de las 2 bodegas — dejalos sin
+  cargar, igual que se hace con otras bodegas sin ese dato confirmado).
+- No asumas ventaDirecta: true para ninguna de las 2 — no está confirmado.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores (fork-ts-checker en 0 issues).
+2. Navegador (server ya corriendo si hay uno activo): Ruta del Vino → Valle
+   Medio muestra Bodega Rivus con sus 3 vinos; Ruta del Vino → Mar muestra
+   Bodega Un Refugio con su vino; cada ficha de vino se ve con el estilo real
+   (o la imagen estática, según lo que confirmes en el Paso 0) con los datos
+   de arriba; "Bodega de origen" desde cada vino lleva a la bodega correcta;
+   el mapa de Inicio muestra los 2 pines nuevos en su ubicación real.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.

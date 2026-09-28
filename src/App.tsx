@@ -184,6 +184,18 @@ import bodegaEnclaveSurPhoto from "./assets/bodega-fotos/bodega-enclave-sur.jpg"
 import bodegaTrinaPhoto from "./assets/bodega-fotos/bodega-trina.jpg";
 import bodegaFamiliaDeBernardiPhoto from "./assets/bodega-fotos/bodega-familia-de-bernardi.jpg";
 import bodegaRiberaDelCuarzoPhoto from "./assets/bodega-fotos/bodega-ribera-del-cuarzo.jpg";
+import bodegaRivusPhoto from "./assets/bodega-fotos/bodega-rivus.png";
+import bodegaUnRefugioPhoto from "./assets/bodega-fotos/bodega-un-refugio.png";
+import fichaBodegaRivusPhoto from "./assets/fichas-bodegas/ficha-bodega-rivus.png";
+import fichaBodegaUnRefugioPhoto from "./assets/fichas-bodegas/ficha-bodega-un-refugio.png";
+import fichaRivusMalbecReserva from "./assets/fichas-vinos/ficha-rivus-malbec-reserva.png";
+import fichaRivusCabernetSauvignonReserva from "./assets/fichas-vinos/ficha-rivus-cabernet-sauvignon-reserva.png";
+import fichaRivusPinotNoir from "./assets/fichas-vinos/ficha-rivus-pinot-noir.png";
+import fichaUnRefugioMalbec from "./assets/fichas-vinos/ficha-un-refugio-malbec.png";
+import rivusMalbecReservaPhoto from "./assets/vinos/rivus-malbec-reserva.png";
+import rivusCabernetSauvignonReservaPhoto from "./assets/vinos/rivus-cabernet-sauvignon-reserva.png";
+import rivusPinotNoirPhoto from "./assets/vinos/rivus-pinot-noir.png";
+import unRefugioMalbecPhoto from "./assets/vinos/un-refugio-malbec.png";
 
 import savuMalbecPhoto from "./assets/vinos/savu-malbec.jpg";
 import savuMalbecRosadoPhoto from "./assets/vinos/savu-malbec-rosado.jpg";
@@ -926,7 +938,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Horario a confirmar",
   openNow: false,
   wines: ["Savu Malbec", "Savu Malbec Rosado", "Savu Syrah", "Savu Cabernet Sauvignon"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Circuito municipal de agroturismo",
   benefit: "",
   distance: "",
@@ -946,7 +958,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Sin visitas públicas confirmadas",
   openNow: false,
   wines: ["Tinto (Malbec y Cabernet Sauvignon)", "Blanco (Chenin)"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Producción familiar, contactar por Facebook",
   benefit: "",
   distance: "",
@@ -964,7 +976,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "08:00 a 20:00, todos los días",
   openNow: true,
   wines: ["Don Amaro Malbec"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Recorrido por viñedos, olivares y bodega + degustación",
   benefit: "",
   distance: "",
@@ -995,7 +1007,7 @@ const WINERIES_DATA: Winery[] = [
     "Enclave Sur Cabernet Sauvignon Reserva",
     "Enclave Sur Reserva Merlot",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Venta directa, sin visitas públicas",
   ventaDirecta: true,
   benefit: "",
@@ -1015,7 +1027,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Todos los días excepto sábados (reservar)",
   openNow: true,
   wines: ["Trina Blend de Malbec", "Trina Naranjo de Criollas", "Trina Reserva de Malbec"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Visitas guiadas, restaurante y alojamiento boutique",
   benefit: "",
   distance: "",
@@ -1040,7 +1052,7 @@ const WINERIES_DATA: Winery[] = [
     "De Bernardi Merlot",
     "De Bernardi Merlot Rosé",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Visitas y degustaciones con reserva previa",
   benefit: "",
   distance: "",
@@ -1070,7 +1082,7 @@ const WINERIES_DATA: Winery[] = [
     "Clásico Malbec",
     "Parcela Única",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Bodega boutique orientada a exportación",
   benefit: "",
   distance: "",
@@ -1094,7 +1106,7 @@ const WINERIES_DATA: Winery[] = [
     "Bodega Costa Sapo Malbec",
     "Bodega Costa Sapo Petit Verdot",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Vinos de autor, producción limitada y biológica",
   benefit: "",
   distance: "",
@@ -1111,7 +1123,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Horario a confirmar",
   openNow: false,
   wines: ["Primo Bacio Malbec", "Fígaro 9"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Bodega boutique de Allen",
   benefit: "",
   distance: "",
@@ -1132,7 +1144,7 @@ const WINERIES_DATA: Winery[] = [
     "Buona Terra Rosado",
     "Buona Terra Torrontés",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Venta directa en bodega",
   ventaDirecta: true,
   benefit: "",
@@ -1163,7 +1175,7 @@ const WINERIES_DATA: Winery[] = [
     "Reserva Hollejos Cabernet Franc",
     "Reserva Hollejos Malbec",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Visita guiada y degustación con reserva previa",
   benefit: "",
   distance: "",
@@ -1181,7 +1193,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Horario a confirmar",
   openNow: false,
   wines: ["Gennari Malbec", "Gennari Rosé", "Gennari Single Vineyard"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Local de venta de vinos y frutos secos",
   ventaDirecta: true,
   benefit: "",
@@ -1200,7 +1212,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Mié a vie ~11:00, fines de semana ~12:00",
   openNow: true,
   wines: ["Pincén Merlot", "Pincén Cabernet Sauvignon", "Pincén Rosado"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Visitas guiadas con reserva previa",
   benefit: "",
   distance: "",
@@ -1218,7 +1230,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Con reserva previa",
   openNow: false,
   wines: ["Agrestis Malbec", "Agrestis Cabernet Sauvignon", "Tenuis Pinot Noir"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Visitas, degustación y almuerzos con reserva previa",
   benefit: "",
   distance: "",
@@ -1246,7 +1258,7 @@ const WINERIES_DATA: Winery[] = [
     "Tronelli Cosecha Tardía",
     "Tronelli Blend (Malbec-Cabernet Franc-Merlot)",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Contactar por Instagram para visitas",
   benefit: "",
   distance: "",
@@ -1270,7 +1282,7 @@ const WINERIES_DATA: Winery[] = [
     "Black Gran Reserva Cabernet Sauvignon",
     "Black Gran Reserva Malbec",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Sin datos de visitas confirmados",
   benefit: "",
   distance: "",
@@ -1289,7 +1301,7 @@ const WINERIES_DATA: Winery[] = [
     "Fabre Montmayou Patagonia Gran Reserva Merlot",
     "Fabre Montmayou Patagonia Barrel Select Malbec",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Contactar a través del sitio web",
   benefit: "",
   distance: "",
@@ -1310,7 +1322,7 @@ const WINERIES_DATA: Winery[] = [
     "Viñas del Lago Pellegrini Malbec",
     "Viñas del Lago Pellegrini Merlot",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Visitas guiadas, degustaciones y alojamiento",
   benefit: "",
   distance: "",
@@ -1333,7 +1345,7 @@ const WINERIES_DATA: Winery[] = [
     "Tierra del Viento Malbec",
     "Tierra del Viento Merlot",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Venta directa",
   ventaDirecta: true,
   benefit: "",
@@ -1358,7 +1370,7 @@ const WINERIES_DATA: Winery[] = [
     "Moschini Dolzó Blanco Natural Dulce",
     "Moschini Blanco",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Visitas guiadas, degustación y almuerzo con reserva previa",
   benefit: "",
   distance: "",
@@ -1386,7 +1398,7 @@ const WINERIES_DATA: Winery[] = [
     "Sin Azufre Pinot Noir",
     "Barda Pinot Noir",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Producción biodinámica, sin sala de degustación pública",
   benefit: "",
   distance: "",
@@ -1404,7 +1416,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Sin horario fijo",
   openNow: false,
   wines: ["A Lisa Malbec", "J Alberto Malbec", "Noemía Malbec"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Producción biodinámica, visitas solo con cita previa",
   benefit: "",
   distance: "",
@@ -1430,7 +1442,7 @@ const WINERIES_DATA: Winery[] = [
     "OIR Syrah",
     "OIR Pinot Noir",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Recorrido y degustación de 3 vinos",
   benefit: "",
   distance: "",
@@ -1455,7 +1467,7 @@ const WINERIES_DATA: Winery[] = [
     "Flor del Prado Malbec",
     "Flor del Prado Cabernet Franc",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Contactar por Instagram para coordinar visita",
   benefit: "",
   distance: "",
@@ -1473,7 +1485,7 @@ const WINERIES_DATA: Winery[] = [
   hours: "Horario a confirmar",
   openNow: false,
   wines: ["Tormini Blanc de Blancs", "Verziere Malbec", "Selvapiana Blend de Guarda"],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Sin datos de visitas confirmados",
   benefit: "",
   distance: "",
@@ -1495,7 +1507,7 @@ const WINERIES_DATA: Winery[] = [
     "Arrayán Malbec Burdeos Eco",
     "Arrayán Cabernet Franc Malbec Burdeos Eco",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Sin visitas públicas por ahora",
   benefit: "",
   distance: "",
@@ -1519,7 +1531,7 @@ const WINERIES_DATA: Winery[] = [
     "La Rufa Pinot Noir Rosé",
     "Il Kavaliro",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Producción boutique",
   benefit: "",
   distance: "",
@@ -1546,12 +1558,52 @@ const WINERIES_DATA: Winery[] = [
     "Gérôme Marteau Reserva Malbec",
     "Rebeca Blend de Terroirs",
   ],
-  shops: [],
+  shops: ALL_SHOP_NAMES,
   activity: "Espacio visitable La Falda en Cipolletti",
   benefit: "",
   distance: "",
   image: bodegaGeromeMarteauPhoto,
   addressCoordinates: "-38.939491, -67.9638961",
+},
+{
+  id: "w35",
+  name: "Bodega Rivus",
+  city: "Darwin",
+  region: "valle-medio",
+  description: "Proyecto dedicado a la producción de vinos orgánicos en Darwin, sobre la Ruta Nacional 22. Sus viñedos, conducidos a cordón unilateral, favorecen una maduración más pareja de los racimos y una mayor homogeneidad en la fruta. La selección comienza en la cosecha y continúa manualmente en bodega, cuidando cada racimo para elaborar vinos de alta calidad, auténticos del terruño de Río Negro.",
+  shortDescription: "Proyecto dedicado a la producción de vinos orgánicos en Darwin, sobre la Ruta Nacional 22.",
+  hours: "Horario a confirmar",
+  openNow: false,
+  wines: [
+    "Rivus Malbec Reserva",
+    "Rivus Cabernet Sauvignon Reserva",
+    "Rivus Pinot Noir",
+  ],
+  shops: ALL_SHOP_NAMES,
+  activity: "Sin visitas públicas por ahora",
+  benefit: "",
+  distance: "",
+  image: bodegaRivusPhoto,
+  addressCoordinates: "-39.1927939, -65.8007772",
+},
+{
+  id: "w36",
+  name: "Bodega Un Refugio",
+  city: "General Conesa",
+  region: "mar",
+  description: "El proyecto de Pablo Rodriguez en General Conesa se desarrolla a partir de un emprendimiento familiar que decidió implantar en el año 2012 un viñedo de aproximadamente una hectárea y media de Malbec con el fin de elaborar, en principio, un 'vino artesanal' que represente las características del terruño.",
+  shortDescription: "Emprendimiento familiar de General Conesa con un viñedo de Malbec implantado en 2012.",
+  hours: "Horario a confirmar",
+  openNow: false,
+  wines: ["Un Refugio Malbec"],
+  shops: ALL_SHOP_NAMES,
+  activity: "Sin visitas públicas por ahora",
+  benefit: "",
+  distance: "",
+  image: bodegaUnRefugioPhoto,
+  // Aproximada: el link de Google Maps apunta a "Colonia Santa Teresita"
+  // (General Conesa), no a un pin propio de la bodega.
+  addressCoordinates: "-40.1511128, -64.3539992",
 },
 ];
 
@@ -1562,7 +1614,7 @@ const WINERIES = [...WINERIES_DATA].sort((a, b) => {
   return 0;
 });
 
-// Ficha nueva (jpeg a ancho completo) de cada una de las 35 bodegas, por id.
+// Ficha nueva (imagen a ancho completo) de cada una de las 37 bodegas, por id.
 const WINERY_FICHA_BY_ID: Record<string, string> = {
   w1: fichaBodegaMirasPhoto,
   w2: fichaBodegaFincaAnielloPhoto,
@@ -1599,6 +1651,8 @@ const WINERY_FICHA_BY_ID: Record<string, string> = {
   w32: fichaBodegaPujantePhoto,
   w33: fichaDominioDeFerenezaPhoto,
   w34: fichaBodegaGeromeMarteauPhoto,
+  w35: fichaBodegaRivusPhoto,
+  w36: fichaBodegaUnRefugioPhoto,
 };
 
 const WINES: Wine[] = [
@@ -3955,6 +4009,71 @@ const WINES: Wine[] = [
   tag: "Alto Valle",
   image: geromeMarteauRebecaDeTerroirsPhoto,
 },
+{
+  id: "v213",
+  name: "Rivus Malbec Reserva",
+  varietal: "Malbec",
+  winery: "Bodega Rivus",
+  style: "Complejo y estructurado",
+  description: "Rivus Malbec Reserva es un vino elaborado con uvas de alta calidad del Valle Medio, que expresa el carácter del terroir patagónico. Añejado en barricas de roble francés y americano, logra una gran complejidad, estructura y equilibrio. De producción orgánica y biodinámica, refleja el compromiso con el cuidado del suelo y la identidad de la región. Certificación: Orgánico (Argencert / Ecocert).",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Reserva",
+  image: rivusMalbecReservaPhoto,
+  vintage: "2012",
+  aging: "Hasta 14 meses en barricas de roble francés y americano",
+  tastingVista: "Rojo rubí intenso, con reflejos violáceos o teja",
+  tastingNariz: "Frutos negros maduros, con notas especiadas y sutiles toques tostados del roble",
+  tastingBoca: "Taninos redondos y bien integrados, con buena estructura y final persistente",
+},
+{
+  id: "v214",
+  name: "Rivus Cabernet Sauvignon Reserva",
+  varietal: "Cabernet Sauvignon",
+  winery: "Bodega Rivus",
+  style: "Equilibrado y persistente",
+  description: "Rivus Cabernet Sauvignon Reserva es un vino elaborado bajo estrictas normas de producción orgánica y biodinámica, que expresa el carácter único del terroir del sur argentino. Con una cuidadosa crianza en madera, logra una gran estructura, complejidad y equilibrio. Certificación: Orgánico (Argencert / Ecocert).",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Reserva",
+  image: rivusCabernetSauvignonReservaPhoto,
+  vintage: "2008",
+  aging: "En barricas de roble",
+  tastingVista: "Rojo rubí intenso, con reflejos violáceos o teja",
+  tastingNariz: "Frutos negros y rojos maduros, con notas especiadas y sutiles toques tostados del roble",
+  tastingBoca: "Taninos suaves y bien integrados, con buen equilibrio entre fruta y madera, y un final persistente",
+},
+{
+  id: "v215",
+  name: "Rivus Pinot Noir",
+  varietal: "Pinot Noir",
+  winery: "Bodega Rivus",
+  style: "Elegante y delicado",
+  description: "Rivus Pinot Noir es un vino que expresa el carácter de esta región fría del norte patagónico, con baja intensidad de color, perfil elegante y notas a frutas rojas. Proviene de un viñedo implantado en Darwin, donde se trabaja con cosecha manual y fermentación en piletas de hormigón, buscando resaltar la pureza de la variedad y las características del terruño.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Valle Medio",
+  image: rivusPinotNoirPhoto,
+  vintage: "2015",
+  aging: "Sin paso por barrica",
+  servingTemp: "14 - 16 °C",
+  tastingVista: "Rojo teja o rubí brillante, de baja intensidad",
+  tastingNariz: "Aromas a cerezas, guindas y frutos rojos, con sutiles toques complejos",
+  tastingBoca: "Suave y delicado, de cuerpo medio-bajo, con taninos finos y equilibrada acidez",
+},
+{
+  id: "v216",
+  name: "Un Refugio Malbec",
+  varietal: "Malbec",
+  winery: "Bodega Un Refugio",
+  style: "Suave y carnoso",
+  description: "Un Refugio es un vino patagónico nacido de un emprendimiento familiar en General Conesa, con un viñedo de Malbec implantado en 2012 que expresa las singularidades del terruño. La uva se cosecha a mano y fermenta con levaduras indígenas en piletas de hormigón revestidas en epoxi, con una maceración de 2 a 3 semanas. Luego el vino cría durante 4 meses en barricas de roble francés y reposa en botella en una cava subterránea.",
+  availableAt: ALL_SHOP_NAMES,
+  tag: "Mar",
+  image: unRefugioMalbecPhoto,
+  aging: "4 meses en barricas de roble francés",
+  servingTemp: "16 - 18 °C",
+  tastingVista: "Rojo bordó con matiz teja, de brillo bajo y alta intensidad",
+  tastingNariz: "Aromas a moras y ciruelas maduras, con un sutil toque terroso ahumado",
+  tastingBoca: "Suave y carnoso, con buen equilibrio, baja acidez y final persistente",
+},
 ].sort((a, b) => {
   const priority = "Antigua Bodega Patagónica";
   const aPriority = a.winery === priority;
@@ -4501,6 +4620,23 @@ function shopAvailabilitySubtitle(shop: Shop, userCoords: Coords | null): string
   return shop.city;
 }
 
+// Orden por cercanía real al usuario, compartido por "Disponible en" (ficha
+// de vino) y "Dónde conseguir sus vinos" (ficha de bodega): lo que no tiene
+// coordenadas queda al final. Sin ubicación, devuelve el orden original.
+function sortByUserDistance<T>(
+  items: T[],
+  getCoords: (item: T) => string | undefined,
+  userCoords: Coords | null
+): T[] {
+  if (!userCoords) return items;
+  const withDistance = items.map((item) => {
+    const c = parseCoords(getCoords(item));
+    return { item, dist: c ? haversineDistanceKm(userCoords, c) : Infinity };
+  });
+  withDistance.sort((a, b) => a.dist - b.dist);
+  return withDistance.map((x) => x.item);
+}
+
 // Opciones de "Disponible en": las vinotecas del vino más su bodega
 // productora si vende directo (ventaDirecta), todas ordenadas juntas por
 // distancia real, sin la regla "Antigua primera" (no aplica acá). Sin
@@ -4522,15 +4658,11 @@ function wineAvailabilityOptions(
   const options: AvailabilityOption[] = winery?.ventaDirecta
     ? [{ kind: "winery", winery }, ...shops]
     : shops;
-  if (!userCoords) return options;
-  const withDistance = options.map((o) => {
-    const c = parseCoords(
-      o.kind === "shop" ? o.shop.coordinates : o.winery.addressCoordinates
-    );
-    return { o, dist: c ? haversineDistanceKm(userCoords, c) : Infinity };
-  });
-  withDistance.sort((a, b) => a.dist - b.dist);
-  return withDistance.map((x) => x.o);
+  return sortByUserDistance(
+    options,
+    (o) => (o.kind === "shop" ? o.shop.coordinates : o.winery.addressCoordinates),
+    userCoords
+  );
 }
 
 function wineryDirectSaleSubtitle(winery: Winery, userCoords: Coords | null): string {
@@ -5356,6 +5488,7 @@ export default function App() {
                   onBack={closeDetail}
                   toggleFavorite={toggleFavorite}
                   isFavorite={isFavorite}
+                  userCoords={userCoords}
                 />
               ) : detail.kind === "event" ? (
                 <EventDetailScreen
@@ -5586,7 +5719,17 @@ const EXPERIENCE_WINE_FICHA_BY_ID: Record<string, string> = {};
   EXPERIENCE_WINE_FICHA_BY_ID[w.wineId] = w.fichaImage;
 });
 
+// Fichas de vinos que no están en Inicio ni en ninguna Experiencia: se
+// muestran solo desde la ficha normal del vino (bodega, búsqueda, listados).
+const CATALOG_WINE_FICHA_BY_ID: Record<string, string> = {
+  v213: fichaRivusMalbecReserva,
+  v214: fichaRivusCabernetSauvignonReserva,
+  v215: fichaRivusPinotNoir,
+  v216: fichaUnRefugioMalbec,
+};
+
 const WINE_FICHA_BY_ID: Record<string, string> = {
+  ...CATALOG_WINE_FICHA_BY_ID,
   ...EXPERIENCE_WINE_FICHA_BY_ID,
   ...HOME_WINE_FICHA_BY_ID,
 };
@@ -8663,6 +8806,7 @@ function WineryDetail({
   onBack,
   toggleFavorite,
   isFavorite,
+  userCoords,
 }: {
   winery: Winery;
   onOpenWine: (name: string) => void;
@@ -8670,6 +8814,7 @@ function WineryDetail({
   onBack: () => void;
   toggleFavorite: (item: FavoriteItem) => void;
   isFavorite: (id: string) => boolean;
+  userCoords: Coords | null;
 }) {
   const directionsQuery = winery.addressCoordinates
     ? winery.addressCoordinates
@@ -8745,18 +8890,29 @@ function WineryDetail({
       <Block title="Dónde conseguir sus vinos">
         {winery.shops.length > 0 ? (
           <div style={styles.stack12}>
-            {winery.shops.map((s) => {
-              const shop = SHOPS.find((x) => x.name === s);
+            {sortByUserDistance(
+              winery.shops.map((name) => ({
+                name,
+                shop: SHOPS.find((x) => x.name === name),
+              })),
+              (x) => x.shop?.coordinates,
+              userCoords
+            ).map(({ name, shop }) => {
+              const distanceText = shop
+                ? distanceLabelFromCoords(shop.coordinates, userCoords, "")
+                : "";
               return (
                 <ResultRow
-                  key={s}
-                  title={s}
+                  key={name}
+                  title={name}
                   subtitle={
                     shop
-                      ? `${shop.address}, ${shop.city}`
+                      ? `${shop.address}, ${shop.city}${
+                          distanceText ? ` · ${distanceText}` : ""
+                        }`
                       : "Dirección a confirmar"
                   }
-                  onClick={() => onOpenShop(s)}
+                  onClick={() => onOpenShop(name)}
                 />
               );
             })}

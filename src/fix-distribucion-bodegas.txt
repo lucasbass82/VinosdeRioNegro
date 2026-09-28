@@ -1,0 +1,52 @@
+INSTRUCCIONES PARA CLAUDE CODE - "DÓNDE CONSEGUIR SUS VINOS" SIN CONFIRMAR EN VARIAS BODEGAS
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo (qué bodegas vas
+a tocar y por qué) y esperá mi aprobación.
+
+============================================
+CONTEXTO
+============================================
+En la ficha de bodega, la sección "Dónde conseguir sus vinos" sale del campo
+shops de WINERIES_DATA. Cuando shops: [], se muestra "Sin distribución
+confirmada" (fix de I4 de la auditoría).
+
+Humberto Canale tiene shops cargado con todas las vinotecas (probablemente
+ALL_SHOP_NAMES, revisalo) y por eso su ficha muestra la lista completa de
+vinotecas en vez del mensaje de "sin confirmar".
+
+============================================ PEDIDO
+============================================
+1. Revisá el campo shops de TODAS las bodegas en WINERIES_DATA (las 37, no
+   solo las 2 nuevas) y decime en el plan cuáles hoy tienen shops: [] (o
+   equivalente vacío) y por lo tanto muestran "Sin distribución confirmada".
+2. Para cada una de esas bodegas (incluidas Bodega Rivus y Bodega Un Refugio,
+   las 2 recién agregadas), cargá shops con el mismo valor que ya usa Humberto
+   Canale — si es ALL_SHOP_NAMES, usá exactamente esa misma constante, no una
+   copia manual de la lista.
+3. No toques ninguna bodega que YA tenga shops cargado con algo distinto de
+   [] (por ejemplo, si alguna tiene una lista parcial de vinotecas específicas
+   en vez de todas, dejala como está y avisame en el plan que la encontraste
+   así, para decidir aparte).
+
+============================================
+QUÉ NO HACER
+============================================
+- No toques wine.availableAt (eso ya está en ALL_SHOP_NAMES en todos los
+  vinos) — este pedido es solo sobre winery.shops.
+- No toques WINES, contactInfo, el mapa, el scroll, ni ninguna otra pantalla.
+- No inventes ninguna vinoteca que no exista ya en SHOPS.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: abrí la ficha de Bodega Rivus y de Bodega Un Refugio — "Dónde
+   conseguir sus vinos" debe mostrar la lista completa de vinotecas, igual
+   que en Humberto Canale (mismo orden por distancia si hay ubicación).
+   Confirmá también 1-2 de las otras bodegas que encontraste con shops: []
+   antes del cambio.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
