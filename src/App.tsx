@@ -194,6 +194,9 @@ import fichaRivusPinotNoir from "./assets/fichas-vinos/ficha-rivus-pinot-noir.pn
 import fichaWapisaMalbec from "./assets/fichas-vinos/ficha-wapisa-malbec.png";
 import fichaWapisaCabernetSauvignon from "./assets/fichas-vinos/ficha-wapisa-cabernet-sauvignon.png";
 import fichaWapisaSauvignonBlanc from "./assets/fichas-vinos/ficha-wapisa-sauvignon-blanc.png";
+import fichaSavuMalbecRosado from "./assets/fichas-vinos/ficha-savu-malbec-rosado.png";
+import fichaSavuCabernetSauvignon from "./assets/fichas-vinos/ficha-savu-cabernet-sauvignon.png";
+import fichaSavuSyrah from "./assets/fichas-vinos/ficha-savu-syrah.png";
 import fichaUnRefugioMalbec from "./assets/fichas-vinos/ficha-un-refugio-malbec.png";
 import rivusMalbecReservaPhoto from "./assets/vinos/rivus-malbec-reserva.png";
 import rivusCabernetSauvignonReservaPhoto from "./assets/vinos/rivus-cabernet-sauvignon-reserva.png";
@@ -1891,10 +1894,15 @@ const WINES: Wine[] = [
   varietal: "Rosado",
   winery: "Viñas de Lucía",
   style: "Fresco y frutado",
-  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  description: "SAVU Malbec Rosado es un vino rosado fresco del Valle de Viedma, en la región de Mar, Río Negro. De estilo liviano y seco, expresa la pureza del terroir patagónico con aromas a frutos rojos y flores. Su acidez viva y su frescura lo hacen ideal para disfrutar bien frío.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Costa/Mar",
   image: savuMalbecRosadoPhoto,
+  aging: "Sin crianza en roble",
+  servingTemp: "6 - 8 °C",
+  tastingVista: "Color rosado frambuesa brillante",
+  tastingNariz: "Aromas expresivos a frutos rojos dulces y sutiles toques florales",
+  tastingBoca: "Ataque suave, meloso, con buen equilibrio de acidez y una persistencia agradable y refrescante",
 },
 {
   id: "v21",
@@ -1902,10 +1910,15 @@ const WINES: Wine[] = [
   varietal: "Syrah",
   winery: "Viñas de Lucía",
   style: "Suave y especiado",
-  description: "Syrah patagónico de zona marítima, con aromas de fruta negra, moras y un toque especiado. En boca es suave y delicado, con correcto equilibrio y cuerpo ligero.",
+  description: "SAVU Syrah es un vino tinto patagónico de zona marítima, que expresa la identidad del Valle de Viedma, en la región de Mar, Río Negro. De estilo suave y delicado, combina aromas de fruta negra y un toque especiado, con correcto equilibrio y un cuerpo ligero.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Costa/Mar",
   image: savuSyrahPhoto,
+  aging: "Sin crianza en roble",
+  servingTemp: "16 - 18 °C",
+  tastingVista: "Color rojo bordó de intensidad media con reflejos intensos",
+  tastingNariz: "Notas frutadas a moras, ciruelas dulces y sutiles toques especiados",
+  tastingBoca: "Paso suave, sedoso, con un ataque ligeramente dulce, taninos jóvenes y acidez equilibrada",
 },
 {
   id: "v22",
@@ -1913,10 +1926,15 @@ const WINES: Wine[] = [
   varietal: "Cabernet Sauvignon",
   winery: "Viñas de Lucía",
   style: "Estructurado y herbáceo",
-  description: "Tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda.",
+  description: "SAVU Cabernet Sauvignon es un vino tinto de cuerpo firme y estructurado, con aromas a cassis, pimiento verde y notas herbáceas que evolucionan hacia especias y tabaco con la crianza. Taninos marcados y buena capacidad de guarda. Vinos artesanales de tirada limitada que buscan la expresión directa de la fruta y el viento patagónico.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Costa/Mar",
   image: savuCabernetSauvignonPhoto,
+  aging: "Con potencial de guarda",
+  servingTemp: "16 - 18 °C",
+  tastingVista: "Color rojo rubí intenso con reflejos violáceos",
+  tastingNariz: "Aromas a cassis, pimiento verde y notas herbáceas, que evolucionan hacia especias y tabaco con la crianza",
+  tastingBoca: "Taninos marcados, estructura firme, con buen equilibrio, baja o media astringencia y el carácter típico de la zona marítima-fluvial del sur",
 },
 {
   id: "v23",
@@ -5748,6 +5766,9 @@ const CATALOG_WINE_FICHA_BY_ID: Record<string, string> = {
   v54: fichaWapisaSauvignonBlanc,
   v104: fichaWapisaCabernetSauvignon,
   v105: fichaWapisaMalbec,
+  v20: fichaSavuMalbecRosado,
+  v21: fichaSavuSyrah,
+  v22: fichaSavuCabernetSauvignon,
 };
 
 const WINE_FICHA_BY_ID: Record<string, string> = {
