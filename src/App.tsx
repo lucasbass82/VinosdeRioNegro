@@ -197,6 +197,8 @@ import fichaWapisaSauvignonBlanc from "./assets/fichas-vinos/ficha-wapisa-sauvig
 import fichaSavuMalbecRosado from "./assets/fichas-vinos/ficha-savu-malbec-rosado.png";
 import fichaSavuCabernetSauvignon from "./assets/fichas-vinos/ficha-savu-cabernet-sauvignon.png";
 import fichaSavuSyrah from "./assets/fichas-vinos/ficha-savu-syrah.png";
+import fichaFamiliaHerreroTinto from "./assets/fichas-vinos/ficha-familia-herrero-tinto-malbec-y-cabernet-sauvignon.png";
+import fichaFamiliaHerreroBlanco from "./assets/fichas-vinos/ficha-familia-herrero-blanco-chenin.png";
 import fichaUnRefugioMalbec from "./assets/fichas-vinos/ficha-un-refugio-malbec.png";
 import rivusMalbecReservaPhoto from "./assets/vinos/rivus-malbec-reserva.png";
 import rivusCabernetSauvignonReservaPhoto from "./assets/vinos/rivus-cabernet-sauvignon-reserva.png";
@@ -963,7 +965,7 @@ const WINERIES_DATA: Winery[] = [
     "Mini bodega familiar de Guardia Mitre, sobre la costa del Río Negro.",
   hours: "Sin visitas públicas confirmadas",
   openNow: false,
-  wines: ["Tinto (Malbec y Cabernet Sauvignon)", "Blanco (Chenin)"],
+  wines: ["Familia Herrero Vino Casero Tinto", "Familia Herrero Vino Casero Blanco"],
   shops: ALL_SHOP_NAMES,
   activity: "Producción familiar, contactar por Facebook",
   benefit: "",
@@ -1938,25 +1940,37 @@ const WINES: Wine[] = [
 },
 {
   id: "v23",
-  name: "Tinto (Malbec y Cabernet Sauvignon)",
+  name: "Familia Herrero Vino Casero Tinto",
   varietal: "Malbec y Cabernet Sauvignon",
   winery: "Familia Herrero",
   style: "Corte con cuerpo",
-  description: "Corte de Malbec y Cabernet Sauvignon que combina la fruta madura y untuosidad del Malbec con la estructura y frescura herbácea del Cabernet. Tinto de cuerpo medio a alto y buena complejidad.",
+  description: "Vino Casero Tinto de Familia Herrero es un corte de Malbec y Cabernet Sauvignon que combina la fruta madura y untuosidad del Malbec con la estructura y frescura herbácea del Cabernet. Tinto de cuerpo medio a alto y buena complejidad, que refleja la identidad del Valle de Viedma, en la región de Mar, Río Negro.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Costa/Mar",
   image: familiaHerreroTintoPhoto,
+  vintage: "2022",
+  aging: "Sin crianza en roble",
+  servingTemp: "16 - 18 °C",
+  tastingVista: "Color rojo bordó de intensidad media y buen brillo",
+  tastingNariz: "Perfil frutado con presencia de frutos rojos o negros, mermelada y sutil toque vegetal o especiado",
+  tastingBoca: "Estructura firme, taninos equilibrados y paso elegante",
 },
 {
   id: "v24",
-  name: "Blanco (Chenin)",
-  varietal: "Chenin Blanc",
+  name: "Familia Herrero Vino Casero Blanco",
+  varietal: "Chenin",
   winery: "Familia Herrero",
   style: "Fresco y mineral",
-  description: "Blanco versátil de acidez marcada, con aromas a manzana verde, membrillo y flores blancas. Fresco y mineral, ideal para climas fríos como el patagónico.",
+  description: "Vino Casero Blanco de Familia Herrero es un blanco versátil de acidez marcada, con aromas a manzana verde, membrillo y flores blancas. Fresco y mineral, ideal para climas fríos como el patagónico.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Costa/Mar",
   image: familiaHerreroBlancoPhoto,
+  vintage: "2022",
+  aging: "Sin crianza en roble",
+  servingTemp: "8 - 10 °C",
+  tastingVista: "Color amarillo pálido con reflejos verdosos, brillante",
+  tastingNariz: "Aromas a manzana verde, membrillo y flores blancas, con sutiles notas minerales",
+  tastingBoca: "Fresco, de acidez marcada, con buen equilibrio y final mineral. Ideal para climas fríos como el patagónico",
 },
 {
   id: "v25",
@@ -5769,6 +5783,8 @@ const CATALOG_WINE_FICHA_BY_ID: Record<string, string> = {
   v20: fichaSavuMalbecRosado,
   v21: fichaSavuSyrah,
   v22: fichaSavuCabernetSauvignon,
+  v23: fichaFamiliaHerreroTinto,
+  v24: fichaFamiliaHerreroBlanco,
 };
 
 const WINE_FICHA_BY_ID: Record<string, string> = {

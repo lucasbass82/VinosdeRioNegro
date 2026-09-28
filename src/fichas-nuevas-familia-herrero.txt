@@ -1,0 +1,97 @@
+INSTRUCCIONES PARA CLAUDE CODE - FICHAS NUEVAS DE FAMILIA HERRERO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Mismo tipo de pedido que ya aplicamos con Wapisa y SAVU. Familia Herrero tiene
+(al menos) estos 2 vinos, que hoy no tienen ficha real nueva: el "Vino Casero
+Tinto" y el "Vino Casero Blanco". Te paso las 2 fichas nuevas para que queden
+con el mismo diseño real que el resto.
+
+============================================
+PASO 0
+============================================
+- Seguí el mismo mecanismo que ya usaste para Wapisa y SAVU
+  (CATALOG_WINE_FICHA_BY_ID → WINE_FICHA_BY_ID, imports desde fichas-vinos/).
+- Confirmá los ids exactos de los vinos de Familia Herrero en WINES antes de
+  tocar nada (no asumas nombres). Puede que el nombre cargado hoy no sea
+  exactamente "Vino Casero Tinto"/"Vino Casero Blanco" — decime en el plan
+  cómo se llaman realmente y si hace falta ajustarles el nombre para que
+  coincida con la etiqueta real de estas fichas.
+- Decime también si Familia Herrero tiene algún otro vino además de estos 2,
+  y si alguno de los 2 ya tenía ficha real (para no pisarla).
+- Recordá que Familia Herrero (w8) es una de las bodegas sin coordenadas
+  (itinerante, sin sede fija) — este pedido no toca eso, es solo sobre las
+  fichas de vino.
+
+============================================
+ASSETS
+============================================
+Las 2 imágenes van en src/assets/fichas-vinos/ (mismo lugar que las demás):
+- ficha-familia-herrero-tinto-malbec-y-cabernet-sauvignon.png
+- ficha-familia-herrero-blanco-chenin.png
+
+============================================
+DATOS (cargalos igual que con Wapisa/SAVU: reemplazá description, crianza,
+servicio, varietal y notas de cata con estos datos reales)
+============================================
+
+1) Familia Herrero — Vino Casero Tinto
+   - Varietal: corte de Malbec y Cabernet Sauvignon
+   - Año: cosecha 2022
+   - Origen: Región Mar, Río Negro (Guardia Mitre)
+   - Descripción: "Vino Casero Tinto de Familia Herrero es un corte de
+     Malbec y Cabernet Sauvignon que combina la fruta madura y untuosidad
+     del Malbec con la estructura y frescura herbácea del Cabernet. Tinto
+     de cuerpo medio a alto y buena complejidad, que refleja la identidad
+     del Valle de Viedma, en la región de Mar, Río Negro."
+   - Crianza: "Sin crianza en roble."
+   - Servicio: "16 - 18 °C."
+   - Notas de cata:
+     - Vista: "Color rojo bordó de intensidad media y buen brillo."
+     - Nariz: "Perfil frutado con presencia de frutos rojos o negros,
+       mermelada y sutil toque vegetal o especiado."
+     - Boca: "Estructura firme, taninos equilibrados y paso elegante."
+
+2) Familia Herrero — Vino Casero Blanco
+   - Varietal: Chenin (Chenin Blanc). Nota: la ficha en sí dice "Corte
+     blanco" en la celda de varietal, pero el usuario confirmó que el
+     varietal real es Chenin — cargá "Chenin" como varietal del vino en
+     WINES, no "Corte blanco".
+   - Año: cosecha 2022
+   - Origen: Región Mar, Río Negro (Guardia Mitre)
+   - Descripción: "Vino Casero Blanco de Familia Herrero es un blanco
+     versátil de acidez marcada, con aromas a manzana verde, membrillo y
+     flores blancas. Fresco y mineral, ideal para climas fríos como el
+     patagónico."
+   - Crianza: "Sin crianza en roble."
+   - Servicio: "8 - 10 °C."
+   - Notas de cata:
+     - Vista: "Color amarillo pálido con reflejos verdosos, brillante."
+     - Nariz: "Aromas a manzana verde, membrillo y flores blancas, con
+       sutiles notas minerales."
+     - Boca: "Fresco, de acidez marcada, con buen equilibrio y final
+       mineral. Ideal para climas fríos como el patagónico."
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ningún otro vino ni bodega.
+- No tocar addressCoordinates de Familia Herrero (sigue sin coordenadas).
+- No tocar el mapa, scroll, saludo, ni ninguna otra pantalla.
+- No inventar ningún dato que no esté arriba.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: desde Familia Herrero, abrir sus vinos — deben mostrar su ficha
+   real (imagen).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
