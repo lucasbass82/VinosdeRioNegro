@@ -199,6 +199,9 @@ import fichaSavuCabernetSauvignon from "./assets/fichas-vinos/ficha-savu-caberne
 import fichaSavuSyrah from "./assets/fichas-vinos/ficha-savu-syrah.png";
 import fichaFamiliaHerreroTinto from "./assets/fichas-vinos/ficha-familia-herrero-tinto-malbec-y-cabernet-sauvignon.png";
 import fichaFamiliaHerreroBlanco from "./assets/fichas-vinos/ficha-familia-herrero-blanco-chenin.png";
+import fichaClasicoPatinasBlancas from "./assets/fichas-vinos/ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-clasico-patinas-blancas.png";
+import fichaClasicoMerlot from "./assets/fichas-vinos/ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-merlot.png";
+import fichaParcelaUnicaBlend from "./assets/fichas-vinos/ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png";
 import fichaUnRefugioMalbec from "./assets/fichas-vinos/ficha-un-refugio-malbec.png";
 import rivusMalbecReservaPhoto from "./assets/vinos/rivus-malbec-reserva.png";
 import rivusCabernetSauvignonReservaPhoto from "./assets/vinos/rivus-cabernet-sauvignon-reserva.png";
@@ -1084,7 +1087,7 @@ const WINERIES_DATA: Winery[] = [
     "Araucana Río de los Ciervos Pinot Noir",
     "Araucana Río de los Ciervos Malbec",
     "Araucana Azul",
-    "Clásico Patinas Blancas",
+    "Clásico Pátinas Blancas",
     "Clásico Merlot Rosé",
     "Clásico Merlot",
     "Clásico Malbec",
@@ -2231,14 +2234,19 @@ const WINES: Wine[] = [
 },
 {
   id: "v47",
-  name: "Clásico Patinas Blancas",
-  varietal: "Blanco",
+  name: "Clásico Pátinas Blancas",
+  varietal: "Sauvignon Blanc y Semillón",
   winery: "Ribera del Cuarzo",
   style: "Fresco y cítrico",
-  description: "Blanco fresco de la Patagonia, con acidez natural marcada por el clima frío y ventoso de la región. Notas cítricas y florales, ideal para acompañar mariscos y pescados.",
+  description: "Las Pátinas del Desierto son formaciones de suelo típicas de la estepa patagónica, resultado del efecto del viento durante milenios. Las uvas de Clásico Pátinas Blancas provienen de una parcela antigua de Sauvignon Blanc con plantas mezcladas de Semillon. Los suelos son aluviales, de antiguas intrusiones del Río Negro, en la zona fría de Valle Azul. Este vino muestra elegancia, frescura y ligereza de los vinos blancos de las zonas frías de la Patagonia.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Estepa",
   image: clasicoPatinasBlancasPhoto,
+  aging: "Sin crianza en roble",
+  servingTemp: "8 - 10 °C",
+  tastingVista: "Color amarillo pálido con sutiles reflejos verdosos",
+  tastingNariz: "Aromas a peras frescas, manzanas maduras, cítricos y dejos herbales o florales con un toque mineral",
+  tastingBoca: "Acidez marcada y filosa, cuerpo ligero, buena textura y un final persistente y vibrante",
 },
 {
   id: "v48",
@@ -2257,10 +2265,15 @@ const WINES: Wine[] = [
   varietal: "Merlot",
   winery: "Ribera del Cuarzo",
   style: "Estructurado y expresivo",
-  description: "100% Merlot de viñedos en ambas márgenes del Río Negro. Perfil estructurado y expresivo, con notas a frutos negros maduros, cassis y sutiles toques especiados. Cuerpo medio, taninos suaves y final redondo.",
+  description: "Un Merlot de perfil estructurado y expresivo, que refleja la identidad de la estepa patagónica. Rojo rubí profundo, con aromas de frutos negros maduros y cassis, sutiles toques especiados y un fondo mineral que delata el suelo de cuarzo. En boca es equilibrado y fresco, con taninos finos y pulidos, acidez vibrante característica del paralelo 39 y un final de fruta pura y persistente.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Estepa",
   image: clasicoMerlotPhoto,
+  aging: "8 a 12 meses, 50% en barricas de roble francés (30% primer uso - 40% segundo uso - 30% tercer y cuarto uso) - 50% en concreto sin roble",
+  servingTemp: "16 - 18 °C",
+  tastingVista: "Color rojo rubí profundo, de gran intensidad y brillo",
+  tastingNariz: "Aromas a frutos negros maduros, cassis, con sutiles toques especiados y un fondo mineral",
+  tastingBoca: "Equilibrado y fresco, con taninos finos y pulidos, acidez vibrante y un final de fruta pura y persistente",
 },
 {
   id: "v50",
@@ -2279,10 +2292,15 @@ const WINES: Wine[] = [
   varietal: "Malbec, Merlot y Petit Verdot",
   winery: "Ribera del Cuarzo",
   style: "Composición única de suelo",
-  description: "Blend de 48% Malbec, 40% Merlot, 12% Petit Verdot. Suelos de origen eólico, enriquecidos con ceniza volcánica y potasio, con alto contenido de carbonato de calcio — una composición química poco común incluso a nivel mundial.",
+  description: "Blend de 48% Malbec, 40% Merlot, 12% Petit Verdot. Suelos de origen eólico, enriquecidos con ceniza volcánica y potasio, con alto contenido de carbonato de calcio — una composición química poco común incluso a nivel mundial. Un vino que expresa la identidad del Valle Azul y el carácter único de la estepa patagónica.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Estepa",
   image: parcelaUnicaPhoto,
+  aging: "16 meses en barricas de roble francés de distintos usos",
+  servingTemp: "16 - 18 °C",
+  tastingVista: "Color violáceo profundo, de gran intensidad y brillo",
+  tastingNariz: "Aromas a frutos rojos y bayas, notas especiadas, de madera fina, con gran complejidad",
+  tastingBoca: "Estructurado y elegante, de taninos firmes y pulidos, con acidez vibrante y un final largo, con gran potencial de guarda",
 },
 {
   id: "v52",
@@ -5785,6 +5803,9 @@ const CATALOG_WINE_FICHA_BY_ID: Record<string, string> = {
   v22: fichaSavuCabernetSauvignon,
   v23: fichaFamiliaHerreroTinto,
   v24: fichaFamiliaHerreroBlanco,
+  v47: fichaClasicoPatinasBlancas,
+  v49: fichaClasicoMerlot,
+  v51: fichaParcelaUnicaBlend,
 };
 
 const WINE_FICHA_BY_ID: Record<string, string> = {

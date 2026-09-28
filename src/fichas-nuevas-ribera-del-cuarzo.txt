@@ -1,0 +1,119 @@
+INSTRUCCIONES PARA CLAUDE CODE - FICHAS NUEVAS DE BODEGA RIBERA DEL CUARZO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Mismo tipo de pedido que ya aplicamos con Wapisa, SAVU y Familia Herrero.
+Bodega Ribera del Cuarzo tiene varios vinos, y te paso 3 fichas nuevas para
+que queden todos sus vinos con ficha real nueva:
+- Clásico Pátinas Blancas (vino blanco)
+- Clásico Merlot (vino tinto)
+- Parcela Única Blend (vino tinto)
+
+============================================
+PASO 0
+============================================
+- Seguí el mismo mecanismo que ya usaste para Wapisa/SAVU/Familia Herrero
+  (CATALOG_WINE_FICHA_BY_ID → WINE_FICHA_BY_ID, imports desde fichas-vinos/).
+- Confirmá los ids exactos de estos 3 vinos de Ribera del Cuarzo en WINES
+  antes de tocar nada (no asumas nombres exactos).
+- Decime en el plan si Ribera del Cuarzo tiene algún otro vino además de
+  estos 3, y si alguno de los 3 ya tenía ficha real nueva (para no pisarla).
+- Si algún nombre cargado hoy no coincide exactamente con el de la etiqueta
+  de la ficha, avisame y proponeme el ajuste (mismo criterio que usamos con
+  Familia Herrero).
+
+============================================
+ASSETS
+============================================
+Las 3 imágenes van en src/assets/fichas-vinos/ (mismo lugar que las demás):
+- ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-clasico-patinas-blancas.png
+- ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-merlot.png
+- ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png
+
+============================================
+DATOS (cargalos igual que con Wapisa/SAVU/Familia Herrero: reemplazá
+description, origen, varietal, crianza, servicio y notas de cata con estos
+datos reales)
+============================================
+
+1) Ribera del Cuarzo Clásico Pátinas Blancas
+   - Varietal: Sauvignon Blanc y Semillon
+   - Origen: Estepa, Río Negro (parcela antigua en la margen sur del Río
+     Negro, en Valle Azul)
+   - Descripción: "Las Pátinas del Desierto son formaciones de suelo
+     típicas de la estepa patagónica, resultado del efecto del viento
+     durante milenios. Las uvas de Clásico Pátinas Blancas provienen de una
+     parcela antigua de Sauvignon Blanc con plantas mezcladas de Semillon.
+     Los suelos son aluviales, de antiguas intrusiones del Río Negro, en la
+     zona fría de Valle Azul. Este vino muestra elegancia, frescura y
+     ligereza de los vinos blancos de las zonas frías de la Patagonia."
+   - Crianza: "Sin crianza en roble."
+   - Servicio: "8 - 10 °C."
+   - Notas de cata:
+     - Vista: "Color amarillo pálido con sutiles reflejos verdosos."
+     - Nariz: "Aromas a peras frescas, manzanas maduras, cítricos y dejos
+       herbales o florales con un toque mineral."
+     - Boca: "Acidez marcada y filosa, cuerpo ligero, buena textura y un
+       final persistente y vibrante."
+
+2) Ribera del Cuarzo Clásico Merlot
+   - Varietal: 100% Merlot
+   - Origen: Estepa, Río Negro (parcela en la margen sur del Río Negro, en
+     Valle Azul)
+   - Descripción: "Un Merlot de perfil estructurado y expresivo, que
+     refleja la identidad de la estepa patagónica. Rojo rubí profundo, con
+     aromas de frutos negros maduros y cassis, sutiles toques especiados y
+     un fondo mineral que delata el suelo de cuarzo. En boca es equilibrado
+     y fresco, con taninos finos y pulidos, acidez vibrante característica
+     del paralelo 39 y un final de fruta pura y persistente."
+   - Crianza: "8 a 12 meses, 50% en barricas de roble francés (30% primer
+     uso - 40% segundo uso - 30% tercer y cuarto uso) - 50% en concreto sin
+     roble."
+   - Servicio: "16 - 18 °C."
+   - Notas de cata:
+     - Vista: "Color rojo rubí profundo, de gran intensidad y brillo."
+     - Nariz: "Aromas a frutos negros maduros, cassis, con sutiles toques
+       especiados y un fondo mineral."
+     - Boca: "Equilibrado y fresco, con taninos finos y pulidos, acidez
+       vibrante y un final de fruta pura y persistente."
+
+3) Ribera del Cuarzo Parcela Única Blend
+   - Varietal: 48% Malbec, 40% Merlot, 12% Petit Verdot
+   - Origen: Estepa, Río Negro (Valle Azul)
+   - Descripción: "Blend de 48% Malbec, 40% Merlot, 12% Petit Verdot.
+     Suelos de origen eólico, enriquecidos con ceniza volcánica y potasio,
+     con alto contenido de carbonato de calcio — una composición química
+     poco común incluso a nivel mundial. Un vino que expresa la identidad
+     del Valle Azul y el carácter único de la estepa patagónica."
+   - Crianza: "16 meses en barricas de roble francés de distintos usos."
+   - Servicio: "16 - 18 °C."
+   - Notas de cata:
+     - Vista: "Color violáceo profundo, de gran intensidad y brillo."
+     - Nariz: "Aromas a frutos rojos y bayas, notas especiadas, de madera
+       fina, con gran complejidad."
+     - Boca: "Estructurado y elegante, de taninos firmes y pulidos, con
+       acidez vibrante y un final largo, con gran potencial de guarda."
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ningún otro vino ni bodega.
+- No tocar el mapa, scroll, saludo, ni ninguna otra pantalla.
+- No inventar ningún dato que no esté arriba.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: desde Bodega Ribera del Cuarzo, abrir los 3 vinos (Clásico
+   Pátinas Blancas, Clásico Merlot, Parcela Única Blend) — los 3 deben
+   mostrar su ficha real (imagen).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
