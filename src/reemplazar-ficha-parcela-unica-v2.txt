@@ -1,0 +1,45 @@
+INSTRUCCIONES PARA CLAUDE CODE - AJUSTE DE FICHA (Parcela Única, v2)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Es un nuevo ajuste sobre la misma ficha que reemplazamos hoy (Ribera del
+Cuarzo - Parcela Única). Después de verla en el celular, se retocó el texto
+(ahora está justificado en vez de alineado a la izquierda). Mismas
+dimensiones que la versión anterior (800×1966), mismo nombre de archivo.
+
+============================================
+PASO 0
+============================================
+- Confirmá que el archivo sigue en src/assets/fichas-vinos/ con el mismo
+  nombre: ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png
+- No hace falta repetir el análisis del contenedor (ya se hizo hoy y no hay
+  que tocar código), solo reemplazar el archivo.
+
+============================================
+ASSETS
+============================================
+Reemplazar el archivo existente (mismo nombre, mismas dimensiones, nuevo
+contenido — solo cambia el texto de alineación izquierda a justificado):
+- ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ninguna otra ficha, vino, bodega ni código.
+- No inventar ajustes que no hagan falta.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a Ribera del Cuarzo → Parcela Única y confirmar que
+   se ve la ficha nueva (texto justificado).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
