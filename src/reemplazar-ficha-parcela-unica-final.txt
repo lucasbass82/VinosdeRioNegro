@@ -1,0 +1,45 @@
+INSTRUCCIONES PARA CLAUDE CODE - MODELO FINAL DE FICHA (Parcela Única)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Último ajuste sobre la misma ficha de hoy (Ribera del Cuarzo - Parcela
+Única). Este es el modelo final del nuevo diseño (texto centrado). Mismas
+dimensiones que las dos versiones anteriores (800×1966), mismo nombre de
+archivo.
+
+============================================
+PASO 0
+============================================
+- Confirmá que el archivo sigue en src/assets/fichas-vinos/ con el mismo
+  nombre: ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png
+- No hace falta repetir el análisis del contenedor (ya se hizo hoy y no hace
+  falta tocar código), solo reemplazar el archivo.
+
+============================================
+ASSETS
+============================================
+Reemplazar el archivo existente (mismo nombre, mismas dimensiones, nuevo
+contenido — el texto ahora está centrado, es el modelo final):
+- ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ninguna otra ficha, vino, bodega ni código.
+- No inventar ajustes que no hagan falta.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a Ribera del Cuarzo → Parcela Única y confirmar que se
+   ve la ficha nueva (texto centrado).
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
