@@ -1,0 +1,67 @@
+INSTRUCCIONES PARA CLAUDE CODE - PROBAR FICHA REDISEÑADA (Parcela Única)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Estamos probando un nuevo diseño de ficha (tipografía más grande y texto en
+párrafos separados, pensado para que se lea mejor en el celular). Te paso una
+versión rediseñada de la ficha de Ribera del Cuarzo - Parcela Única para
+reemplazar la que ya está cargada. Es solo esta ficha, a modo de prueba, antes
+de decidir si rediseñamos el resto.
+
+El archivo tiene EXACTAMENTE el mismo nombre que el actual:
+ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png
+
+Pero las dimensiones cambiaron: la actual es 1024×1536, la nueva es 800×1966
+(más angosta y más alta, distinta proporción).
+
+============================================
+PASO 0
+============================================
+- Confirmá dónde está hoy el archivo de esta ficha en src/assets/fichas-vinos/
+  y cómo se importa/usa en el código (mismo mecanismo que ya conocés:
+  CATALOG_WINE_FICHA_BY_ID / WINE_FICHA_BY_ID).
+- Revisá cómo se renderiza esa imagen (el contenedor, si tiene un aspect-ratio
+  fijo, max-height, object-fit, etc.) para anticipar si el cambio de
+  proporción (más angosta y más alta) puede generar algún recorte, espacio en
+  blanco raro o scroll distinto al de las demás fichas. Contame en el plan qué
+  encontraste y si hace falta ajustar algún estilo del contenedor para que la
+  imagen se vea completa y bien, o si al ser ancho completo no hace falta
+  tocar nada.
+
+============================================
+ASSETS
+============================================
+Reemplazar el archivo existente:
+- ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png
+  (mismo nombre, nuevo contenido, va en src/assets/fichas-vinos/)
+
+Como el nombre de archivo es igual, probablemente no haga falta tocar código,
+salvo que el contenedor necesite un ajuste de estilo por el cambio de
+proporción (ver Paso 0).
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ninguna otra ficha, vino o bodega.
+- No cambiar datos/textos del vino (son los mismos que ya están cargados).
+- No inventar ajustes de diseño que no hagan falta — solo tocar el contenedor
+  si realmente lo requiere el cambio de proporción de la imagen.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: entrar a Ribera del Cuarzo → Parcela Única y ver que la ficha
+   nueva se vea completa, sin recortes ni espacios raros, tanto en vista de
+   escritorio como simulando un celular (viewport angosto).
+3. Comparar visualmente con otra ficha de la misma bodega para confirmar que
+   el resto de la pantalla (navegación, "Bodega de origen", etc.) no se rompió.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
