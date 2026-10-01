@@ -1,0 +1,91 @@
+INSTRUCCIONES PARA CLAUDE CODE - REDISEÑO DE FICHAS (tanda 1)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Veníamos probando un nuevo diseño de ficha (tipografía más grande, texto en
+párrafos separados y centrado) con Ribera del Cuarzo - Parcela Única, que ya
+está en producción. El análisis que hiciste en ese momento confirmó que no
+hace falta tocar el contenedor/CSS: la ficha se muestra a ancho completo sin
+aspect-ratio fijo, así que una imagen más angosta y alta se adapta sola.
+
+Ahora toca la primera tanda grande: 21 fichas rediseñadas, TODAS con el mismo
+nombre de archivo que la ficha actual correspondiente (reemplazo directo, 1 a
+1). Van en src/assets/fichas-vinos/ (o la carpeta que corresponda según cómo
+esté organizado hoy).
+
+Dato importante: cada vino tiene UNA SOLA ficha que se reutiliza tanto en su
+pantalla normal como dentro de cualquier "Experiencia" en la que aparezca (no
+hay una ficha para cada contexto). Si hoy el código tiene un mecanismo con
+dos imágenes distintas por vino (una para la vista normal y otra para
+Experiencias), avisame en el plan antes de tocar nada — puede que haya que
+unificarlo para que ambos lugares usen el mismo archivo.
+
+============================================
+PASO 0
+============================================
+- Confirmá que cada uno de los 21 nombres de archivo de abajo existe hoy en
+  la carpeta de assets de fichas y a qué vino/bodega corresponde cada uno.
+- Confirmá si alguno de estos vinos usa el mismo archivo de ficha tanto en su
+  vista normal como en una tarjeta de "Experiencia", o si son referencias
+  separadas en el código que simplemente apuntan al mismo archivo.
+- Si encontrás algún archivo de los 21 que NO exista hoy con ese nombre
+  exacto, avisame en el plan antes de reemplazar nada (no asumas a qué vino
+  correspondería).
+
+============================================
+ASSETS - LOS 21 ARCHIVOS A REEMPLAZAR (mismo nombre, nuevo contenido)
+============================================
+1. experiencia-malbec-alto-valle-agrestis-ficha.png
+2. experiencia-malbec-alto-valle-verziere-ficha.png
+3. experiencia-malbec-valle-medio-enclave-sur-ficha.png
+4. experiencia-malbec-valle-medio-trina-ficha.png
+5. experiencia-pinot-altovalle-bellacomalcriado-ficha.png
+6. experiencia-pinot-vallemedio-calfulen-ficha.png
+7. experiencia-region-cordillera-estepa-familia-de-bernardi-merlot-ficha.png
+8. experiencia-region-cordillera-estepa-finca-fraschetti-pinot-noir-ficha.png
+9. ficha-antigua-bodega-patagonica-un-chardonnay.png
+10. ficha-antigua-bodega-patagonica-un-malbec-reserva.png
+11. ficha-antigua-bodega-patagonica-un-rose.png
+12. ficha-bodega-chacra-barda-pinot-noir.png
+13. ficha-bodega-finca-anielo-006-merlot.png
+14. ficha-bodega-humberto-canale-barzi-canale-blend-de-familia.png
+15. ficha-bodega-humberto-canale-old-vineyard-pinot-noir.png
+16. ficha-bodega-miras-pinot-salvaje-curiosos.png
+17. ficha-de-bernardi-pinot-noir.png
+18. ficha-enclave-sur-chardonnay.png
+19. ficha-rivus-cabernet-sauvignon-reserva.png
+20. ficha-rivus-malbec-reserva.png
+21. ficha-rivus-pinot-noir.png
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ningún otro vino, bodega o ficha que no esté en esta lista de 21.
+- No tocar la ficha de Ribera del Cuarzo - Parcela Única (ya se hizo aparte).
+- No cambiar datos/textos de los vinos (son solo las imágenes).
+- No inventar ajustes de contenedor que no hagan falta — ya se confirmó con
+  la prueba de Parcela Única que no hace falta tocar CSS, salvo que algo
+  puntual de estos 21 lo requiera (avisame si es así).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: abrir al menos 5-6 de los 21 vinos repartidos entre distintas
+   bodegas, confirmar que cada uno muestra su ficha nueva completa, sin
+   recortes, tanto en vista de escritorio como en viewport angosto de
+   celular.
+3. Para los vinos que también aparecen en una "Experiencia" (Agrestis,
+   Verziere, Enclave Sur Malbec, Trina, Bellaco Malcriado, Calfuén, De
+   Bernardi Merlot, Finca Fraschetti), confirmar que la ficha se ve igual
+   (la misma imagen nueva) tanto desde la vista normal del vino como desde
+   la Experiencia correspondiente.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.

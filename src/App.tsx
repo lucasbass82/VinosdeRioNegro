@@ -91,7 +91,6 @@ import botonFincaFraschettiPn from "./assets/botones-vinos/boton-finca-fraschett
 import botonCalfulenPnReserva from "./assets/botones-vinos/boton-calfulen-pinot-noir-reserva.png";
 import botonSavuMalbec from "./assets/botones-vinos/boton-savu-malbec.png";
 import botonAraucanaMalbecRose from "./assets/botones-vinos/boton-araucana-rio-de-los-ciervos-malbec-rose.png";
-import fichaBellacoMalcriadoPn from "./assets/fichas-vinos/ficha-antigua-bodega-patagonica-bellaco-malcriado-pinot-noir.png";
 import fichaUnChardonnay from "./assets/fichas-vinos/ficha-antigua-bodega-patagonica-un-chardonnay.png";
 import fichaAniello006Merlot from "./assets/fichas-vinos/ficha-bodega-finca-anielo-006-merlot.png";
 import fichaMirasSalvajeCurioso from "./assets/fichas-vinos/ficha-bodega-miras-pinot-salvaje-curiosos.png";
@@ -103,8 +102,6 @@ import fichaUnMalbecReserva from "./assets/fichas-vinos/ficha-antigua-bodega-pat
 import fichaUnRose from "./assets/fichas-vinos/ficha-antigua-bodega-patagonica-un-rose.png";
 import fichaBarziCanaleBlend from "./assets/fichas-vinos/ficha-bodega-humberto-canale-barzi-canale-blend-de-familia.png";
 import fichaOldVineyardPn from "./assets/fichas-vinos/ficha-bodega-humberto-canale-old-vineyard-pinot-noir.png";
-import fichaFincaFraschettiPn from "./assets/fichas-vinos/ficha-finca-fraschetti-pinot-noir.png";
-import fichaCalfulenPnReserva from "./assets/fichas-vinos/ficha-videla-dorna-calfuen-pinot-noir-reserva.png";
 import fichaSavuMalbec from "./assets/fichas-vinos/ficha-savu-malbec.png";
 import fichaAraucanaMalbecRose from "./assets/fichas-vinos/ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec-rose.png";
 
@@ -5021,7 +5018,7 @@ type HomeWineCard = {
 };
 
 const HOME_NEARBY_CARDS: HomeWineCard[] = [
-  { wineId: "v16", boton: botonBellacoMalcriadoPn, ficha: fichaBellacoMalcriadoPn },
+  { wineId: "v16", boton: botonBellacoMalcriadoPn, ficha: experienciaPinotAltovalleBellacomalcriadoFichaPhoto },
   { wineId: "v9", boton: botonUnChardonnay, ficha: fichaUnChardonnay },
   { wineId: "v2", boton: botonAniello006Merlot, ficha: fichaAniello006Merlot },
   { wineId: "v1", boton: botonMirasSalvajeCurioso, ficha: fichaMirasSalvajeCurioso },
@@ -5036,8 +5033,8 @@ const HOME_RECOMMENDED_CARDS: HomeWineCard[] = [
   { wineId: "v10", boton: botonUnRose, ficha: fichaUnRose },
   { wineId: "v75", boton: botonBarziCanaleBlend, ficha: fichaBarziCanaleBlend },
   { wineId: "v3", boton: botonOldVineyardPn, ficha: fichaOldVineyardPn },
-  { wineId: "v7", boton: botonFincaFraschettiPn, ficha: fichaFincaFraschettiPn },
-  { wineId: "v5", boton: botonCalfulenPnReserva, ficha: fichaCalfulenPnReserva },
+  { wineId: "v7", boton: botonFincaFraschettiPn, ficha: fichaFincaFraschettiPnCe },
+  { wineId: "v5", boton: botonCalfulenPnReserva, ficha: experienciaPinotVallemedioCalfulenFichaPhoto },
   { wineId: "v19", boton: botonSavuMalbec, ficha: fichaSavuMalbec },
   { wineId: "v43", boton: botonAraucanaMalbecRose, ficha: fichaAraucanaMalbecRose },
 ];
@@ -5776,9 +5773,11 @@ const CORDILLERA_ESTEPA_EXPERIENCE_WINES: ExperienceWine[] = [
 // Mapeo centralizado wineId → fichaImage para WineDetail (la ficha normal de
 // cualquier vino, ver fichas-nuevas-en-wine-detail.txt): combina las fichas
 // de las Experiencias con las de Inicio, sin duplicar datos. Cuando un vino
-// tiene ficha en ambos lados (Bellaco Malcriado, Calfulen, Araucana), gana
-// la de Inicio (usa el logo de región real de la app y la ciudad real de la
-// bodega, más consistente con el resto de la app).
+// tiene ficha distinta en ambos lados (hoy solo Araucana), gana la de Inicio
+// (usa el logo de región real de la app y la ciudad real de la bodega, más
+// consistente con el resto de la app). Bellaco Malcriado, Calfulen y Finca
+// Fraschetti usan en Inicio la misma ficha rediseñada de su Experiencia
+// (una sola ficha por vino, ver reemplazar-fichas-tanda1-rediseno.txt).
 const EXPERIENCE_WINE_FICHA_BY_ID: Record<string, string> = {};
 [
   ...PINOT_EXPERIENCE_WINES,
