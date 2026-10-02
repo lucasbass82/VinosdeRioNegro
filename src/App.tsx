@@ -31,7 +31,6 @@ import experienciaPinotPhoto from "./assets/experiencias/experiencia-pinot.png";
 import tarjetaExperienciaRvPinotPhoto from "./assets/experiencias/tarjeta-experiencia-ruta-del-vino-pinot-noir.png";
 import headExperienciaRvPinotPhoto from "./assets/experiencias/head-experiencia-ruta-del-vino-pinot-noir.png";
 import tarjetaDescripcionRvPinotPhoto from "./assets/experiencias/tarjeta-descripcion-ruta-del-vino-pinot-noir.png";
-import experienciaPinotMarWapisaFichaPhoto from "./assets/fichas-vinos/experiencia-pinot-mar-wapisa-ficha.png";
 import experienciaPinotAltovalleBellacomalcriadoFichaPhoto from "./assets/fichas-vinos/experiencia-pinot-altovalle-bellacomalcriado-ficha.png";
 import experienciaPinotVallemedioCalfulenFichaPhoto from "./assets/fichas-vinos/experiencia-pinot-vallemedio-calfulen-ficha.png";
 import experienciaPinotEstepaAraucanaFichaPhoto from "./assets/fichas-vinos/experiencia-pinot-estepa-araucana-ficha.png";
@@ -97,7 +96,6 @@ import fichaMirasSalvajeCurioso from "./assets/fichas-vinos/ficha-bodega-miras-p
 import fichaDeBernardiPn from "./assets/fichas-vinos/ficha-de-bernardi-pinot-noir.png";
 import fichaEnclaveSurChardonnay from "./assets/fichas-vinos/ficha-enclave-sur-chardonnay.png";
 import fichaWapisaPn from "./assets/fichas-vinos/ficha-wapisa-pinot-noir.png";
-import fichaAraucanaPn from "./assets/fichas-vinos/ficha-araucana-rio-de-los-ciervos-pinot-noir.png";
 import fichaUnMalbecReserva from "./assets/fichas-vinos/ficha-antigua-bodega-patagonica-un-malbec-reserva.png";
 import fichaUnRose from "./assets/fichas-vinos/ficha-antigua-bodega-patagonica-un-rose.png";
 import fichaBarziCanaleBlend from "./assets/fichas-vinos/ficha-bodega-humberto-canale-barzi-canale-blend-de-familia.png";
@@ -5025,7 +5023,7 @@ const HOME_NEARBY_CARDS: HomeWineCard[] = [
   { wineId: "v39", boton: botonDeBernardiPn, ficha: fichaDeBernardiPn },
   { wineId: "v28", boton: botonEnclaveSurChardonnay, ficha: fichaEnclaveSurChardonnay },
   { wineId: "v6", boton: botonWapisaPn, ficha: fichaWapisaPn },
-  { wineId: "v44", boton: botonAraucanaPn, ficha: fichaAraucanaPn },
+  { wineId: "v44", boton: botonAraucanaPn, ficha: experienciaPinotEstepaAraucanaFichaPhoto },
 ];
 
 const HOME_RECOMMENDED_CARDS: HomeWineCard[] = [
@@ -5655,7 +5653,7 @@ const PINOT_EXPERIENCE_WINES: ExperienceWine[] = [
     id: "mar-wapisa",
     name: "Wapisa",
     cardImage: botonWapisaPn,
-    fichaImage: experienciaPinotMarWapisaFichaPhoto,
+    fichaImage: fichaWapisaPn,
     winery: "Wapisa",
     wineId: "v6",
   },

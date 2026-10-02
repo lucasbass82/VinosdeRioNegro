@@ -1,0 +1,78 @@
+INSTRUCCIONES PARA CLAUDE CODE - VERIFICAR FICHAS REDISEÑADAS (tanda 2)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Ya reemplacé manualmente 16 archivos de ficha en la carpeta de assets
+correspondiente, con el mismo nombre de archivo que tenían antes (mismo
+mecanismo que la tanda 1: reemplazo directo del contenido de la imagen, sin
+cambiar nombres). Son el nuevo diseño (tipografía más grande, texto en
+párrafos separados).
+
+Como el nombre de archivo no cambió, no debería hacer falta tocar código,
+pero quiero que confirmes que todo está bien antes de dar por terminado.
+
+============================================
+PASO 0
+============================================
+- Confirmá que los 16 nombres de archivo de abajo existen hoy en la carpeta
+  de assets de fichas y a qué vino/bodega corresponde cada uno.
+- Si alguno de los 16 no existe con ese nombre exacto, avisame en el plan
+  antes de asumir nada.
+
+============================================
+LOS 16 ARCHIVOS REEMPLAZADOS (mismo nombre, nuevo contenido)
+============================================
+Ribera del Cuarzo:
+1. experiencia-pinot-estepa-araucana-ficha.png
+2. experiencia-region-cordillera-estepa-ribera-del-cuarzo-araucana-azul-ficha.png
+3. experiencia-region-cordillera-estepa-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec-ficha.png
+4. experiencia-region-cordillera-estepa-ribera-del-cuarzo-clasico-merlot-rose-ficha.png
+5. ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-clasico-patinas-blancas.png
+6. ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-malbec-rose.png
+7. ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-merlot.png
+8. experiencia-malbec-estepa-ribera-del-cuarzo-ficha.png
+
+SAVU:
+9. ficha-savu-cabernet-sauvignon.png
+10. ficha-savu-malbec-rosado.png
+11. ficha-savu-malbec.png
+12. ficha-savu-syrah.png
+
+Wapisa:
+13. ficha-wapisa-cabernet-sauvignon.png
+14. ficha-wapisa-malbec.png
+15. ficha-wapisa-pinot-noir.png
+
+Un Refugio:
+16. ficha-un-refugio-malbec.png
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ningún otro vino, bodega o ficha que no esté en esta lista de 16.
+- No cambiar datos/textos de los vinos (son solo las imágenes).
+- No tocar la clasificación de región de ninguna bodega (eso es un pedido
+  aparte).
+- No inventar ajustes de código que no hagan falta — si el nombre de archivo
+  no cambió, probablemente no haga falta tocar nada.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: abrir al menos 6-8 de los 16 vinos repartidos entre las 4
+   bodegas (Ribera del Cuarzo, SAVU, Wapisa, Un Refugio), confirmar que cada
+   uno muestra su ficha nueva completa, sin recortes, tanto en vista de
+   escritorio como en viewport angosto de celular.
+3. Para los vinos de Ribera del Cuarzo que también aparecen dentro de alguna
+   "Experiencia", confirmar que se ve la misma ficha nueva tanto desde la
+   vista normal del vino como desde la Experiencia correspondiente.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.
