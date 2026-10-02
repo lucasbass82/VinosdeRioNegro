@@ -1,0 +1,76 @@
+INSTRUCCIONES PARA CLAUDE CODE - CORREGIR UBICACIÓN DE BODEGA RIBERA DEL CUARZO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Bodega Ribera del Cuarzo (w13) está cargada hoy con la localidad "El Cuy".
+Es un error: El Cuy es una localidad de la zona de la Estepa patagónica, y
+no corresponde a esta bodega. La ubicación correcta es Valle Azul, dentro de
+la región Alto Valle de Río Negro (que ya se corrigió en un pedido anterior
+a nivel de región/clasificación, pero quedó pendiente este dato de
+localidad/coordenadas).
+
+Te paso el link de Google Maps con la ubicación real de la bodega:
+https://maps.app.goo.gl/fvQR2yaWRMgemJfz7
+Necesito que abras ese link (tenés navegador) y saques de ahí la dirección
+exacta y las coordenadas (latitud/longitud) para usar en el cambio.
+
+============================================
+PASO 0
+============================================
+- Abrí el link de Google Maps de arriba y anotá la dirección exacta y las
+  coordenadas (lat/long) que muestra.
+- Buscá y listame en el plan TODOS los lugares donde aparece "El Cuy"
+  asociado a Ribera del Cuarzo o a w13, por ejemplo:
+  - El campo de localidad/ciudad de la bodega w13 en WINERIES.
+  - Las coordenadas (lat/long) de w13, y confirmá si hoy están puestas en
+    El Cuy o ya estaban en otro lugar (puede que el texto "El Cuy" sea solo
+    una etiqueta visual, separada de las coordenadas reales que se usan
+    para calcular distancia en "vinotecas cercanas" — confirmame cuál es el
+    caso).
+  - Cualquier otro texto en la app (descripciones, subtítulos) que mencione
+    "El Cuy" para esta bodega.
+- Confirmame si cambiar las coordenadas afecta el orden de "vinotecas
+  cercanas" o cualquier cálculo de distancia, y contame qué iba a pasar
+  antes de aplicar el cambio.
+
+Ojo: la imagen de ficha de bodega (ficha-ribera-del-cuarzo.jpeg, que tiene
+"El Cuy (Valle Azul) · Estepa" dibujado adentro) NO se toca en este pedido
+— esa la voy a rehacer yo aparte con el resto del rediseño de fichas. Este
+pedido es solo sobre el dato de localidad/coordenadas que usa el código de
+la app (no sobre esa imagen puntual).
+
+============================================
+CAMBIO
+============================================
+- Cambiar la localidad de w13 (Ribera del Cuarzo) de "El Cuy" a "Valle
+  Azul" en WINERIES.
+- Actualizar las coordenadas (lat/long) de w13 a las reales de Valle Azul,
+  según lo que confirmes del link de Google Maps.
+- No tocar ninguna otra bodega, vino, ni imágenes.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar la imagen de ficha de la bodega ni de ningún vino.
+- No tocar otras bodegas.
+- No inventar coordenadas: usá las que saques del link de Google Maps.
+- No tocar la región (Alto Valle), eso ya quedó bien del pedido anterior.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: en el detalle de Ribera del Cuarzo y en Ruta del Vino,
+   confirmar que dice "Valle Azul" y ya no "El Cuy".
+3. Confirmar que "vinotecas cercanas" / cálculo de distancia sigue
+   funcionando bien con las coordenadas nuevas (no rompe el orden de otras
+   bodegas).
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.

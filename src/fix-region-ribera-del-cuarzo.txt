@@ -1,0 +1,71 @@
+INSTRUCCIONES PARA CLAUDE CODE - CORREGIR REGIÓN DE BODEGA RIBERA DEL CUARZO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Bodega Ribera del Cuarzo (w13, El Cuy / Valle Azul) está cargada hoy con
+región "Estepa". Es un error: la región correcta es "Alto Valle". Hay que
+corregir esto en todos los lugares donde la app usa esa clasificación.
+
+============================================
+PASO 0
+============================================
+Antes de tocar nada, buscá y listame en el plan TODOS los lugares donde
+aparece "Estepa" asociado a Ribera del Cuarzo o a w13, por ejemplo:
+- El campo region (o como se llame) de la bodega w13 en WINERIES.
+- Cualquier agrupación de "Ruta del Vino" por región (confirmá cómo están
+  armadas las regiones hoy: Alto Valle, Valle Medio, Mar, Estepa, Cordillera,
+  etc., y dónde vive esa lista).
+- Texto "Origen: Estepa..." o similar dentro de la descripción de los 3 vinos
+  de Ribera del Cuarzo que cargamos hace poco con datos (Clásico Pátinas
+  Blancas v47, Clásico Merlot v49, Parcela Única v51) — recordá que esos
+  campos de texto se cargaron igual aunque estén tapados por la ficha-imagen,
+  por las dudas.
+- Si alguno de los otros 6 vinos de la bodega (los que ya tenían ficha antes)
+  también tiene "Estepa" cargado en algún campo de texto editable (no la
+  imagen, eso no se toca acá).
+- Si existe alguna "Experiencia" que agrupe vinos por región (por ejemplo vi
+  mencionada una "Experiencia Cordillera-Estepa" en el código) y si mover
+  Ribera del Cuarzo de región rompe o afecta esa experiencia. Si la afecta,
+  explicame cómo y no hagas el cambio todavía — contámelo en el plan primero.
+
+Ojo: las imágenes de ficha (los diseños con el logo "ESTEPA VINOS RIO NEGRO")
+NO se tocan en este pedido — esas las estoy rehaciendo yo aparte y te las voy
+a pasar para reemplazar en un prompt separado. Este pedido es solo sobre la
+clasificación de región que usa el código de la app (navegación, filtros,
+distancia), no sobre las imágenes.
+
+============================================
+CAMBIO
+============================================
+- Cambiar la región de w13 (Ribera del Cuarzo) de "Estepa" a "Alto Valle" en
+  WINERIES.
+- Si corresponde (confirmalo en el plan), actualizar el texto "Origen:
+  Estepa..." a "Origen: Alto Valle..." en los campos de descripción de los
+  vinos de esta bodega que lo tengan cargado como texto plano.
+- No tocar ninguna otra bodega, vino, ni las imágenes de ficha.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar las imágenes de ficha de ningún vino.
+- No tocar otras bodegas.
+- No inventar datos que no estén confirmados.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores.
+2. Navegador: en Ruta del Vino, confirmar que Ribera del Cuarzo ahora aparece
+   bajo "Alto Valle" y ya no bajo "Estepa".
+3. Si existe alguna Experiencia que agrupaba por región y se vio afectada,
+   confirmar que sigue funcionando bien (o avisame si necesita una decisión
+   mía antes de tocarla).
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo — usá el
+que esté activo.

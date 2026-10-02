@@ -1069,12 +1069,12 @@ const WINERIES_DATA: Winery[] = [
 {
   id: "w13",
   name: "Ribera del Cuarzo",
-  city: "El Cuy (Valle Azul)",
-  region: "linea-sur",
+  city: "Valle Azul",
+  region: "alto-valle",
   description:
     "Viñedo único en Valle Azul, con suelos de ceniza y cuarzo de origen volcánico. Marca Araucana, boutique orientada a exportación, liderada por Felipe Menéndez desde 2018.",
   shortDescription:
-    "Bodega boutique de Estepa, orientada a exportación, en la barda de Valle Azul.",
+    "Bodega boutique del Alto Valle, orientada a exportación, en la barda de Valle Azul.",
   hours: "Horario a confirmar",
   openNow: false,
   wines: [
@@ -1093,8 +1093,8 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaRiberaDelCuarzoPhoto,
-  addressCoordinates: "-39.1524364, -66.7871532",
-  address: "Ruta Provincial N° 7, Km 12, Valle Azul, Río Negro. CP 8336.",
+  addressCoordinates: "-39.1867759, -66.8734098",
+  address: "Ruta Provincial N° 7, Km 12, Lote 8, Valle Azul, Río Negro. CP 8336.",
 },
 {
   id: "w14",
@@ -2191,7 +2191,7 @@ const WINES: Wine[] = [
   style: "Fresco y frutado",
   description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: araucanaRioDeLosCiervosMalbecRosePhoto,
 },
 {
@@ -2202,7 +2202,7 @@ const WINES: Wine[] = [
   style: "Delicado y elegante",
   description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: araucanaRioDeLosCiervosPinotNoirPhoto,
 },
 {
@@ -2213,7 +2213,7 @@ const WINES: Wine[] = [
   style: "Complejo y mineral",
   description: "Viñedos de más de 40 años de antigüedad en los suelos clásicos del Alto Valle. Tintos redondos, complejos y equilibrados, con taninos elegantes. Aromas a frutos negros con sutiles notas ahumadas y mentoladas, carácter frutal combinado con notas minerales y final persistente. 95% Malbec, 5% Petit Verdot, crianza en roble francés.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: araucanaRioDeLosCiervosMalbecPhoto,
 },
 {
@@ -2224,7 +2224,7 @@ const WINES: Wine[] = [
   style: "Blend elegante",
   description: "Blend elegante y exclusivo de Malbec, Merlot y Petit Verdot.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: araucanaAzulPhoto,
 },
 {
@@ -2235,7 +2235,7 @@ const WINES: Wine[] = [
   style: "Fresco y cítrico",
   description: "Las Pátinas del Desierto son formaciones de suelo típicas de la estepa patagónica, resultado del efecto del viento durante milenios. Las uvas de Clásico Pátinas Blancas provienen de una parcela antigua de Sauvignon Blanc con plantas mezcladas de Semillon. Los suelos son aluviales, de antiguas intrusiones del Río Negro, en la zona fría de Valle Azul. Este vino muestra elegancia, frescura y ligereza de los vinos blancos de las zonas frías de la Patagonia.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: clasicoPatinasBlancasPhoto,
   aging: "Sin crianza en roble",
   servingTemp: "8 - 10 °C",
@@ -2251,7 +2251,7 @@ const WINES: Wine[] = [
   style: "Suave y liviano",
   description: "Rosado elaborado a partir de Merlot, de color salmón vivo, con aromas a frutos rojos frescos y un perfil suave y liviano en boca.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: clasicoMerlotRosePhoto,
 },
 {
@@ -2262,7 +2262,7 @@ const WINES: Wine[] = [
   style: "Estructurado y expresivo",
   description: "Un Merlot de perfil estructurado y expresivo, que refleja la identidad de la estepa patagónica. Rojo rubí profundo, con aromas de frutos negros maduros y cassis, sutiles toques especiados y un fondo mineral que delata el suelo de cuarzo. En boca es equilibrado y fresco, con taninos finos y pulidos, acidez vibrante característica del paralelo 39 y un final de fruta pura y persistente.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: clasicoMerlotPhoto,
   aging: "8 a 12 meses, 50% en barricas de roble francés (30% primer uso - 40% segundo uso - 30% tercer y cuarto uso) - 50% en concreto sin roble",
   servingTemp: "16 - 18 °C",
@@ -2278,7 +2278,7 @@ const WINES: Wine[] = [
   style: "Fresco y con sentido de lugar",
   description: "Uvas de 8 viñedos antiguos de ambas márgenes del Río Negro. Busca mostrar la diversidad de la zona clásica del valle: frescura, elegancia y sentido de lugar.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: clasicoMalbecPhoto,
 },
 {
@@ -2289,7 +2289,7 @@ const WINES: Wine[] = [
   style: "Composición única de suelo",
   description: "Blend de 48% Malbec, 40% Merlot, 12% Petit Verdot. Suelos de origen eólico, enriquecidos con ceniza volcánica y potasio, con alto contenido de carbonato de calcio — una composición química poco común incluso a nivel mundial. Un vino que expresa la identidad del Valle Azul y el carácter único de la estepa patagónica.",
   availableAt: ALL_SHOP_NAMES,
-  tag: "Estepa",
+  tag: "Alto Valle",
   image: parcelaUnicaPhoto,
   aging: "16 meses en barricas de roble francés de distintos usos",
   servingTemp: "16 - 18 °C",
@@ -4776,7 +4776,7 @@ function WineAvailabilityList({
 
 // Ciudades conocidas para el saludo de Inicio: todas las que ya aparecen en
 // WINERIES_DATA/SHOPS, con coordenada de centro aproximada (geocodificada a
-// nivel localidad; en 2 casos —Las Grutas y El Cuy (Valle Azul)— el centro
+// nivel localidad; en 2 casos —Las Grutas y Valle Azul— el centro
 // administrativo de Nominatim caía muy lejos del lugar real, así que se usó
 // la coordenada exacta de un comercio/bodega ya cargado ahí). "greeting" es
 // la forma corta para "¡Hola, X!" (ej. "Roca", "Bariloche"); el resto usa el
@@ -4802,7 +4802,7 @@ const KNOWN_CITIES: { name: string; greeting: string; coords: Coords }[] = [
     greeting: "Contralmirante Cordero",
     coords: [-38.7578252, -68.0997165],
   },
-  { name: "El Cuy (Valle Azul)", greeting: "Valle Azul", coords: [-39.1524364, -66.7871532] },
+  { name: "Valle Azul", greeting: "Valle Azul", coords: [-39.1867759, -66.8734098] },
   { name: "Fernández Oro", greeting: "Fernández Oro", coords: [-38.9563161, -67.9212057] },
   { name: "Guardia Mitre", greeting: "Guardia Mitre", coords: [-40.425038, -63.6721943] },
   { name: "Ingeniero Huergo", greeting: "Huergo", coords: [-39.0694381, -67.2362915] },
@@ -4812,7 +4812,7 @@ const KNOWN_CITIES: { name: string; greeting: string; coords: Coords }[] = [
   { name: "San Antonio Oeste", greeting: "San Antonio", coords: [-40.7302125, -64.9389955] },
   { name: "San Javier", greeting: "San Javier", coords: [-40.7499219, -63.2670243] },
   // Resto de la provincia (Valle Medio, Línea Sur, costa y cordillera). "El
-  // Cuy" es el pueblo real, distinto de "El Cuy (Valle Azul)" de arriba.
+  // Cuy" es el pueblo real, distinto de "Valle Azul" de arriba.
   { name: "General Conesa", greeting: "Conesa", coords: [-40.1076505, -64.4518589] },
   { name: "Lamarque", greeting: "Lamarque", coords: [-39.4240795, -65.7014299] },
   { name: "Darwin", greeting: "Darwin", coords: [-39.2040404, -65.7400555] },
@@ -5115,7 +5115,7 @@ export default function App() {
     { id: "w4", name: "Bodega Videla Dorna", city: "Luis Beltrán", kind: "winery" },
     { id: "w5", name: "Wapisa", city: "San Javier", kind: "winery" },
     { id: "w6", name: "Finca Fraschetti", city: "San Carlos de Bariloche", kind: "winery" },
-    { id: "w13", name: "Ribera del Cuarzo", city: "El Cuy (Valle Azul)", kind: "winery" },
+    { id: "w13", name: "Ribera del Cuarzo", city: "Valle Azul", kind: "winery" },
     { id: "e1", name: "BALC 2026", kind: "event" },
   ]);
   const [search, setSearch] = useState("");
@@ -7627,6 +7627,13 @@ function RegionsScreen({
       />
 
       <div style={styles.stack12}>
+        {wineries.length === 0 && (
+          <div style={styles.card}>
+            <div style={styles.placeText}>
+              Todavía no hay bodegas cargadas en esta región.
+            </div>
+          </div>
+        )}
         {wineries.map((w) => (
           <div
             key={w.id}
