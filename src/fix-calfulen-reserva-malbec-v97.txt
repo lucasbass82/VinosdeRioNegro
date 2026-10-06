@@ -1,0 +1,71 @@
+INSTRUCCIONES PARA CLAUDE CODE - CORREGIR NOMBRE Y DATOS DE CALFULÉN RESERVA MALBEC (v97)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+En la bodega Calfulén (Videla Dorna) hay dos vinos distintos:
+- Gran Calfulén Malbec (v55)
+- Calfulén Reserva Malbec (v97)
+
+Hoy v97 está cargado en la app con el nombre "Calfulen Malbec" (sin
+"Reserva") y con una descripción que es copia palabra por palabra de la de
+v55, así que no corresponde al Reserva. Su ficha nueva (imagen) ya está
+conectada y se ve bien; esto es para que el texto de la app coincida con
+ella.
+
+La ficha del vino es src/assets/fichas-vinos/ficha-calfulen-malbec-reserva.png
+Abrila y leela: es la fuente de verdad para todos los textos.
+
+============================================
+PASO 0
+============================================
+- Buscá TODOS los lugares donde aparece el nombre "Calfulen Malbec" de v97:
+  el name del vino en WINES, la lista wines de la bodega Videla Dorna (que
+  conecta bodega y vino por el texto del nombre), y cualquier otro (Perfil,
+  favoritos de ejemplo, búsqueda, comentarios, etc.).
+- Mostrame todos los campos de texto de v97 (descripción, varietal, estilo,
+  crianza, temperatura de servicio, maridaje, notas de cata, tags, lo que
+  tenga) y compará cada uno contra lo que dice la ficha. Listame cuáles
+  coinciden, cuáles contradicen y cuáles son copia de v55.
+- Decime si el nombre de v97 se usa como clave de algo (por ejemplo un
+  match por texto) que se rompería al renombrarlo.
+
+============================================
+CAMBIO
+============================================
+1. Renombrar v97 a "Calfulén Reserva Malbec" (con acento, como dice la
+   ficha), y actualizar TODOS los lugares donde aparece el nombre viejo,
+   incluida la lista wines de la bodega, para que la conexión bodega-vino
+   siga funcionando.
+2. Reescribir la descripción de v97 usando solo lo que dice la ficha.
+3. Corregir los otros campos de texto de v97 que contradigan la ficha o
+   sean copia de v55, usando solo datos que estén en la ficha. Si un campo
+   no se puede completar con datos de la ficha, dejalo como está y avisame.
+4. No inventar nada. En el informe final mostrame el antes y el después
+   exacto de cada línea que cambies.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar v55 (Gran Calfulén Malbec) ni ningún otro vino.
+- No tocar precios, ids, imágenes, regiones, ubicaciones ni la bodega.
+- No corregir los nombres de otros vinos de Calfulén aunque veas
+  inconsistencias (por ejemplo "Gran Calfuen Malbec" sin la l, o nombres
+  sin acento). Solo listámelas en el informe, no las toques.
+- No tocar la imagen de la ficha (la etiqueta dice "Violeta Dorna", eso es
+  parte de la imagen).
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores ni avisos.
+2. Navegador (servidor activo): la bodega Videla Dorna sigue listando el
+   vino con el nombre nuevo y al tocarlo abre la ficha correcta; la búsqueda
+   "Calfulén" muestra el nombre nuevo; Gran Calfulén Malbec sigue igual.
+3. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo.
