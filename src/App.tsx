@@ -198,6 +198,15 @@ import fichaClasicoPatinasBlancas from "./assets/fichas-vinos/ficha-ribera-del-c
 import fichaClasicoMerlot from "./assets/fichas-vinos/ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-merlot.png";
 import fichaParcelaUnicaBlend from "./assets/fichas-vinos/ficha-ribera-del-cuarzo-araucana-rio-de-los-ciervos-parcela-unica-blend.png";
 import fichaUnRefugioMalbec from "./assets/fichas-vinos/ficha-un-refugio-malbec.png";
+import fichaCalfulenMalbecReserva from "./assets/fichas-vinos/ficha-calfulen-malbec-reserva.png";
+import fichaCalfulenRiesling from "./assets/fichas-vinos/ficha-calfulen-resling.png";
+import fichaCalfulenTorrontes from "./assets/fichas-vinos/ficha-calfulen-torrontes.png";
+import fichaGranCalfulenMalbec from "./assets/fichas-vinos/ficha-gran-calfulen-malbec.png";
+import fichaEnclaveSurPinotNoir from "./assets/fichas-vinos/ficha-enclave-sur-pinot-noir.png";
+import fichaEnclaveSurRosadoDulce from "./assets/fichas-vinos/ficha-enclave-sur-rosado-dulce.png";
+import fichaMaromaBlend from "./assets/fichas-vinos/ficha-maroma-blend.png";
+import fichaMaromaRosado from "./assets/fichas-vinos/ficha-maroma-rosado.png";
+import fichaMaromaSauvignonBlanc from "./assets/fichas-vinos/ficha-maroma-sauvignon-blanc.png";
 import rivusMalbecReservaPhoto from "./assets/vinos/rivus-malbec-reserva.png";
 import rivusCabernetSauvignonReservaPhoto from "./assets/vinos/rivus-cabernet-sauvignon-reserva.png";
 import rivusPinotNoirPhoto from "./assets/vinos/rivus-pinot-noir.png";
@@ -1956,7 +1965,7 @@ const WINES: Wine[] = [
 {
   id: "v24",
   name: "Familia Herrero Vino Casero Blanco",
-  varietal: "Chenin",
+  varietal: "Corte blanco",
   winery: "Familia Herrero",
   style: "Fresco y mineral",
   description: "Vino Casero Blanco de Familia Herrero es un blanco versátil de acidez marcada, con aromas a manzana verde, membrillo y flores blancas. Fresco y mineral, ideal para climas fríos como el patagónico.",
@@ -1995,10 +2004,10 @@ const WINES: Wine[] = [
 {
   id: "v27",
   name: "Enclave Sur Rosado",
-  varietal: "Rosado",
+  varietal: "50% Pinot Noir y 50% Malbec",
   winery: "Enclave Sur",
   style: "Fresco y frutado",
-  description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
+  description: "Rosado dulce natural, blend de Pinot Noir y Malbec en partes iguales, de color rosa pálido, con aromas cítricos, vegetales y sutiles frutos rojos. Dulce, fresco, de cuerpo liviano y muy agradable.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Valle Medio",
   image: enclaveSurRosadoPhoto,
@@ -5803,6 +5812,15 @@ const CATALOG_WINE_FICHA_BY_ID: Record<string, string> = {
   v47: fichaClasicoPatinasBlancas,
   v49: fichaClasicoMerlot,
   v51: fichaParcelaUnicaBlend,
+  v97: fichaCalfulenMalbecReserva,
+  v99: fichaCalfulenRiesling,
+  v100: fichaCalfulenTorrontes,
+  v55: fichaGranCalfulenMalbec,
+  v26: fichaEnclaveSurPinotNoir,
+  v27: fichaEnclaveSurRosadoDulce,
+  v101: fichaMaromaBlend,
+  v102: fichaMaromaRosado,
+  v103: fichaMaromaSauvignonBlanc,
 };
 
 const WINE_FICHA_BY_ID: Record<string, string> = {

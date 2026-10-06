@@ -1,0 +1,88 @@
+INSTRUCCIONES PARA CLAUDE CODE - FICHAS REDISEÑADAS (tanda 3, nombres NUEVOS)
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+Tanda 3 de fichas con el nuevo diseño (tipografía grande, texto en
+párrafos). A diferencia de las tandas anteriores, estos 11 archivos tienen
+nombres NUEVOS, que no existen hoy en el código. Cada uno es la ficha
+nueva de un vino que YA existe en la app y que hoy muestra otra ficha (de
+diseño viejo).
+
+Lo que quiero: que cada uno de estos vinos pase a mostrar la ficha nueva,
+en TODOS los lugares donde hoy se ve su ficha. Las fichas viejas se dejan
+en la carpeta, sin borrar, solo que la app deja de usarlas.
+
+Ya copié los 11 archivos nuevos en src/assets/fichas-vinos/.
+
+============================================
+LOS 11 ARCHIVOS NUEVOS Y A QUÉ VINO CORRESPONDEN
+============================================
+1. ficha-calfulen-malbec-reserva.png      -> Calfulén Reserva Malbec
+2. ficha-calfulen-resling.png             -> Calfulén Riesling
+   (el nombre del archivo dice "resling" con un typo, es Riesling; dejalo
+   así, no lo renombres)
+3. ficha-calfulen-torrontes.png           -> Calfulén Torrontés
+4. ficha-gran-calfulen-malbec.png         -> Gran Calfulén Malbec
+5. ficha-enclave-sur-pinot-noir.png       -> Enclave Sur Pinot Noir
+6. ficha-enclave-sur-rosado-dulce.png     -> Enclave Sur Rosado Dulce Natural
+7. ficha-maroma-blend.png                 -> Maroma Blend
+8. ficha-maroma-rosado.png                -> Maroma Rosado
+9. ficha-maroma-sauvignon-blanc.png       -> Maroma Sauvignon Blanc
+10. ficha-wapisa-sauvignon-blanc.png      -> Wapisa Sauvignon Blanc
+11. ficha-familia-herrero-blanco-chenin.png -> Familia Herrero Vino Casero Blanco
+    (OJO: el nombre del archivo dice "chenin" pero la ficha dice varietal
+    "Corte blanco". Decime en el plan qué varietal tiene cargado hoy el vino
+    en la app, pero NO cambies ningún dato, solo la imagen.)
+
+============================================
+PASO 0
+============================================
+- Confirmá que los 11 archivos están en src/assets/fichas-vinos/.
+- Para cada uno, encontrá el vino correspondiente en la app (por nombre y
+  bodega) y decime su id.
+- Si alguno de los 11 vinos NO existe en la app, o si hay más de un vino
+  que podría ser el que corresponde (ej: dos "Calfulén Malbec"), avisame en
+  el plan antes de asumir nada. No crees vinos nuevos ni inventes datos.
+- Para cada vino, listame TODOS los lugares donde hoy se resuelve su ficha
+  (WINE_FICHA_BY_ID, CATALOG_WINE_FICHA_BY_ID, HOME_NEARBY_CARDS,
+  HOME_RECOMMENDED_CARDS, tarjetas de Experiencias con fichaImage, o
+  cualquier otro). Ya nos pasó dos veces que un mismo vino tenía una ficha
+  en Inicio y otra distinta en Experiencias.
+- Decime si alguno de estos vinos hoy NO tiene ficha-imagen y se muestra
+  con la pantalla de detalle armada por código. En ese caso avisame antes
+  de cambiar nada, porque pasaría a mostrarse distinto.
+
+============================================
+PRINCIPIO
+============================================
+Una sola ficha por vino: tiene que ser la MISMA imagen nueva se abra el
+vino desde Inicio, desde la ficha normal, desde Ruta del Vino, desde una
+Experiencia o desde cualquier otro lugar. Después de apuntar todas las
+referencias al archivo nuevo, borrá solo los imports que queden sin uso
+(para que el build no tire avisos). No borres los archivos de imagen viejos.
+
+============================================
+QUÉ NO HACER
+============================================
+- No tocar ningún otro vino, bodega o ficha.
+- No cambiar datos ni textos de los vinos, solo las imágenes de ficha.
+- No tocar regiones ni ubicaciones.
+- No crear vinos nuevos ni inventar datos.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores ni avisos.
+2. Navegador (usá el servidor que ya está activo): abrir los 11 vinos y
+   confirmar que muestran la ficha nueva completa, sin recortes, en
+   escritorio y en ancho de celular (~390px).
+3. Para cada vino, confirmar que se ve la misma ficha nueva desde TODOS los
+   lugares donde aparece (Inicio, ficha normal, Experiencias, etc.).
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo.
