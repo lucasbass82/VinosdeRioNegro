@@ -925,7 +925,7 @@ const WINERIES_DATA: Winery[] = [
   id: "w6",
   name: "Finca Fraschetti",
   region: "cordillera",
-  city: "San Carlos de Bariloche",
+  city: "El Bolsón",
   description: "Bodega de montaña que combina tradición, naturaleza y pasión por el vino.",
   shortDescription:
     "Bodega de El Bolsón, en la Comarca Andina, con vinos de clima frío.",
@@ -4509,7 +4509,7 @@ const EVENTS: EventItem[] = [
   {
     id: "e3",
     title: "Cata de Malbecs del Alto Valle",
-    place: "Vinopolitan",
+    place: "Vinoteca Vinopolitan",
     when: "Hoy · 20:00",
     city: "Viedma",
     benefit: "1 copa de regalo",
@@ -5148,7 +5148,7 @@ export default function App() {
     { id: "w1", name: "Bodega Miras", city: "Mainqué", kind: "winery" },
     { id: "w4", name: "Bodega Videla Dorna", city: "Luis Beltrán", kind: "winery" },
     { id: "w5", name: "Wapisa", city: "San Javier", kind: "winery" },
-    { id: "w6", name: "Finca Fraschetti", city: "San Carlos de Bariloche", kind: "winery" },
+    { id: "w6", name: "Finca Fraschetti", city: "El Bolsón", kind: "winery" },
     { id: "w13", name: "Ribera del Cuarzo", city: "Valle Azul", kind: "winery" },
     { id: "e1", name: "BALC 2026", kind: "event" },
   ]);
