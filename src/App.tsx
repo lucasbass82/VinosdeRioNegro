@@ -878,7 +878,7 @@ const WINERIES_DATA: Winery[] = [
     openNow: true,
     wines: [
       "Calfulen Pinot Noir Reserva",
-      "Gran Calfuen Malbec",
+      "Gran Calfulen Malbec",
       "Calfulen Reserva Malbec",
       "Calfulen Merlot",
       "Calfulen Riesling",
@@ -2352,7 +2352,7 @@ const WINES: Wine[] = [
 },
 {
   id: "v55",
-  name: "Gran Calfuen Malbec",
+  name: "Gran Calfulen Malbec",
   varietal: "Malbec",
   winery: "Bodega Videla Dorna",
   style: "Intenso y untuoso",
@@ -4588,6 +4588,15 @@ const FEATURED_EVENTS: Record<string, FeaturedEventConfig> = {
   },
 };
 
+// Texto para comparar en búsquedas y filtros: sin mayúsculas, sin acentos ni
+// diéresis y sin espacios al borde ("Calfulén" == "calfulen").
+const normalizeText = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .trim();
+
 // Campos con valor placeholder (dato no confirmado) que no deben mostrarse.
 const isPlaceholderText = (value?: string) =>
   !value || /a confirmar|pendiente|no especificado/i.test(value);
@@ -5312,20 +5321,24 @@ export default function App() {
   }, [detailStack]);
 
   const results = useMemo(() => {
-    const q = search.toLowerCase().trim();
+    const q = normalizeText(search);
 
-    // Solo se compara contra: nombre de vino, bodega, varietal y nombre de
-    // vinoteca. NO contra descripciones largas ni el catálogo completo de la
-    // vinoteca (evita falsos positivos tipo "Chacra" por texto de descripción).
+    // Solo se compara contra: nombre de vino, bodega y varietal; nombre,
+    // vinos y ciudad de la bodega; nombre y ciudad de la vinoteca. NO contra
+    // descripciones largas, región ni el catálogo completo de la vinoteca
+    // (evita falsos positivos tipo "Chacra" por texto de descripción).
+    // Sin distinguir mayúsculas ni acentos (normalizeText).
     const wines = WINES.filter((w) =>
-      [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q)
+      normalizeText([w.name, w.winery, w.varietal].join(" ")).includes(q)
     );
 
     const wineries = WINERIES.filter((w) =>
-      [w.name, ...w.wines].join(" ").toLowerCase().includes(q)
+      normalizeText([w.name, ...w.wines, w.city].join(" ")).includes(q)
     );
 
-    const shops = SHOPS.filter((s) => s.name.toLowerCase().includes(q));
+    const shops = SHOPS.filter((s) =>
+      normalizeText([s.name, s.city].join(" ")).includes(q)
+    );
 
     return {
       wines: q ? wines : WINES,
@@ -6170,10 +6183,9 @@ function ShopMainView({
   const filteredShopWines = WINES.filter((w) => {
     const matchesVarietal =
       shopVarietalFilter === "Todos" || w.varietal === shopVarietalFilter;
-    const q = search.toLowerCase().trim();
+    const q = normalizeText(search);
     const matchesSearch =
-      !q ||
-      [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q);
+      !q || normalizeText([w.name, w.winery, w.varietal].join(" ")).includes(q);
     return matchesVarietal && matchesSearch;
   });
 
@@ -7737,10 +7749,9 @@ function MapScreen({
     WINES.filter((w) => {
       const matchesVarietal =
         varietalFilter === "Cerca mío" || varietalChip(w) === varietalFilter;
-      const q = search.toLowerCase().trim();
+      const q = normalizeText(search);
       const matchesSearch =
-        !q ||
-        [w.name, w.winery, w.varietal].join(" ").toLowerCase().includes(q);
+        !q || normalizeText([w.name, w.winery, w.varietal].join(" ")).includes(q);
       return matchesVarietal && matchesSearch;
     }),
     userCoords
