@@ -7199,6 +7199,7 @@ function HomeScreen({
       <div style={styles.horizontalScroller}>
         {sortWineriesByDistance(HOME_RECOMMENDED_WINERIES, userCoords).map((w) => {
           const distanceText = distanceLabelFromCoords(w.addressCoordinates, userCoords, w.distance);
+          const open = wineryOpenNow(w, new Date());
           return (
           <div key={w.id} style={styles.horizontalImageCard}>
             <ImageCard
@@ -7210,9 +7211,11 @@ function HomeScreen({
               feature={w.activity}
               image={w.image}
               badge={
-                <Badge kind={w.openNow ? "open" : "closed"} compact>
-                  {w.openNow ? "Abierta" : "Cerrada"}
-                </Badge>
+                open === null ? null : (
+                  <Badge kind={open ? "open" : "closed"} compact>
+                    {open ? "Abierta" : "Cerrada"}
+                  </Badge>
+                )
               }
               onFavorite={(e) => {
                 e.stopPropagation();
@@ -8027,9 +8030,26 @@ function parseShopHours(hours: string): ShopWeekSchedule | null {
 
 const SHOP_SCHEDULES = new Map(SHOPS.map((s) => [s.id, parseShopHours(s.hours)]));
 
+// Bodegas: mismo parser que las vinotecas. Hoy ninguna tiene un horario con
+// días en este formato (openNow de WINERIES_DATA es fijo), así que no muestran
+// chip Abierta/Cerrada hasta que se cargue un horario real.
+const WINERY_SCHEDULES = new Map(
+  WINERIES_DATA.map((w) => [w.id, parseShopHours(w.hours)])
+);
+
 // true/false según la hora del dispositivo; null si no se puede saber.
 function shopOpenNow(shop: Shop, now: Date): boolean | null {
-  const week = SHOP_SCHEDULES.get(shop.id);
+  return openNowFromSchedule(SHOP_SCHEDULES.get(shop.id), now);
+}
+
+function wineryOpenNow(winery: Winery, now: Date): boolean | null {
+  return openNowFromSchedule(WINERY_SCHEDULES.get(winery.id), now);
+}
+
+function openNowFromSchedule(
+  week: ShopWeekSchedule | null | undefined,
+  now: Date
+): boolean | null {
   if (!week) return null;
   const today = (now.getDay() + 6) % 7;
   const yesterday = (today + 6) % 7;
