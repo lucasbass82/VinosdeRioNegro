@@ -7215,7 +7215,7 @@ function HomeScreen({
 
       <div style={styles.horizontalScroller}>
         {sortWineriesByDistance(HOME_RECOMMENDED_WINERIES, userCoords).map((w) => {
-          const distanceText = distanceLabelFromCoords(w.addressCoordinates, userCoords, w.distance);
+          const distanceText = distanceLabelFromCoords(w.addressCoordinates, userCoords, "");
           const open = wineryOpenNow(w, new Date());
           return (
           <div key={w.id} style={styles.horizontalImageCard}>
