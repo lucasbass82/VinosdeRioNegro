@@ -729,7 +729,7 @@ const WINERIES_DATA: Winery[] = [
     hours: "10:00 a 18:00",
     openNow: true,
     wines: [
-      "Miras Pinot Noir Salvaje Curioso",
+      "Mira Jovem – Pinot Salvaje",
       "Miras Joven Malbec",
       "Miras Crianza Malbec",
       "Miras Crianza Merlot",
@@ -1673,14 +1673,19 @@ const WINERY_FICHA_BY_ID: Record<string, string> = {
 const WINES: Wine[] = [
   {
     id: "v1",
-    name: "Miras Pinot Noir Salvaje Curioso",
-    varietal: "Pinot Noir",
+    name: "Mira Jovem – Pinot Salvaje",
+    varietal: "Sauvignon Blanc y Pinot Noir",
     winery: "Bodega Miras",
-    style: "Elegante y fresco",
-    note: "Fruta roja, acidez equilibrada y perfil patagónico ideal para regalar.",
+    style: "Vibrante y delicado",
+    note: "Vino blanco experimental que combina Sauvignon Blanc y Pinot Noir en una cofermentación poco convencional. Con prensado conjunto y mínima intervención, expresa frescura, pureza y un carácter singular.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Ideal para regalar",
-    image: mirasPinotSalvajeCuriosoPhoto
+    image: mirasPinotSalvajeCuriosoPhoto,
+    aging: "Sin crianza",
+    servingTemp: "8 - 10 °C",
+    tastingVista: "Color amarillo tenue con reflejos rosados.",
+    tastingNariz: "Aromas frescos y expresivos que recuerdan a frutas blancas, cítricos y ligeros toques herbales.",
+    tastingBoca: "En boca es vibrante y delicado, con buena acidez, final fresco y personalidad única.",
   },
   {
     id: "v2",
@@ -5144,7 +5149,7 @@ export default function App() {
   const [detailStack, setDetailStack] = useState<DetailEntry[]>([]);
   const detail: DetailState = detailStack[detailStack.length - 1] ?? null;
   const [favorites, setFavorites] = useState<FavoriteItem[]>([
-    { id: "v1", name: "Miras Pinot Noir Salvaje Curioso", kind: "wine" },
+    { id: "v1", name: "Mira Jovem – Pinot Salvaje", kind: "wine" },
     { id: "w1", name: "Bodega Miras", city: "Mainqué", kind: "winery" },
     { id: "w4", name: "Bodega Videla Dorna", city: "Luis Beltrán", kind: "winery" },
     { id: "w5", name: "Wapisa", city: "San Javier", kind: "winery" },
