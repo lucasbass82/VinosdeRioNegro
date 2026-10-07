@@ -422,7 +422,7 @@ import pujanteArrayanGranMalbecPhoto from "./assets/vinos/bodega-pujante-viñedo
 import pujanteArrayanMalbecBurdeosEcoPhoto from "./assets/vinos/bodega-pujante-viñedos-patagonicos-arrayan-malbec-burdeos-eco.jpg";
 import pujanteArrayanCabernetFrancMalbecBurdeosEcoPhoto from "./assets/vinos/bodega-pujante-viñedos-patagonicos-arrayan-cabernet-franc-malbec-burdeos-eco.jpg";
 
-// Prompt 3 — Dominio de Fereneza
+// Prompt 3 — Dominio de Freneza
 import ferenezaLaVojaPinotNoirPhoto from "./assets/vinos/bodega-dominio-de-fereneza-la-voja-pinot-noir.jpg";
 import ferenezaLaVojaChardonnayPhoto from "./assets/vinos/bodega-dominio-de-fereneza-la-voja-chardonnay.jpg";
 import ferenezaLaFerenezaPinotNoirPhoto from "./assets/vinos/bodega-dominio-de-fereneza-la-freneza-pinot-noir.jpg";
@@ -1532,7 +1532,7 @@ const WINERIES_DATA: Winery[] = [
 },
 {
   id: "w33",
-  name: "Dominio de Fereneza",
+  name: "Dominio de Freneza",
   city: "Fernández Oro",
   region: "alto-valle",
   description: "Proyecto boutique a cargo del enólogo Agustín Lombroni, con viñedos en Mainqué y San Patricio del Chañar, vinificado en Bodega Gennari.",
@@ -3942,7 +3942,7 @@ const WINES: Wine[] = [
   id: "v199",
   name: "La Voja Pinot Noir",
   varietal: "Pinot Noir",
-  winery: "Dominio de Fereneza",
+  winery: "Dominio de Freneza",
   style: "Delicado y elegante",
   description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
   availableAt: ALL_SHOP_NAMES,
@@ -3953,7 +3953,7 @@ const WINES: Wine[] = [
   id: "v200",
   name: "La Voja Chardonnay",
   varietal: "Chardonnay",
-  winery: "Dominio de Fereneza",
+  winery: "Dominio de Freneza",
   style: "Untuoso y cítrico",
   description: "Blanco de cuerpo medio a alto, con aromas a fruta de pepita (manzana, pera) y cítricos, que puede sumar notas de manteca y vainilla si pasa por barrica. Untuoso en boca, con buena acidez.",
   availableAt: ALL_SHOP_NAMES,
@@ -3964,7 +3964,7 @@ const WINES: Wine[] = [
   id: "v201",
   name: "La Freneza Pinot Noir",
   varietal: "Pinot Noir",
-  winery: "Dominio de Fereneza",
+  winery: "Dominio de Freneza",
   style: "Delicado y elegante",
   description: "Tinto delicado y elegante, de color rubí claro, con aromas a frutos rojos (cereza, frambuesa), flores y notas terrosas. Cuerpo liviano, taninos suaves y acidez fresca.",
   availableAt: ALL_SHOP_NAMES,
@@ -3975,7 +3975,7 @@ const WINES: Wine[] = [
   id: "v202",
   name: "La Rufa Pinot Noir Rosé",
   varietal: "Rosado",
-  winery: "Dominio de Fereneza",
+  winery: "Dominio de Freneza",
   style: "Fresco y frutado",
   description: "Rosado fresco de color salmón o frambuesa pálido, con aromas a frutos rojos y flores. Liviano, seco y de acidez viva, ideal para tomar bien frío.",
   availableAt: ALL_SHOP_NAMES,
@@ -3986,7 +3986,7 @@ const WINES: Wine[] = [
   id: "v203",
   name: "Il Kavaliro",
   varietal: "No especificado",
-  winery: "Dominio de Fereneza",
+  winery: "Dominio de Freneza",
   style: "Vino de autor",
   description: "Vino de autor de la bodega, de perfil de cuerpo medio a alto, elaborado con especial cuidado enológico.",
   availableAt: ALL_SHOP_NAMES,
