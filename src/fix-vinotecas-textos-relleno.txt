@@ -1,0 +1,76 @@
+INSTRUCCIONES PARA CLAUDE CODE - VINOTECAS SIN TEXTOS DE RELLENO
+Proyecto: Vinos de Río Negro
+
+Antes de tocar cualquier código, presentame el plan completo y esperá mi
+aprobación.
+
+============================================
+CONTEXTO
+============================================
+La auditoría del 2026-10-06 (AUDITORIA-2026-10-06.md, hallazgos 6.1 y 7.4)
+encontró que las 22 vinotecas guardan textos de relleno como si fueran datos
+reales, y la ficha de cada vinoteca los muestra tal cual:
+- description: "Descripción pendiente de confirmar con el comercio."
+- benefit: "Beneficio a confirmar"
+- distance: "Distancia a confirmar"
+- hours: "Horario a confirmar" (6 vinotecas)
+- address: "Dirección a confirmar" (8 vinotecas)
+Además aparece el chip "Cerrada ahora" aunque el horario es desconocido.
+
+Quiero que la app esconda lo que no tiene dato real, en vez de mostrar
+"a confirmar". Solo cambia la interfaz: los datos NO se tocan todavía.
+
+============================================
+PASO 0
+============================================
+- Buscá TODOS los lugares donde se muestran los datos de una vinoteca:
+  la ficha de la vinoteca (ShopDetail, ~línea 9096), las tarjetas de la
+  pantalla Vinotecas, las de Inicio, el mapa, la búsqueda y el lugar de los
+  eventos. Para cada campo de relleno (description, benefit, distance,
+  hours, address) decime dónde se muestra.
+- Mirá cómo funciona isPlaceholderText (~línea 4584): qué textos detecta hoy
+  y dónde se usa. Decime si alcanza para detectar todos los rellenos de
+  arriba o si hay que ampliarlo.
+- Decime cómo se calcula el chip "Abierta/Cerrada" y qué pasa cuando no hay
+  horario real.
+- Decime qué se vería en la ficha de una vinoteca si se esconden todos los
+  campos sin dato, para evitar que quede vacía o rara.
+
+============================================
+CAMBIO
+============================================
+1. Usar una sola función para decidir si un texto es de relleno (ampliar
+   isPlaceholderText si hace falta) y aplicarla en TODOS los lugares del
+   Paso 0 donde se muestran esos campos.
+2. Si un campo es de relleno, no mostrarlo (ni el título del campo ni el
+   chip). Si hay una distancia que se puede calcular por coordenadas, esa se
+   sigue mostrando como hasta ahora.
+3. Si no hay horario real, no mostrar el chip "Abierta/Cerrada". Las
+   vinotecas con horario real siguen igual.
+4. Mantener un diseño prolijo cuando falten varios campos (sin huecos ni
+   títulos sueltos).
+
+============================================
+QUÉ NO HACER
+============================================
+- No cambiar ni borrar los textos de los datos (SHOPS). Solo la UI.
+- No inventar descripciones, horarios ni beneficios.
+- No tocar vinos, bodegas, fichas, Experiencias ni la Tienda.
+- No cambiar la lógica de ordenamiento por distancia.
+
+============================================
+VERIFICACIÓN AL TERMINAR
+============================================
+1. npm run build sin errores ni avisos.
+2. Navegador (servidor activo), en escritorio y a 390 px:
+   - Ficha de Vinoteca Río Tinto y de El Regio: mostrame cómo se veía antes
+     y cómo queda ahora.
+   - Una vinoteca con horario real (si existe) sigue mostrando horario y su
+     chip Abierta/Cerrada.
+   - Pantalla Vinotecas, Inicio y el mapa: sin textos "a confirmar".
+   - Una vinoteca desde el lugar de un evento.
+3. Búsqueda "a confirmar" y "pendiente": no debe quedar ningún resultado
+   visible con esos textos.
+4. Consola sin errores nuevos.
+
+No levantes servidor de desarrollo aparte si ya hay uno corriendo.

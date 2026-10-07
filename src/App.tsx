@@ -4533,7 +4533,10 @@ const openInMaps = (query: string) => {
 // Dirección para el "place" de un evento: primero vinoteca, luego bodega.
 const addressForPlace = (place: string): string | null => {
   const shop = SHOPS.find((s) => s.name === place);
-  if (shop) return `${shop.address}, ${shop.city}`;
+  if (shop) {
+    if (!isPlaceholderText(shop.address)) return `${shop.address}, ${shop.city}`;
+    return shop.coordinates || shop.city;
+  }
   const winery = WINERIES.find((w) => w.name === place);
   if (winery && winery.address) return `${winery.address}, ${winery.city}`;
   return null;
@@ -9014,10 +9017,10 @@ function WineryDetail({
                   title={name}
                   subtitle={
                     shop
-                      ? `${shop.address}, ${shop.city}${
-                          distanceText ? ` · ${distanceText}` : ""
-                        }`
-                      : "Dirección a confirmar"
+                      ? `${
+                          isPlaceholderText(shop.address) ? "" : `${shop.address}, `
+                        }${shop.city}${distanceText ? ` · ${distanceText}` : ""}`
+                      : ""
                   }
                   onClick={() => onOpenShop(name)}
                 />
@@ -9047,6 +9050,18 @@ function ShopDetail({
   isFavorite: (id: string) => boolean;
   userCoords: Coords | null;
 }) {
+  // Los campos con texto de relleno ("a confirmar", "pendiente…") no se
+  // muestran; el chip Abierta/Cerrada sale del horario real (null = no se sabe).
+  const open = shopOpenNow(shop, new Date());
+  const hasBenefit = !isPlaceholderText(shop.benefit);
+  const description = isPlaceholderText(shop.description)
+    ? SHOP_CARD_DESCRIPTIONS[shop.name] ?? ""
+    : shop.description;
+  const infoBoxes = [
+    !isPlaceholderText(shop.hours) && { label: "Horario", value: shop.hours },
+    hasBenefit && { label: "Beneficio", value: shop.benefit },
+  ].filter((b): b is { label: string; value: string } => Boolean(b));
+
   return (
     <div style={styles.stack22}>
       <div style={styles.rowBetweenCenter}>
@@ -9081,24 +9096,37 @@ function ShopDetail({
           <div style={styles.sectionTitle}>{shop.name}</div>
           <div style={styles.itemSub}>
             {(() => {
-              const distanceText = distanceLabelFromCoords(shop.coordinates, userCoords, shop.distance);
+              const distanceText = distanceLabelFromCoords(shop.coordinates, userCoords, "");
               return distanceText ? `${shop.city} · ${distanceText}` : shop.city;
             })()}
           </div>
 
-          <div style={{ ...styles.rowGap8, marginTop: 10 }}>
-            <Badge kind={shop.openNow ? "open" : "closed"}>
-              {shop.openNow ? "Abierta ahora" : "Cerrada ahora"}
-            </Badge>
-            <Badge kind="benefit">{shop.benefit}</Badge>
-          </div>
+          {(open !== null || hasBenefit) && (
+            <div style={{ ...styles.rowGap8, marginTop: 10 }}>
+              {open !== null && (
+                <Badge kind={open ? "open" : "closed"}>
+                  {open ? "Abierta ahora" : "Cerrada ahora"}
+                </Badge>
+              )}
+              {hasBenefit && <Badge kind="benefit">{shop.benefit}</Badge>}
+            </div>
+          )}
 
-          <div style={styles.placeText}>{shop.description}</div>
+          {description && <div style={styles.placeText}>{description}</div>}
 
-          <div style={styles.grid2}>
-            <InfoBox label="Horario" value={shop.hours} />
-            <InfoBox label="Beneficio" value={shop.benefit} />
-          </div> 
+          {infoBoxes.length > 0 && (
+            <div
+              style={
+                infoBoxes.length === 1
+                  ? { ...styles.grid2, gridTemplateColumns: "1fr" }
+                  : styles.grid2
+              }
+            >
+              {infoBoxes.map((b) => (
+                <InfoBox key={b.label} label={b.label} value={b.value} />
+              ))}
+            </div>
+          )}
 
           <div style={styles.rowGap10Wrap}>
             <button
@@ -9113,9 +9141,11 @@ function ShopDetail({
             >
               Cómo llegar
             </button>
-            <button style={{ ...styles.secondaryButton, flex: 1 }}>
-              Usar beneficio
-            </button>
+            {hasBenefit && (
+              <button style={{ ...styles.secondaryButton, flex: 1 }}>
+                Usar beneficio
+              </button>
+            )}
           </div>
         </div>
       </div>
