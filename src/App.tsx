@@ -4599,6 +4599,23 @@ const wineSubtitle = (wine: Wine) =>
 const varietalOrDefault = (varietal: string | undefined, fallback: string) =>
   hasRealVarietal(varietal) ? (varietal as string) : fallback;
 
+// Chip de filtro de un vino (un solo chip por vino). Agrupa los varietales que
+// están escritos de distintas formas; el resto queda con su varietal tal cual.
+// null = sin chip (varietal "No especificado"). No cambia ningún dato.
+function varietalChip(wine: Wine): string | null {
+  const v = wine.varietal;
+  if (!hasRealVarietal(v)) return null;
+  // Rosados: "Rosé", "Rosado", "Merlot Rosé", "vinificado en rosado", o el
+  // nombre lo dice (Enclave Sur Rosado, que además es corte, va solo acá).
+  if (/ros[eé]|rosado/i.test(v) || /ros[eé]|rosado|blush/i.test(wine.name)) return "Rosé";
+  // Trina Blend de Malbec: corte de tres clones de Malbec, una sola uva.
+  if (v === "Blend de Malbec") return "Malbec";
+  if (/^naranjo\b/i.test(v)) return "Naranjo";
+  // Cortes tintos y blancos: más de una uva, "Blend" o "Corte".
+  if (/blend|corte|,|\sy\s|%/i.test(v)) return "Blend";
+  return v;
+}
+
 // ---- Recomendados de Home ----
 
 const ANTIGUA_NAME = "Antigua Bodega Patagónica";
@@ -7295,14 +7312,16 @@ function WineListScreen({
   setSearch: (value: string) => void;
 }) {
   const varietals = Array.from(
-    new Set(wines.map((w) => w.varietal).filter(hasRealVarietal))
+    new Set(
+      wines.map(varietalChip).filter((c): c is string => c !== null)
+    )
   );
   const [activeVarietal, setActiveVarietal] = useState("Todos");
 
   const shownWines =
     activeVarietal === "Todos"
       ? wines
-      : wines.filter((w) => w.varietal === activeVarietal);
+      : wines.filter((w) => varietalChip(w) === activeVarietal);
 
   return (
     <div style={styles.stack22}>
@@ -7712,7 +7731,7 @@ function MapScreen({
   const filteredWines = sortWinesByWineryDistance(
     WINES.filter((w) => {
       const matchesVarietal =
-        varietalFilter === "Cerca mío" || w.varietal === varietalFilter;
+        varietalFilter === "Cerca mío" || varietalChip(w) === varietalFilter;
       const q = search.toLowerCase().trim();
       const matchesSearch =
         !q ||
