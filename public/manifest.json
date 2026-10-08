@@ -1,0 +1,14 @@
+{
+  "name": "Vinos de Río Negro",
+  "short_name": "Vinos RN",
+  "description": "Bodegas, vinos y experiencias de Río Negro, de la cordillera al mar.",
+  "lang": "es",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#6b1a2c",
+  "background_color": "#FBF8F3",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
