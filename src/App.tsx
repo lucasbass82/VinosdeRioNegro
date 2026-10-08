@@ -7889,7 +7889,7 @@ function WineGridCard({
         <div style={styles.wineGridCardTitle}>{title}</div>
         <div style={styles.wineGridCardSubtitle}>{subtitle}</div>
         {tag && (
-          <div style={{ marginTop: 6 }}>
+          <div style={{ marginTop: "auto", paddingTop: 6 }}>
             <Badge kind="neutral">{tag}</Badge>
           </div>
         )}
@@ -10933,6 +10933,10 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 12,
     overflow: "hidden",
     cursor: "pointer",
+    // Columna: el body ocupa el alto sobrante y la etiqueta queda al pie,
+    // alineada con la de la otra tarjeta de la fila.
+    display: "flex",
+    flexDirection: "column",
   },
   wineGridCardPhoto: {
     height: 136,
@@ -10943,17 +10947,17 @@ const styles: Record<string, React.CSSProperties> = {
   },
   wineGridCardBody: {
     padding: 10,
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
   },
+  // Sin límite de líneas: el nombre del vino se lee completo.
   wineGridCardTitle: {
     fontFamily: '"Lora", serif',
     fontWeight: 700,
     color: theme.text,
     fontSize: 13,
     lineHeight: 1.3,
-    display: "-webkit-box",
-    WebkitLineClamp: 2,
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
   },
   wineGridCardSubtitle: {
     marginTop: 4,
