@@ -3985,7 +3985,7 @@ const WINES: Wine[] = [
 {
   id: "v203",
   name: "Il Kavaliro",
-  varietal: "No especificado",
+  varietal: "Syrah",
   winery: "Dominio de Freneza",
   style: "Vino de autor",
   description: "Vino de autor de la bodega, de perfil de cuerpo medio a alto, elaborado con especial cuidado enológico.",
