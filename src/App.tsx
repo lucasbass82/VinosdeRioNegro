@@ -4607,6 +4607,96 @@ function varietalChip(wine: Wine): string | null {
   return v;
 }
 
+// ---- Tipo de vino y "También te pueden gustar" ----
+
+type WineType = "tinto" | "blanco" | "rosé" | "naranjo";
+
+// Vinos cuyo tipo no se deduce del varietal, decididos a mano. null = sin
+// tipo: se les sugieren vinos de su bodega y nunca se sugieren a otros vinos.
+const WINE_TYPE_BY_ID: Record<string, WineType | null> = {
+  v1: "blanco", // Mira Jovem – Pinot Salvaje (Sauvignon Blanc y Pinot Noir)
+  v61: "blanco", // Aniello Soil Blanco de Pinot Noir
+  v165: "blanco", // Moschini Dolzó Blanco Natural Dulce (No especificado)
+  v166: "blanco", // Moschini Blanco (No especificado)
+  v194: "tinto", // Selvapiana Blend de Guarda
+  v212: "tinto", // Rebeca Blend de Terroirs
+  v13: null, // UN Gran Corte Reserva (Blend)
+  v75: null, // Barzi Canale Blend de Familia
+  v92: null, // Old Vineyard Blend
+  v101: null, // Maroma Blend
+  v114: null, // Punta de Riel Blend Estiba Única
+  v145: null, // Tronelli Cosecha Tardía
+};
+
+const WHITE_GRAPES = [
+  "Chardonnay",
+  "Sauvignon Blanc",
+  "Torrontés",
+  "Semillón",
+  "Riesling",
+  "Gewürztraminer",
+  "Sauvignon Gris",
+];
+const RED_GRAPES = [
+  "Malbec",
+  "Pinot Noir",
+  "Merlot",
+  "Cabernet Sauvignon",
+  "Cabernet Franc",
+  "Syrah",
+  "Trousseau",
+  "Petit Verdot",
+];
+
+// Tipo deducido del varietal (WINES no tiene un campo de tipo): rosado y
+// naranjo según varietalChip; blanco/tinto si todas las uvas del varietal
+// (o del corte) son blancas/tintas. null = no se puede deducir.
+function wineType(wine: Wine): WineType | null {
+  if (wine.id in WINE_TYPE_BY_ID) return WINE_TYPE_BY_ID[wine.id];
+  const chip = varietalChip(wine);
+  if (chip === "Rosé") return "rosé";
+  if (chip === "Naranjo") return "naranjo";
+  if (/^(Corte blanco|Blend de blancas)$/i.test(wine.varietal)) return "blanco";
+  const grapes = wine.varietal
+    .replace(/\d+%\s*/g, "")
+    .replace(/^Blend de\s+/i, "")
+    .replace(/\s+Blend$/i, "")
+    .split(/,\s*|\s+y\s+/)
+    .map((g) => g.trim())
+    .filter(Boolean);
+  if (grapes.length && grapes.every((g) => WHITE_GRAPES.includes(g))) return "blanco";
+  if (grapes.length && grapes.every((g) => RED_GRAPES.includes(g))) return "tinto";
+  return null;
+}
+
+// "También te pueden gustar" (WineDetail y WineOriginBlocks): 2 vinos del
+// mismo tipo, primero de la misma bodega, después de la misma región, después
+// del mismo varietal (chip); a igualdad, el orden de WINES. Un vino sin tipo
+// recibe vinos de su bodega (de cualquier tipo).
+const SIMILAR_WINES_COUNT = 2;
+
+function similarWines(wine: Wine): Wine[] {
+  const type = wineType(wine);
+  if (type === null) {
+    return WINES.filter(
+      (w) => w.id !== wine.id && w.winery === wine.winery
+    ).slice(0, SIMILAR_WINES_COUNT);
+  }
+  const regionOf = (w: Wine) =>
+    WINERIES.find((x) => x.name === w.winery)?.region;
+  const region = regionOf(wine);
+  const chip = varietalChip(wine);
+  const score = (w: Wine) =>
+    (w.winery === wine.winery ? 4 : 0) +
+    (region !== undefined && regionOf(w) === region ? 2 : 0) +
+    (chip !== null && varietalChip(w) === chip ? 1 : 0);
+  return WINES.filter((w) => w.id !== wine.id && wineType(w) === type)
+    .map((w, i) => ({ w, i, s: score(w) }))
+    .sort((a, b) => b.s - a.s || a.i - b.i)
+    .slice(0, SIMILAR_WINES_COUNT)
+    .map((x) => x.w);
+}
+
 // ---- Recomendados de Home ----
 
 const ANTIGUA_NAME = "Antigua Bodega Patagónica";
@@ -8651,11 +8741,7 @@ function WineDetail({
     setTimeout(() => setJustAdded(false), 1000);
   };
 
-  const similar = WINES.filter(
-    (w) =>
-      w.id !== wine.id &&
-      (w.varietal === wine.varietal || w.winery === wine.winery)
-  ).slice(0, 2);
+  const similar = similarWines(wine);
 
 
   return (
@@ -8876,11 +8962,7 @@ function WineOriginBlocks({
 }) {
   const originWinery = WINERIES.find((w) => w.name === wine.winery);
 
-  const similar = WINES.filter(
-    (w) =>
-      w.id !== wine.id &&
-      (w.varietal === wine.varietal || w.winery === wine.winery)
-  ).slice(0, 2);
+  const similar = similarWines(wine);
 
 
   return (
