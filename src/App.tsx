@@ -578,7 +578,12 @@ type EventItem = {
   city: string;
   benefit: string;
   organizer?: string;
+  // Chip de Agenda fijo; solo se usa si el evento no tiene fecha real.
   timeframe: EventTimeframe;
+  // Fechas reales "AAAA-MM-DD" (solo las confirmadas). Sin endDate el evento
+  // no vence; sin startDate se toma endDate como único día.
+  startDate?: string;
+  endDate?: string;
 };
 
 type FavoriteItem = {
@@ -4471,12 +4476,13 @@ const EVENTS: EventItem[] = [
   {
     id: "e1",
     title: "BALC 2026",
-    organizer: "Antigua Bodega Patagónica",
+    organizer: "Asociación Empresaria Hotelera Gastronómica de Bariloche",
     place: "Vinoteca Olivas y Sabores",
     when: "Hoy · 19:00",
-    city: "Viedma",
+    city: "San Carlos de Bariloche",
     benefit: "1 copa de regalo",
     timeframe: "hoy",
+    endDate: "2026-10-12",
   },
   {
     id: "e2",
@@ -4487,6 +4493,8 @@ const EVENTS: EventItem[] = [
     city: "Viedma",
     benefit: "10% OFF socios",
     timeframe: "finde",
+    startDate: "2026-10-24",
+    endDate: "2026-10-24",
   },
   {
     id: "e3",
@@ -4502,6 +4510,45 @@ const EVENTS: EventItem[] = [
 // Eventos que viven de forma permanente en "Todos los eventos" (Agenda) en
 // vez de en el carrusel filtrado por chip de fecha.
 const AGENDA_ALL_EVENTS_IDS = ["e1"];
+
+// ---- Fechas de eventos: vencidos y chip de Agenda ----
+
+// "AAAA-MM-DD" de una fecha en hora local.
+function isoDay(d: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+function addDays(d: Date, days: number): Date {
+  const out = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  out.setDate(out.getDate() + days);
+  return out;
+}
+
+// Vencido = ya pasó su último día. Sin endDate nunca vence.
+function isEventOver(event: EventItem, now: Date): boolean {
+  return !!event.endDate && event.endDate < isoDay(now);
+}
+
+// Eventos que siguen vigentes (Inicio y Agenda ocultan los vencidos).
+function upcomingEvents(now: Date): EventItem[] {
+  return EVENTS.filter((e) => !isEventOver(e, now));
+}
+
+// Chip de Agenda: con fecha real, "hoy" si hoy cae dentro del evento y
+// "finde" si toca el sábado o domingo de esta semana; null = más adelante
+// (va a "Todos los eventos"). Sin fecha, el timeframe fijo.
+function eventTimeframe(event: EventItem, now: Date): EventTimeframe | null {
+  if (!event.endDate) return event.timeframe;
+  const start = event.startDate ?? event.endDate;
+  const today = isoDay(now);
+  if (start <= today && today <= event.endDate) return "hoy";
+  const day = now.getDay(); // 0 = domingo
+  const saturday = isoDay(addDays(now, day === 0 ? -1 : 6 - day));
+  const sunday = isoDay(addDays(now, day === 0 ? 0 : 7 - day));
+  if (start <= sunday && event.endDate >= saturday) return "finde";
+  return null;
+}
 
 // ---- Helpers de auditoría (I4–I11) ----
 
@@ -4555,7 +4602,7 @@ const FEATURED_EVENTS: Record<string, FeaturedEventConfig> = {
   e3: {
     boton: tarjetaCataMalbecVinopolitanPhoto,
     ficha: fichaCataMalbecVinopolitanPhoto,
-    buttonLabel: "Quiero más info",
+    buttonLabel: "Cómo llegar",
     onButtonClick: () =>
       window.open(
         "https://www.google.com/maps/search/?api=1&query=-40.8191635,-62.9852614",
@@ -7021,6 +7068,8 @@ function EventCarouselCard({
   variant?: "compact" | "full";
 }) {
   const featured = FEATURED_EVENTS[event.id];
+  // Chip "Finalizado" (solo llega acá un vencido desde los favoritos del Perfil).
+  const finished = isEventOver(event, new Date());
   if (featured) {
     return (
       <div
@@ -7046,6 +7095,11 @@ function EventCarouselCard({
             borderRadius: 28,
           }}
         />
+        {finished && (
+          <div style={{ position: "absolute", top: 10, left: 10 }}>
+            <Badge kind="closed">Finalizado</Badge>
+          </div>
+        )}
         <button
           style={styles.shopCardHeartButton}
           onClick={(ev) => {
@@ -7214,6 +7268,8 @@ function HomeScreen({
   setSearch: (value: string) => void;
   userCoords: Coords | null;
 }) {
+  const homeEvents = upcomingEvents(new Date());
+
   return (
     <div style={styles.stack22}>
       <div style={{ ...styles.searchBar, marginTop: 0 }}>
@@ -7262,23 +7318,28 @@ function HomeScreen({
         onOpenHomeWineFicha={onOpenHomeWineFicha}
       />
 
-      <SectionTitle
-        title="Actividades destacadas"
-        action="Ver todo"
-        onAction={() => onSetTabFromHome("agenda")}
-      />
-
-      <div style={styles.horizontalScroller}>
-        {EVENTS.map((e) => (
-          <EventCarouselCard
-            key={e.id}
-            event={e}
-            onOpen={() => onOpenEvent(e.id)}
-            isFavorite={(id) => favorites.some((f) => f.id === id)}
-            toggleFavorite={toggleFavorite}
+      {/* Solo eventos vigentes; sin ninguno, la sección no se muestra. */}
+      {homeEvents.length > 0 && (
+        <>
+          <SectionTitle
+            title="Actividades destacadas"
+            action="Ver todo"
+            onAction={() => onSetTabFromHome("agenda")}
           />
-        ))}
-      </div>
+
+          <div style={styles.horizontalScroller}>
+            {homeEvents.map((e) => (
+              <EventCarouselCard
+                key={e.id}
+                event={e}
+                onOpen={() => onOpenEvent(e.id)}
+                isFavorite={(id) => favorites.some((f) => f.id === id)}
+                toggleFavorite={toggleFavorite}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <SectionTitle
         title="Vinos recomendados"
@@ -8327,11 +8388,17 @@ function AgendaScreen({
 }) {
   const [filter, setFilter] = useState<EventTimeframe>("hoy");
   const [openEvent, setOpenEvent] = useState<EventItem | null>(null);
-  const shownEvents = EVENTS.filter(
-    (e) => e.timeframe === filter && !AGENDA_ALL_EVENTS_IDS.includes(e.id)
+  // Solo eventos vigentes. Los de fecha real más adelante (sin chip) van a
+  // "Todos los eventos", junto a los fijos de AGENDA_ALL_EVENTS_IDS.
+  const now = new Date();
+  const upcoming = upcomingEvents(now);
+  const shownEvents = upcoming.filter(
+    (e) =>
+      eventTimeframe(e, now) === filter && !AGENDA_ALL_EVENTS_IDS.includes(e.id)
   );
-  const allEventsSection = EVENTS.filter((e) =>
-    AGENDA_ALL_EVENTS_IDS.includes(e.id)
+  const allEventsSection = upcoming.filter(
+    (e) =>
+      AGENDA_ALL_EVENTS_IDS.includes(e.id) || eventTimeframe(e, now) === null
   );
 
   const agendaScrollRef = useRef<HTMLDivElement>(null);
@@ -8429,20 +8496,24 @@ function AgendaScreen({
             </div>
           )}
 
-          <SectionTitle title="Todos los eventos" />
+          {allEventsSection.length > 0 && (
+            <>
+              <SectionTitle title="Todos los eventos" />
 
-          <div style={styles.eventCardFullScroller}>
-            {allEventsSection.map((e) => (
-              <EventCarouselCard
-                key={e.id}
-                event={e}
-                onOpen={() => openThisEvent(e)}
-                isFavorite={isFavorite}
-                toggleFavorite={toggleFavorite}
-                variant="full"
-              />
-            ))}
-          </div>
+              <div style={styles.eventCardFullScroller}>
+                {allEventsSection.map((e) => (
+                  <EventCarouselCard
+                    key={e.id}
+                    event={e}
+                    onOpen={() => openThisEvent(e)}
+                    isFavorite={isFavorite}
+                    toggleFavorite={toggleFavorite}
+                    variant="full"
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
