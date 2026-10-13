@@ -547,7 +547,6 @@ type Shop = {
   wines: string[];
   benefit: string;
   distance: string;
-  image: string;
 };
 
 type Wine = {
@@ -4181,7 +4180,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s2",
@@ -4195,7 +4193,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s3",
@@ -4209,7 +4206,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s4",
@@ -4223,7 +4219,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s5",
@@ -4237,7 +4232,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s6",
@@ -4251,7 +4245,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s7",
@@ -4265,7 +4258,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s8",
@@ -4280,7 +4272,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s9",
@@ -4295,7 +4286,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s10",
@@ -4309,7 +4299,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s11",
@@ -4323,7 +4312,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s12",
@@ -4337,7 +4325,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s13",
@@ -4352,7 +4339,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s14",
@@ -4367,7 +4353,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s15",
@@ -4382,7 +4367,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s16",
@@ -4396,7 +4380,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s17",
@@ -4410,7 +4393,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s18",
@@ -4424,7 +4406,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s19",
@@ -4438,7 +4419,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s20",
@@ -4452,10 +4432,9 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
-    // Sin logo: la ficha usa GENERIC_VINOTECA_PHOTO (fallback de shopHeaderImage).
+    // Sin logo: tarjetas y ficha muestran su nombre (ShopNameMark), no una foto.
     id: "s21",
     name: "Vinoteca Piscis",
     city: "Sierra Grande",
@@ -4467,7 +4446,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
   {
     id: "s22",
@@ -4481,7 +4459,6 @@ const SHOPS: Shop[] = [
     wines: WINES.map((w) => w.name),
     benefit: "Beneficio a confirmar",
     distance: "Distancia a confirmar",
-    image: "/grapes.png",
   },
 ].sort((a, b) => {
   const priority = "Vinoteca Olivas y Sabores";
@@ -7285,7 +7262,8 @@ function HomeScreen({
                 description={SHOP_CARD_DESCRIPTIONS[s.name] ?? ""}
                 feature=""
                 image={shopHeaderImage(s.name)}
-                imageFit={shopImageFit(s.name)}
+                imageFit="contain"
+                imageMark={<ShopNameMark name={s.name} fontSize={30} />}
                 badge={
                   open === null ? null : (
                     <Badge kind={open ? "open" : "closed"} compact>
@@ -7528,18 +7506,21 @@ function ImageCard({
   favoriteActive,
   onClick,
   imageFit = "cover",
+  imageMark,
 }: {
   title: string;
   subtitle: string;
   description: string;
   feature: string;
-  image: string;
+  image: string | null;
   badge: React.ReactNode;
   onFavorite: (e: React.MouseEvent<HTMLButtonElement>) => void;
   favoriteActive: boolean;
   onClick: () => void;
   // "contain": logo entero sobre crema (vinotecas), sin la sombra de foto.
   imageFit?: "cover" | "contain";
+  // Sin imagen: se muestra centrado en el recuadro (p. ej. ShopNameMark).
+  imageMark?: React.ReactNode;
 }) {
   return (
     <div style={styles.imageCard} onClick={onClick}>
@@ -7548,7 +7529,8 @@ function ImageCard({
           imageFit === "contain"
             ? {
                 ...styles.imageCardTop,
-                backgroundImage: `url('${image}')`,
+                position: "relative",
+                ...(image ? { backgroundImage: `url('${image}')` } : {}),
                 backgroundSize: "contain",
                 backgroundOrigin: "content-box",
                 backgroundColor: theme.cream,
@@ -7562,7 +7544,21 @@ function ImageCard({
               }
         }
       >
-        <div style={styles.rowBetweenTop}>
+        {!image && imageMark && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 16,
+            }}
+          >
+            {imageMark}
+          </div>
+        )}
+        <div style={{ ...styles.rowBetweenTop, position: "relative" }}>
           <div style={styles.rowGap8}>{badge}</div>
           <button
             style={
@@ -7952,14 +7948,30 @@ const SHOP_HEADER_IMAGES: Record<string, string> = {
   "Vinoteca El Regio": logoVinotecaElRegioPhoto,
 };
 
-function shopHeaderImage(name: string): string {
-  return SHOP_HEADER_IMAGES[name] || GENERIC_VINOTECA_PHOTO;
+// Logo de la vinoteca (se muestra entero, contain sobre crema), o null si no
+// tiene: en ese caso va ShopNameMark en el mismo recuadro, sin foto de stock.
+function shopHeaderImage(name: string): string | null {
+  return SHOP_HEADER_IMAGES[name] ?? null;
 }
 
-// Los logos se muestran enteros (contain sobre crema, como en ShopDetail); la
-// foto genérica de las vinotecas sin logo, a sangre (cover).
-function shopImageFit(name: string): "contain" | "cover" {
-  return SHOP_HEADER_IMAGES[name] ? "contain" : "cover";
+// Vinotecas sin logo (hoy solo Piscis): su nombre en bordó con la tipografía
+// de los títulos, para que se vea como los logos sobre crema de las demás.
+function ShopNameMark({ name, fontSize }: { name: string; fontSize: number }) {
+  return (
+    <span
+      style={{
+        fontFamily: '"Lora", serif',
+        fontWeight: 700,
+        fontSize,
+        lineHeight: 1.1,
+        letterSpacing: -0.4,
+        color: theme.wine,
+        textAlign: "center",
+      }}
+    >
+      {name.replace(/^Vinoteca\s+/, "")}
+    </span>
+  );
 }
 
 // ---- Vinotecas recomendadas de Inicio / "Ver todas" (tab "vinotecas") ----
@@ -8160,7 +8172,7 @@ function ShopListScreen({
 
       <div style={styles.stack12}>
         {shops.map((s) => {
-          const fit = shopImageFit(s.name);
+          const logo = shopHeaderImage(s.name);
           return (
             <div
               key={s.id}
@@ -8172,16 +8184,20 @@ function ShopListScreen({
                   width: 92,
                   height: 78,
                   borderRadius: 18,
-                  backgroundImage: `url('${shopHeaderImage(s.name)}')`,
-                  backgroundSize: fit,
+                  ...(logo ? { backgroundImage: `url('${logo}')` } : {}),
+                  backgroundSize: "contain",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
-                  ...(fit === "contain"
-                    ? { backgroundColor: theme.cream, border: `1px solid ${theme.line}` }
-                    : {}),
+                  backgroundColor: theme.cream,
+                  border: `1px solid ${theme.line}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   flexShrink: 0,
                 }}
-              />
+              >
+                {!logo && <ShopNameMark name={s.name} fontSize={19} />}
+              </div>
 
               <div style={{ flex: 1 }}>
                 <div style={styles.itemTitle}>{s.name}</div>
@@ -9116,6 +9132,7 @@ function ShopDetail({
     !isPlaceholderText(shop.hours) && { label: "Horario", value: shop.hours },
     hasBenefit && { label: "Beneficio", value: shop.benefit },
   ].filter((b): b is { label: string; value: string } => Boolean(b));
+  const shopLogo = shopHeaderImage(shop.name);
 
   return (
     <div style={styles.stack22}>
@@ -9143,9 +9160,11 @@ function ShopDetail({
         <div
           style={{
             ...styles.shopLogoPanel,
-            backgroundImage: `url('${shopHeaderImage(shop.name)}')`,
+            ...(shopLogo ? { backgroundImage: `url('${shopLogo}')` } : {}),
           }}
-        />
+        >
+          {!shopLogo && <ShopNameMark name={shop.name} fontSize={36} />}
+        </div>
 
         <div style={styles.imageCardBody}>
           <div style={styles.sectionTitle}>{shop.name}</div>
@@ -10827,6 +10846,9 @@ const styles: Record<string, React.CSSProperties> = {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     borderBottom: `1px solid ${theme.line}`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   profileHeroCard: {
     background: `linear-gradient(135deg, ${theme.wineDark}, ${theme.wine})`,
