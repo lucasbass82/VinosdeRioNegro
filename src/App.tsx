@@ -3416,7 +3416,7 @@ const WINES: Wine[] = [
   varietal: "Malbec",
   winery: "Bodega Agrestis",
   style: "Untuoso e intenso",
-  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  description: "El Agrestis Malbec es un vino tinto de producción limitada, elaborado por Bodega Agrestis en General Roca, Río Negro. Con uvas de viñedo propio, expresa la identidad del Alto Valle con fruta, estructura y equilibrio.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Alto Valle",
   image: agrestisMalbecPhoto,
