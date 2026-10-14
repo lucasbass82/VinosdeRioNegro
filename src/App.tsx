@@ -769,7 +769,7 @@ const WINERIES_DATA: Winery[] = [
     hours: "11:00 a 19:00",
     openNow: false,
     wines: [
-      "Aniello 006",
+      "Aniello 006 Merlot",
       "Aniello 006 Pinot Noir",
       "Aniello 006 Chardonnay",
       "Aniello 006 Malbec",
@@ -835,7 +835,7 @@ const WINERIES_DATA: Winery[] = [
     hours: "09:00 a 17:00",
     openNow: true,
     wines: [
-      "Pinot Noir de viñedo antiguo",
+      "Old Vineyard Pinot Noir",
       "Gran Reserva Malbec",
       "Barzi Canale Blend de Familia",
       "Barzi Canale Pinot Noir",
@@ -1045,7 +1045,7 @@ const WINERIES_DATA: Winery[] = [
     "Bodega de Río Colorado, con restaurante propio y alojamiento boutique junto al río.",
   hours: "Todos los días excepto sábados (reservar)",
   openNow: true,
-  wines: ["Trina Blend de Malbec", "Trina Naranjo de Criollas", "Trina Reserva de Malbec"],
+  wines: ["Trina Blend de Malbec", "Trina Naranjo de Criollas", "Trina Reserva Malbec"],
   shops: ALL_SHOP_NAMES,
   activity: "Visitas guiadas, restaurante y alojamiento boutique",
   benefit: "",
@@ -1693,26 +1693,37 @@ const WINES: Wine[] = [
   },
   {
     id: "v2",
-    name: "Aniello 006",
+    name: "Aniello 006 Merlot",
     varietal: "Merlot",
     winery: "Bodega Finca Aniello",
     style: "Amable y redondo",
     note: "Muy versátil, ideal para una cena y uno de los más buscados.",
+    description: "Cosecha manual en tres fechas según el tipo de suelo y vinificación independiente. Maceración en frío y fermentación alcohólica lenta en cubas de hormigón, con temperatura controlada y levaduras indígenas y seleccionadas. La fermentación maloláctica tiene lugar en barricas de roble francés nuevas, de segundo y tercer uso. El vino tiene una crianza de 8 meses en barricas.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Muy buscado",
-    image: anielo006MerlotPhoto
+    image: anielo006MerlotPhoto,
+    aging: "8 meses en barricas de roble francés",
+    servingTemp: "16 – 18 °C",
+    tastingVista: "Merlot de atractivo color rubí.",
+    tastingNariz: "Aromas de frutos negros y especias. Carácter balsámico. Roble presente en armonía con su tipicidad varietal.",
+    tastingBoca: "Sensación agradable en la boca, taninos sedosos, final largo y persistente.",
 
   },
   {
     id: "v3", 
-    name: "Pinot Noir de viñedo antiguo",
+    name: "Old Vineyard Pinot Noir",
     varietal: "Pinot Noir",
     winery: "Humberto Canale",
     style: "Complejo y largo",
     note: "Etiqueta clásica, con personalidad y excelente estructura.",
+    description: "Las cepas seleccionadas provienen de Finca La Isabel, el paño puro más viejo de la Patagonia, plantado por inversores franceses en 1969 y adquirido a fines de los años 90 por la familia Canale. De color rojo rubí con notas tejas, ofrece aromas de cerezas frescas y nuez, en armonía con suaves ahumados aportados por la barrica de roble francés. En boca es balanceado, elegante y complejo, de tacto sedoso y fruta integrada con la madera. Su final amplio y persistente y su tipicidad lo destacan entre los Pinot Noir de la Patagonia.",
     availableAt: ALL_SHOP_NAMES,
     tag: "Reserva",
-    image: humbertoCanaleOldVineyardPinotNoirPhoto
+    image: humbertoCanaleOldVineyardPinotNoirPhoto,
+    servingTemp: "14 – 16 °C",
+    tastingVista: "Rojo rubí con notas tejas, típico de esta variedad.",
+    tastingNariz: "Carácter frutado con cerezas frescas y nuez, en armonía con suaves ahumados de la barrica de roble francés.",
+    tastingBoca: "Balanceado, elegante y complejo. Tacto sedoso, fruta integrada con la madera y final amplio y persistente.",
   },
   {
     id: "v4",
@@ -2041,10 +2052,14 @@ const WINES: Wine[] = [
   varietal: "Malbec",
   winery: "Bodega Don Amaro",
   style: "Robusto e intenso",
-  description: "Vino artesanal y orgánico que rinde tributo al espíritu pionero de la familia Mañana, pionera en la olivicultura de San Antonio Oeste (marca Oleosan). Es el primer vino elaborado en la región. Aromas a frutos rojos maduros, especias sutiles y notas terrosas, con elegancia en boca y taninos suaves. La influencia de los vientos marítimos y el cambio de mareas le aporta gran concentración de polifenoles, dando un vino de cuerpo robusto y color intenso.",
+  description: "Don Amaro Malbec es un vino tinto artesanal y orgánico elaborado por la Bodega Don Amaro, ubicada en San Antonio Oeste, provincia de Río Negro. Nace de un emprendimiento familiar que combina tradición, pasión y respeto por la naturaleza, con una producción limitada que refleja la identidad del terroir patagónico atlántico, influenciado por los vientos marítimos y la cercanía al mar. Un Malbec con personalidad única, que ha sido reconocido en concursos de vinos artesanales, incluyendo Medalla de Oro, y forma parte de los Caminos del Vino de Río Negro.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Costa/Mar",
   image: donAmaroMalbecPhoto,
+  servingTemp: "16 – 18 °C",
+  tastingVista: "Rojo rubí intenso con reflejos violáceos.",
+  tastingNariz: "Aromas a frutas rojas y negras, con notas florales y sutiles toques especiados.",
+  tastingBoca: "De cuerpo medio a completo, taninos suaves y redondos, acidez equilibrada y un final persistente.",
 },
 {
   id: "v26",
@@ -2204,14 +2219,20 @@ const WINES: Wine[] = [
 },
 {
   id: "v38",
-  name: "Trina Reserva de Malbec",
+  name: "Trina Reserva Malbec",
   varietal: "Malbec",
   winery: "Bodega Trina",
   style: "Decantación natural",
-  description: "Vino de dos inviernos, de decantación natural de dos años, sin paso por madera. Malbec de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  description: "Trina Reserva Malbec 2024 combina uvas de suelos arenosos, arcillosos y pedregosos de una chacra en Colonia Reig, Valle Medio. La cosecha es manual. La vinificación incluye prefermentación en frío, fermentos indígenas y maceración de 12 a 16 días. Su crianza de 12 meses en barricas seleccionadas de roble francés aporta complejidad y equilibrio.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Reserva",
   image: trinaReservaDeMalbecPhoto,
+  vintage: "2024",
+  aging: "12 meses en barricas de roble francés",
+  servingTemp: "16 – 18 °C",
+  tastingVista: "Rojo rubí intenso, de gran profundidad y brillo.",
+  tastingNariz: "Aromas a ciruelas y cerezas cocidas, con notas tostadas y un sutil fondo especiado.",
+  tastingBoca: "Taninos dulces y aterciopelados, frutas rojas maduras, buena estructura y final largo y equilibrado.",
 },
 {
   id: "v39",
@@ -2692,13 +2713,19 @@ const WINES: Wine[] = [
 {
   id: "v75",
   name: "Barzi Canale Blend de Familia",
-  varietal: "Blend",
+  varietal: "41% Malbec, 28% Merlot, 21% Cabernet Franc y 10% Petit Verdot",
   winery: "Humberto Canale",
   style: "Elegante de familia",
-  description: "Corte de varias variedades que combina la fruta y estructura de cada una, buscando equilibrio, complejidad y un perfil de cuerpo medio a alto.",
+  description: "Barzi Canale Blend de Familia es el vino más exclusivo de la familia. Rinde culto al trabajo en equipo en la bodega, al respeto por la tierra y al uso consciente y responsable de sus recursos naturales. Un corte tinto de excepción que expresa un terroir único, la historia familiar en la Patagonia y un legado centenario, con el sello de la actual generación.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Barzi Canale",
   image: barziCanaleBlendDeFamiliaPhoto,
+  vintage: "2017",
+  aging: "18 meses en barricas de roble francés. 20 meses en botella.",
+  servingTemp: "16 – 18 °C. Decantar al menos una hora antes de beber.",
+  tastingVista: "De color rojo granate intenso, con matiz vivaz.",
+  tastingNariz: "Aromas a frutos rojos y negros en combinación con especias.",
+  tastingBoca: "Muy suave y sedoso, de muy buen volumen y equilibrio, muy fresco, con persistente y elegante final.",
 },
 {
   id: "v76",
@@ -4034,13 +4061,18 @@ const WINES: Wine[] = [
 {
   id: "v193",
   name: "Verziere Malbec",
-  varietal: "Malbec",
+  varietal: "85% Malbec y 15% Merlot",
   winery: "Bodega Bonomi y Bernal",
   style: "Untuoso e intenso",
-  description: "Variedad insignia de Argentina. Tinto de color rojo violáceo intenso, con aromas a ciruela madura, frutos rojos y negros, y notas especiadas. En boca es untuoso, de taninos suaves y buena acidez, con cuerpo medio a alto.",
+  description: "Verziere es un Malbec de producción limitada elaborado por Bodega Bonomi y Bernal en General Roca, Río Negro. Refleja la identidad del Alto Valle con fruta, frescura y equilibrio. Una parte se elabora con maceración carbónica parcial y se complementa con 15% de Merlot para aportar volumen y redondez.",
   availableAt: ALL_SHOP_NAMES,
   tag: "Alto Valle",
   image: bonomiYBernalVerziereMalbecPhoto,
+  aging: "Maceración carbónica parcial. 8 meses en barricas de roble francés.",
+  servingTemp: "16 – 18 °C",
+  tastingVista: "Rojo violáceo intenso, brillante y de gran limpieza.",
+  tastingNariz: "Aromas a fruta roja madura como ciruela y mora, con notas florales y un leve especiado.",
+  tastingBoca: "Entrada amable, taninos pulidos, buena estructura y equilibrio. Final largo y persistente.",
 },
 {
   id: "v194",
@@ -4826,7 +4858,6 @@ const WINE_TYPE_BY_ID: Record<string, WineType | null> = {
   v194: "tinto", // Selvapiana Blend de Guarda
   v212: "tinto", // Rebeca Blend de Terroirs
   v13: null, // UN Gran Corte Reserva (Blend)
-  v75: null, // Barzi Canale Blend de Familia
   v92: null, // Old Vineyard Blend
   v114: null, // Punta de Riel Blend Estiba Única
   v145: null, // Tronelli Cosecha Tardía
@@ -6014,7 +6045,7 @@ const MALBEC_EXPERIENCE_WINES: ExperienceWine[] = [
   },
   {
     id: "vallemedio-trina",
-    name: "Trina Reserva de Malbec",
+    name: "Trina Reserva Malbec",
     cardImage: botonTrinaReservaMalbec,
     fichaImage: fichaTrinaMalbec,
     winery: "Bodega Trina",
