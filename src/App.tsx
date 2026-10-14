@@ -1325,7 +1325,7 @@ const WINERIES_DATA: Winery[] = [
   benefit: "",
   distance: "",
   image: bodegaFabreMontmayouPhoto,
-  address: "Ruta 22 y Rajneri, General Roca, Río Negro. CP 8332. También tiene viñedos en Allen (~60 ha).",
+  address: "Ruta 22 y Rajneri",
 },
 {
   id: "w24",
@@ -9338,11 +9338,13 @@ function WineryDetail({
   isFavorite: (id: string) => boolean;
   userCoords: Coords | null;
 }) {
+  // Sin coordenadas ni dirección: se busca la bodega por nombre y ciudad, sin
+  // escribir ninguna coordenada.
   const directionsQuery = winery.addressCoordinates
     ? winery.addressCoordinates
     : winery.address
     ? `${winery.address}, ${winery.city}`
-    : null;
+    : `${winery.name}, ${winery.city}, Río Negro`;
 
   const ficha = WINERY_FICHA_BY_ID[winery.id];
 
@@ -9378,15 +9380,8 @@ function WineryDetail({
       )}
 
       <button
-        style={{
-          ...styles.primaryButton,
-          width: "100%",
-          ...(directionsQuery
-            ? null
-            : { opacity: 0.5, cursor: "default" }),
-        }}
-        disabled={!directionsQuery}
-        onClick={() => directionsQuery && openInMaps(directionsQuery)}
+        style={{ ...styles.primaryButton, width: "100%" }}
+        onClick={() => openInMaps(directionsQuery)}
       >
         Cómo llegar
       </button>
