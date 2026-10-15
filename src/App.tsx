@@ -669,7 +669,7 @@ const REGION_META: Record<
    },
   "cordillera": {
     title: "Cordillera",
-    subtitle: "Vinos de montaña y paisajes Patagonicos",
+    subtitle: "Vinos de montaña y paisajes patagónicos.",
     image:
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80",
     tint: "#efe7dc",
@@ -4782,7 +4782,7 @@ const FEATURED_EVENTS: Record<string, FeaturedEventConfig> = {
   e2: {
     boton: botonOlivasSaboresEventoPhoto,
     ficha: fichaOlivasSaboresEventoPhoto,
-    buttonLabel: "Quiero ir!",
+    buttonLabel: "¡Quiero ir!",
     onButtonClick: (event) => {
       const address = addressForPlace(event.place);
       if (address) openInMaps(address);
@@ -5693,7 +5693,7 @@ export default function App() {
           {ageGate === "denied" && (
             <div style={styles.ageGateCard}>
               <p style={styles.ageGateQuestion}>
-                Esta app es solo para mayores de 18 años
+                Esta app es solo para mayores de 18 años.
               </p>
               <button style={styles.primaryButton} onClick={retryAgeGate}>
                 Volver a intentar
@@ -6238,12 +6238,12 @@ const EXPERIENCE_BOXES: ExperienceBox[] = [
 
 const WINE_COURSES: Array<{ name: string; description: string }> = [
   {
-    name: "Introducción al Vino Rionegrino",
+    name: "Introducción al vino rionegrino",
     description:
       "Descubrí las regiones, varietales y estilos únicos de Río Negro. Ideal para principiantes.",
   },
   {
-    name: "Maridaje Patagónico",
+    name: "Maridaje patagónico",
     description:
       "Aprendé a combinar los mejores vinos locales con la gastronomía de la región.",
   },
@@ -6474,8 +6474,8 @@ function ShopMainView({
         }
       : activeShopTab === "Cursos"
       ? {
-          title: "Cursos de Vino",
-          subtitle: "Aprendé, descubrí y viví el vino Rionegrino.",
+          title: "Cursos de vino",
+          subtitle: "Aprendé, descubrí y viví el vino rionegrino.",
         }
       : {
           title: "Vinos",
@@ -6524,7 +6524,7 @@ function ShopMainView({
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     style={styles.inputBig}
-                    placeholder="Busca tu vino, bodega o experiencia."
+                    placeholder="Buscá tu vino o bodega"
                   />
                 </div>
                 <button
@@ -6546,11 +6546,11 @@ function ShopMainView({
                 }}
               >
                 <div style={styles.locationGreeting}>
-                  Descubrí el vino Rionegrino
+                  Descubrí el vino rionegrino
                 </div>
                 <div style={styles.locationBody}>
-                  Hay un Río Negro distinto en cada copa. De la Cordillera al
-                  Mar, viñedos, paisajes y personas dan vida a vinos con
+                  Hay un Río Negro distinto en cada copa. De la cordillera al
+                  mar, viñedos, paisajes y personas dan vida a vinos con
                   identidades únicas. Recorré regiones, descubrí nuevas
                   bodegas y varietales, y encontrá ese vino que todavía no
                   conocías.
@@ -7057,7 +7057,7 @@ function Header({
 
         <img
           src="/logo-vinos-rn.png"
-          alt="Arte uvas"
+          alt="Vinos de Río Negro"
           style={{
             ...styles.headerBrandArt,
             width: 285,
@@ -7142,7 +7142,7 @@ const PHOTO_HEADER_CONFIG: Record<
 > = {
   home: {
     imageUrl: HOME_PHOTO_URL,
-    title: "Viví el Vino Rionegrino",
+    title: "Viví el vino rionegrino",
     subtitle: "Descubrí bodegas, vinos y experiencias, de la cordillera al mar.",
   },
   map: {
@@ -7153,19 +7153,19 @@ const PHOTO_HEADER_CONFIG: Record<
   bodegas: {
     imageUrl: mapaProvinciaPhoto,
     title: "Ruta del Vino",
-    subtitle: "Nuestros vinos, para vos.",
+    subtitle: "Recorré las bodegas de Río Negro, de la cordillera al mar.",
     gradient: RUTA_DEL_VINO_GRADIENT,
     height: 180,
     backgroundSize: "contain",
   },
   winelist: {
     imageUrl: HOME_PHOTO_URL,
-    title: "Buscá tu Vino",
-    subtitle: "Todos los vinos Rionegrinos, en un solo lugar.",
+    title: "Buscá tu vino",
+    subtitle: "Todos los vinos rionegrinos, en un solo lugar.",
   },
   nearby: {
     imageUrl: rioNegroRiverPhoto,
-    title: "Vinos Cerca Tuyo",
+    title: "Vinos cerca tuyo",
     subtitle: "Los vinos que tenemos cerca tuyo, en un solo lugar.",
   },
   // Mismo encabezado que Ruta del Vino ("bodegas").
@@ -7179,7 +7179,7 @@ const PHOTO_HEADER_CONFIG: Record<
   },
   profile: {
     imageUrl: headPerfilPhoto,
-    title: "Tu Perfil",
+    title: "Tu perfil",
     subtitle: "Tus beneficios, guardados y actividad en Vinos de Río Negro.",
   },
 };
@@ -7475,7 +7475,7 @@ function HomeScreen({
           onKeyDown={(e) => {
             if (e.key === "Enter") onSetTab("search");
           }}
-          placeholder="Busca tu vino, bodega o experiencia."
+          placeholder="Buscá tu vino o bodega"
           style={styles.searchBarInput}
         />
       </div>
@@ -7483,7 +7483,7 @@ function HomeScreen({
       <div>
         <div style={styles.sectionTitle}>{homeGreeting(userCoords)}</div>
         <div style={styles.homeGreetingSubtitle}>
-          Más de 54 etiquetas Rionegrinas cerca tuyo
+          {WINES.length} etiquetas rionegrinas cerca tuyo
         </div>
       </div>
 
@@ -7496,8 +7496,8 @@ function HomeScreen({
       />
 
       <SectionTitle
-        title="Vinos Cerca Tuyo"
-        action="Ver todas"
+        title="Vinos cerca tuyo"
+        action="Ver todos"
         onAction={() => onSetTabFromHome("nearby")}
       />
 
@@ -7510,8 +7510,8 @@ function HomeScreen({
       {homeEvents.length > 0 && (
         <>
           <SectionTitle
-            title="Actividades destacadas"
-            action="Ver todo"
+            title="Eventos destacados"
+            action="Ver todos"
             onAction={() => onSetTabFromHome("agenda")}
           />
 
@@ -7678,7 +7678,7 @@ function WineListScreen({
           onKeyDown={(e) => {
             if (e.key === "Enter") onSetTab("search");
           }}
-          placeholder="Busca tu vino, bodega o experiencia."
+          placeholder="Buscá tu vino o bodega"
           style={styles.searchBarInput}
         />
       </div>
@@ -7746,14 +7746,14 @@ function SearchScreen({
   return (
     <div style={styles.stack22}>
       <div style={styles.searchHeroCard}>
-        <img src="/logo-vinos-rn.png" alt="Arte uvas" style={styles.searchHeroArt} />
+        <img src="/logo-vinos-rn.png" alt="Vinos de Río Negro" style={styles.searchHeroArt} />
         <div style={styles.searchInputWrapBig}>
           <SearchIcon />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={styles.inputBig}
-            placeholder="Busca tu vino, bodega o experiencia"
+            placeholder="Buscá tu vino o bodega"
           />
         </div>
       </div>
@@ -8100,7 +8100,7 @@ function MapScreen({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={styles.inputBig}
-          placeholder="Busca tu vino, bodega o experiencia."
+          placeholder="Buscá tu vino o bodega"
         />
       </div>
 
@@ -8115,7 +8115,7 @@ function MapScreen({
         </div>
         <div style={styles.locationGreeting}>Estás en Viedma</div>
         <div style={styles.locationBody}>
-          Más de {WINES.length} etiquetas de los mejores vinos Rionegrinos
+          Más de {WINES.length} etiquetas de los mejores vinos rionegrinos
           cerca tuyo
         </div>
         <div style={styles.rowGap10Wrap}>
@@ -8648,7 +8648,7 @@ function AgendaScreen({
             </button>
           )}
 
-          <SectionTitle title="Eventos Cerca Tuyo" />
+          <SectionTitle title="Eventos cerca tuyo" />
 
           <div style={styles.rowGap10Wrap}>
             {AGENDA_FILTERS.map((f) => (
@@ -8664,9 +8664,9 @@ function AgendaScreen({
 
           {shownEvents.length === 0 ? (
             <div style={styles.card}>
-              <div style={styles.itemTitle}>Sin actividades</div>
+              <div style={styles.itemTitle}>Sin eventos</div>
               <div style={styles.placeText}>
-                No hay actividades para este momento. Probá con otro filtro.
+                No hay eventos para este momento. Probá con otro filtro.
               </div>
             </div>
           ) : (
@@ -8842,11 +8842,11 @@ function ProfileScreen({
     <div style={styles.stack22}>
       <Block title="Membresía activa">
         <div style={styles.profileHeroCard}>
-          <img src="/logo-vinos-rn.png" alt="Arte uvas" style={styles.profileArtImage} />
+          <img src="/logo-vinos-rn.png" alt="Vinos de Río Negro" style={styles.profileArtImage} />
           <div>
-            <div style={styles.membershipTitle}>Tus Beneficios</div>
+            <div style={styles.membershipTitle}>Tus beneficios</div>
             <div style={styles.membershipText}>
-              Descuentos en vinotecas, actividades y bodegas adheridas.
+              Descuentos en vinotecas, eventos y bodegas adheridas.
             </div>
           </div>
 
@@ -8859,7 +8859,7 @@ function ProfileScreen({
       </Block>
 
       {favoriteWines.length > 0 && (
-        <Block title="Tus Vinos">
+        <Block title="Tus vinos">
           <div style={styles.horizontalScroller}>
             {favoriteWines.map((wine) => (
               <div
@@ -8880,7 +8880,7 @@ function ProfileScreen({
       )}
 
       {favoriteWineries.length > 0 && (
-        <Block title="Tus Bodegas">
+        <Block title="Tus bodegas">
           <div style={styles.horizontalScroller}>
             {favoriteWineries.map((winery) => (
               <div
@@ -8904,7 +8904,7 @@ function ProfileScreen({
           tiene ítems — punto abierto, ver rediseno-perfil.txt. */}
 
       {favoriteEvents.length > 0 && (
-        <Block title="Tus Eventos">
+        <Block title="Tus eventos">
           <div style={styles.horizontalScroller}>
             {favoriteEvents.map((event) => (
               <EventCarouselCard
@@ -8920,7 +8920,7 @@ function ProfileScreen({
       )}
 
       {favoriteShops.length > 0 && (
-        <Block title="Tus Vinotecas">
+        <Block title="Tus vinotecas">
           <div style={styles.stack12}>
             {favoriteShops.map((shop) => (
               <ResultRow
@@ -9387,7 +9387,7 @@ function WineryDetail({
       </button>
 
       <div>
-        <SectionTitle title="Sus Vinos" />
+        <SectionTitle title="Sus vinos" />
         <div style={styles.wineCardGrid}>
           {winery.wines.map((w) => {
             const wineData = WINES.find((x) => x.name === w);
